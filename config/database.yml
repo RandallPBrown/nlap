@@ -1,0 +1,26 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: proto_dev
+  pool: 5
+  host: localhost
+  username: postgres
+  password: postgres
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: proto_test
+  pool: 5
+  host: localhost
+  username: postgres
+  password: postgres
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: proto_production
+  pool: 5
+  host: localhost
+  username: postgres
+  password: postgres
