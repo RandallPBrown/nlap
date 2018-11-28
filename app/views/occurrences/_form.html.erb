@@ -1,0 +1,47 @@
+
+<%= form_for(@occurrence, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.form_group :name, class: 'row' do |f| %>
+      <%= f.label :name, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :name, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :ovalue, class: 'row' do |f| %>
+      <%= f.label :ovalue, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :ovalue, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :odate, class: 'row' do |f| %>
+      <%= f.label :odate, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.date_select :odate, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :desc, class: 'row' do |f| %>
+      <%= f.label :desc, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_area :desc, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div class="d-flex">
+    <div class="ml-auto">
+      <%= f.submit class: 'btn btn-primary' %>
+      <%= link_to "Cancel", occurrences_path, class: 'btn btn-outline-default' %>
+    </div>
+  </div>
+<% end %>
+

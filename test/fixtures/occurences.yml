@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  occ_type: 1.5
+  occ_date: 2018-11-23
+  occ_desc: MyText
+
+two:
+  occ_type: 1.5
+  occ_date: 2018-11-23
+  occ_desc: MyText

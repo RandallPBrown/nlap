@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-default position-relative inspectable">
+      <!-- component-title: Active Users Table -->
+      <div class="card-header">
+        <h6>MOST ACTIVE USERS</h6>
+      </div>
+      <div class="table-responsive">
+              <table class="table table-striped table-hover table-sm-responsive">
+                <thead>
+                  <tr>
+                                          <th>Agent</th>
+                                          <th>Department</th>
+                                          <th>Occurrence</th>
+                                          <th>Edate</th>
+                                          <th>Edesc</th>
+                                        <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% @entries.each do |entry| %>
+                  <tr>
+                                          <td><%= entry.agent.lname %></td>
+                                          <td><%= entry.agent.department.name %></td>
+                                          <td><%= entry.occurrence.ovalue %></td>
+                                          <td><%= entry.edate %></td>
+                                          <td><%= entry.edesc %></td>
+                                        <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), entry, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("pencil-alt"), edit_entry_path(entry), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("trash"), entry, 'data-toggle': 'tooltip', title: 'Delete',
+                        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+                      </div>
+                      </td>
+                    </tr>
+                    <% end %>
+                    <% if @entries.length == 0 %>
+                    <tr><td colspan=42 class='text-center'>No entries.</td></tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+      </div>
+
+    </div>
+  </div>
+</div>
