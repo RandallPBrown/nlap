@@ -26,6 +26,10 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <% if @entries %>
+                  <tr><td colspan=42 class='text-center'>No entries.</td></tr>
+
+                <% else %>
                 <% @entries.each do |entry| %>
                   <tr>
                                           <td><%= entry.agent.lname %></td>
@@ -43,14 +47,12 @@
                       </td>
                     </tr>
                     <% end %>
-                    <% if @entries.length == 0 %>
-                    <tr><td colspan=42 class='text-center'>No entries.</td></tr>
-                    <% end %>
+<% end %>
                     </tbody>
                   </table>
                 </div>
 
-                
+
                               </div>
 
 

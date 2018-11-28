@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181127220750) do
+ActiveRecord::Schema.define(version: 20181128175144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,18 +26,6 @@ ActiveRecord::Schema.define(version: 20181127220750) do
     t.index ["department_id"], name: "index_agents_on_department_id"
   end
 
-  create_table "agents_departments", id: false, force: :cascade do |t|
-    t.bigint "agent_id", null: false
-    t.bigint "department_id", null: false
-  end
-
-  create_table "create_join_table_agent_departments", force: :cascade do |t|
-    t.string "agent"
-    t.string "department"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "departments", force: :cascade do |t|
     t.string "name"
     t.text "desc"
@@ -46,15 +34,13 @@ ActiveRecord::Schema.define(version: 20181127220750) do
   end
 
   create_table "entries", force: :cascade do |t|
-    t.bigint "agent_id"
-    t.bigint "department_id"
     t.bigint "occurrence_id"
+    t.bigint "agent_id"
+    t.string "edesc"
     t.date "edate"
-    t.text "edesc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["agent_id"], name: "index_entries_on_agent_id"
-    t.index ["department_id"], name: "index_entries_on_department_id"
     t.index ["occurrence_id"], name: "index_entries_on_occurrence_id"
   end
 
@@ -87,6 +73,9 @@ ActiveRecord::Schema.define(version: 20181127220750) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin", default: false, null: false
+    t.string "recurly_account_code"
+    t.boolean "subscription_active", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -100,7 +89,4 @@ ActiveRecord::Schema.define(version: 20181127220750) do
   end
 
   add_foreign_key "agents", "departments"
-  add_foreign_key "entries", "agents"
-  add_foreign_key "entries", "departments"
-  add_foreign_key "entries", "occurrences"
 end
