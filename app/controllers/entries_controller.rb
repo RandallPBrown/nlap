@@ -7,7 +7,7 @@ class EntriesController < ApplicationController
 
     @body_class = "with-sidebar show-sidebar"
     @entries = Entry.all.includes(occurrence: params[:ovalue])
-    @occurrence_total = Occurrence.sum(:ovalue)
+    @occurrence_total = Entry.joins(:occurrence).sum(:ovalue)
     # @occurrenceval = Entry.all.map {|m| m.occurrence}
     # @occurrencecalc = @occurrenceval.map.sum{|n| n.ovalue}
     # @dv1 = Entry.all.map {|d| d.agent}
