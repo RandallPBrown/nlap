@@ -3,7 +3,7 @@
     <div class="card card-full-height inspectable">
       <!-- component-title: Graph -->
       <div class="card-header d-flex align-items-center">
-        <h6 class="mr-auto">SALES VS REFUNDS LAST 7 DAYS</h6>
+        <h6 class="mr-auto">Occurrences by Agent</h6>
 
         <div class="d-flex">
           <div class="dropdown">
@@ -19,7 +19,46 @@
         </div>
       </div>
       <div class="card-body position-relative">
-        <canvas class="sales-vs-refunds"></canvas>
+        <canvas id="myChart" width="400" height="200"></canvas>
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: <%= raw Department.all.map { |m| [m.name]} %>,
+        datasets: [{
+            label: '# of Occurrences',
+            data: [<%= @chart %>],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
       </div>
     </div>
   </div>
@@ -34,15 +73,15 @@
         <div class="timeline" style="height: 450px">
           <ul class="left-timeline">
             <% types = [ { klass: 'refund', css_class: 'badge badge-danger'},  { klass: 'purchase', css_class: 'badge badge-success'}, { klass: 'cancellation', css_class: 'badge badge-light'}] %>
-            <% (1..8).each do |index|%>
+            <% (1..8).each do |entry|%>
               <li class="timeline-item">
                 <% instance = types[Random.rand(types.length)] %>
-                <time class='<%= instance[:css_class]%>'>
-                  <strong>$<%=Random.rand(120) %></strong>
+                <time class=''>
+                  <strong><%= raw Occurrence.all.map { |m| [m.ovalue]}.last(1) %></strong>
                 </time>
                 <div class="activity-text">
-                  <strong>Internet Genie</strong>
-                  <small class="text-muted"><%=instance[:klass].upcase %> - <%=time_ago_in_words( DateTime.now-(index.minutes) ) %></small>
+                  <strong><%= raw Agent.all.map { |m| [m.lname]}.last(1) %></strong>
+                  <small class="text-muted"><%=instance[:klass].upcase %> - <%=time_ago_in_words( DateTime.now-(entry.minutes) ) %></small>
                 </div>
               </li>
             <% end %>

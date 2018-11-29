@@ -26,6 +26,18 @@ ActiveRecord::Schema.define(version: 20181128175144) do
     t.index ["department_id"], name: "index_agents_on_department_id"
   end
 
+  create_table "agents_departments", id: false, force: :cascade do |t|
+    t.bigint "agent_id", null: false
+    t.bigint "department_id", null: false
+  end
+
+  create_table "create_join_table_agent_departments", force: :cascade do |t|
+    t.string "agent"
+    t.string "department"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "departments", force: :cascade do |t|
     t.string "name"
     t.text "desc"
@@ -73,9 +85,6 @@ ActiveRecord::Schema.define(version: 20181128175144) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "admin", default: false, null: false
-    t.string "recurly_account_code"
-    t.boolean "subscription_active", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

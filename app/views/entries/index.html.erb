@@ -26,11 +26,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% if @entries %>
-                  <tr><td colspan=42 class='text-center'>No entries.</td></tr>
-
-                <% else %>
                 <% @entries.each do |entry| %>
+
                   <tr>
                                           <td><%= entry.agent.lname %></td>
                                           <td><%= entry.agent.department.name %></td>
@@ -47,9 +44,10 @@
                       </td>
                     </tr>
                     <% end %>
-<% end %>
                     </tbody>
+
                   </table>
+                  <%= will_paginate(@entries) %>
                 </div>
 
 
