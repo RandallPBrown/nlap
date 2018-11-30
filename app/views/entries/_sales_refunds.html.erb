@@ -3,7 +3,7 @@
     <div class="card card-full-height inspectable">
       <!-- component-title: Graph -->
       <div class="card-header d-flex align-items-center">
-        <h6 class="mr-auto">Occurrences by Agent</h6>
+        <h6 class="mr-auto">Occurrences by Department</h6>
 
         <div class="d-flex">
           <div class="dropdown">
@@ -30,7 +30,7 @@ var myChart = new Chart(ctx, {
             label: '# of Occurrences',
             data: [<%= @chart %>],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
@@ -38,7 +38,7 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
-                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
@@ -67,24 +67,62 @@ var myChart = new Chart(ctx, {
     <div class="card card-full-height d-flex inspectable">
       <!-- component-title: Timeline Card -->
       <div class="card-header">
-        <h6>SALES ACTIVITY</h6>
+        <h6>RECENT ACTIVITY</h6>
       </div>
       <div class="card-body">
         <div class="timeline" style="height: 450px">
           <ul class="left-timeline">
-            <% types = [ { klass: 'refund', css_class: 'badge badge-danger'},  { klass: 'purchase', css_class: 'badge badge-success'}, { klass: 'cancellation', css_class: 'badge badge-light'}] %>
-            <% (1..8).each do |entry|%>
+          
               <li class="timeline-item">
-                <% instance = types[Random.rand(types.length)] %>
+                
                 <time class=''>
-                  <strong><%= raw Occurrence.all.map { |m| [m.ovalue]}.last(1) %></strong>
+                  <strong><%= Entry.all.order("id DESC").map { |m| m.occurrence.name}.first %></strong>
                 </time>
                 <div class="activity-text">
-                  <strong><%= raw Agent.all.map { |m| [m.lname]}.last(1) %></strong>
-                  <small class="text-muted"><%=instance[:klass].upcase %> - <%=time_ago_in_words( DateTime.now-(entry.minutes) ) %></small>
+                  <strong><%= Entry.all.order("id DESC").map { |m| m.agent.lname}.first %>, <%= Entry.all.order("id DESC").map { |m| m.agent.fname}.first %></strong>
+                  <small class="text-muted"><%= raw Entry.all.order("id DESC").map { |m| [m.agent.department.name]}.first.join(", ") %></small>
                 </div>
               </li>
-            <% end %>
+               <li class="timeline-item">
+                
+                <time class=''>
+                  <strong><%= Entry.all.order("id DESC").map { |m| m.occurrence.name}.second %></strong>
+                </time>
+                <div class="activity-text">
+                  <strong><%= Entry.all.order("id DESC").map { |m| m.agent.lname}.second %>, <%= Entry.all.order("id DESC").map { |m| m.agent.fname}.second %></strong>
+                  <small class="text-muted"><%= raw Entry.all.order("id DESC").map { |m| [m.agent.department.name]}.second.join(", ") %></small>
+                </div>
+              </li>
+              <li class="timeline-item">
+                
+                <time class=''>
+                  <strong><%= Entry.all.order("id DESC").map { |m| m.occurrence.name}.third %></strong>
+                </time>
+                <div class="activity-text">
+                  <strong><%= Entry.all.order("id DESC").map { |m| m.agent.lname}.third %>, <%= Entry.all.order("id DESC").map { |m| m.agent.fname}.third %></strong>
+                  <small class="text-muted"><%= raw Entry.all.order("id DESC").map { |m| [m.agent.department.name]}.third.join(", ") %></small>
+                </div>
+              </li>
+              <li class="timeline-item">
+                
+                <time class=''>
+                  <strong><%= Entry.all.order("id DESC").map { |m| m.occurrence.name}.fourth %></strong>
+                </time>
+                <div class="activity-text">
+                  <strong><%= Entry.all.order("id DESC").map { |m| m.agent.lname}.fourth %>, <%= Entry.all.order("id DESC").map { |m| m.agent.fname}.fourth %></strong>
+                  <small class="text-muted"><%= raw Entry.all.order("id DESC").map { |m| [m.agent.department.name]}.fourth.join(", ") %></small>
+                </div>
+              </li>
+              <li class="timeline-item">
+                
+                <time class=''>
+                  <strong><%= Entry.all.order("id DESC").map { |m| m.occurrence.name}.fifth %></strong>
+                </time>
+                <div class="activity-text">
+                  <strong><%= Entry.all.order("id DESC").map { |m| m.agent.lname}.fifth %>, <%= Entry.all.order("id DESC").map { |m| m.agent.fname}.fifth %></strong>
+                  <small class="text-muted"><%= raw Entry.all.order("id DESC").map { |m| [m.agent.department.name]}.fifth.join(", ") %></small>
+                </div>
+              </li>
           </ul>
         </div>
       </div>
