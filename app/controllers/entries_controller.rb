@@ -8,14 +8,9 @@ class EntriesController < ApplicationController
     @body_class = "with-sidebar show-sidebar"
     @entries = Entry.all.includes(occurrence: params[:ovalue])
     @occurrence_total = Entry.joins(:occurrence).sum(:ovalue)
-    # @occurrenceval = Entry.all.map {|m| m.occurrence}
-    # @occurrencecalc = @occurrenceval.map.sum{|n| n.ovalue}
-    # @dv1 = Entry.all.map {|d| d.agent}
-    # @dv2 = @dv1.map {|k| k.department}
-    # @dv3 = @dv2.map {|l| l.id}
-    # @departmentname = @departmentval.map{|f| f.department}
-    # @ed = Entry.order(@dv3).all.map {|g| g.occurrence}
-    # @chart = @occurrenceval.map{|n| n.ovalue}
+    @occurrenceval = Entry.all.map {|m| m.occurrence}
+    @chart_labels = Department.pluck(:name).to_a
+    @chart_data = Entry.joins(:occurrence, agent: :department).group('departments.name').sum(:ovalue).values
 
   end
 
