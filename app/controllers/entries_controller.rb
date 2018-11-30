@@ -9,8 +9,8 @@ class EntriesController < ApplicationController
     @entries = Entry.all.includes(occurrence: params[:ovalue])
     @occurrence_total = Entry.joins(:occurrence).sum(:ovalue)
     @occurrenceval = Entry.all.map {|m| m.occurrence}
-    @chart_labels = Department.pluck(:name).to_a
-    @chart_data = Entry.joins(:occurrence, agent: :department).group('departments.name').sum(:ovalue).values
+    @chart_labels = Department.order(name: :desc).pluck(:name).to_a
+    @chart_data = Entry.joins(:occurrence, agent: :department).group('departments.name').order('departments.name DESC').sum(:ovalue).values
 
   end
 
