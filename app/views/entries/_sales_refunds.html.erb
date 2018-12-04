@@ -48,18 +48,18 @@ var config = {
             backgroundColor: [
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
             ],
             borderColor: [
                 'rgba(54, 162, 235, 1)',
                 'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)'
             ],
             borderWidth: 1
         },]
@@ -78,6 +78,9 @@ var config = {
 };
 var occurrence_chart = new Chart(ctx, config);
 $("#chartToday").click(function() {
+    var chart_labels = <%= raw @chart_labels_today %>;
+    var chart_data = <%= raw @chart_data_today %>;
+    var dataset_label = "Today";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;
@@ -87,7 +90,7 @@ $("#chartToday").click(function() {
 $("#chart90Day").click(function() {
     var chart_labels = <%= raw @chart_labels_effective %>;
     var chart_data = <%= raw @chart_data_effective %>;
-    var dataSetLabel = "90 Days";
+    var dataset_label = "90 Days";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;
@@ -95,8 +98,8 @@ $("#chart90Day").click(function() {
     occurrence_chart.update();
 });
 $("#chartBar").click(function() {
+    var chart_type = 'bar';
     var data = occurrence_chart.config.data;
-    data.labels = chart_labels;
     data.datasets[0].type = chart_type;
     occurrence_chart.update();
 });
