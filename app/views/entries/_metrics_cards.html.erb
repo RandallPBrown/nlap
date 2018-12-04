@@ -6,12 +6,30 @@
         <div class="media">
           <div class="d-flex align-self-center mr-3">
             <span>
-              <%= theme_icon_tag "money", class: "display-4" %>
+              <%= theme_icon_tag "", class: "display-4" %>
             </span>
           </div>
           <div class="media-body text-right">
             <h4 class="m-0"><%= @occurrence_total %></h4>
             <h6 class="m-0 text-muted">Total Occurrences</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 col-lg-3 animate-drop-fade">
+    <div class="card card-mini inspectable">
+      <!-- component-title: Mini Card -->
+      <div class="card-body">
+        <div class="media">
+          <div class="d-flex align-self-center mr-3">
+            <span>
+              <%= theme_icon_tag "", class: "display-4" %>
+            </span>
+          </div>
+          <div class="media-body text-right">
+            <h4 class="m-0"><%= @occurrence_total_today %></h4>
+            <h6 class="m-0 text-muted">Todays Occurrences</h6>
           </div>
         </div>
       </div>
@@ -30,6 +48,24 @@
           <div class="media-body text-right">
             <h4 class="m-0" data-refresh-interval="10"><%= Agent.count(:id) %></h4>
             <h6 class="m-0 text-muted">Total Agents</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 col-lg-3 animate-drop-fade">
+    <div class="card card-mini inspectable">
+      <!-- component-title: Mini Card -->
+      <div class="card-body">
+        <div class="media">
+          <div class="d-flex align-self-center mr-3">
+            <span>
+              <%= theme_icon_tag "user", class: "display-4" %>
+            </span>
+          </div>
+          <div class="media-body text-right">
+            <h4 class="m-0" data-refresh-interval="10"><%= @agent_total_today %></h4>
+            <h6 class="m-0 text-muted">Agents Late/Absent</h6>
           </div>
         </div>
       </div>

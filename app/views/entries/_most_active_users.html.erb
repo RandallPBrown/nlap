@@ -3,7 +3,7 @@
     <div class="card card-default position-relative inspectable">
       <!-- component-title: Active Users Table -->
       <div class="card-header">
-        <h6>MOST ACTIVE USERS</h6>
+        <h6>Recent Occurrences</h6>
       </div>
       <div class="table-responsive">
               <table class="table table-striped table-hover table-sm-responsive">
@@ -12,8 +12,8 @@
                                           <th>Agent</th>
                                           <th>Department</th>
                                           <th>Occurrence</th>
-                                          <th>Edate</th>
-                                          <th>Edesc</th>
+                                          <th>Date</th>
+                                          <th>Description</th>
                                         <th></th>
                   </tr>
                 </thead>
@@ -39,8 +39,9 @@
                     <tr><td colspan=42 class='text-center'>No entries.</td></tr>
                     <% end %>
                     </tbody>
+
                   </table>
-                  
+                  <div class="pagination justify-content-center"><%= will_paginate @entries, :class => 'page-item' %></div>
       </div>
 
     </div>

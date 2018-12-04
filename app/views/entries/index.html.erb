@@ -1,7 +1,7 @@
-<% @title = "Listing entries" %>
+<% @title = "All Entries" %>
 
 <% content_for :description do %>
-  <p>Edit this template in <code>app/views/Entries/index.html.erb</code>.</p>
+  
   <% end %>
 
   <% content_for :actions do %>
@@ -20,8 +20,8 @@
                                           <th>Agent</th>
                                           <th>Department</th>
                                           <th>Occurrence</th>
-                                          <th>Edate</th>
-                                          <th>Edesc</th>
+                                          <th>Date</th>
+                                          <th>Description</th>
                                         <th></th>
                   </tr>
                 </thead>
@@ -47,30 +47,13 @@
                     </tbody>
 
                   </table>
-                  <%= will_paginate(@entries) %>
+                  <div class="pagination justify-content-center"><%= will_paginate(@entries) %></div>
                 </div>
 
 
                               </div>
 
 
-              <div id="sidebar" class="col-md-3">
-
-                <ul class="nav nav-stacked nav-caret-left bg-gray-200 card small pb-2">
-                  <li><h6 class="mt-3 ml-3">Sub Menu</h6></li>
-                  <li class="nav-item">
-                  <a class="nav-link" href="#">Vacation Days</a>
-                  </li>
-                  <li class="nav-item active">
-                  <a class="nav-link" href="#">Salaries</a>
-                  </li>
-                  <li class="nav-item">
-                  <a class="nav-link" href="#">Disciplinary Items</a>
-                  </li>
-                  <li class="nav-item">
-                  <a class="nav-link" href="#">Firings</a>
-                  </li>
-                </ul>
-              </div> <!-- /#sidebar -->
+             
             </div>
           </div>

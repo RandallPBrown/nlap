@@ -1,17 +1,22 @@
+
+
 class EntriesController < ApplicationController
   layout "scaffold"
 
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
 
   def dashboard
-
+    require 'date'
     @body_class = "with-sidebar show-sidebar"
     @entries = Entry.all.includes(occurrence: params[:ovalue])
     @occurrence_total = Entry.joins(:occurrence).sum(:ovalue)
+    @occurrence_total_today = Entry.today.joins(:occurrence).sum(:ovalue)
     @occurrenceval = Entry.all.map {|m| m.occurrence}
-    @chart_labels = Department.order(name: :desc).pluck(:name).to_a
-    @chart_data = Entry.joins(:occurrence, agent: :department).group('departments.name').order('departments.name DESC').sum(:ovalue).values
-
+    @entries = Entry.all.order(created_at: :desc).paginate(page: params[:page], :per_page => 5)
+    @agent_total_today = Entry.today.joins(:agent).count(:id)
+    # to filter by today, use .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+    @chart_data = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').sum(:ovalue).values
+    @chart_labels = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').pluck('departments.name')  
   end
 
   def _most_active_users
@@ -21,7 +26,7 @@ class EntriesController < ApplicationController
 
   # GET /entries
   def index
-    @entries = Entry.all.paginate(page: params[:page], :per_page => 5)
+    @entries = Entry.all.order(created_at: :desc).paginate(page: params[:page], :per_page => 5)
     require 'will_paginate/array'
 
   end

@@ -1,16 +1,24 @@
 <%= render :layout => "layouts/base" do %>
   <nav class="navbar navbar-expand-lg">
-    <a href="javascript:" class="navbar-brand"><%= app_name %></a>
+    <a href="javascript:" class="navbar-brand">Attendance Tracker</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Servers</a>
+          <a class="nav-link" href="../entries/dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
+          <a class="nav-link" href="../entries">Entries</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Administration</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="downdown-item nav-link text-white" href="../agents">Agents</a>
+            <a class="downdown-item nav-link text-white" href="../departments">Departments</a>
+            <a class="downdown-item nav-link text-white" href="../occurrences">Occurrences</a>
+          </div>  
         </li>
       </ul>
       <ul class="nav navbar-nav">

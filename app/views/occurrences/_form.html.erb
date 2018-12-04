@@ -4,7 +4,7 @@
 
   <div class="form-inputs">
     <%= f.form_group :name, class: 'row' do |f| %>
-      <%= f.label :name, class: 'control-label col-md-2' %>
+      <%= f.label "Name", class: 'control-label col-md-2' %>
       <div class='col-12 col-md-10'>
         <%= f.text_field :name, class: 'form-control' %>
         <%= f.error_messages %>
@@ -12,7 +12,7 @@
     <% end %>
 
     <%= f.form_group :ovalue, class: 'row' do |f| %>
-      <%= f.label :ovalue, class: 'control-label col-md-2' %>
+      <%= f.label "Value", class: 'control-label col-md-2' %>
       <div class='col-12 col-md-10'>
         <%= f.text_field :ovalue, class: 'form-control' %>
         <%= f.error_messages %>
@@ -20,7 +20,7 @@
     <% end %>
 
     <%= f.form_group :odate, class: 'row' do |f| %>
-      <%= f.label :odate, class: 'control-label col-md-2' %>
+      <%= f.label "Occurred On", class: 'control-label col-md-2' %>
       <div class='col-12 col-md-10'>
         <%= f.date_select :odate, class: 'form-control' %>
         <%= f.error_messages %>
@@ -28,7 +28,7 @@
     <% end %>
 
     <%= f.form_group :desc, class: 'row' do |f| %>
-      <%= f.label :desc, class: 'control-label col-md-2' %>
+      <%= f.label "Description", class: 'control-label col-md-2' %>
       <div class='col-12 col-md-10'>
         <%= f.text_area :desc, class: 'form-control' %>
         <%= f.error_messages %>

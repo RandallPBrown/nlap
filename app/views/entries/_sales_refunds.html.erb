@@ -3,15 +3,14 @@
     <div class="card card-full-height inspectable">
       <!-- component-title: Graph -->
       <div class="card-header d-flex align-items-center">
-        <h6 class="mr-auto">Occurrences by Department</h6>
+        <h6 class="mr-auto">Occurrences by Department (Today)</h6>
 
         <div class="d-flex">
           <div class="dropdown">
             <button class="nav-link btn btn-icon " type="button" id="salesAndRefundButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%= theme_icon_tag "more" %>
             </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-badgeledby="salesAndRefundButton">
-              <a class="dropdown-item" href="#">Action</a>
+            <div class="dropdown-menu dropdown-menu-right" aria-badgeledby="salesAndRefundButton" id="chart-selector">
               <a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
