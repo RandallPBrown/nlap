@@ -3,71 +3,45 @@
     <div class="card card-full-height inspectable">
       <!-- component-title: Graph -->
       <div class="card-header d-flex align-items-center">
-        <h6 class="mr-auto">Occurrences by Department (Today)</h6>
+        <h6 class="mr-auto">Occurrences by Department</h6>
+        <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-secondary active" id="chartBar">
+             <input type="radio" name="options"  autocomplete="off" checked>Bar
+          </label>
+          
+          <label class="btn btn-secondary" id="chartLine">
+            <input type="radio" name="options"  autocomplete="off">Line
+          </label>
+          
+        </div>
         <div class="d-flex">
           <div class="dropdown">
             <button class="nav-link btn btn-icon " type="button" id="salesAndRefundButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%= theme_icon_tag "more" %>
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-badgeledby="salesAndRefundButton" id="chart-selector">
-              <button class="dropdown-item" id="0">Today</button>
-              <button class="dropdown-item" id="1">90 Days</button>
+              <button class="dropdown-item" id="chartToday">Today</button>
+              <button class="dropdown-item" id="chart90Day">90 Days</button>
             </div>
           </div>
         </div>
       </div>
       <div class="card-body position-relative">
         <!-- <canvas id="myChart" width="400" height="200"></canvas> -->
-<canvas id="forecast" width="300" height="150"></canvas>
+<canvas id="occurrenceChart" width="300" height="150"></canvas>
 <script>
-// var ctx = document.getElementById("myChart").getContext('2d');
-// var myChart = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//         labels: <%= raw @chart_labels %>,
-//         datasets: [{
-//             label: '# of Occurrences',
-//             data: <%= raw @chart_data %>,
-//             backgroundColor: [
-//                 'rgba(54, 162, 235, 0.2)',
-//                 'rgba(54, 162, 235, 0.2)',
-//                 'rgba(255, 206, 86, 0.2)',
-//                 'rgba(75, 192, 192, 0.2)',
-//                 'rgba(153, 102, 255, 0.2)',
-//                 'rgba(255, 159, 64, 0.2)'
-//             ],
-//             borderColor: [
-//                 'rgba(54, 162, 235, 1)',
-//                 'rgba(54, 162, 235, 1)',
-//                 'rgba(255, 206, 86, 1)',
-//                 'rgba(75, 192, 192, 1)',
-//                 'rgba(153, 102, 255, 1)',
-//                 'rgba(255, 159, 64, 1)'
-//             ],
-//             borderWidth: 1
-//         }]
-//     },
-//     options: {
-//         scales: {
-//             yAxes: [{
-//                 ticks: {
-//                     beginAtZero:true
-//                 }
-//             }]
-//         }
-//     }
-// });
-
 var chart_labels = <%= raw @chart_labels_today %>;
 var chart_data = <%= raw @chart_data_today %>;
-var ctx = document.getElementById("forecast").getContext('2d');
+var dataset_label = "Today";
+var chart_type = 'bar';
+var ctx = document.getElementById("occurrenceChart").getContext('2d');
 var config = {
     type: 'bar',
     data: {
         labels: chart_labels,
         datasets: [{
-            type: 'line',
-            label: "Temperature (Celsius)",
+            type: chart_type,
+            label: dataset_label,
             yAxisID: "y-axis-0",
             fill: true,
             data: chart_data,
@@ -95,27 +69,42 @@ var config = {
             yAxes: [{
                 position: "left",
                 "id": "y-axis-0",
-            }, {
-                position: "right",
-                "id": "y-axis-1",
+                ticks: {
+                  beginAtZero: true
+                }
             }]
         }
     }
 };
-var forecast_chart = new Chart(ctx, config);
-$("#0").click(function() {
-    var data = forecast_chart.config.data;
+var occurrence_chart = new Chart(ctx, config);
+$("#chartToday").click(function() {
+    var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;
-    forecast_chart.update();
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
 });
-$("#1").click(function() {
+$("#chart90Day").click(function() {
     var chart_labels = <%= raw @chart_labels_effective %>;
     var chart_data = <%= raw @chart_data_effective %>;
-    var data = forecast_chart.config.data;
+    var dataSetLabel = "90 Days";
+    var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;
-    forecast_chart.update();
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
+});
+$("#chartBar").click(function() {
+    var data = occurrence_chart.config.data;
+    data.labels = chart_labels;
+    data.datasets[0].type = chart_type;
+    occurrence_chart.update();
+});
+$("#chartLine").click(function() {
+    var data = occurrence_chart.config.data;
+    var chart_type = 'line';
+    data.datasets[0].type = chart_type;
+    occurrence_chart.update();
 });
 </script>
 
