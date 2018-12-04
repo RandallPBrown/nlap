@@ -15,8 +15,11 @@ class EntriesController < ApplicationController
     @entries = Entry.all.order(created_at: :desc).paginate(page: params[:page], :per_page => 5)
     @agent_total_today = Entry.today.joins(:agent).count(:id)
     # to filter by today, use .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
-    @chart_data = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').sum(:ovalue).values
-    @chart_labels = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').pluck('departments.name')  
+    @chart_data_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').sum(:ovalue).values
+    @chart_labels_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').pluck('departments.name')
+    @chart_data_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').sum(:ovalue).values
+    @chart_labels_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').pluck('departments.name').to_s  
+
   end
 
   def _most_active_users
