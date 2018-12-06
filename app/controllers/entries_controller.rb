@@ -41,6 +41,7 @@ class EntriesController < ApplicationController
   # GET /entries/new
   def new
     @entry = Entry.new
+    @department = Entry.joins(agent: :department)
   end
 
   # GET /entries/1/edit
@@ -81,6 +82,6 @@ class EntriesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def entry_params
-      params.require(:entry).permit(:agent_id, :department_id, :occurrence_id, :edate, :edesc, occurrence: [:ovalue])
+      params.require(:entry).permit(:agent_id, :dept, :occurrence_id, :edate, :edesc, occurrence: [:ovalue])
     end
 end
