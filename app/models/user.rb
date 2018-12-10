@@ -7,4 +7,11 @@ class User < ApplicationRecord
 	has_many :entries
     accepts_nested_attributes_for :department
     accepts_nested_attributes_for :entries
+  before_validation :create_department
+  def create_department
+  	department = Department.new(name: 'name')
+  	if department.save
+  		self.department_id = department.id  
+  	end
+  end		
 end
