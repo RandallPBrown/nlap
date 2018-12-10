@@ -115,10 +115,14 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                   <div>
-                    <a href="003_app_pages@fa-laptop%2F006_user_profile" class="btn ">Edit Profile</a>
+                    <%= link_to "Change your password", edit_user_registration_path, :class => 'btn' %>
                   </div>
                   <div>
-                    <a href="#" class="btn ">Log Out</a>
+                    <% if user_signed_in? %>
+                      <%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => 'btn' %>
+                    <% else %>
+                      <%= link_to "Sign up now!",  new_user_registration_path, :class => 'btn'%>
+                    <% end %>
                   </div>
                 </div>
               </div>
