@@ -2,6 +2,10 @@ module ApplicationHelper
   def app_name
     "My App"
   end
+
+  def user_email
+    current_user.email
+  end  
   def custom_bootstrap_flash
     flash_messages = []
     flash.each do |type, message|
