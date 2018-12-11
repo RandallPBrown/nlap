@@ -125,57 +125,18 @@ $("#chartLine").click(function() {
       <div class="card-body">
         <div class="timeline" style="height: 450px">
           <ul class="left-timeline">
-
+            <% @entries.each do |entry| %>
               <li class="timeline-item">
 
                 <time class=''>
-                  <strong><%= Entry.all.order("id DESC").map { |m| m.occurrence.name}.first %></strong>
+                  <strong><%= entry.occurrence.name %></strong>
                 </time>
                 <div class="activity-text">
-                  <strong><%= Entry.all.order("id DESC").map { |m| m.agent.lname}.first %>, <%= Entry.all.order("id DESC").map { |m| m.agent.fname}.first %></strong>
-                  <small class="text-muted"><%= raw Entry.all.order("id DESC").map { |m| [m.agent.department.name]}.first.join(", ") %></small>
+                  <strong><%= entry.agent.full_name %></strong>
+                  <small class="text-muted"><%= entry.agent.department.name %></small>
                 </div>
               </li>
-               <li class="timeline-item">
-
-                <time class=''>
-                  <strong><%= Entry.all.order("id DESC").map { |m| m.occurrence.name}.second %></strong>
-                </time>
-                <div class="activity-text">
-                  <strong><%= Entry.all.order("id DESC").map { |m| m.agent.lname}.second %>, <%= Entry.all.order("id DESC").map { |m| m.agent.fname}.second %></strong>
-                  <small class="text-muted"><%= raw Entry.all.order("id DESC").map { |m| [m.agent.department.name]}.second.join(", ") %></small>
-                </div>
-              </li>
-              <li class="timeline-item">
-
-                <time class=''>
-                  <strong><%= Entry.all.order("id DESC").map { |m| m.occurrence.name}.third %></strong>
-                </time>
-                <div class="activity-text">
-                  <strong><%= Entry.all.order("id DESC").map { |m| m.agent.lname}.third %>, <%= Entry.all.order("id DESC").map { |m| m.agent.fname}.third %></strong>
-                  <small class="text-muted"><%= raw Entry.all.order("id DESC").map { |m| [m.agent.department.name]}.third.join(", ") %></small>
-                </div>
-              </li>
-              <li class="timeline-item">
-
-                <time class=''>
-                  <strong><%= Entry.all.order("id DESC").map { |m| m.occurrence.name}.fourth %></strong>
-                </time>
-                <div class="activity-text">
-                  <strong><%= Entry.all.order("id DESC").map { |m| m.agent.lname}.fourth %>, <%= Entry.all.order("id DESC").map { |m| m.agent.fname}.fourth %></strong>
-                  <small class="text-muted"><%= raw Entry.all.order("id DESC").map { |m| [m.agent.department.name]}.fourth.join(", ") %></small>
-                </div>
-              </li>
-              <li class="timeline-item">
-
-                <time class=''>
-                  <strong><%= Entry.all.order("id DESC").map { |m| m.occurrence.name}.fifth %></strong>
-                </time>
-                <div class="activity-text">
-                  <strong><%= Entry.all.order("id DESC").map { |m| m.agent.lname}.fifth %>, <%= Entry.all.order("id DESC").map { |m| m.agent.fname}.fifth %></strong>
-                  <small class="text-muted"><%= raw Entry.all.order("id DESC").map { |m| [m.agent.department.name]}.fifth.join(", ") %></small>
-                </div>
-              </li>
+            <% end %>
           </ul>
         </div>
       </div>
