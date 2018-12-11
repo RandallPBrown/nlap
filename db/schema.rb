@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 20181211165404) do
     t.datetime "updated_at", null: false
     t.string "dept"
     t.bigint "department_id"
-    t.bigint "users_id"
+    t.bigint "user_id"
     t.index ["department_id"], name: "index_agents_on_department_id"
-    t.index ["users_id"], name: "index_agents_on_users_id"
+    t.index ["user_id"], name: "index_agents_on_user_id"
   end
 
   create_table "departments", force: :cascade do |t|
@@ -110,6 +110,6 @@ ActiveRecord::Schema.define(version: 20181211165404) do
   end
 
   add_foreign_key "agents", "departments"
-  add_foreign_key "agents", "users", column: "users_id"
+  add_foreign_key "agents", "users"
   add_foreign_key "users", "departments"
 end

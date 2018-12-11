@@ -3,12 +3,13 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-    belongs_to :department
+  belongs_to :department
 	has_many :entries
     accepts_nested_attributes_for :department
     accepts_nested_attributes_for :entries
   before_validation :allow_department
+  has_one :agent
   def allow_department
   		self.department_id
-  end		
+  end
 end

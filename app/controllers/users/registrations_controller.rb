@@ -17,8 +17,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     resource.save
     yield resource if block_given?
+
     if resource.persisted?
       if resource.active_for_authentication?
+        # This is shitty with no checks, but you get the picture
+        Agent.create({:department_id => resource.department_id, :user_id => resource.id})
         set_flash_message! :notice, :signed_up
         sign_up(resource_name, resource)
         respond_with resource, location: after_sign_up_path_for(resource)

@@ -6,5 +6,5 @@ class Agent < ApplicationRecord
     def full_name
   	"#{fname} #{lname}"
     end
+	belongs_to :user
 end
-
