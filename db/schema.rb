@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181210183501) do
+ActiveRecord::Schema.define(version: 20181211165404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,9 @@ ActiveRecord::Schema.define(version: 20181210183501) do
     t.datetime "updated_at", null: false
     t.string "dept"
     t.bigint "department_id"
+    t.bigint "users_id"
     t.index ["department_id"], name: "index_agents_on_department_id"
+    t.index ["users_id"], name: "index_agents_on_users_id"
   end
 
   create_table "departments", force: :cascade do |t|
@@ -108,5 +110,6 @@ ActiveRecord::Schema.define(version: 20181210183501) do
   end
 
   add_foreign_key "agents", "departments"
+  add_foreign_key "agents", "users", column: "users_id"
   add_foreign_key "users", "departments"
 end
