@@ -1,43 +1,45 @@
 
 <div class="container-fluid">
-  <div class="card my-3">
+  <div class="card my-5">
     <div class="card-title">
-      <h1>Sign Up</h1>
+      <h1 align="center">Sign Up</h1>
     </div>
     <div class="card-body">
       <div class="form-group">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= devise_error_messages! %>
 
-        <div class="field col-6">
+        <div class="field col-auto">
           <%= f.label :email %>
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
         </div>
 
-        <div class="field col-6">
+        <div class="field col-auto">
+            <%= f.label "Department", class: 'control-label' %><br />
+            <%= f.collection_select :department_id, Department.order(:id), :id, :name, {}, { :class => "form-control" } %>
+        </div>
+
+        <div class="field col-auto">
           <%= f.label :password %>
           <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
           <% end %>
           <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
         </div>
-
-        <div class="field col-6">
+        <div class="field col-auto">
           <%= f.label :password_confirmation %>
           <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
         </div>
 
-        <div class="field col-6">
-            <%= f.label "Department" %><br />
-            <%= f.collection_select :department_id, Department.order(:id), :id, :name, class: 'form-control' %>
-        </div>
+        
 
-        <div class="actions col-6"><br />
-          <%= f.submit "Sign up", class: 'btn btn-primary' %>
+        <div class="actions col-auto"><br />
+          <center><%= f.submit "Sign up", class: 'btn btn-primary' %></center>
+          <%= render "users/shared/links" %>
         </div>
       <% end %>
     </div>
     </div>
-  <%= render "users/shared/links" %>
+  
   </div>
 </div>
