@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/dashboard'
+
   get 'entries/dashboard'
 
   get 'entry/dashboard'
@@ -21,5 +23,5 @@ Rails.application.routes.draw do
         registrations: 'users/registrations'
       }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: "entries#dashboard"
+  root to: "users#dashboard"
 end

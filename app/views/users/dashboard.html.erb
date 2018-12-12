@@ -1,0 +1,186 @@
+<% content_for :no_page_header, true %>
+<% content_for :js_libs, "modernizr gmaps flot chartjs demo-dashboard demo-chartjs demo-sparklines" %>
+
+<section class="bg-light px-3 pt-5 pb-3 mb-3 d-flex flex-column">
+  <div class="container-fluid">
+    <div class="row equal-cols">
+
+      <div class="col-12 col-md-3">
+        <h4 class="leading-normal m-0 p-0">Hello, <%= current_user.first_name %></h4>
+        <p class="leading-normal small">Currently you are viewing:</p>
+        <ul class="m-0 p-0 mb-5 small">
+          <li>Total number of occurrences.</li>
+          <li>Detailed list of each one</li>
+        </ul>
+        <a class="btn btn-primary mb-3" href="javascript:">Go to Timeline &rarr;</a>
+        <a class="btn btn-info" href="javascript:">See activity feed &rarr;</a>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card card-full-height">
+          <div class="card-body">
+            <canvas id="myChart" width="200" height="100"></canvas>
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: <%= raw @agent_chart_labels %>,
+        datasets: [{
+            label: 'Count',
+            data: <%= raw @agent_chart_data %>,
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-3 d-flex flex-column justify-items-between">
+
+        <div class="card card-mini card-mini-solid-icon">
+          <div class="card-body">
+            <div class="media">
+              <div class="media-body text-left">
+                <h6 class="m-0 text-muted">Active Occurrences</h6>
+                <h4 class="m-0"><%= @user_entry_total_effective %></h4>
+              </div>
+              <div class="d-flex align-self-center text-primary ml-3">
+                <span>
+                  <i class="fa fa-hashtag "></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-mini card-mini-solid-icon">
+          <div class="card-body">
+            <div class="media">
+              <div class="media-body text-left">
+                <h6 class="m-0 text-muted">Total Active Tardies</h6>
+                <h4 class="m-0"><%= @user_entry_tardy_effective %></h4>
+              </div>
+              <div class="d-flex align-self-center text-primary ml-3">
+                <span>
+                  <i class="fa fa-clock-o "></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-mini card-mini-solid-icon">
+          <div class="card-body">
+            <div class="media">
+              <div class="media-body text-left">
+                <h6 class="m-0 text-muted">Total Active Absences</h6>
+                <h4 class="m-0"><%= @user_entry_absent_effective %></h4>
+              </div>
+              <div class="d-flex align-self-center text-primary ml-3">
+                <span>
+                  <i class="fa fa-table "></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-md-9">
+      <div class="card inspectable">
+        <div class="card-header d-flex align-items-center">
+          <h6>List of occurrences</h6>
+          <div class="ml-auto btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-default active">Week</button>
+            <button type="button" class="btn btn-default">Month</button>
+            <button type="button" class="btn btn-default">Quarter</button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <% @user_entry.each do |entry| %>
+              <tr>
+                <td><%= entry.agent.user.full_name %></td>
+                <td><%= entry.occurrence.name %></td>
+                <td><%= entry.edate %></td>
+                <td><%= entry.edesc %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+
+
+<div class="col-12 col-md-3 animate-fade-in-1000">
+    <div class="card card-full-height d-flex inspectable">
+      <!-- component-title: Timeline Card -->
+      <div class="card-header">
+        <h6>RECENT ACTIVITY</h6>
+      </div>
+      <div class="card-body">
+        <div class="timeline" style="height: 450px">
+          <ul class="left-timeline">
+            <% @user_entry.each do |entry| %>
+              <li class="timeline-item">
+
+                <time class=''>
+                  <strong>
+                    <%= entry.occurrence.name %>
+                  </strong>
+                </time>
+                <div class="activity-text">
+                  <strong><%= entry.edate %></strong>
+                  <small class="text-muted"><%= entry.agent.department.name %></small>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>  
+</div>
