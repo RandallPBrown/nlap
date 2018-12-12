@@ -1,6 +1,6 @@
 module ApplicationHelper
   def app_name
-    "My App"
+    "New Leaf Agent Portal"
   end
 
   def user_email

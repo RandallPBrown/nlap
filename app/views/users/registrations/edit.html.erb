@@ -1,67 +1,97 @@
-<div class="container-fluid">
-  <div class="card my-5">
-    <div class="card-title">
-      <h1 align="center">Edit <%= resource_name.to_s.humanize %></h1>
+<% @title = "Edit #{resource_name.to_s.humanize}" %>
+
+<div id="main" class="devise-1">
+  <div class="container-fluid">
+    <div class="row">
+      <header class="text-center">
+        <h1><%=app_name%></h1>
+        <p class="p-0 m-0 text-uppercase">My Account Details</p>
+      </header>
     </div>
-    <div class="card-body">
-      <div class="form-group">
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-          <%= devise_error_messages! %>
+    <div class="row m-5">
+      <div class="col-12 col-md-8 mr-auto ml-auto">
+        <div class="card">
+          <div class="card-body">
+            <div class="container">
+              <%= form_for resource, as: resource_name, url: registration_path(resource_name),
+                html: { method: :put, novalidate: true, class: "form-horizontal" } do |f| %>
 
-          <div class="field form-group col-auto">
-            <%= f.label :email %><br />
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+                <%= f.error_notification %>
+
+                <%= f.form_group :email, class:"row" do |f| %>
+                  <%= f.label :email, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= f.email_field :email, required: true, autofocus: true, class: "form-control" %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :first_name, class:"row" do |f| %>
+                  <%= f.label :first_name, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= f.email_field :first_name, required: true, autofocus: true, class: "form-control" %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :last_name, class:"row" do |f| %>
+                  <%= f.label :last_name, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= f.email_field :last_name, required: true, autofocus: true, class: "form-control" %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :department_id, class:"row" do |f| %>
+                  <%= f.label :department_id, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= f.collection_select :department_id, Department.order(:id), :id, :name, {}, {:class => 'form-control'} %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :password, class: "row" do |f| %>
+                  <%= f.label :password, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= f.password_field :password, class: "form-control" %>
+                    <%= f.error_messages %>
+                    <div class="help-block">
+                      Leave it blank if you don"t want to change it.
+                    </div>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :password_confirmation, class: "row" do |f| %>
+                  <%= f.label :password_confirmation, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= f.password_field :password_confirmation, class: "form-control" %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :current_password, class: "row" do |f| %>
+                  <%= f.label :current_password, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= f.password_field :current_password, class: "form-control" %>
+                    <%= f.error_messages %>
+                    <div class="help-block">
+                      We need your current password to confirm your changes.
+                    </div>
+                  </div>
+                <% end %>
+
+                <div class="row d-flex align-items-center mt-5">
+                  <%= link_to "Cancel my account", registration_path(resource_name), confirm: "Are you sure?", method: :delete, class: "mr-auto text-danger" %>
+                  <div>
+                    <%= link_to "Back", :back, class: "btn btn-outline-defualt" %>
+                    <%= f.submit "Update", class: "btn btn-primary" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
           </div>
-
-        <div class="field col-auto">
-          <%= f.label :first_name %>
-          <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class: 'form-control' %>
         </div>
-
-        <div class="field col-auto">
-          <%= f.label :last_name %>
-          <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class: 'form-control' %>
-        </div>
-
-          <div class="field form-group col-auto">
-              <%= f.label "Department" %><br />
-                <%= f.collection_select :department_id, Department.order(:id), :id, :name, {}, {:class => 'form-control'} %>
-          </div>
-
-          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-          <% end %>
-
-          <div class="field form-group col-auto">
-            <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-            <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
-            <% if @minimum_password_length %>
-              <br />
-              <em><%= @minimum_password_length %> characters minimum</em>
-            <% end %>
-          </div>
-
-          <div class="field form-group col-auto">
-            <%= f.label :password_confirmation %><br />
-            <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
-          </div>
-
-          <div class="field form-group col-auto">
-            <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-            <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
-          </div>
-
-          <div class="actions">
-            <%= f.submit "Update", class: 'btn' %>
-          </div>
-        <% end %>
-        <hr>
-        <h2 align="center">Cancel my account</h2>
-
-        <p><center>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn' %></center></p>
-
-        <%= link_to "Back", :back, class: 'btn' %>
       </div>
     </div>
   </div>
-</div>      
+</div>
