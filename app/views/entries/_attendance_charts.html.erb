@@ -22,6 +22,8 @@
             <div class="dropdown-menu dropdown-menu-right" aria-badgeledby="salesAndRefundButton" id="chart-selector">
               <button class="dropdown-item" id="chartToday">Today</button>
               <button class="dropdown-item" id="chart90Day">90 Days</button>
+              <button class="dropdown-item" id="chartAgentToday">Agent Today</button>
+              <button class="dropdown-item" id="chartAgent90Day">Agent 90 Days</button>
             </div>
           </div>
         </div>
@@ -97,6 +99,26 @@ $("#chart90Day").click(function() {
     data.datasets[0].label = dataset_label;
     occurrence_chart.update();
 });
+$("#chartAgentToday").click(function() {
+    var chart_labels = <%= raw @chart_labels_agent_today %>;
+    var chart_data = <%= raw @chart_data_agent_today %>;
+    var dataset_label = "Agent Today";
+    var data = occurrence_chart.config.data;
+    data.datasets[0].data = chart_data;
+    data.labels = chart_labels;
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
+});
+$("#chartAgent90Day").click(function() {
+    var chart_labels = <%= raw @chart_labels_agent_effective %>;
+    var chart_data = <%= raw @chart_data_agent_effective %>;
+    var dataset_label = "Agent 90 Days";
+    var data = occurrence_chart.config.data;
+    data.datasets[0].data = chart_data;
+    data.labels = chart_labels;
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
+});
 $("#chartBar").click(function() {
     var chart_type = 'bar';
     var data = occurrence_chart.config.data;
@@ -129,10 +151,12 @@ $("#chartLine").click(function() {
               <li class="timeline-item">
 
                 <time class=''>
-                  <strong><%= entry.occurrence.name %></strong>
+                  <strong>
+                    <%= entry.occurrence.name %>
+                  </strong>
                 </time>
                 <div class="activity-text">
-                  <strong><%= entry.agent.full_name %></strong>
+                  <strong><%= entry.agent.user.full_name %></strong>
                   <small class="text-muted"><%= entry.agent.department.name %></small>
                 </div>
               </li>

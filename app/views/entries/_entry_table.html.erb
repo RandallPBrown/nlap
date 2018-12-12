@@ -20,7 +20,7 @@
                 <tbody>
                 <% @entries.each do |entry| %>
                   <tr>
-                                          <td><%= entry.agent.full_name %></td>
+                                          <td><%= entry.agent.user.email %></td>
                                           <td><%= entry.agent.department.name %></td>
                                           <td><%= entry.occurrence.ovalue %></td>
                                           <td><%= entry.edate %></td>

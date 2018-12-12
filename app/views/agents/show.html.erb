@@ -10,28 +10,19 @@
         <div class="card-body">
           <div class="form-horizontal">
                           <div class="form-group row">
-                <label class="col-12 col-md-2 form-label">First</label>
+                <label class="col-12 col-md-2 form-label">Agent ID</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
-                    <%= @agent.fname %>
+                    <%= @agent.user.id %>
                   </span>
                 </div>
               </div>
 
                           <div class="form-group row">
-                <label class="col-12 col-md-2 form-label">Last</label>
+                <label class="col-12 col-md-2 form-label">Email</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
-                    <%= @agent.lname %>
-                  </span>
-                </div>
-              </div>
-
-                          <div class="form-group row">
-                <label class="col-12 col-md-2 form-label">Hire</label>
-                <div class="col-12 col-md-10 form-control uneditable-input">
-                  <span>
-                    <%= @agent.hire %>
+                    <%= @agent.user.email %>
                   </span>
                 </div>
               </div>

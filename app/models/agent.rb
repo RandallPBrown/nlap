@@ -3,8 +3,8 @@ class Agent < ApplicationRecord
 	has_many :entries
     accepts_nested_attributes_for :department
     accepts_nested_attributes_for :entries
-    def full_name
-  	"#{fname} #{lname}"
-    end
 	belongs_to :user
+	def user_email
+    	self.user.email
+  	end  
 end

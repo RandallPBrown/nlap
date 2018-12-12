@@ -12,4 +12,7 @@ class User < ApplicationRecord
   def allow_department
   		self.department_id
   end
+  def full_name
+    "#{first_name} #{last_name}"
+  end  
 end

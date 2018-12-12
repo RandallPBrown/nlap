@@ -13,6 +13,16 @@
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
           </div>
 
+        <div class="field col-auto">
+          <%= f.label :first_name %>
+          <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class: 'form-control' %>
+        </div>
+
+        <div class="field col-auto">
+          <%= f.label :last_name %>
+          <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class: 'form-control' %>
+        </div>
+
           <div class="field form-group col-auto">
               <%= f.label "Department" %><br />
                 <%= f.collection_select :department_id, Department.order(:id), :id, :name, {}, {:class => 'form-control'} %>

@@ -19,6 +19,10 @@ class EntriesController < ApplicationController
     @chart_labels_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').pluck('departments.name')
     @chart_data_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').sum(:ovalue).values
     @chart_labels_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').pluck('departments.name').to_s  
+    @chart_data_agent_today = Entry.today.joins(:occurrence, agent: :user).group('users.email').order('users.email asc').sum(:ovalue).values
+    @chart_labels_agent_today = Entry.today.joins(:occurrence, agent: :user).group('users.email').order('users.email asc').pluck('users.email').to_s  
+    @chart_data_agent_effective = Entry.effective.joins(:occurrence, agent: :user).group('users.email').order('users.email asc').sum(:ovalue).values
+    @chart_labels_agent_effective = Entry.effective.joins(:occurrence, agent: :user).group('users.email').order('users.email asc').pluck('users.email').to_s  
 
   end
 
@@ -42,6 +46,7 @@ class EntriesController < ApplicationController
   def new
     @entry = Entry.new
     @department = Entry.joins(agent: :department)
+    @user = Entry.joins(agent: :user).group('users.email')
   end
 
   # GET /entries/1/edit
@@ -51,7 +56,7 @@ class EntriesController < ApplicationController
   # POST /entries
   def create
     @entry = Entry.new(entry_params)
-
+    @user = Entry.joins(agent: :user).group('users.email')
     if @entry.save
       redirect_to @entry, notice: 'Entry was successfully created.'
     else
