@@ -10,15 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181211165404) do
+ActiveRecord::Schema.define(version: 20181214170756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "agents", force: :cascade do |t|
-    t.string "fname"
-    t.string "lname"
-    t.date "hire"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "dept"
@@ -38,6 +35,19 @@ ActiveRecord::Schema.define(version: 20181211165404) do
     t.string "department"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "daps", force: :cascade do |t|
+    t.string "description"
+    t.date "ddate"
+    t.bigint "user_id"
+    t.bigint "writeup_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "wunature_id"
+    t.index ["user_id"], name: "index_daps_on_user_id"
+    t.index ["writeup_id"], name: "index_daps_on_writeup_id"
+    t.index ["wunature_id"], name: "index_daps_on_wunature_id"
   end
 
   create_table "departments", force: :cascade do |t|
@@ -130,15 +140,23 @@ ActiveRecord::Schema.define(version: 20181211165404) do
   end
 
   create_table "writeups", force: :cascade do |t|
-    t.string "type"
-    t.date "wdate"
+    t.string "name"
     t.text "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "wunatures", force: :cascade do |t|
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_foreign_key "agents", "departments"
   add_foreign_key "agents", "users"
+  add_foreign_key "daps", "users"
+  add_foreign_key "daps", "writeups"
+  add_foreign_key "daps", "wunatures"
   add_foreign_key "users", "agents"
   add_foreign_key "users", "departments"
 end

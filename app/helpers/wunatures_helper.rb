@@ -1,0 +1,2 @@
+module WunaturesHelper
+end

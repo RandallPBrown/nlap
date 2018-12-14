@@ -5,8 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :department
 	has_many :entries
+  has_many :daps
   accepts_nested_attributes_for :department
   accepts_nested_attributes_for :entries
+  accepts_nested_attributes_for :daps
   before_validation :allow_department
   has_one :agent
   def allow_department
@@ -15,6 +17,9 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end  
+  scope :written,  -> {
+    where("daps.ddate > ?", Time.now-90.days)
+  }
   scope :effective,  -> {
     where("entries.edate > ?", Time.now-180.days)
   }

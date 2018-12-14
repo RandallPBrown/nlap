@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  ddate: 2018-12-14
+  user: one
+  writeup: one
+
+two:
+  description: MyString
+  ddate: 2018-12-14
+  user: two
+  writeup: two

@@ -55,6 +55,6 @@ class WriteupsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def writeup_params
-      params.require(:writeup).permit(:type, :wdate, :desc)
+      params.require(:writeup).permit(:name, :wdate, :desc)
     end
 end

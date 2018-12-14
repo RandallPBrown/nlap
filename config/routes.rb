@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :wunatures
+  resources :daps
   get 'users/dashboard'
 
   get 'entries/dashboard'

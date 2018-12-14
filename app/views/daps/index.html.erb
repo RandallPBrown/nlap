@@ -1,0 +1,55 @@
+<% @title = "Listing Disciplinary Actions" %>
+
+<% content_for :description do %>
+  <% end %>
+
+  <% content_for :actions do %>
+    <%= link_to new_dap_path, class: 'btn btn-primary btn-large pull-right' do %>
+      <%= fa_icon_tag "plus" %> Add Dap
+      <% end %>
+      <% end %>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="card card-sheet sheet-condensed">
+              <table class="table table-striped table-hover table-sm-responsive">
+                <thead>
+                  <tr>
+                                          <th>Nature of Incident</th>
+                                          <th>Date</th>
+                                          <th>Agent</th>
+                                          <th>Type</th>
+                                        <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% @daps.each do |dap| %>
+                  <tr>
+                                          <td><%= dap.wunature.description %></td>
+                                          <td><%= dap.ddate %></td>
+                                          <td><%= dap.user.full_name %></td>
+                                          <td><%= dap.writeup.name %></td>
+                                        <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), dap, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("pencil-alt"), edit_dap_path(dap), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("trash"), dap, 'data-toggle': 'tooltip', title: 'Delete',
+                        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+                      </div>
+                      </td>
+                    </tr>
+                    <% end %>
+                    <% if @daps.length == 0 %>
+                    <tr><td colspan=42 class='text-center'>No daps.</td></tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+
+                                  <%# Remove the trailing if condition if you're using pagination. %>
+                  <%= will_paginate @daps if @daps.respond_to?(:total_pages) %>
+                
+              </div>
+            </div>
+          </div>

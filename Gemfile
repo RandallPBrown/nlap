@@ -38,6 +38,10 @@ gem 'devise'
 gem 'toastr-rails'
 gem "will_paginate", "~> 3.0.4"
 
+# pdf to create forms
+gem 'wicked_pdf', '~> 1.1'
+gem 'wkhtmltopdf-binary'
+
 source "https://gems.rapidrailsthemes.com/gems" do
   gem "rrt", "~> 1.0.17"
 end
