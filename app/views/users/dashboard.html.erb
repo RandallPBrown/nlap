@@ -7,13 +7,15 @@
 
       <div class="col-12 col-md-3">
         <h4 class="leading-normal m-0 p-0">Hello, <%= current_user.first_name %></h4>
-        <p class="leading-normal small">Currently you are viewing:</p>
+        <p class="leading-normal small">Important information regarding the occurrence system:</p>
         <ul class="m-0 p-0 mb-5 small">
-          <li>Total number of occurrences.</li>
-          <li>Detailed list of each one</li>
+          <li>If your total occurrences meet the following guidelines within 180 days:</li>
+            <ul>
+              <li><b>Verbal Warning</b> - If employee gets <u>3.0 or more</u> occurrences will receive verbal warning. The warning will remain in effect for <u>90 days</u>. If employee receives <u>1.0 or more</u> occurrences during this period, progress to next.</li>
+              <li><b>Written Warning</b> - Issued for receiving <u>1.0 or more</u> occurrences during verbal warning and last for <u>90 days</u>. If agent receives an additional <u>1.0 or more</u> occurrences, progress to next.</li>
+              <li><b>Final Written Warning</b> - Received for <u>1.0 or more</u> occurrences during <u>90 day written warning</u>. If agent receives <u>1.0 or more</u> occurrences during this <u>90 day period</u> their employment <u>will be terminated</u>.</li>
+            </ul>  
         </ul>
-        <a class="btn btn-primary mb-3" href="javascript:">Go to Timeline &rarr;</a>
-        <a class="btn btn-info" href="javascript:">See activity feed &rarr;</a>
       </div>
 
       <div class="col-12 col-md-6">
@@ -165,7 +167,6 @@ var myChart = new Chart(ctx, {
           <ul class="left-timeline">
             <% @user_entry.each do |entry| %>
               <li class="timeline-item">
-
                 <time class=''>
                   <strong>
                     <%= entry.occurrence.name %>

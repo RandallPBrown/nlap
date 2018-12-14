@@ -1,6 +1,6 @@
 class DepartmentsController < ApplicationController
   layout "scaffold"
-
+before_action :authorize_admin
   before_action :set_department, only: [:show, :edit, :update, :destroy]
 
   # GET /departments

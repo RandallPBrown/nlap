@@ -13,4 +13,5 @@ class Entry < ApplicationRecord
     where("entries.agent_id = ?", User.current_user)
   }
 
+
 end

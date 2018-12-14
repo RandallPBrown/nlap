@@ -1,6 +1,6 @@
 <%= render :layout => "layouts/base" do %>
   <nav class="navbar navbar-expand-lg">
-    <a href="javascript:" class="navbar-brand">Attendance Tracker</a>
+    <a href="javascript:" class="navbar-brand"><%= app_name %></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -18,7 +18,6 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Administration</a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="downdown-item nav-link" href="../agents">Agents</a>
             <a class="downdown-item nav-link" href="../departments">Departments</a>
             <a class="downdown-item nav-link" href="../occurrences">Occurrences</a>
           </div>  
@@ -112,7 +111,9 @@
             <li class="dropdown-item text-center">
               <div class="card">
                 <div class="card-body">
-                  <p class="m0 p0 d-block"><%= user_email %></p>
+                  <h3><%= current_user.full_name %></h3><br />
+                  <p><%= user_email %></p>
+
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                   <div>

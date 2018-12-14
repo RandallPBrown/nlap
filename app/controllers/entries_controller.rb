@@ -1,9 +1,12 @@
 
 
 class EntriesController < ApplicationController
+  before_action :authorize_admin
+
   layout "scaffold"
 
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
+
 
   def dashboard
     require 'date'
@@ -23,7 +26,8 @@ class EntriesController < ApplicationController
     @chart_labels_agent_today = Entry.today.joins(:occurrence, agent: :user).group('users.email').order('users.email asc').pluck('users.email').to_s  
     @chart_data_agent_effective = Entry.effective.joins(:occurrence, agent: :user).group('users.email').order('users.email asc').sum(:ovalue).values
     @chart_labels_agent_effective = Entry.effective.joins(:occurrence, agent: :user).group('users.email').order('users.email asc').pluck('users.email').to_s  
-
+    @agent_occurrence_values = Entry.limit(10).all.joins(:occurrence, agent: :user).group("users.email").order("users.email").sum(:ovalue).values
+    @agent_occurrence_labels = Entry.limit(10).all.joins(:occurrence, agent: :user).group("users.email").order("users.email").pluck("users.email")
   end
 
   def _most_active_users

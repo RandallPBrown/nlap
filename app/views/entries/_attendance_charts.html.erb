@@ -142,22 +142,22 @@ $("#chartLine").click(function() {
     <div class="card card-full-height d-flex inspectable">
       <!-- component-title: Timeline Card -->
       <div class="card-header">
-        <h6>RECENT ACTIVITY</h6>
+        <h6>Highest Offenders</h6>
       </div>
       <div class="card-body">
         <div class="timeline" style="height: 450px">
           <ul class="left-timeline">
-            <% @entries.each do |entry| %>
+            <% @agent_occurrence_values.zip(@agent_occurrence_labels).sort{ |a, b| b <=> a }.each do |entry| %>
               <li class="timeline-item">
 
                 <time class=''>
                   <strong>
-                    <%= entry.occurrence.name %>
+                    <%= entry.join(" ---------- ") %>
                   </strong>
                 </time>
                 <div class="activity-text">
-                  <strong><%= entry.agent.user.full_name %></strong>
-                  <small class="text-muted"><%= entry.agent.department.name %></small>
+                  <strong><%#= @fdsa %></strong>
+                  <small class="text-muted"><%#= entry.agent.department.name %></small>
                 </div>
               </li>
             <% end %>
