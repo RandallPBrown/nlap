@@ -48,7 +48,7 @@
                 </div>
 
                                   <%# Remove the trailing if condition if you're using pagination. %>
-                  <%= will_paginate @daps if @daps.respond_to?(:total_pages) %>
+                  <%= will_paginate @daps %>
                 
               </div>
             </div>

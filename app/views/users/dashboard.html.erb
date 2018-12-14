@@ -10,7 +10,7 @@
         <p class="leading-normal small">Important information regarding the occurrence system:</p>
         <ul class="m-0 p-0 mb-5 small">
           <li>If your total occurrences meet the following guidelines within 180 days:</li>
-            <ul>
+            <ul><br />
               <li><b>Verbal Warning</b> - If employee gets <u>3.0 or more</u> occurrences will receive verbal warning. The warning will remain in effect for <u>90 days</u>. If employee receives <u>1.0 or more</u> occurrences during this period, progress to next.</li>
               <li><b>Written Warning</b> - Issued for receiving <u>1.0 or more</u> occurrences during verbal warning and last for <u>90 days</u>. If agent receives an additional <u>1.0 or more</u> occurrences, progress to next.</li>
               <li><b>Final Written Warning</b> - Received for <u>1.0 or more</u> occurrences during <u>90 day written warning</u>. If agent receives <u>1.0 or more</u> occurrences during this <u>90 day period</u> their employment <u>will be terminated</u>.</li>
@@ -141,15 +141,10 @@ var myChart = new Chart(ctx, {
     <div class="col-12 col-md-9">
       <div class="card inspectable">
         <div class="card-header d-flex align-items-center">
-          <h6>List of occurrences</h6>
-          <div class="ml-auto btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-default active">Week</button>
-            <button type="button" class="btn btn-default">Month</button>
-            <button type="button" class="btn btn-default">Quarter</button>
-          </div>
+          <h6>List of occurrences</h6>   
         </div>
-        <div class="table-responsive">
-          <table class="table table-hover table-striped">
+        <div class="table-responsive" >
+          <table class="table table-hover table-striped" id="userEntryTable">
             <thead>
               <tr>
                 <th>Name</th>
@@ -167,7 +162,34 @@ var myChart = new Chart(ctx, {
               </tr>
             <% end %>
           </table>
+          <center><%= will_paginate @user_entry %></center>
+        </div><br>
+        <div class="card-header d-flex align-items-center">
+          <h6>List of Disciplinary Actions</h6>   
         </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped" id="userDapTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <% @user_dap.each do |dap| %>
+              <tr>
+                <td><%= dap.user.full_name %></td>
+                <td><%= dap.writeup.name %></td>
+                <td><%= dap.ddate %></td>
+                <td><%= dap.description %></td>
+              </tr>
+            <% end %>
+          </table>
+          
+        </div>
+        <center><%= will_paginate @user_dap %></center>
       </div>
     </div>
   

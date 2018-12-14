@@ -1,7 +1,7 @@
 <% @title = "Showing dap" %>
 
 <% content_for :description do %>
-  <p>Edit this template in <code>app/views/Daps/show.html.erb</code>.</p>
+
   <% end %>
 
 <div class="container">
@@ -60,7 +60,7 @@
                         <div class="d-flex">
               <div class="ml-auto">
                 <%= link_to fa_icon_tag("pencil") + ' Edit', edit_dap_path(@dap), class: 'btn btn-primary' %>
-                
+
                 <%= link_to 'Back', daps_path, class: 'btn' %>
               </div>
             </div>

@@ -5,13 +5,14 @@ class DapsController < ApplicationController
 
   # GET /daps
   def index
-    @daps = Dap.all
-
+    @daps = Dap.all.paginate(page: params[:page], :per_page => 5)
+    require 'will_paginate/array'
 
   end
 
   # GET /daps/1
   def show
+
 
   end
 
