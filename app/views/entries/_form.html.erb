@@ -34,7 +34,7 @@
     <%= f.form_group :agent, class: 'row' do |f| %>
       <%= f.label "Agent", class: 'control-label col-md-2' %>
       <div class='col-12 col-md-10'>
-        <%= f.grouped_collection_select :agent_id, Department.order(:id), :agents, :name, :id, :user_email %>
+        <%= f.grouped_collection_select :agent_id, Department.order(:id), :agents, :name, :id, :user_full_name %>
         <%= f.error_messages %>
       </div>
     <% end %>

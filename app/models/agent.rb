@@ -4,7 +4,7 @@ class Agent < ApplicationRecord
     accepts_nested_attributes_for :department
     accepts_nested_attributes_for :entries
 	belongs_to :user
-	def user_email
-    	self.user.email
+	def user_full_name
+    	self.user.full_name
   	end  
 end

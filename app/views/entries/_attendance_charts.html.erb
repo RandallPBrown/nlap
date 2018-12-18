@@ -21,9 +21,9 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-badgeledby="salesAndRefundButton" id="chart-selector">
               <button class="dropdown-item" id="chartToday">Today</button>
-              <button class="dropdown-item" id="chart90Day">90 Days</button>
+              <button class="dropdown-item" id="chartEffective">180 Days</button>
               <button class="dropdown-item" id="chartAgentToday">Agent Today</button>
-              <button class="dropdown-item" id="chartAgent90Day">Agent 90 Days</button>
+              <button class="dropdown-item" id="chartAgentEffective">Agent 180 Days</button>
             </div>
           </div>
         </div>
@@ -47,22 +47,8 @@ var config = {
             yAxisID: "y-axis-0",
             fill: true,
             data: chart_data,
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)'
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)'
-            ],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 1
         },]
     },
@@ -89,10 +75,10 @@ $("#chartToday").click(function() {
     data.datasets[0].label = dataset_label;
     occurrence_chart.update();
 });
-$("#chart90Day").click(function() {
+$("#chartEffective").click(function() {
     var chart_labels = <%= raw @chart_labels_effective %>;
     var chart_data = <%= raw @chart_data_effective %>;
-    var dataset_label = "90 Days";
+    var dataset_label = "180 Days";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;
@@ -109,10 +95,10 @@ $("#chartAgentToday").click(function() {
     data.datasets[0].label = dataset_label;
     occurrence_chart.update();
 });
-$("#chartAgent90Day").click(function() {
+$("#chartAgentEffective").click(function() {
     var chart_labels = <%= raw @chart_labels_agent_effective %>;
     var chart_data = <%= raw @chart_data_agent_effective %>;
-    var dataset_label = "Agent 90 Days";
+    var dataset_label = "Agent 180 Days";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;
