@@ -5,10 +5,15 @@ class DapsController < ApplicationController
 
   # GET /daps
   def index
-    @daps = Dap.all.paginate(page: params[:page], :per_page => 5)
+    # @daps = Dap.all.paginate(page: params[:page], :per_page => 5)
     require 'will_paginate/array'
-
+    if params[:search].present?
+      @daps = Dap.perform_search(params[:search]).order(created_at: :desc).paginate(page: params[:page], :per_page => 5)
+    else
+      @daps = Dap.all.order(created_at: :desc).paginate(page: params[:page], :per_page => 5)
+    end
   end
+
 
   # GET /daps/1
   def show

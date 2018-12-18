@@ -1,0 +1,24 @@
+<%# app/views/entries/_list.html.erb %>
+<div id="filterrific_results">
+
+  <div>
+    <%= page_entries_info entries # provided by will_paginate %>
+  </div>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Registered at</th>
+    </tr>
+    <% entries.each do |entry| %>
+      <tr>
+        <td><%= link_to(entry.full_name, entry_path(entry)) %></td>
+        <td><%= entry.email %></td>
+        <td><%= entry.decorated_created_at %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= will_paginate entries # provided by will_paginate %>

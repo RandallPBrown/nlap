@@ -38,6 +38,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 
 gem 'toastr-rails'
+
+gem 'pg_search'
 gem "will_paginate", "~> 3.0.4"
 
 # pdf to create forms

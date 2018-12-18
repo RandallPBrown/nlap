@@ -151,6 +151,7 @@ var myChart = new Chart(ctx, {
                 <th>Type</th>
                 <th>Date</th>
                 <th>Description</th>
+                <th></th>
               </tr>
             </thead>
             <% @user_entry.each do |entry| %>
@@ -159,6 +160,11 @@ var myChart = new Chart(ctx, {
                 <td><%= entry.occurrence.name %></td>
                 <td><%= entry.edate %></td>
                 <td><%= entry.edesc %></td>
+                <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), entry, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                      </div>
+                      </td>
               </tr>
             <% end %>
           </table>
@@ -176,6 +182,7 @@ var myChart = new Chart(ctx, {
                 <th>Type</th>
                 <th>Date</th>
                 <th>Description</th>
+                <th></th>
               </tr>
             </thead>
             <% @user_dap.each do |dap| %>
@@ -184,6 +191,11 @@ var myChart = new Chart(ctx, {
                 <td><%= dap.writeup.name %></td>
                 <td><%= dap.ddate %></td>
                 <td><%= dap.description %></td>
+                <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), dap, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                      </div>
+                      </td>
               </tr>
             <% end %>
           </table>

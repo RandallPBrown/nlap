@@ -37,9 +37,13 @@ class EntriesController < ApplicationController
 
   # GET /entries
   def index
-    @entries = Entry.all.order(created_at: :desc).paginate(page: params[:page], :per_page => 5)
+    # @entries = Entry.all.order(created_at: :desc).paginate(page: params[:page], :per_page => 5)
     require 'will_paginate/array'
-
+    if params[:search].present?
+      @entries = Entry.perform_search(params[:search]).order(created_at: :desc).paginate(page: params[:page], :per_page => 5)
+    else
+      @entries = Entry.all.order(created_at: :desc).paginate(page: params[:page], :per_page => 5)
+    end
   end
 
   # GET /entries/1
@@ -91,6 +95,6 @@ class EntriesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def entry_params
-      params.require(:entry).permit(:agent_id, :dept, :occurrence_id, :edate, :edesc, occurrence: [:ovalue])
+      params.require(:entry).permit(:query, :agent_id, :dept, :occurrence_id, :edate, :edesc, occurrence: [:ovalue])
     end
 end
