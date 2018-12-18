@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "pagination.css" %>
 <% @title = "Listing Disciplinary Actions" %>
 
 <% content_for :description do %>
@@ -51,10 +52,11 @@
                     <% end %>
                     </tbody>
                   </table>
+                  <center><%= will_paginate @daps %></center>
                 </div>
 
                                   <%# Remove the trailing if condition if you're using pagination. %>
-                  <%= will_paginate @daps %>
+                  
                 
               </div>
             </div>

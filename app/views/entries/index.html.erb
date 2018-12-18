@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "pagination.css" %>
 <% @title = "All Entries" %>
 
 <% content_for :description do %>
@@ -53,7 +54,7 @@
                     </tbody>
 
                   </table>
-                  <div class="pagination justify-content-center"><%= will_paginate(@entries) %></div>
+                  <center><%= will_paginate(@entries) %></center>
                 
                 </div>
 

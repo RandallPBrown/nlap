@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "pagination.css" %>
 <% content_for :no_page_header, true %>
 <% content_for :js_libs, "modernizr gmaps flot chartjs demo-dashboard demo-chartjs demo-sparklines" %>
 
@@ -201,7 +202,7 @@ var myChart = new Chart(ctx, {
           </table>
           
         </div>
-        <%= will_paginate @user_dap %>
+        <center><%= will_paginate @user_dap %></center>
       </div>
     </div>
   
