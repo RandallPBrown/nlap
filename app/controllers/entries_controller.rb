@@ -26,8 +26,8 @@ class EntriesController < ApplicationController
     @chart_labels_agent_today = Entry.today.joins(:occurrence, agent: :user).group('users.email').order('users.email asc').pluck('users.email').to_s  
     @chart_data_agent_effective = Entry.effective.joins(:occurrence, agent: :user).group('users.email').order('users.email asc').sum(:ovalue).values
     @chart_labels_agent_effective = Entry.effective.joins(:occurrence, agent: :user).group('users.email').order('users.email asc').pluck('users.email').to_s  
-    @agent_occurrence_values = Entry.all.joins(:occurrence, agent: :user).group("users.email").order("users.email").sum(:ovalue).values
-    @agent_occurrence_labels = Entry.all.joins(:occurrence, agent: :user).group("users.email").order("users.email").pluck("users.email")
+    @agent_occurrence_values = Entry.all.joins(:occurrence, agent: :user).group("users.first_name, users.last_name").order("users.first_name, users.last_name").sum(:ovalue).values
+    @agent_occurrence_labels = Entry.all.joins(:occurrence, agent: :user).group("users.first_name, users.last_name").order("users.first_name, users.last_name").pluck("users.first_name, users.last_name")
   end
 
   def _most_active_users

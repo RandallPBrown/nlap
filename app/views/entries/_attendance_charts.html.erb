@@ -128,7 +128,7 @@ $("#chartLine").click(function() {
     <div class="card card-full-height d-flex inspectable">
       <!-- component-title: Timeline Card -->
       <div class="card-header">
-        <h6>Highest Offenders</h6>
+        <h6>Occurrence Rankings</h6>
       </div>
       <div class="card-body">
         <div class="timeline" style="height: 450px">
@@ -138,7 +138,7 @@ $("#chartLine").click(function() {
 
                 <time class=''>
                   <strong>
-                    <%= entry.join(" ---------- ") %>
+                    <%= entry.join(" ").truncate(25) %>
                   </strong>
                 </time>
                 <div class="activity-text">

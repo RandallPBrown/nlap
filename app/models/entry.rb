@@ -15,7 +15,6 @@ class Entry < ApplicationRecord
   scope :logged_user,  -> {
     where("entries.agent_id = ?", User.current_user)
   }
-  
     
   pg_search_scope :search,
                   :associated_against => {
