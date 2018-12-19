@@ -2,6 +2,7 @@ class DapsController < ApplicationController
   layout "scaffold"
 
   before_action :set_dap, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin, except: [:show]
 
   # GET /daps
   def index
@@ -17,7 +18,6 @@ class DapsController < ApplicationController
 
   # GET /daps/1
   def show
-
 
   end
 

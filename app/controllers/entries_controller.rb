@@ -1,7 +1,7 @@
 
 
 class EntriesController < ApplicationController
-  before_action :authorize_admin
+  before_action :authorize_admin, except: [:show]
 
   layout "scaffold"
 
