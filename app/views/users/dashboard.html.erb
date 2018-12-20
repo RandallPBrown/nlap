@@ -1,8 +1,8 @@
 <%= stylesheet_link_tag "pagination.css" %>
 <% content_for :no_page_header, true %>
 <% content_for :js_libs, "modernizr gmaps flot chartjs demo-dashboard demo-chartjs demo-sparklines" %>
-
-<section class="bg-light px-3 pt-5 pb-3 mb-3 d-flex flex-column">
+<body style="background-color: #dcedc8 !important;">
+<section class="px-3 pt-5 pb-3 mb-3 d-flex flex-column" style="background-color: #eeeeee !important">
   <div class="container-fluid">
     <div class="row equal-cols">
 
@@ -20,7 +20,7 @@
       </div>
 
       <div class="col-12 col-md-6">
-        <div class="card card-full-height">
+        <div class="card card-full-height" style="background-color: #ffffff !important">
           <div class="card-body">
             <canvas id="myChart" width="200" height="100"></canvas>
 <script>
@@ -32,22 +32,8 @@ var myChart = new Chart(ctx, {
         datasets: [{
             label: 'Count',
             data: <%= raw @agent_chart_data %>,
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)'
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)'
-            ],
+            backgroundColor: '#f1f8e9',
+            borderColor: '#7cb342',
             borderWidth: 1
         }]
     },
@@ -237,3 +223,4 @@ var myChart = new Chart(ctx, {
   </div>
   </div>  
 </div>
+</body>
