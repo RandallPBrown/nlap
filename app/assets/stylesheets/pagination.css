@@ -21,3 +21,8 @@
 .pagination a:hover:not(.active) {
 	background-color: grey !important;
 }
+
+.nav-item a:hover {
+  color: black !important;
+  background-color: #dcedc8 !important;
+}

@@ -1,31 +1,32 @@
+<%= stylesheet_link_tag "pagination.css" %>
 <%= render :layout => "layouts/base" do %>
   <nav class="navbar navbar-expand-lg" style="background-color: #7cb342 !important">
-    <a href="javascript:" class="navbar-brand text-dark"><%= app_name %></a>
+    <a href="javascript:" class="navbar-brand text-white"><%= app_name %></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link text-dark" href="../users/dashboard">User</a>
+          <a class="nav-link text-white font-weight-bold" href="../users/dashboard">User</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="../entries/dashboard">Company</a>
+          <a class="nav-link text-white font-weight-bold" href="../entries/dashboard">Company</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-dark" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Entries</a>
+          <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Entries</a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="downdown-item nav-link text-dark" href="../entries">Occurrence Log</a>
-            <a class="downdown-item nav-link text-dark" href="../daps">Write-up Log</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../entries">Occurrence Log</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../daps">Write-up Log</a>
           </div>  
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-dark" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Administration</a>
+          <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Administration</a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="downdown-item nav-link text-dark" href="../departments">Departments</a>
-            <a class="downdown-item nav-link text-dark" href="../occurrences">Occurrences</a>
-            <a class="downdown-item nav-link text-dark" href="../writeups">Disciplinary Actions</a>
-            <a class="downdown-item nav-link text-dark" href="../wunatures">Types of Incidents</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../departments">Departments</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../occurrences">Occurrences</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../writeups">Disciplinary Actions</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../wunatures">Types of Incidents</a>
           </div>  
         </li>
       </ul>
@@ -33,8 +34,8 @@
 
         
         <li class="nav-item dropdown user-nav">
-          <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="material-icons text-dark">person_outline</i>
+          <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons ">person_outline</i>
             <span class="caret caret-light"></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-right" role="menu">
