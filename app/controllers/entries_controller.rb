@@ -2,7 +2,7 @@
 
 class EntriesController < ApplicationController
   before_action :authorize_admin, except: [:show]
-
+  before_action :authenticate_user!
   layout "scaffold"
 
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
@@ -10,7 +10,9 @@ class EntriesController < ApplicationController
 
   def dashboard
     require 'date'
+    
     @body_class = "with-sidebar show-sidebar"
+    @current_department = current_user.department.name
     @entries = Entry.all.includes(occurrence: params[:ovalue])
     @occurrence_total = Entry.joins(:occurrence).sum(:ovalue)
     @occurrence_total_today = Entry.today.joins(:occurrence).sum(:ovalue)
@@ -18,6 +20,10 @@ class EntriesController < ApplicationController
     @entries = Entry.all.order(updated_at: :desc).paginate(page: params[:page], :per_page => 5)
     @agent_total_today = Entry.today.joins(:agent).count(:id)
     # to filter by today, use .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+    @chart_data_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').sum(:ovalue).values
+    @chart_labels_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').pluck('departments.name').to_s  
+    @chart_data_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').sum(:ovalue).values
+    @chart_labels_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').pluck('departments.name')
     @chart_data_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').sum(:ovalue).values
     @chart_labels_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').pluck('departments.name')
     @chart_data_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').sum(:ovalue).values
