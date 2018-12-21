@@ -20,10 +20,38 @@ class EntriesController < ApplicationController
     @entries = Entry.all.order(updated_at: :desc).paginate(page: params[:page], :per_page => 5)
     @agent_total_today = Entry.today.joins(:agent).count(:id)
     # to filter by today, use .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
-    @chart_data_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').sum(:ovalue).values
-    @chart_labels_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').pluck('departments.name').to_s  
-    @chart_data_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').sum(:ovalue).values
-    @chart_labels_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').pluck('departments.name')
+    if @current_department.eql? "Executive"
+      then @chart_data_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').pluck('departments.name').to_s  
+           @chart_data_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').pluck('departments.name').to_s  
+    elsif @current_department.eql? "Call Center Director"
+      then @chart_data_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Ferguson', 'Service-Contract').order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Ferguson', 'Service-Contract').order('departments.name asc').pluck('departments.name').to_s  
+           @chart_data_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Ferguson', 'Service-Contract').order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Ferguson', 'Service-Contract').order('departments.name asc').pluck('departments.name').to_s  
+    elsif @current_department.eql? "Back Office Director"
+      then @chart_data_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').pluck('departments.name').to_s  
+           @chart_data_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').pluck('departments.name').to_s  
+    elsif @current_department.eql? "Claims/Service Network Supervisor"
+      then @chart_data_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network').order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network').order('departments.name asc').pluck('departments.name').to_s  
+           @chart_data_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network').order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network').order('departments.name asc').pluck('departments.name').to_s  
+    elsif @current_department.eql? "Pre-Approval/Pending-Review Supervisor"
+      then @chart_data_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').pluck('departments.name').to_s  
+           @chart_data_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ? OR departments.name = ?', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').pluck('departments.name').to_s  
+    else 
+           @chart_data_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').pluck('departments.name').to_s
+           @chart_data_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').sum(:ovalue).values
+           @chart_labels_dept_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').where('departments.name = ?', @current_department).order('departments.name asc').pluck('departments.name').to_s
+    end
+
     @chart_data_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').sum(:ovalue).values
     @chart_labels_effective = Entry.effective.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').pluck('departments.name')
     @chart_data_today = Entry.today.joins(:occurrence, agent: :department).group('departments.name').order('departments.name asc').sum(:ovalue).values
