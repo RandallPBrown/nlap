@@ -15,7 +15,15 @@ class Entry < ApplicationRecord
   scope :logged_user,  -> {
     where("entries.agent_id = ?", User.current_user)
   }
-    
+  
+  scope :grouped_dept, -> {
+    joins(:occurrence, agent: :department).group('departments.name')
+  }
+
+  scope :grouped_user, -> {
+    joins(:occurrence, agent: :user).group('users.email')
+  }
+
   pg_search_scope :search,
                   :associated_against => {
      :user => [:first_name, :last_name], :department => [:name], :occurrence => [:ovalue]
