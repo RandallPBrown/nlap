@@ -39,7 +39,7 @@
 
                   <tr>
                                           <td><%= entry.agent.user.full_name %></td>
-                                          <td><%= entry.agent.department.name %></td>
+                                          <td><%= entry.agent.department.name.truncate(15) %></td>
                                           <td><%= entry.occurrence.name %></td>
                                           <td><%= entry.edate %></td>
                                           <td><%= entry.edesc.truncate(15) %></td>

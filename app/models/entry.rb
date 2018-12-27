@@ -31,9 +31,9 @@ class Entry < ApplicationRecord
 
 def self.to_csv
     CSV.generate do |csv|
-      csv << column_names
+      csv << column_names = %w{edate first_name last_name department_id name edesc   }
       all.each do |result|
-        csv << result.attributes.values_at(*column_names)
+        csv << result.attributes.merge(result.agent.user.attributes).merge(result.agent.department.attributes).merge(result.occurrence.attributes).values_at(*column_names)
       end
     end
   end
