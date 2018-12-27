@@ -21,7 +21,7 @@ class Entry < ApplicationRecord
   }
 
   scope :grouped_user, -> {
-    joins(:occurrence, agent: :user).group('users.email')
+    joins(:occurrence, agent: [:user, :department]).group('users.email')
   }
 
   pg_search_scope :search,
@@ -29,6 +29,14 @@ class Entry < ApplicationRecord
      :user => [:first_name, :last_name], :department => [:name], :occurrence => [:ovalue]
   }, :against => [:edesc]
 
+def self.to_csv
+    CSV.generate do |csv|
+      csv << column_names
+      all.each do |result|
+        csv << result.attributes.values_at(*column_names)
+      end
+    end
+  end
 
 def self.perform_search(keyword)
     if keyword.present?

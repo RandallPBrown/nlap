@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'entry/dashboard'
 
   get 'home/dashboard'
+  get 'myresults', to: 'entries#my_results', defaults: { format: 'csv'}
+
 
   resources :entries
   resources :create_join_table_agent_departments
