@@ -1,24 +1,19 @@
 <%= stylesheet_link_tag "pagination.css" %>
 <div class="simple-calendar">
-  <div class="calendar-heading">
-    <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view %>
+  <div class="calendar-heading"><center><b>
+    <%= link_to t('simple_calendar.previous', default: '<'), calendar.url_for_previous_view, :remote => true %>
     <span class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
-    <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view %>
+    <%= link_to t('simple_calendar.next', default: '>'), calendar.url_for_next_view, :remote => true %></b></center>
   </div>
   <div class="table-responsive">
     <table class="table table-striped">
-      <thead>
+      <thead class="text-dark" style="background-color: #7cb342 !important">
         <tr>
           <% date_range.slice(0, 7).each do |day| %>
             <th><%= t('date.abbr_day_names')[day.wday] %></th>
           <% end %>
         </tr>
       </thead>
-    <style>
-    td {
-      max-height: 10px !important;
-    }
-    </style>
       <tbody>
         <% date_range.each_slice(7) do |week| %>
           <tr>

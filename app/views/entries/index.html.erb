@@ -6,22 +6,10 @@
             </div>
           </div>
   <% content_for :actions do %>
-  <div class="d-flex justify-content-end">
     <%= link_to new_entry_path, class: 'btn btn-primary btn-large pull-right' do %>
       <%= fa_icon_tag "plus" %>Add Entry
-      <% end %>
-  </div>
-  <br />
-  <div class="d-flex justify-content-end">
-    <%= link_to entries_calendar_path, :class => "btn btn-primary btn-large pull-right", :remote => true, "data-toggle" => "modal", "data-target" => "#modal-window" do %>
-      <%= fa_icon_tag "calendar" %> Calendar
-      <% end %>
-  </div>
-  <br />
-  <div class="d-flex justify-content-end">
-    <a href="/myresults.csv" class="btn btn-primary btn-large"><i class="fa fa-file-o "></i>Export All</a>
-  </div>
     <% end %>
+  <% end %>
 <div id="modal-calendar">
 </div>
     <!-- <i class="fa fa-calendar"></i> Calendar -->
@@ -72,8 +60,20 @@
                   <center><%= will_paginate(@entries) %></center>
                 
                 </div>
-
-
-                              </div>    
+                              </div>    <div class="col-md-3">
+  <ul class="nav nav-stacked nav-caret-left card small pb-2  ">
+    <li>
+      <h6 class="mt-3 ml-3">Additional Actions</h6>
+    </li>
+    <li class="nav-item">
+      <%= link_to entries_calendar_path, :class => "nav-link font-weight-bold", :remote => true, "data-toggle" => "modal", "data-target" => "#modal-window" do %>
+      <%= fa_icon_tag "calendar" %> Calendar
+      <% end %>
+    </li>
+    <li class="nav-item active">
+      <a href="/myresults.csv" class="nav-link font-weight-bold"><i class="fa fa-file-o "></i> Export All</a>
+    </li>
+  </ul>
+</div>
 
 

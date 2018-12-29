@@ -3,12 +3,10 @@
 <div id="modal-window" class="card-body">
     <div class="modal hide" id="myModal" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel" style="display: block;">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog" style="width: 90%; max-width: 1200px;">
         <div class="modal-content">
           <div class="modal-header justify-content-center">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              <i class="ti-close "></i>
-            </button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">CLOSE</button>
           </div>
           <div class="modal-body">
             <%= month_calendar events: @entries do |date, entries| %>
@@ -16,8 +14,8 @@
               <% entries.each do |entry| %>
                 <div>
                   <small>
-                <%= entry.occurrence.name.truncate(2, omission: ' ') %>
-                <%= link_to entry.user.full_name.truncate(10), entry, 'data-toggle': 'tooltip', title: entry.user.full_name, class: "btn btn-link" %>                 
+                <b><%= entry.occurrence.name.truncate(2, omission: ' ') %></b>
+                <%= link_to entry.user.full_name.truncate(15), entry, 'data-toggle': 'tooltip', title: entry.user.full_name, class: "btn btn-link" %>                 
                 </small>
               </div>
               <% end %>  
