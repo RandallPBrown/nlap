@@ -2,17 +2,30 @@
 <% @title = "All Entries" %>
 
 <% content_for :description do %>
-  
   <% end %>
-
+            </div>
+          </div>
   <% content_for :actions do %>
+  <div class="d-flex justify-content-end">
     <%= link_to new_entry_path, class: 'btn btn-primary btn-large pull-right' do %>
-      <%= fa_icon_tag "plus" %> Add Entry
+      <%= fa_icon_tag "plus" %>Add Entry
       <% end %>
+  </div>
+  <br />
+  <div class="d-flex justify-content-end">
+    <%= link_to entries_calendar_path, :class => "btn btn-primary btn-large pull-right", :remote => true, "data-toggle" => "modal", "data-target" => "#modal-window" do %>
+      <%= fa_icon_tag "calendar" %> Calendar
       <% end %>
-
-
-
+  </div>
+  <br />
+  <div class="d-flex justify-content-end">
+    <a href="/myresults.csv" class="btn btn-primary btn-large"><i class="fa fa-file-o "></i>Export All</a>
+  </div>
+    <% end %>
+<div id="modal-calendar">
+</div>
+    <!-- <i class="fa fa-calendar"></i> Calendar -->
+     
       <div class="container">
         <div class="row">
           <div class="col-md-9">
@@ -61,9 +74,6 @@
                 </div>
 
 
-                              </div>
-<!-- CSV Export Button -->
-<a href="/myresults.csv"><button class="btn btn-primary btn-large"><i class="fa fa-file-o "></i> Export All</button></a>
-             
-            </div>
-          </div>
+                              </div>    
+
+

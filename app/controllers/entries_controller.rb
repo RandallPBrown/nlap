@@ -125,6 +125,14 @@ class EntriesController < ApplicationController
   def show
   end
 
+  def calendar
+    @entries = Entry.all
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
   # GET /entries/new
   def new
     @entry = Entry.new

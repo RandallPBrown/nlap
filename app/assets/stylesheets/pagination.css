@@ -26,3 +26,11 @@
   color: black !important;
   background-color: #dcedc8 !important;
 }
+
+.simple-calendar {
+  .day { 
+    .td {
+      max-height: 10px !important;
+    }
+  }
+}

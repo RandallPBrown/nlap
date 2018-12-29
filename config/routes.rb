@@ -4,14 +4,17 @@ Rails.application.routes.draw do
   get 'users/dashboard'
 
   get 'entries/dashboard'
+  
 
   get 'entry/dashboard'
-
+  get 'entries/calendar'
   get 'home/dashboard'
   get 'myresults', to: 'entries#my_results', defaults: { format: 'csv'}
 
 
   resources :entries
+
+  
   resources :create_join_table_agent_departments
   resources :occurrences
   resources :agent_department

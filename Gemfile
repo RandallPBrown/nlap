@@ -41,10 +41,13 @@ gem 'toastr-rails'
 
 gem 'pg_search'
 gem "will_paginate", "~> 3.0.4"
-
+gem "simple_calendar", "~> 2.0"
 # pdf to create forms
 gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary'
+
+gem 'bootstrap'
+gem 'popper_js'
 
 source "https://gems.rapidrailsthemes.com/gems" do
   gem "rrt", "~> 1.0.17"

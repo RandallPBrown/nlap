@@ -29,6 +29,10 @@ class Entry < ApplicationRecord
      :user => [:first_name, :last_name], :department => [:name], :occurrence => [:ovalue]
   }, :against => [:edesc]
 
+  def start_time
+    self.edate
+  end
+
 def self.to_csv
     CSV.generate do |csv|
       csv << column_names = %w{edate first_name last_name department_id name edesc   }
