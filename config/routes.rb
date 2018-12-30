@@ -4,10 +4,10 @@ Rails.application.routes.draw do
   get 'users/dashboard'
 
   get 'entries/dashboard'
-  
 
   get 'entry/dashboard'
   get 'entries/calendar'
+  get 'entries/new'
   get 'home/dashboard'
   get 'myresults', to: 'entries#my_results', defaults: { format: 'csv'}
 

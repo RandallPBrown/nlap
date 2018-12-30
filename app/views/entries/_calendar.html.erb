@@ -10,7 +10,7 @@
           </div>
           <div class="modal-body">
             <%= month_calendar events: @entries do |date, entries| %>
-              <%= date.day %> <%= link_to fa_icon_tag("plus-circle"), new_entry_path, :class => 'mr-1 pull-right' %>
+              <%= date.day %> <%= link_to fa_icon_tag("plus-circle"), entries_new_path, :remote => 'true', :class => 'mr-1 pull-right' %>
               <% entries.each do |entry| %>
                 <div>
                   <small>
@@ -26,4 +26,5 @@
       </div>
     </div>
   </div>
-
+<div id="modal-new">
+</div>
