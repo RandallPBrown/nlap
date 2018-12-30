@@ -65,14 +65,43 @@
         </div>
       </div>
     </div>
-
+    <div class="col-3 hidepane">
+      <!-- RECENT ACTIVITY TABLE -->
+      <div class="card inspectable">
+        <!-- component-title: Timeline Card -->
+        <div class="card-header">
+          <h6>RECENT ACTIVITY</h6>
+        </div>
+        <div class="card-body">
+          <div class="timeline" style="height: 450px">
+            <ul class="left-timeline">
+              <li>
+                <% if @user_entry_total_effective >= 2.5 then %>
+                <strong>Occurrences: <span class="text-danger pull-right"> <%= @user_entry_total_effective %></span>
+                <% else %>
+                <strong>Occurrences: <span class="pull-right"><%= @user_entry_total_effective %></span>
+                <% end %>
+              </li><br />
+              <li>
+                <% if @user_dap_total_effective >= 1 then %>
+                <strong>Writeups: <span class="text-danger pull-right"><%= @user_dap_total_effective %></span>
+                <% else %>
+                <strong>Writeups: <span class="pull-right"><%= @user_dap_total_effective %></span>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- /RECENT ACTIVITY TABLE-->
+    </div>
     
   </div>
 </div>
 
 <div class="container">
   <div class="row">
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-12">
       <div class="card inspectable">
         <div class="card-header d-flex align-items-center">
           <h6><%= @entry.agent.user.first_name %>'s Active Occurrences</h6>   
@@ -110,7 +139,7 @@
 </div>
 <div class="container">
   <div class="row">
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-12">
       <div class="card inspectable">      
         <div class="card-header d-flex align-items-center">
           <h6><%= @entry.agent.user.first_name %>'s Active Disciplinary Actions</h6>   

@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-9">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-horizontal">
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Email</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @entry.agent.user.email %>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Department</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @entry.agent.department.name%>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Occurence</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @entry.occurrence.ovalue %>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Date</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @entry.edate %>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Description</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @entry.edesc %>
+                  </span>
+                </div>
+              </div>
+
+                        <div class="d-flex">
+              <div class="ml-auto">
+                <%= link_to fa_icon_tag("pencil") + ' Edit', edit_entry_path(@entry), class: 'btn btn-primary' %>
+                <%= link_to 'Back', entries_path, class: 'btn' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
