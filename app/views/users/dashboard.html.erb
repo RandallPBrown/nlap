@@ -47,12 +47,42 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+$(document).ready(function() {
+    
+    /* Every time the window is scrolled ... */
+    $(window).scroll( function(){
+    
+        /* Check the location of each desired element */
+        $('.hidepane').each( function(i){
+            
+            var bottom_of_object = $(this).position().top + $(this).outerHeight();
+            var bottom_of_window = $(window).scrollTop() + $(window).height();
+            
+            /* If the object is completely visible in the window, fade it it */
+            if( bottom_of_window > bottom_of_object ){
+                
+                $(this).animate({'opacity':'1'},500);
+                    
+            }
+            
+        }); 
+    
+    });
+    
+});
 </script>
+<style>
+.hidepane
+{
+    opacity:0;
+}
+</style>
           </div>
         </div>
       </div>
 
-      <div class="col-12 col-md-3 d-flex flex-column justify-items-between">
+      <div class="col-12 col-md-3 d-flex flex-column justify-items-between animate-fade-in-1000">
 
         <div class="card card-mini card-mini-solid-icon">
           <div class="card-body">
@@ -125,7 +155,7 @@ var myChart = new Chart(ctx, {
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-9">
+    <div class="col-9 hidepane">
       <div class="row">
         <div class="col-12">
           <!-- OCCURRENCE TABLE -->
@@ -212,7 +242,7 @@ var myChart = new Chart(ctx, {
         </div>
       </div>
     </div>
-    <div class="col-3">
+    <div class="col-3 hidepane">
       <!-- RECENT ACTIVITY TABLE -->
       <div class="card inspectable">
         <!-- component-title: Timeline Card -->
