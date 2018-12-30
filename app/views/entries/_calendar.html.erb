@@ -10,11 +10,11 @@
           </div>
           <div class="modal-body">
             <%= month_calendar events: @entries do |date, entries| %>
-              <%= link_to date.day, new_entry_path %>
+              <%= date.day %> <%= link_to fa_icon_tag("plus-circle"), new_entry_path, :class => 'mr-1 pull-right' %>
               <% entries.each do |entry| %>
                 <div>
                   <small>
-                    <b><%= entry.occurrence.name.truncate(1, omission: '') %></b>
+                    <b><%= entry.occurrence.name.truncate(4, omission: ' - ') %></b>
                     <%= link_to entry.user.full_name.truncate(15), entry, 'data-toggle': 'tooltip', title: entry.user.full_name, class: "text-dark" %>
                     <hr>
                   </small>
