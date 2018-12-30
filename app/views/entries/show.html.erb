@@ -69,3 +69,84 @@
     
   </div>
 </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-9">
+      <div class="card inspectable">
+        <div class="card-header d-flex align-items-center">
+          <h6><%= @entry.agent.user.first_name %>'s Active Occurrences</h6>   
+        </div>
+        <div class="table-responsive" >
+          <table class="table table-hover table-striped" id="userEntryTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <% @user_entry.each do |entry| %>
+              <tr>
+                <td><%= entry.agent.user.full_name %></td>
+                <td><%= entry.occurrence.name %></td>
+                <td><%= entry.edate %></td>
+                <td><%= entry.edesc.truncate(15) %></td>
+                <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), entry, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                      </div>
+                      </td>
+              </tr>
+            <% end %>
+          </table>
+          <center><%= will_paginate @user_entry %></center>
+        </div><br>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-9">
+      <div class="card inspectable">      
+        <div class="card-header d-flex align-items-center">
+          <h6><%= @entry.agent.user.first_name %>'s Active Disciplinary Actions</h6>   
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped" id="userDapTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <% @user_dap.each do |dap| %>
+              <tr>
+                <td><%= dap.user.full_name %></td>
+                <td><%= dap.writeup.name %></td>
+                <td><%= dap.ddate %></td>
+                <td><%= dap.description %></td>
+                <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), dap, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                      </div>
+                      </td>
+              </tr>
+            <% end %>
+          </table>
+          
+        </div>
+        <center><%= will_paginate @user_dap %></center>
+      </div>
+    </div>
+  </div>
+  </div>  
+</div>
+</body>

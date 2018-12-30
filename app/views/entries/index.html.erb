@@ -3,11 +3,9 @@
 
 <% content_for :description do %>
   <% end %>
-            </div>
-          </div>
   <% content_for :actions do %>
     <%= link_to new_entry_path, class: 'btn btn-primary btn-large pull-right' do %>
-      <%= fa_icon_tag "plus" %>Add Entry
+      <%= fa_icon_tag "plus" %> Add Entry
     <% end %>
   <% end %>
 <div id="modal-calendar">
@@ -71,7 +69,7 @@
       <% end %>
     </li>
     <li class="nav-item active">
-      <a href="/myresults.csv" class="nav-link font-weight-bold"><i class="fa fa-file-o "></i> Export All</a>
+      <a href="/myresults.csv" class="nav-link font-weight-bold"><i class="fa fa-file-excel-o "></i> Export All</a>
     </li>
   </ul>
 </div>

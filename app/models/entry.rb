@@ -27,7 +27,7 @@ class Entry < ApplicationRecord
   pg_search_scope :search,
                   :associated_against => {
      :user => [:first_name, :last_name], :department => [:name], :occurrence => [:ovalue]
-  }, :against => [:edesc]
+  }, :against => [:edesc, :edate]
 
   def start_time
     self.edate

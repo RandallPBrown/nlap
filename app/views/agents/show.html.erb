@@ -19,6 +19,15 @@
               </div>
 
                           <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Name</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @agent.user.full_name %>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
                 <label class="col-12 col-md-2 form-label">Email</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
@@ -50,3 +59,105 @@
     
   </div>
 </div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-md-9">
+      <div class="card inspectable">
+        <div class="card-header d-flex align-items-center">
+          <h6>List of occurrences</h6>   
+        </div>
+        <div class="table-responsive" >
+          <table class="table table-hover table-striped" id="userEntryTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <% @user_entry.each do |entry| %>
+              <tr>
+                <td><%= entry.agent.user.full_name %></td>
+                <td><%= entry.occurrence.name %></td>
+                <td><%= entry.edate %></td>
+                <td><%= entry.edesc.truncate(15) %></td>
+                <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), entry, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                      </div>
+                      </td>
+              </tr>
+            <% end %>
+          </table>
+          <center><%= will_paginate @user_entry %></center>
+        </div><br>
+        <div class="card-header d-flex align-items-center">
+          <h6>List of Disciplinary Actions</h6>   
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped" id="userDapTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <% @user_dap.each do |dap| %>
+              <tr>
+                <td><%= dap.user.full_name %></td>
+                <td><%= dap.writeup.name %></td>
+                <td><%= dap.ddate %></td>
+                <td><%= dap.description %></td>
+                <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), dap, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                      </div>
+                      </td>
+              </tr>
+            <% end %>
+          </table>
+          
+        </div>
+        <center><%= will_paginate @user_dap %></center>
+      </div>
+    </div>
+  
+
+
+<div class="col-12 col-md-3 animate-fade-in-1000">
+    <div class="card card-full-height d-flex inspectable">
+      <!-- component-title: Timeline Card -->
+      <div class="card-header">
+        <h6>RECENT ACTIVITY</h6>
+      </div>
+      <div class="card-body">
+        <div class="timeline" style="height: 450px">
+          <ul class="left-timeline">
+            <% @user_entry.each do |entry| %>
+              <li class="timeline-item">
+                <time class=''>
+                  <strong>
+                    <%= entry.occurrence.name %>
+                  </strong>
+                </time>
+                <div class="activity-text">
+                  <strong><%= entry.edate %></strong>
+                  <small class="text-muted"><%= entry.agent.department.name %></small>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>  
+</div>
+</body>

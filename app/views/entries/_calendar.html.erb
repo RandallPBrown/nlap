@@ -14,10 +14,11 @@
               <% entries.each do |entry| %>
                 <div>
                   <small>
-                <b><%= entry.occurrence.name.truncate(2, omission: ' ') %></b>
-                <%= link_to entry.user.full_name.truncate(15), entry, 'data-toggle': 'tooltip', title: entry.user.full_name, class: "btn btn-link" %>                 
-                </small>
-              </div>
+                    <b><%= entry.occurrence.name.truncate(1, omission: '') %></b>
+                    <%= link_to entry.user.full_name.truncate(15), entry, 'data-toggle': 'tooltip', title: entry.user.full_name, class: "text-dark" %>
+                    <hr>
+                  </small>
+                </div>
               <% end %>  
             <% end %> 
           </div>
