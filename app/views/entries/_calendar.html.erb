@@ -1,3 +1,20 @@
+<script>
+$(document).ready(
+  function(){
+    $("#fdsa").click(function() {
+      var x = document.getElementById("asdf");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        $('#dynamic').empty();
+      } else {
+        x.style.display = "none";
+        // document.location.reload();
+        // $('#modal-window').modal('show');
+        $('#dynamic').html("<%= j (render partial: 'dynamic') %> ");
+      }
+    });
+  });
+</script>
 
 <%= stylesheet_link_tag "pagination.css" %>
 <div id="modal-window" class="card-body">
@@ -5,26 +22,15 @@
     aria-labelledby="myModalLabel" style="display: block;">
       <div class="modal-dialog" style="width: 90%; max-width: 1200px;">
         <div class="modal-content">
-          <div class="modal-header justify-content-center">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">CLOSE</button>
+          <div class="modal-header"><button type="button" class="btn btn-primary btn-large" id="fdsa"><i class="fa fa-plus"></i> Add Entry</button> 
+<!--             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">CLOSE</button> -->
           </div>
-          <div class="modal-body">
-            <%= month_calendar events: @entries do |date, entries| %>
-              <%= date.day %> <%= link_to fa_icon_tag("plus-circle"), entries_new_path, :remote => 'true', :class => 'mr-1 pull-right' %>
-              <% entries.each do |entry| %>
-                <div>
-                  <small>
-                    <b><%= entry.occurrence.name.truncate(4, omission: ' - ') %></b>
-                    <%= link_to entry.user.full_name.truncate(15), entry, 'data-toggle': 'tooltip', title: entry.user.full_name, class: "text-dark" %>
-                    <hr>
-                  </small>
-                </div>
-              <% end %>  
-            <% end %> 
-          </div>
+              <div class="modal-body" id="modalCalendar">
+<div id="asdf" class="card border-dark p-2" style="display: none;"><%= render partial: 'form' %></div>
+<div id="dynamic" class="card border-dark p-2"><%= render partial: 'dynamic' %></div>
+
+              </div>
         </div>
       </div>
     </div>
   </div>
-<div id="modal-new">
-</div>

@@ -121,6 +121,7 @@ class EntriesController < ApplicationController
     end
   end
 
+
   # GET /entries/1
   def show
         @user_entry = Entry.joins(:occurrence, agent: :user).where("users.id = ?", @entry.agent.user.id).group(:id).order("entries.edate DESC").paginate(page: params[:page], :per_page => 3)
@@ -138,12 +139,14 @@ class EntriesController < ApplicationController
   end
 
   def calendar
+    @entry = Entry.new
     if params[:search].present?
       @entries = Entry.perform_search(params[:search]).order(edate: :desc).paginate(page: params[:page], :per_page => 5)
     else
       @entries = Entry.all
     end
   end
+
 
   # GET /entries/new
   def new
@@ -161,7 +164,8 @@ class EntriesController < ApplicationController
     @entry = Entry.new(entry_params)
     @user = Entry.joins(agent: :user).group('users.email')
     if @entry.save
-      redirect_to @entry, notice: 'Entry was successfully created.'
+      # redirect_to @entry, notice: 'Entry was successfully created.'
+      redirect_to '/entries', notice: 'Entry was successfully created.'
     else
       render :new
     end

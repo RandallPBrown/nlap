@@ -48,6 +48,7 @@ gem 'wkhtmltopdf-binary'
 
 gem 'bootstrap'
 gem 'popper_js'
+gem 'toastr-rails'
 
 source "https://gems.rapidrailsthemes.com/gems" do
   gem "rrt", "~> 1.0.17"
