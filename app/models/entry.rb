@@ -35,9 +35,11 @@ class Entry < ApplicationRecord
 
 def self.to_csv
     CSV.generate do |csv|
-      csv << column_names = %w{edate first_name last_name department_id name edesc   }
+      csv << column_names = %w{edate first_name last_name department_id name ovalue edesc   }
       all.each do |result|
+        ovalues = result.occurrence.attributes.values
         csv << result.attributes.merge(result.agent.user.attributes).merge(result.agent.department.attributes).merge(result.occurrence.attributes).values_at(*column_names)
+        csv.add_row ovalues
       end
     end
   end
