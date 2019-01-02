@@ -136,6 +136,13 @@ class EntriesController < ApplicationController
     @user_dap = Dap.joins(:writeup, :user).where("users.id = ?", @entry.agent.user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
     @user_entry_total_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @entry.agent.user.id).sum(:ovalue)
     @user_dap_total_effective = Dap.written.joins(:user).where("users.id = ?", @entry.agent.user.id).count(:id)
+    @fdsa = 0.to_s
+    @ddate = Dap.written.joins(:writeup,:user).where("users.id = ?", @entry.agent.user.id).group(:id).order(ddate: :asc).pluck(:ddate)
+    if @ddate.present?
+    @hjkl = Entry.joins(:occurrence, agent: :user).where(:edate => @ddate.last.beginning_of_day..Time.zone.now.end_of_day).group(:user_id).where("users.id = ?", @entry.agent.user.id).sum(:ovalue).values.join(' ')
+    else
+      @hjkl = @fdsa
+    end  
   end
 
   def calendar

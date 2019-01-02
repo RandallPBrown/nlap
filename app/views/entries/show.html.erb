@@ -76,8 +76,9 @@
           <div class="timeline" style="height: 450px">
             <ul class="left-timeline">
               <li>
-                <% if @user_entry_total_effective >= 2.5 then %>
+                <% if @user_entry_total_effective >= 2.5 && @user_dap_total_effective == 0 then %>
                 <strong>Occurrences: <span class="text-danger pull-right"> <%= @user_entry_total_effective %></span>
+                  <center><small class="text-danger">***Agent Writeup Required***</small></center>
                 <% else %>
                 <strong>Occurrences: <span class="pull-right"><%= @user_entry_total_effective %></span>
                 <% end %>
@@ -88,6 +89,14 @@
                 <% else %>
                 <strong>Writeups: <span class="pull-right"><%= @user_dap_total_effective %></span>
                 <% end %>
+              </li><br />
+              <li>
+                <% if @hjkl.to_i >= 1 then %>
+                <strong>Since Writeup: <span class="text-danger"><%= @hjkl %></span></strong>
+                <center><small class ="text-danger">**Agent Writeup Required**</small></center>
+                <% else %>
+                <strong>Since Writeup: <span><%= @hjkl %></span></strong>
+                <% end %> 
               </li>
             </ul>
           </div>
