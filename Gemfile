@@ -41,6 +41,7 @@ gem 'toastr-rails'
 
 gem 'pg_search'
 gem "will_paginate", "~> 3.0.4"
+gem 'alphabetical_paginate'
 gem "simple_calendar", "~> 2.0"
 # pdf to create forms
 gem 'wicked_pdf', '~> 1.1'

@@ -37,6 +37,14 @@ class Entry < ApplicationRecord
      :user => [:first_name, :last_name], :department => [:name], :occurrence => [:ovalue]
   }, :against => [:edesc, :edate]
 
+  scope :date_desc, -> { 
+    order( edate: :desc )
+  }
+
+  scope :date_asc, -> {
+    order( edate: :asc )
+  }
+
   def start_time
     self.edate
   end
