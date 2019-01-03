@@ -121,7 +121,7 @@ class EntriesController < ApplicationController
     else
       @entries = Entry.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).paginate(page: params[:page], :per_page => 5)
     end
-    @agents_list = Agent.all.includes(:entries, :user) 
+    @agents_list = Agent.all.includes(:entries, :user).order(params[:sort])
     # occurrence_ovalue = Entry.all.joins(:occurrence, agent: :user).group(:id).group('occurrences.ovalue').where('users.id = ?' :user_id).select(:agent_id, :occurrence_id, :edate, :edesc, :id, :ovalue).sum(:ovalue)
   end
 
@@ -244,6 +244,14 @@ class EntriesController < ApplicationController
 
     def sort_column
       Entry.column_names.include?(params[:sort]) ? params[:sort] : "edate"
+    end
+    
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
+    def sort_column
+      Agent.column_names.include?(params[:sort]) ? params[:sort] : "desc"
     end
     
     def sort_direction
