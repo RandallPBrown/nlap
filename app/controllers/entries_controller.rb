@@ -114,34 +114,72 @@ class EntriesController < ApplicationController
   def index
     # @entries = Entry.all.order(created_at: :desc).paginate(page: params[:page], :per_page => 5)
     require 'will_paginate/array'
+    # @entry = Entry.all.joins(agent: :user)
+    @asdf = Entry.all.includes(occurrence: params[:ovalue])
     if params[:search].present?
-      @entries = Entry.perform_search(params[:search]).order(edate: :desc).paginate(page: params[:page], :per_page => 5)
+      @entries = Entry.order(edate: :desc).perform_search(params[:search]).paginate(page: params[:page], :per_page => 5)
     else
       @entries = Entry.all.order(edate: :desc).paginate(page: params[:page], :per_page => 5)
     end
+    @agents_list = Agent.all.includes(:entries, :user) 
+    # occurrence_ovalue = Entry.all.joins(:occurrence, agent: :user).group(:id).group('occurrences.ovalue').where('users.id = ?' :user_id).select(:agent_id, :occurrence_id, :edate, :edesc, :id, :ovalue).sum(:ovalue)
   end
 
 
   # GET /entries/1
   def show
-        @user_entry = Entry.joins(:occurrence, agent: :user).where("users.id = ?", @entry.agent.user.id).group(:id).order("entries.edate DESC").paginate(page: params[:page], :per_page => 3)
-    @user_entry_today = Entry.today.joins(:occurrence, agent: :user).where("users.id = ?", @entry.agent.user.id).group(:id).order("entries.edate DESC")
-    @user_entry_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @entry.agent.user.id).group(:id).order("entries.edate DESC")
-    @user_entry_total_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @entry.agent.user.id).sum(:ovalue)
-    @user_entry_tardy_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @entry.agent.user.id).where("occurrences.name = ?", "Tardy").count(:name)
-    @user_entry_absent_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @entry.agent.user.id).where("occurrences.ovalue > ?", 0.5).count(:name)
-    @agent_chart_labels = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @entry.agent.user.id).group("occurrences.name").order("occurrences.name DESC").pluck("occurrences.name")
-    @agent_chart_data = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @entry.agent.user.id).group("occurrences.name").order("occurrences.name DESC").count("occurrences.name").values
-    @user_writeup_written = Dap.written.joins(:writeup, :user).where("users.id = ?", @entry.agent.user.id).count(:writeup_id)
-    @user_dap = Dap.joins(:writeup, :user).where("users.id = ?", @entry.agent.user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
-    @user_entry_total_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @entry.agent.user.id).sum(:ovalue)
-    @user_dap_total_effective = Dap.written.joins(:user).where("users.id = ?", @entry.agent.user.id).count(:id)
-    @fdsa = 0.to_s
-    @ddate = Dap.written.joins(:writeup,:user).where("users.id = ?", @entry.agent.user.id).group(:id).order(ddate: :asc).pluck(:ddate)
+    @user_entry = Entry.occurrence_user
+      .where("users.id = ?", @entry.agent.user.id)
+      .group(:id).order("entries.edate DESC")
+      .paginate(page: params[:page], :per_page => 3)
+    @user_entry_today = Entry.today.occurrence_user
+      .where("users.id = ?", @entry.agent.user.id)
+      .group(:id).order("entries.edate DESC")
+    @user_entry_effective = Entry.effective.occurrence_user
+      .where("users.id = ?", @entry.agent.user.id)
+      .group(:id).order("entries.edate DESC")
+    @user_entry_total_effective = Entry.effective.occurrence_user
+      .where("users.id = ?", @entry.agent.user.id).sum(:ovalue)
+    @user_entry_tardy_effective = Entry.effective.occurrence_user
+      .where("users.id = ?", @entry.agent.user.id)
+      .where("occurrences.name = ?", "Tardy")
+      .count(:name)
+    @user_entry_absent_effective = Entry.effective.occurrence_user
+      .where("users.id = ?", @entry.agent.user.id)
+      .where("occurrences.ovalue > ?", 0.5)
+      .count(:name)
+    @agent_chart_labels = Entry.effective.occurrence_user
+      .where("users.id = ?", @entry.agent.user.id)
+      .group("occurrences.name")
+      .order("occurrences.name DESC")
+      .pluck("occurrences.name")
+    @agent_chart_data = Entry.effective.occurrence_user
+      .where("users.id = ?", @entry.agent.user.id).group("occurrences.name")
+      .order("occurrences.name DESC")
+      .count("occurrences.name").values
+    @user_writeup_written = Dap.written.joins(:writeup, :user)
+      .where("users.id = ?", @entry.agent.user.id)
+      .count(:writeup_id)
+    @user_dap = Dap.joins(:writeup, :user)
+      .where("users.id = ?", @entry.agent.user.id)
+      .group(:id).order("daps.ddate DESC")
+      .paginate(page: params[:page], :per_page => 3)
+    @user_entry_total_effective = Entry.effective.occurrence_user
+      .where("users.id = ?", @entry.agent.user.id)
+      .sum(:ovalue)
+    @user_dap_total_effective = Dap.written.joins(:user)
+      .where("users.id = ?", @entry.agent.user.id)
+      .count(:id)
+    @blank_val = 0.to_s
+    @ddate = Dap.written.joins(:writeup,:user)
+      .where("users.id = ?", @entry.agent.user.id)
+      .group(:id)
+      .order(ddate: :asc)
+      .pluck(:ddate)
     if @ddate.present?
-    @hjkl = Entry.joins(:occurrence, agent: :user).where(:edate => @ddate.last.beginning_of_day..Time.zone.now.end_of_day).group(:user_id).where("users.id = ?", @entry.agent.user.id).sum(:ovalue).values.join(' ')
+      @since_wu = Entry.occurrence_user.where(:edate => @ddate.last.beginning_of_day..Time.zone.now.end_of_day).group(:user_id).where("users.id = ?", @entry.agent.user.id).sum(:ovalue).values.join(' ')
     else
-      @hjkl = @fdsa
+      @since_wu = @blank_val
     end  
   end
 

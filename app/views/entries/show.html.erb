@@ -91,11 +91,11 @@
                 <% end %>
               </li><br />
               <li>
-                <% if @hjkl.to_i >= 1 then %>
-                <strong>Since Writeup: <span class="text-danger"><%= @hjkl %></span></strong>
+                <% if @since_wu.to_i >= 1 then %>
+                <strong>Since Writeup: <span class="text-danger"><%= @since_wu %></span></strong>
                 <center><small class ="text-danger">**Agent Writeup Required**</small></center>
                 <% else %>
-                <strong>Since Writeup: <span><%= @hjkl %></span></strong>
+                <strong>Since Writeup: <span><%= @since_wu %></span></strong>
                 <% end %> 
               </li>
             </ul>
@@ -104,7 +104,6 @@
       </div>
       <!-- /RECENT ACTIVITY TABLE-->
     </div>
-    
   </div>
 </div>
 

@@ -55,14 +55,51 @@
         </div>
       </div>
     </div>
-
-    
+    <div class="col-3 hidepane">
+      <!-- RECENT ACTIVITY TABLE -->
+      <div class="card inspectable">
+        <!-- component-title: Timeline Card -->
+        <div class="card-header">
+          <h6>Current Items</h6>
+        </div>
+        <div class="card-body">
+          <div class="timeline" style="height: 450px">
+            <ul class="left-timeline">
+              <li>
+                <% if @user_entry_total_effective > 2.5 && @user_dap_total_effective == 0 then %>
+                <strong>Occurrences: <span class="text-danger pull-right"> <%= @user_entry_total_effective %></span>
+                  <center><small class="text-danger">***Agent Writeup Required***</small></center>
+                <% else %>
+                <strong>Occurrences: <span class="pull-right"><%= @user_entry_total_effective %></span>
+                <% end %>
+              </li><br />
+              <li>
+                <% if @user_dap_total_effective >= 1 then %>
+                <strong>Writeups: <span class="text-danger pull-right"><%= @user_dap_total_effective %></span>
+                <% else %>
+                <strong>Writeups: <span class="pull-right"><%= @user_dap_total_effective %></span>
+                <% end %>
+              </li><br />
+              <li>
+                <% if @since_wu.to_i >= 1 then %>
+                <strong>Since Writeup: <span class="text-danger"><%= @since_wu %></span></strong>
+                <center><small class ="text-danger">**Agent Writeup Required**</small></center>
+                <% else %>
+                <strong>Since Writeup: <span><%= @since_wu %></span></strong>
+                <% end %> 
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- /RECENT ACTIVITY TABLE-->
+    </div>
   </div>
 </div>
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-12">
       <div class="card inspectable">
         <div class="card-header d-flex align-items-center">
           <h6>List of occurrences</h6>   
@@ -94,6 +131,14 @@
           </table>
           <center><%= will_paginate @user_entry %></center>
         </div><br>
+      </div>
+    </div>
+  </div>
+</div>      
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-md-12">
+      <div class="card inspectable">
         <div class="card-header d-flex align-items-center">
           <h6>List of Disciplinary Actions</h6>   
         </div>
@@ -128,36 +173,6 @@
         <center><%= will_paginate @user_dap %></center>
       </div>
     </div>
-  
-
-
-<div class="col-12 col-md-3 animate-fade-in-1000">
-    <div class="card card-full-height d-flex inspectable">
-      <!-- component-title: Timeline Card -->
-      <div class="card-header">
-        <h6>RECENT ACTIVITY</h6>
-      </div>
-      <div class="card-body">
-        <div class="timeline" style="height: 450px">
-          <ul class="left-timeline">
-            <% @user_entry.each do |entry| %>
-              <li class="timeline-item">
-                <time class=''>
-                  <strong>
-                    <%= entry.occurrence.name %>
-                  </strong>
-                </time>
-                <div class="activity-text">
-                  <strong><%= entry.edate %></strong>
-                  <small class="text-muted"><%= entry.agent.department.name %></small>
-                </div>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
   </div>  
 </div>
 </body>

@@ -5,9 +5,10 @@ class AgentsController < ApplicationController
 
   # GET /agents
   def index
-    @agents = Agent.all
-    # @department = Department.find(@agent.all.includes(:Departments))
-
+    # @agent = Agent.all
+    @agent = Agent.all
+    @users = User.all
+    @agents = Agent.joins(:user).order('users.first_name ASC')
   end
 
   # GET /agents/1
@@ -22,7 +23,23 @@ class AgentsController < ApplicationController
     @agent_chart_data = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).group("occurrences.name").order("occurrences.name DESC").count("occurrences.name").values
     @user_writeup_written = Dap.written.joins(:writeup, :user).where("users.id = ?", @agent.user.id).count(:writeup_id)
     @user_dap = Dap.joins(:writeup, :user).where("users.id = ?", @agent.user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
-
+    @user_entry_total_effective = Entry.effective.occurrence_user
+      .where("users.id = ?", @agent.user.id)
+      .sum(:ovalue)
+    @user_dap_total_effective = Dap.written.joins(:user)
+      .where("users.id = ?", @agent.user.id)
+      .count(:id)
+    @blank_val = 0.to_s
+    @ddate = Dap.written.joins(:writeup,:user)
+      .where("users.id = ?", @agent.user.id)
+      .group(:id)
+      .order(ddate: :asc)
+      .pluck(:ddate)
+    if @ddate.present?
+      @since_wu = Entry.occurrence_user.where(:edate => @ddate.last.beginning_of_day..Time.zone.now.end_of_day).group(:user_id).where("users.id = ?", @agent.user.id).sum(:ovalue).values.join(' ')
+    else
+      @since_wu = @blank_val
+    end    
   end
 
   # GET /agents/new
@@ -75,7 +92,7 @@ class AgentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def agent_params
-      params.require(:agent).permit(:id, :fname, :lname, :hire, :dept, :department_id)
+      params.require(:agent).permit(:id, :fname, :lname, :hire, :dept, :department_id, user: [:full_name], occurrence: [:ovalue])
     end
   
     def department_params

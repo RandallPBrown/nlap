@@ -24,6 +24,14 @@ class Entry < ApplicationRecord
     joins(:occurrence, agent: [:user, :department]).group('users.email')
   }
 
+  scope :occurrence_user, -> {
+      joins(:occurrence, agent: :user)
+  }
+
+  scope :ovalue_sum, -> {
+      group(:ovalue).sum(:ovalue)
+  }
+
   pg_search_scope :search,
                   :associated_against => {
      :user => [:first_name, :last_name], :department => [:name], :occurrence => [:ovalue]
@@ -44,7 +52,7 @@ def self.to_csv
 
 def self.perform_search(keyword)
     if keyword.present?
-    then Entry.search(keyword)
+    then Entry.search(keyword).order(edate: :desc)
     else Entry.all
     end
   end
