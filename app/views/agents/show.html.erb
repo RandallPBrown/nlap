@@ -81,11 +81,11 @@
                 <% end %>
               </li><br />
               <li>
-                <% if @since_wu.to_i >= 1 then %>
-                <strong>Since Writeup: <span class="text-danger"><%= @since_wu %></span></strong>
+                <% if @occurrences_since.occurrences_since_dap.to_i >= 1 then %>
+                <strong>Since Writeup: <span class="text-danger"><%= @occurrences_since.occurrences_since_dap %></span></strong>
                 <center><small class ="text-danger">**Agent Writeup Required**</small></center>
                 <% else %>
-                <strong>Since Writeup: <span><%= @since_wu %></span></strong>
+                <strong>Since Writeup: <span><%= @occurrences_since.occurrences_since_dap %></span></strong>
                 <% end %> 
               </li>
             </ul>

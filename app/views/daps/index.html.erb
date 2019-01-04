@@ -27,6 +27,7 @@
                                           <th>Date</th>
                                           <th>Agent</th>
                                           <th>Type</th>
+                                          <th>Foo</th>
                                         <th></th>
                   </tr>
                 </thead>
@@ -37,6 +38,7 @@
                                           <td><%= dap.ddate %></td>
                                           <td><%= dap.user.full_name %></td>
                                           <td><%= dap.writeup.name %></td>
+                                          <td><%= dap.foo %></td>
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to theme_icon_tag("eye"), dap, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>

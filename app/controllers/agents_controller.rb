@@ -8,7 +8,8 @@ class AgentsController < ApplicationController
     # @agent = Agent.all
     @agent = Agent.all
     @users = User.all
-    @agents = Agent.joins(:user).order('users.first_name ASC')
+    @agents = Agent.includes(user: :daps)
+    # @occurrences_since = Dap.find_by(user_id: @users.ids) 
   end
 
   # GET /agents/1
@@ -29,17 +30,8 @@ class AgentsController < ApplicationController
     @user_dap_total_effective = Dap.written.joins(:user)
       .where("users.id = ?", @agent.user.id)
       .count(:id)
-    @blank_val = 0.to_s
-    @ddate = Dap.written.joins(:writeup,:user)
-      .where("users.id = ?", @agent.user.id)
-      .group(:id)
-      .order(ddate: :asc)
-      .pluck(:ddate)
-    if @ddate.present?
-      @since_wu = Entry.occurrence_user.where(:edate => @ddate.last.beginning_of_day..Time.zone.now.end_of_day).group(:user_id).where("users.id = ?", @agent.user.id).sum(:ovalue).values.join(' ')
-    else
-      @since_wu = @blank_val
-    end    
+    
+@occurrences_since = Dap.find(@agent.user_id)   
   end
 
   # GET /agents/new

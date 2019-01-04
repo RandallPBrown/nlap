@@ -16,5 +16,5 @@ class Agent < ApplicationRecord
 
 	def user_full_name
     	self.user.full_name
-  	end  
+  end  
 end

@@ -170,17 +170,7 @@ class EntriesController < ApplicationController
     @user_dap_total_effective = Dap.written.joins(:user)
       .where("users.id = ?", @entry.agent.user.id)
       .count(:id)
-    @blank_val = 0.to_s
-    @ddate = Dap.written.joins(:writeup,:user)
-      .where("users.id = ?", @entry.agent.user.id)
-      .group(:id)
-      .order(ddate: :asc)
-      .pluck(:ddate)
-    if @ddate.present?
-      @since_wu = Entry.occurrence_user.where(:edate => @ddate.last.beginning_of_day..Time.zone.now.end_of_day).group(:user_id).where("users.id = ?", @entry.agent.user.id).sum(:ovalue).values.join(' ')
-    else
-      @since_wu = @blank_val
-    end  
+      # @what = Dap.days_since_last_writeup(@entry.agent.user_id)   
   end
 
   def calendar
@@ -195,7 +185,19 @@ class EntriesController < ApplicationController
   def agent_list
     # @agents, @alphaParams = Agent.all
     # @asdf = Entry.all.includes(occurrence: params[:ovalue])
+    @entry = Entry.all
     @agents_list = Agent.effective.includes(:entries, :user).order('users.first_name ASC')
+    @blank_val = 0.to_s
+    @ddate = Dap.written.joins(:writeup, :user)
+      .where("users.id = ?", @entry.joins(agent: :user).pluck(:user_id))
+      .group(:id)
+      .order(ddate: :asc)
+      .pluck(:ddate)
+    if @ddate.present?
+      @days_since_last_writeup = Entry.occurrence_user.where(:edate => @ddate.last.beginning_of_day..Time.zone.now.end_of_day).group(:user_id).where("users.id = ?", @entry.agent.user.id).sum(:ovalue).values.join(' ')
+    else
+      @days_since_last_writeup = @blank_val
+    end  
   end
 
   # GET /entries/new

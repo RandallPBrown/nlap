@@ -57,6 +57,7 @@
                 </div>
               </div>
 
+
                         <div class="d-flex">
               <div class="ml-auto">
                 <%= link_to fa_icon_tag("pencil") + ' Edit', edit_dap_path(@dap), class: 'btn btn-primary' %>
@@ -67,6 +68,31 @@
           </div>
         </div>
       </div>
+          <div class="col-3 hidepane">
+      <!-- RECENT ACTIVITY TABLE -->
+      <div class="card inspectable">
+        <!-- component-title: Timeline Card -->
+        <div class="card-header">
+          <h6>Current Items</h6>
+        </div>
+        <div class="card-body">
+          <div class="timeline" style="height: 450px">
+            <ul class="left-timeline">
+
+              <li>
+                <% if @what.to_i >= 1 then %>
+                <strong>Since Writeup: <span class="text-danger"><%= @what %></span></strong>
+                <center><small class ="text-danger">**Agent Writeup Required**</small></center>
+                <% else %>
+                <strong>Since Writeup: <span><%= @what%></span></strong>
+                <% end %> 
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- /RECENT ACTIVITY TABLE-->
+    </div>
     </div>
   </div>
 </div>

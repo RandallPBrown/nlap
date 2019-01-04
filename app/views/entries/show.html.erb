@@ -91,11 +91,11 @@
                 <% end %>
               </li><br />
               <li>
-                <% if @since_wu.to_i >= 1 then %>
-                <strong>Since Writeup: <span class="text-danger"><%= @since_wu %></span></strong>
+                <% if @what.to_i >= 1 then %>
+                <strong>Since Writeup: <span class="text-danger"><%= @what %></span></strong>
                 <center><small class ="text-danger">**Agent Writeup Required**</small></center>
                 <% else %>
-                <strong>Since Writeup: <span><%= @since_wu %></span></strong>
+                <strong>Since Writeup: <span><%= @what%></span></strong>
                 <% end %> 
               </li>
             </ul>
