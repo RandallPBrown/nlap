@@ -76,18 +76,18 @@
           <div class="timeline" style="height: 450px">
             <ul class="left-timeline">
               <li>
-                <% if @user_entry_total_effective > 2.5 && @user_dap_total_effective == 0 then %>
-                <strong>Occurrences: <span class="text-danger pull-right"> <%= @user_entry_total_effective %></span>
+                <% if @entry.asdf > 2.5 && @entry.user.daps.map.count {|m| m.total_active_writeup} == 0 then %>
+                <strong>Occurrences: <span class="text-danger pull-right"> <%= @entry.asdf %></span>
                   <center><small class="text-danger">***Agent Writeup Required***</small></center>
                 <% else %>
-                <strong>Occurrences: <span class="pull-right"><%= @user_entry_total_effective %></span>
+                <strong>Occurrences: <span class="pull-right"><%= @entry.asdf %></span>
                 <% end %>
               </li><br />
               <li>
-                <% if @user_dap_total_effective >= 1 then %>
-                <strong>Writeups: <span class="text-danger pull-right"><%= @user_dap_total_effective %></span>
+                <% if @entry.agent.user.daps.map.count {|m| m.total_active_writeup} > 0 then %>
+                  <strong>Writeups: <span class="text-danger pull-right"><%= @entry.agent.user.daps.map.count {|m| m.total_active_writeup} %></span>
                 <% else %>
-                <strong>Writeups: <span class="pull-right"><%= @user_dap_total_effective %></span>
+                  <strong>Writeups: <span class="pull-right"><%= @entry.agent.user.daps.map.count {|m| m.total_active_writeup} %></span>
                 <% end %>
               </li><br />
               <li>

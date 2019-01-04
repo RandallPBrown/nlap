@@ -1,5 +1,6 @@
 class Entry < ApplicationRecord
   include PgSearch
+  attr_accessor :asdf
   belongs_to :agent
   belongs_to :occurrence
   has_one :user, :through => :agent
@@ -44,6 +45,17 @@ class Entry < ApplicationRecord
   scope :date_asc, -> {
     order( edate: :asc )
   }
+
+
+  def asdf
+    Entry.fdsa(self.user.id)
+  end
+
+  def self.fdsa(user_id)
+    Entry.effective.occurrence_user
+      .where("users.id = ?", user_id)
+      .sum(:ovalue)
+  end
 
   def start_time
     self.edate

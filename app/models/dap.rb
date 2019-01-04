@@ -1,5 +1,6 @@
 class Dap < ApplicationRecord
-  attr_accessor :foo
+  attr_accessor :occurrence_since_dap
+  attr_accessor :total_active_writeup
 	include PgSearch
   	belongs_to :user
   	belongs_to :writeup
@@ -27,7 +28,18 @@ class Dap < ApplicationRecord
       end
     end
 
-  def foo
+  def total_active_writeup
+    Dap.user_writeups(self.user_id)
+  end
+
+  def self.user_writeups(user_id)
+  dap_total = Dap.written.joins(:user)
+      .group(user_id)
+      .where("users.id = ?", user_id)
+      .select(self.ids)
+  end
+
+  def occurrence_since_dap
     Dap.days_since_last_writeup(self.user_id)
   end
 
@@ -43,5 +55,5 @@ class Dap < ApplicationRecord
     else
       return 0
     end  
-end
+  end
 end

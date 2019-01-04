@@ -15,7 +15,7 @@
                                           <th><%= link_to "Agent", :sort => "users.first_name asc" %></th>
                                           <th><%= link_to "Department", :sort => "departments.name asc" %></th>
                                           <th><%= link_to "Occurrence", :sort => "occurrences.name asc" %></th>
-                                          <th>Writeups</th>
+                                          <th>OSD</th>
                                         <th></th>
                   </tr>
                 </thead>
@@ -25,7 +25,7 @@
                                           <td><%= agent_list.user.full_name %></td>
                                           <td><%= agent_list.department.name.truncate(15) %></td>
                                           <td><%= agent_list.entries.map.sum {|m| m.occurrence.ovalue} %></td>
-                                          <td><%= agent_list.user.daps.ids.count %></td>
+                                          <td><%= agent_list.user.daps.map {|f| f.occurrence_since_dap.to_f}.first %></td>
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to theme_icon_tag("eye"), agent_list, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>

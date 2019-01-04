@@ -112,17 +112,13 @@ class EntriesController < ApplicationController
 
   # GET /entries
   def index
-    # @entries = Entry.all.order(created_at: :desc).paginate(page: params[:page], :per_page => 5)
     require 'will_paginate/array'
-    # @entry = Entry.all.joins(agent: :user)
-    @asdf = Entry.all.includes(occurrence: params[:ovalue])
     if params[:search].present?
       @entries = Entry.order(edate: :desc).perform_search(params[:search]).paginate(page: params[:page], :per_page => 5)
     else
       @entries = Entry.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).paginate(page: params[:page], :per_page => 5)
     end
     @agents_list = Agent.all.includes(:entries, :user).order(params[:sort])
-    # occurrence_ovalue = Entry.all.joins(:occurrence, agent: :user).group(:id).group('occurrences.ovalue').where('users.id = ?' :user_id).select(:agent_id, :occurrence_id, :edate, :edesc, :id, :ovalue).sum(:ovalue)
   end
 
 
@@ -132,45 +128,15 @@ class EntriesController < ApplicationController
       .where("users.id = ?", @entry.agent.user.id)
       .group(:id).order("entries.edate DESC")
       .paginate(page: params[:page], :per_page => 3)
-    @user_entry_today = Entry.today.occurrence_user
-      .where("users.id = ?", @entry.agent.user.id)
-      .group(:id).order("entries.edate DESC")
-    @user_entry_effective = Entry.effective.occurrence_user
-      .where("users.id = ?", @entry.agent.user.id)
-      .group(:id).order("entries.edate DESC")
-    @user_entry_total_effective = Entry.effective.occurrence_user
-      .where("users.id = ?", @entry.agent.user.id).sum(:ovalue)
-    @user_entry_tardy_effective = Entry.effective.occurrence_user
-      .where("users.id = ?", @entry.agent.user.id)
-      .where("occurrences.name = ?", "Tardy")
-      .count(:name)
-    @user_entry_absent_effective = Entry.effective.occurrence_user
-      .where("users.id = ?", @entry.agent.user.id)
-      .where("occurrences.ovalue > ?", 0.5)
-      .count(:name)
-    @agent_chart_labels = Entry.effective.occurrence_user
-      .where("users.id = ?", @entry.agent.user.id)
-      .group("occurrences.name")
-      .order("occurrences.name DESC")
-      .pluck("occurrences.name")
-    @agent_chart_data = Entry.effective.occurrence_user
-      .where("users.id = ?", @entry.agent.user.id).group("occurrences.name")
-      .order("occurrences.name DESC")
-      .count("occurrences.name").values
-    @user_writeup_written = Dap.written.joins(:writeup, :user)
-      .where("users.id = ?", @entry.agent.user.id)
-      .count(:writeup_id)
     @user_dap = Dap.joins(:writeup, :user)
       .where("users.id = ?", @entry.agent.user.id)
       .group(:id).order("daps.ddate DESC")
       .paginate(page: params[:page], :per_page => 3)
-    @user_entry_total_effective = Entry.effective.occurrence_user
-      .where("users.id = ?", @entry.agent.user.id)
-      .sum(:ovalue)
-    @user_dap_total_effective = Dap.written.joins(:user)
-      .where("users.id = ?", @entry.agent.user.id)
-      .count(:id)
-      # @what = Dap.days_since_last_writeup(@entry.agent.user_id)   
+
+    # @user_dap_total_effective = Dap.written.joins(:user)
+    #   .where("users.id = ?", @entry.agent.user.id)
+    #   .count(:id)  
+
   end
 
   def calendar
@@ -183,21 +149,8 @@ class EntriesController < ApplicationController
   end
 
   def agent_list
-    # @agents, @alphaParams = Agent.all
-    # @asdf = Entry.all.includes(occurrence: params[:ovalue])
     @entry = Entry.all
-    @agents_list = Agent.effective.includes(:entries, :user).order('users.first_name ASC')
-    @blank_val = 0.to_s
-    @ddate = Dap.written.joins(:writeup, :user)
-      .where("users.id = ?", @entry.joins(agent: :user).pluck(:user_id))
-      .group(:id)
-      .order(ddate: :asc)
-      .pluck(:ddate)
-    if @ddate.present?
-      @days_since_last_writeup = Entry.occurrence_user.where(:edate => @ddate.last.beginning_of_day..Time.zone.now.end_of_day).group(:user_id).where("users.id = ?", @entry.agent.user.id).sum(:ovalue).values.join(' ')
-    else
-      @days_since_last_writeup = @blank_val
-    end  
+    @agents_list = Agent.includes(:entries, user: :daps).order('users.first_name ASC')
   end
 
   # GET /entries/new
