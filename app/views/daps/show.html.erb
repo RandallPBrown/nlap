@@ -63,6 +63,7 @@
                 <%= link_to fa_icon_tag("pencil") + ' Edit', edit_dap_path(@dap), class: 'btn btn-primary' %>
 
                 <%= link_to 'Back', daps_path, class: 'btn' %>
+                <%= link_to "Get PDF", dap_path(format: :pdf), target: :_blank %>
               </div>
             </div>
           </div>

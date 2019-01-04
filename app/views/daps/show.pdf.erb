@@ -1,0 +1,79 @@
+<div class="card" >
+  <div class="card-header p-5">
+    <center><h1 class="font-weight-bold text-monospace" >COUNSELING FORM</h1></center>
+  </div>
+  <div class="card-body">
+  	<div class="container">
+	    <div class="row">
+		    <div class="col-6">
+		    	<strong>EMPLOYEE NAME:</strong> <%= @dap.user.full_name %>
+		    </div>
+		    <div class="col-6">
+		    	<strong>DEPARTMENT:</strong> <%= @dap.user.department.name %>
+		    </div><br />
+	    </div>
+	    <div class="row">
+	    	<div class="col-6">
+	    		<strong>DISCIPLINARY ACTION LEVEL:</strong> <span class="text-uppercase"> <%= @dap.writeup.name %></span>
+	    	</div>
+	    </div><br /><hr>
+	    <div class="row">
+	    	<div class="col-3">
+	    		<table class="table">
+	    			<thead class="thead-dark">
+		    			<tr>
+		    				<th>NATURE OF INCIDENT</th>
+		    			</tr>
+		    		</thead>
+	    		</table>
+	    	</div>
+	    </div>
+	    <div class="row">
+	    	<div class="col-12">
+	    		<strong>TYPE:</strong> <%= @dap.wunature.description %>
+	    	</div>
+	    </div><br />
+	    <div class="row">
+	    	<div class="col-12">
+	    		<strong>DETAILS:</strong><br /> <%= @dap.description %>
+	    	</div>
+	    </div><br /><hr>
+	    <div class="row">
+	    	<div class="col-12">
+	    		<strong>WITNESSES:</strong><br /><br />
+	    		<p>____________________________________________________________________________________________________________________________________</p>
+	    	</div>
+	    </div>
+	    <div class="row">
+	    	<div class="col-12">
+	    		<strong>EMPLOYEE COMMENTS:</strong><br /><br />
+	    		<p>____________________________________________________________________________________________________________________________________</p>
+	    		<p>____________________________________________________________________________________________________________________________________</p>
+	    	</div>
+	    	<div class="col-12">
+	    		<center><p class="text-danger font-weight-bold">***CONSEQUENCES OF FAILURE TO IMPROVE INCLUDE UP TO TERMINATION***</p></center>
+	    	</div>
+	    </div><br /><hr>
+	    <div class="row">
+	    	<div class="col-12">
+	    		<center><p class="text-danger font-weight-bold">I HAVE READ AND UNDERSTAND THIS COUNSELING FORM</p></center>
+	    	</div>
+	    	<div class="col-12">
+	    		<strong>SUPERVISOR SIGNATURE:</strong><br /><br />
+	    		<p>__________________________________________________________________________________________________________________________</p><p>DATE:______</p>
+	    	</div>
+	    </div>
+	    <div class="row">
+	    	<div class="col-12">
+	    		<strong>EMPLOYEE SIGNATURE:</strong><br /><br />
+	    		<p>________________________________________________________________________________________________________________________________</p>
+	    	</div>
+	    </div><br />
+	    <div class="row">
+	    	<div class="col-12">
+	    		<center><p class="text-danger font-weight-bold">THE ABOVE OFFENSE HAS BEEN NOTED AND ARE MADE A PART OF THE OF EMPLOYEE'S PERSONNEL FILE AS OF THIS DATE</p></center>
+	    	</div><br /><hr>
+	    </div>
+	</div>
+  </div>
+</div>

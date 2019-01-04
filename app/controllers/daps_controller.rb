@@ -18,7 +18,14 @@ class DapsController < ApplicationController
 
   # GET /daps/1
   def show
-
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf: "your-filename",
+        page_size: 'Letter',
+        zoom: 2.5
+      end
+    end
   end
 
   # GET /daps/new

@@ -59,7 +59,7 @@
               <div class="ml-auto">
                 <%= link_to fa_icon_tag("pencil") + ' Edit', edit_entry_path(@entry), class: 'btn btn-primary' %>
                 <%= link_to 'Back', entries_path, class: 'btn' %>
-                <%= link_to "Get PDF", entry_path(format: :pdf) %>
+                <%= link_to "Get PDF", entry_path(format: :pdf), target: :_blank %>
               </div>
             </div>
           </div>
