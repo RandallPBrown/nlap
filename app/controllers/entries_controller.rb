@@ -132,6 +132,12 @@ class EntriesController < ApplicationController
       .where("users.id = ?", @entry.agent.user.id)
       .group(:id).order("daps.ddate DESC")
       .paginate(page: params[:page], :per_page => 3)
+      respond_to do |format|
+  format.html
+  format.pdf do
+    render  pdf: "your-filename"
+  end
+end
   end
 
   def calendar
