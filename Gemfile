@@ -37,8 +37,6 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'devise'
 
-gem 'toastr-rails'
-
 gem 'pg_search'
 gem "will_paginate", "~> 3.0.4"
 gem 'alphabetical_paginate'
@@ -47,7 +45,7 @@ gem "simple_calendar", "~> 2.0"
 gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary'
 
-gem 'bootstrap'
+# gem 'bootstrap'
 gem 'popper_js'
 gem 'toastr-rails'
 

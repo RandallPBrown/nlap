@@ -132,11 +132,6 @@ class EntriesController < ApplicationController
       .where("users.id = ?", @entry.agent.user.id)
       .group(:id).order("daps.ddate DESC")
       .paginate(page: params[:page], :per_page => 3)
-
-    # @user_dap_total_effective = Dap.written.joins(:user)
-    #   .where("users.id = ?", @entry.agent.user.id)
-    #   .count(:id)  
-
   end
 
   def calendar

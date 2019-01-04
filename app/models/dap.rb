@@ -5,8 +5,10 @@ class Dap < ApplicationRecord
   	belongs_to :user
   	belongs_to :writeup
   	belongs_to :wunature
+    has_many :agents
   	has_one :department, :through => :user
   	accepts_nested_attributes_for :user
+    accepts_nested_attributes_for :agents
   	accepts_nested_attributes_for :writeup
   	accepts_nested_attributes_for :wunature
   	scope :written,  -> {

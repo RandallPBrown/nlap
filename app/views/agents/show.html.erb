@@ -81,11 +81,11 @@
                 <% end %>
               </li><br />
               <li>
-                <% if @occurrences_since.occurrences_since_dap.to_i >= 1 then %>
-                <strong>Since Writeup: <span class="text-danger"><%= @occurrences_since.occurrences_since_dap %></span></strong>
+                <% if @agent.user.daps.map {|m| m.occurrence_since_dap.first}.first.to_f > 1.0  %>
+                <strong>Since Writeup: <span class="text-danger"><%= @agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f %></span></strong>
                 <center><small class ="text-danger">**Agent Writeup Required**</small></center>
                 <% else %>
-                <strong>Since Writeup: <span><%= @occurrences_since.occurrences_since_dap %></span></strong>
+                <strong>Since Writeup: <span><%= @agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f %></span></strong>
                 <% end %> 
               </li>
             </ul>

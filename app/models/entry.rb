@@ -1,6 +1,6 @@
 class Entry < ApplicationRecord
   include PgSearch
-  attr_accessor :asdf
+  attr_accessor :total_effective_occurrence
   belongs_to :agent
   belongs_to :occurrence
   has_one :user, :through => :agent
@@ -47,11 +47,11 @@ class Entry < ApplicationRecord
   }
 
 
-  def asdf
-    Entry.fdsa(self.user.id)
+  def total_effective_occurrence
+    Entry.effective_occurrence(self.user.id)
   end
 
-  def self.fdsa(user_id)
+  def self.effective_occurrence(user_id)
     Entry.effective.occurrence_user
       .where("users.id = ?", user_id)
       .sum(:ovalue)

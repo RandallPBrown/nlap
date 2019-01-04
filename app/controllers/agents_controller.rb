@@ -8,7 +8,7 @@ class AgentsController < ApplicationController
     # @agent = Agent.all
     @agent = Agent.all
     @users = User.all
-    @agents = Agent.includes(user: :daps)
+    @agents = Agent.includes(:entries, user: :daps).order('users.first_name asc')
     # @occurrences_since = Dap.find_by(user_id: @users.ids) 
   end
 
@@ -29,9 +29,7 @@ class AgentsController < ApplicationController
       .sum(:ovalue)
     @user_dap_total_effective = Dap.written.joins(:user)
       .where("users.id = ?", @agent.user.id)
-      .count(:id)
-    
-@occurrences_since = Dap.find(@agent.user_id)   
+      .count(:id)  
   end
 
   # GET /agents/new
@@ -47,9 +45,6 @@ class AgentsController < ApplicationController
   # POST /agents
   def create
     @agent = Agent.new(agent_params)
-    #puts @agent.inspect
-    #puts agent_params.inspect
-    # puts @agent.department_id = agent_params[:dept]
     if @agent.save
       redirect_to @agent, notice: 'Agent was successfully created.'
     else
