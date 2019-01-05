@@ -18,12 +18,13 @@ class DapsController < ApplicationController
 
   # GET /daps/1
   def show
+    @future_time = @dap.ddate + 90.days
+    @daps = Dap.all.joins(:user).where('user_id = ?', @dap.user_id)
     respond_to do |format|
       format.html
       format.pdf do
         render  pdf: "your-filename",
-        page_size: 'Letter',
-        zoom: 2.5
+        zoom: 2.25
       end
     end
   end

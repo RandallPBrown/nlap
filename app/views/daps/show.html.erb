@@ -1,9 +1,5 @@
 <% @title = "Showing Disciplinary Action" %>
 
-<% content_for :description do %>
-
-  <% end %>
-
 <div class="container">
   <div class="row">
     <div class="col-12 col-md-9">
@@ -12,7 +8,7 @@
           <div class="form-horizontal">
                           
 
-                          <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-12 col-md-2 form-label">Effective Date</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
@@ -21,7 +17,7 @@
                 </div>
               </div>
 
-                          <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-12 col-md-2 form-label">Agent</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
@@ -30,7 +26,7 @@
                 </div>
               </div>
 
-                          <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-12 col-md-2 form-label">Type</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
@@ -39,7 +35,7 @@
                 </div>
               </div>
 
-                          <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-12 col-md-2 form-label">Nature of Incident</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
@@ -48,7 +44,7 @@
                 </div>
               </div>
 
-                          <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-12 col-md-2 form-label">Notes</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
@@ -58,42 +54,17 @@
               </div>
 
 
-                        <div class="d-flex">
+            <div class="d-flex">
               <div class="ml-auto">
                 <%= link_to fa_icon_tag("pencil") + ' Edit', edit_dap_path(@dap), class: 'btn btn-primary' %>
 
                 <%= link_to 'Back', daps_path, class: 'btn' %>
-                <%= link_to "Get PDF", dap_path(format: :pdf), target: :_blank %>
+                <%= link_to fa_icon_tag("file-pdf-o") + ' PDF', dap_path(format: :pdf), target: :_blank, class: 'btn btn-primary' %>
               </div>
             </div>
           </div>
         </div>
       </div>
-          <div class="col-3 hidepane">
-      <!-- RECENT ACTIVITY TABLE -->
-      <div class="card inspectable">
-        <!-- component-title: Timeline Card -->
-        <div class="card-header">
-          <h6>Current Items</h6>
-        </div>
-        <div class="card-body">
-          <div class="timeline" style="height: 450px">
-            <ul class="left-timeline">
-
-              <li>
-                <% if @what.to_i >= 1 then %>
-                <strong>Since Writeup: <span class="text-danger"><%= @what %></span></strong>
-                <center><small class ="text-danger">**Agent Writeup Required**</small></center>
-                <% else %>
-                <strong>Since Writeup: <span><%= @what%></span></strong>
-                <% end %> 
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- /RECENT ACTIVITY TABLE-->
-    </div>
     </div>
   </div>
 </div>

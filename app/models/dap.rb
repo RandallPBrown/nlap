@@ -1,6 +1,7 @@
 class Dap < ApplicationRecord
   attr_accessor :occurrence_since_dap
   attr_accessor :total_active_writeup
+  attr_accessor :written_end
 	include PgSearch
   	belongs_to :user
   	belongs_to :writeup
@@ -19,6 +20,7 @@ class Dap < ApplicationRecord
           joins(:occurrence, agent: :user)
     }
 
+
   	pg_search_scope :search,
     	              :associated_against => {
     	 :user => [:first_name, :last_name], :department => [:name], :writeup => [:name]
@@ -29,6 +31,7 @@ class Dap < ApplicationRecord
       else Dap.all
       end
     end
+
 
   def total_active_writeup
     Dap.user_writeups(self.user_id)
