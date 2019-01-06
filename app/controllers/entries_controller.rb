@@ -12,15 +12,9 @@ class EntriesController < ApplicationController
   def dashboard
     require 'date'
     
-    @body_class = "with-sidebar show-sidebar"
-    @current_department = current_user.department.name
-    @entries = Entry.all.includes(occurrence: params[:ovalue]).joins(agent: :user).order(updated_at: :desc).paginate(page: params[:page], :per_page => 5)
-    @occurrence_total = Entry.joins(:occurrence).sum(:ovalue)
-    @occurrence_total_today = Entry.today.joins(:occurrence).sum(:ovalue)
-    @occurrenceval = Entry.all.map {|m| m.occurrence}
-    # @entries = Entry.all.order(updated_at: :desc).paginate(page: params[:page], :per_page => 5)
-    @agent_total_today = Entry.today.joins(:agent).count(:id)
-    # to filter by today, use .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+    @body_class = "with-sidebar show-sidebar" #system generated
+    @current_department = current_user.department.name # keep for now
+    @entries = Entry.all.includes(occurrence: params[:ovalue]).joins(agent: :user).order(updated_at: :desc).paginate(page: params[:page], :per_page => 5) # keep for now
     if @current_department.eql? "Executive"
       #Dan/dad/rick
       then @chart_data_dept_today = Entry.today.grouped_dept.order('departments.name asc').sum(:ovalue).values

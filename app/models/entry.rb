@@ -1,6 +1,6 @@
 class Entry < ApplicationRecord
   include PgSearch
-  attr_accessor :total_effective_occurrence
+  attr_accessor :total_effective_occurrence, :occurrences_today, :occurrence_ovalue_today, :occurrence_total
   belongs_to :agent
   belongs_to :occurrence
   has_one :user, :through => :agent
@@ -45,6 +45,19 @@ class Entry < ApplicationRecord
   scope :date_asc, -> {
     order( edate: :asc )
   }
+
+  def occurrence_total
+    Entry.joins(:occurrence).sum(:ovalue)
+  end
+
+  def occurrence_ovalue_today
+    Entry.today.joins(:occurrence).sum(:ovalue)
+  end
+
+
+  def occurrences_today
+    Entry.today.joins(:agent).count(:id)
+  end
 
 
   def total_effective_occurrence

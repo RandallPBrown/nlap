@@ -10,7 +10,7 @@
             </span>
           </div>
           <div class="media-body text-right">
-            <h4 class="m-0"><%= @occurrence_total %></h4>
+            <h4 class="m-0"><%= @entries.map {|t| t.occurrence_total }.first %></h4>
             <h6 class="m-0 text-muted">Total Occurrences</h6>
           </div>
         </div>
@@ -28,7 +28,7 @@
             </span>
           </div>
           <div class="media-body text-right">
-            <h4 class="m-0"><%= @occurrence_total_today %></h4>
+            <h4 class="m-0"><%= @entries.map {|f| f.occurrence_ovalue_today}.first %></h4>
             <h6 class="m-0 text-muted">Todays Occurrences</h6>
           </div>
         </div>
@@ -64,7 +64,7 @@
             </span>
           </div>
           <div class="media-body text-right">
-            <h4 class="m-0" data-refresh-interval="10"><%= @agent_total_today %></h4>
+            <h4 class="m-0" data-refresh-interval="10"><%= @entries.map{|m| m.occurrences_today}.first %></h4>
             <h6 class="m-0 text-muted">Agents Late/Absent</h6>
           </div>
         </div>
