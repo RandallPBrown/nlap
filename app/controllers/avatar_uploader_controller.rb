@@ -1,0 +1,2 @@
+class AvatarUploaderController < ApplicationController
+end

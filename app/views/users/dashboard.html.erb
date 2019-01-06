@@ -23,61 +23,31 @@
         <div class="card card-full-height" style="background-color: #ffffff !important">
           <div class="card-body">
             <canvas id="myChart" width="200" height="100"></canvas>
-<script>
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: <%= raw @agent_chart_labels %>,
-        datasets: [{
-            label: 'Count',
-            data: <%= raw @agent_chart_data %>,
-            backgroundColor: '#f1f8e9',
-            borderColor: '#7cb342',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
+            <script>
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: <%= raw @agent_chart_labels %>,
+                    datasets: [{
+                        label: 'Count',
+                        data: <%= raw @agent_chart_data %>,
+                        backgroundColor: '#f1f8e9',
+                        borderColor: '#7cb342',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
                 }
-            }]
-        }
-    }
-});
-
-$(document).ready(function() {
-    
-    /* Every time the window is scrolled ... */
-    $(window).scroll( function(){
-    
-        /* Check the location of each desired element */
-        $('.hidepane').each( function(i){
-            
-            var bottom_of_object = $(this).position().top + $(this).outerHeight();
-            var bottom_of_window = $(window).scrollTop() + $(window).height();
-            
-            /* If the object is completely visible in the window, fade it it */
-            if( bottom_of_window > bottom_of_object ){
-                
-                $(this).animate({'opacity':'1'},500);
-                    
-            }
-            
-        }); 
-    
-    });
-    
-});
-</script>
-<style>
-.hidepane
-{
-    opacity:0;
-}
-</style>
+            });
+            </script>
           </div>
         </div>
       </div>
@@ -88,7 +58,7 @@ $(document).ready(function() {
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0 text-muted">Active Occurrences</h6>
+                <h6 class="m-0 text-muted"><u>Active Occurrences</u></h6>
                 <h4 class="m-0"><%= @user_entry_total_effective %></h4>
               </div>
               <div class="d-flex align-self-center text-primary ml-3">
@@ -104,7 +74,7 @@ $(document).ready(function() {
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0 text-muted">Total Active Tardies</h6>
+                <h6 class="m-0 text-muted"><u>Total Active Tardies</u></h6>
                 <h4 class="m-0"><%= @user_entry_tardy_effective %></h4>
               </div>
               <div class="d-flex align-self-center text-primary ml-3">
@@ -120,7 +90,7 @@ $(document).ready(function() {
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0 text-muted">Total Active Absences</h6>
+                <h6 class="m-0 text-muted"><u>Total Active Absences</u></h6>
                 <h4 class="m-0"><%= @user_entry_absent_effective %></h4>
               </div>
               <div class="d-flex align-self-center text-primary ml-3">
@@ -136,7 +106,7 @@ $(document).ready(function() {
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0 text-muted">Total Active Write-ups</h6>
+                <h6 class="m-0 text-muted"><u>Total Active Write-ups</u></h6>
                 <h4 class="m-0"><%= @user_writeup_written %></h4>
               </div>
               <div class="d-flex align-self-center text-primary ml-3">

@@ -1,28 +1,28 @@
 <%= stylesheet_link_tag "pagination.css" %>
 <%= render :layout => "layouts/base" do %>
   <nav class="navbar navbar-expand-lg" style="background-color: #7cb342 !important">
-    <a href="javascript:" class="navbar-brand text-white"><%= app_name %></a>
+    <a href="javascript:" class="navbar-brand mr-auto p-0"><%= image_tag 'brand.png', size: "45x40"%> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav ml-3">
         <li class="nav-item">
-          <a class="nav-link text-white font-weight-bold" href="../users/dashboard">User</a>
+          <a class="nav-link text-white font-weight-bold" href="../users/dashboard"> <%= fa_icon_tag("home") %></a>
         </li>
         <% if current_user.admin? then %>
         <li class="nav-item">
-          <a class="nav-link text-white font-weight-bold" href="../entries/dashboard">Company</a>
+          <a class="nav-link text-white font-weight-bold" href="../entries/dashboard"> <%= fa_icon_tag("pie-chart") %></a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Entries</a>
+          <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"> <%= fa_icon_tag("list") %></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../entries">Occurrence Log</a>
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../daps">Write-up Log</a>
           </div>  
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Administration</a>
+          <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">  <%= fa_icon_tag("cogs") %></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../agents">Agents List</a>
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../departments">Departments</a>
@@ -34,21 +34,45 @@
         <% else %>
         <% end %>
       </ul>
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav ml-auto">
 
         
         <li class="nav-item dropdown user-nav">
           <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="material-icons ">person_outline</i>
+                <%= fa_icon_tag("user") %>
             <span class="caret caret-light"></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-right" role="menu">
             <li class="dropdown-item text-center">
               <div class="card">
+                <div class="card-header">
+                  <h4 class="m-auto text-uppercase font-weight-bold"><%= current_user.full_name %></h4>
+                </div>
                 <div class="card-body">
-                  <h3><%= current_user.full_name %></h3><br />
-                  <p><%= user_email %></p>
-
+                  <div class="row">
+                    <div class="col-4">
+                      <span class="pull-left"><strong>Email:</strong></span>
+                    </div>
+                    <div class="col-8">
+                        <span class="pull-left text-capitalize"><%= user_email %></span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4">
+                      <span class="pull-left"><strong>Department:</strong></span> 
+                    </div>
+                    <div class="col-8">
+                      <span class="pull-left"><%= current_user.department.name %></span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4">
+                      <span class="pull-left"><strong>Write-ups:</strong></span> 
+                    </div>
+                    <div class="col-8">
+                      <span class="pull-left"><%= current_user.daps.ids.sum %></span>
+                    </div>
+                  </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                   <div>
@@ -58,7 +82,6 @@
                     <% if user_signed_in? %>
                       <%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => 'btn  text-dark' %>
                     <% else %>
-                      <%= link_to "Sign up now!",  new_user_registration_path, :class => 'btn'%>
                     <% end %>
                   </div>
                 </div>
