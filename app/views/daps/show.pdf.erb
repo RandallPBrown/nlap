@@ -1,3 +1,5 @@
+<%= wicked_pdf_stylesheet_link_tag('bootstrap') %>
+
 <%= wicked_pdf_image_tag 'logo.png' %><br /><br />
 <div class="card" >
   <div class="card-header p-3">
@@ -12,10 +14,10 @@
 			    <div>
 			    	<strong>DEPARTMENT:</strong> <%= @dap.user.department.name %>
 			    </div>
-			    <div style="position: absolute; margin-left: 1000px; margin-top: -50px; width: auto;">
+			    <div style="position: absolute; margin-left: 500px; margin-top: -50px; width: auto;">
 			    	<strong>DATE START:</strong> <%= @dap.ddate %>
 			    </div><br />
-			    <div style="position: absolute; margin-left: 1000px; margin-top: -50px; width: auto;">
+			    <div style="position: absolute; margin-left: 500px; margin-top: -50px; width: auto;">
 			    	<strong>DATE END:</strong> <%= @future_time %>
 			    </div>
 			</div>
@@ -26,7 +28,7 @@
 	    	</div>
 	    </div><br /><hr>
 	    <div class="row">
-	    	<div class="col-3">
+	    	<div class="col-4">
 	    		<table class="table">
 	    			<thead class="thead-dark">
 		    			<tr>
@@ -49,14 +51,14 @@
 	    <div class="row">
 	    	<div class="col-12">
 	    		<strong>WITNESSES:</strong><br /><br />
-	    		<p>______________________________________________________________________________________________________________________________________________________</p>
+	    		<p>___________________________________________________________________________________________________</p>
 	    	</div>
 	    </div>
 	    <div class="row">
 	    	<div class="col-12">
 	    		<strong>EMPLOYEE COMMENTS:</strong><br /><br />
-	    		<p>______________________________________________________________________________________________________________________________________________________</p>
-	    		<p>______________________________________________________________________________________________________________________________________________________</p>
+	    		<p>___________________________________________________________________________________________________</p>
+	    		<p>___________________________________________________________________________________________________</p>
 	    	</div><br />
 	    	<div class="col-12">
 	    		<center><p class="text-danger font-weight-bold">***CONSEQUENCES OF FAILURE TO IMPROVE INCLUDE UP TO TERMINATION***</p></center>
@@ -68,13 +70,13 @@
 	    	</div>
 	    	<div class="col-12">
 	    		<strong>SUPERVISOR SIGNATURE:</strong><br /><br />
-	    		<p>_____________________________________________________________________________________________________________________________________   DATE:___________</p>
+	    		<p>_____________________________________________________________________________________ DATE:___________</p>
 	    	</div>
 	    </div>
 	    <div class="row">
 	    	<div class="col-12">
 	    		<strong>EMPLOYEE SIGNATURE:</strong><br /><br />
-	    		<p>_____________________________________________________________________________________________________________________________________   DATE:___________</p>
+	    		<p>_____________________________________________________________________________________ DATE:___________</p>
 	    	</div>
 	    </div><br />
 	    <div class="row">
@@ -82,6 +84,7 @@
 	    		<center><p class="text-danger font-weight-bold">THE ABOVE OFFENSE HAS BEEN NOTED AND ARE MADE A PART OF THE OF EMPLOYEE'S PERSONNEL FILE AS OF THE DATE LISTED ABOVE</p></center>
 	    	</div><br /><hr>
 	    </div>
+	    <center><h1 class="font-weight-bold text-monospace">COUNSELING HISTORY</h1></center>
 	    <div class="row">
 	        <div class="table-responsive">
 	            <table class="table table-hover table-striped" id="userDapTable">
