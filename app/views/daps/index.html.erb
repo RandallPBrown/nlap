@@ -20,7 +20,8 @@
                 <%= submit_tag "", style: "display: none;" %>
               <% end %>
               </div>
-              <table class="table table-striped table-hover table-sm-responsive">
+              <div class="table-responsive">
+              <table class="table table-striped table-hover">
                 <thead>
                   <tr>
                                           <th>Nature of Incident</th>
@@ -54,6 +55,7 @@
                     <% end %>
                     </tbody>
                   </table>
+                </div>
                   <center><%= will_paginate @daps %></center>
                 </div>
               </div>
