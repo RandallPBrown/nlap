@@ -23,7 +23,7 @@ class DapsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render  pdf: "your-filename",
+        render  pdf: "your-filename"
       end
     end
   end
