@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :wunatures
   resources :daps
   get 'users/dashboard'
-
+  get 'users/index'
   get 'entries/dashboard'
 
   get 'entry/dashboard'
@@ -26,10 +26,11 @@ Rails.application.routes.draw do
   resources :roles
   resources :departments
   resources :agents
-  devise_for :users, controllers: {
-        sessions: 'users/sessions',
-        registrations: 'users/registrations'
+  devise_for :users, :skip => [:registrations], controllers: {
+        sessions: 'users/sessions'
+        # registrations: 'users/registrations'
       }
+  resources :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: "users#dashboard"
 end

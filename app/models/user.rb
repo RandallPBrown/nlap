@@ -10,7 +10,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :entries
   accepts_nested_attributes_for :daps
   before_validation :allow_department
-  has_one :agent
+  has_one :agent, dependent: :destroy
   def allow_department
   		self.department_id
   end

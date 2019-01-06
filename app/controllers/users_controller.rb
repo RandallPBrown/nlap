@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
   layout 'scaffold'
+  before_action :authorize_admin, except: [:show, :dashboard, :edit]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+
   def dashboard          
     # @body_class = "with-sidebar show-sidebar"
     # @current_user = current_user
@@ -16,7 +19,62 @@ class UsersController < ApplicationController
   require 'will_paginate/array'
   end
 
-  def index
+  def show
+  end
 
-  end  
+  def create
+  end
+
+  # GET /agents/new
+  def new
+    @user = User.new
+  #  @departments = Department.new
+  end
+
+  # GET /agents/1/edit
+  def edit
+  end
+
+  # POST /agents
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      redirect_to agents_path, notice: 'User was successfully created.'
+      Agent.create({:department_id => @user.department_id, :user_id => @user.id})
+
+    else
+      render :new
+    end
+  end
+
+  # PATCH/PUT /agents/1
+  def update
+    if @user.update(user_params)
+      redirect_to @user, notice: 'User was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+
+
+def destroy
+  @user.destroy!
+  redirect_to agents_path, notice: 'User was successfully destroyed.'
+end
+
+  def index
+    @users = User.all.includes(:daps, agent: :entries).joins(agent: :entries).order('users.first_name asc')
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_user
+      @user = User.find(params[:id])
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def user_params
+      params.require(:user).permit(:id, :first_name, :last_name, :email, :department_id, :password, :password_confirmation, :department, :agent)
+    end
 end

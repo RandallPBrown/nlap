@@ -76,7 +76,7 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                   <div>
-                    <%= link_to "Change your password", edit_user_registration_path, :class => 'btn  text-dark' %>
+                    <%= link_to "Change your password", edit_user_path(current_user.id), :class => 'btn  text-dark' %>
                   </div>
                   <div>
                     <% if user_signed_in? %>

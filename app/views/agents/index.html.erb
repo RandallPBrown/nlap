@@ -2,6 +2,11 @@
 
 <% content_for :description do %>
   <% end %>
+    <% content_for :actions do %>
+    <%= link_to new_user_path, class: 'btn btn-primary btn-large pull-right' do %>
+      <%= fa_icon_tag "plus" %> Add User
+    <% end %>
+  <% end %>
 
       <div class="container">
         <div class="row">
@@ -55,9 +60,9 @@
                                           </td>
                                         <td class="actions text-right">
                       <div class="btn-group">
-                        <%= link_to theme_icon_tag("eye"), agent, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("pencil-alt"), edit_agent_path(agent), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("trash"), agent, 'data-toggle': 'tooltip', title: 'Delete',
+                        <%= link_to theme_icon_tag("eye"), user, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("pencil-alt"), edit_user_path(agent.user.id), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("trash"), user, 'data-toggle': 'tooltip', title: 'Delete',
                         data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                       </div>
                       </td>

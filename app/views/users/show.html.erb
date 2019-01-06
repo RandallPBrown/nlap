@@ -1,0 +1,60 @@
+<% @title = "Showing agent" %>
+
+<% content_for :description do %>
+  <% end %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-9">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-horizontal">
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Agent ID</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @user.id %>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Name</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @user.full_name %>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Email</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @user.email %>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Department</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @user.department.name %>
+                  </span>
+                </div>
+              </div>
+
+                        <div class="d-flex">
+              <div class="ml-auto">
+                <%= link_to fa_icon_tag("pencil") + ' Edit', edit_user_path(@user), class: 'btn btn-primary' %>
+                <%= link_to 'Back', agents_path, class: 'btn' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
