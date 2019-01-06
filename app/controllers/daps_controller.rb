@@ -24,7 +24,6 @@ class DapsController < ApplicationController
       format.html
       format.pdf do
         render  pdf: "your-filename",
-        zoom: 2.25
       end
     end
   end
