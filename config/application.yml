@@ -9,7 +9,4 @@
 # production:
 #   stripe_api_key: sk_live_EeHnL644i6zo4Iyq4v1KdV9H
 #   stripe_publishable_key: pk_live_9lcthxpSIHbGwmdO941O1XVU
-GMAIL_USERNAME: 'rpeytonb@gmail.com'  
-GMAIL_PASSWORD: 'kklbbqtlrljdyswl'
-SENDGRID_USERNAME: 'apikey'
-SENDGRID_PASSWORD: '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'  
+
