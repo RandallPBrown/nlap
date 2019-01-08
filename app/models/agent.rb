@@ -1,5 +1,4 @@
 class Agent < ApplicationRecord
-  acts_as_paranoid without_default_scope: true
   validates :deleted_at, uniqueness_without_deleted: true
   belongs_to :department
   belongs_to :user, -> { with_deleted }
