@@ -61,7 +61,7 @@
                                           </td>
                                         <td class="actions text-right">
                       <div class="btn-group">
-                        <%= link_to theme_icon_tag("eye"), user, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("eye"), agent_path(agent.id), 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
                         <%= link_to theme_icon_tag("pencil-alt"), edit_user_path(agent.user.id), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
                         <%= link_to  theme_icon_tag("trash"), user_path(agent.user.id), confirm: "Are you sure?", method: :delete, data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                       </div>

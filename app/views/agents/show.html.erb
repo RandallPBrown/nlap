@@ -47,7 +47,7 @@
 
                         <div class="d-flex">
               <div class="ml-auto">
-                <%= link_to fa_icon_tag("pencil") + ' Edit', edit_agent_path(@agent), class: 'btn btn-primary' %>
+                <%= link_to fa_icon_tag("pencil") + ' Edit', edit_user_path(@agent.user.id), class: 'btn btn-primary' %>
                 <%= link_to 'Back', agents_path, class: 'btn' %>
               </div>
             </div>

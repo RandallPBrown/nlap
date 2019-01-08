@@ -22,7 +22,7 @@
     <%= f.form_group :user, class: 'row' do |f| %>
       <%= f.label :user, class: 'control-label col-md-2' %>
       <div class='col-12 col-md-10'>
-        <%= f.collection_select :user_id, User.order(:email), :id, :email, class: 'form-control' %>
+        <%= f.collection_select :user_id, User.order(:first_name), :id, :full_name, class: 'form-control' %>
         <%= f.error_messages %>
       </div>
     <% end %>
