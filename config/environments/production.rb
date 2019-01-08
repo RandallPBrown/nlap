@@ -67,7 +67,7 @@ Rails.application.configure do
     :address              => "smtp.sendgrid.net",
     :port                 => 587,
     :enable_starttls_auto => true,
-    :authentication       => :plain,
+    :authentication       => 'text/html',
     :domain               => "nlscap.net"
   }
   # Ignore bad email addresses and do not raise email delivery errors.
