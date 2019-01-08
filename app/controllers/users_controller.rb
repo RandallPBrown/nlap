@@ -57,7 +57,14 @@ class UsersController < ApplicationController
 
 
 def destroy
-  @user.destroy!
+  # DELETE /resource
+    @user.soft_delete
+    # Devise.sign_out_all_scopes ? sign_out : sign_out(@user)
+    # set_flash_message :notice, :destroyed
+    yield @user if block_given?
+    # respond_with_navigational(@user){ redirect_to agents_path(@user.id) }
+
+  # @user.destroy!
   redirect_to agents_path, notice: 'User was successfully destroyed.'
 end
 

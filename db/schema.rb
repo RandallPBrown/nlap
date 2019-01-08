@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190105175158) do
+ActiveRecord::Schema.define(version: 20190108170030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20190105175158) do
     t.string "dept"
     t.bigint "department_id"
     t.bigint "user_id"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_agents_on_deleted_at"
     t.index ["department_id"], name: "index_agents_on_department_id"
     t.index ["user_id"], name: "index_agents_on_user_id"
   end
@@ -129,6 +131,7 @@ ActiveRecord::Schema.define(version: 20190105175158) do
     t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.datetime "deleted_at"
     t.index ["agent_id"], name: "index_users_on_agent_id"
     t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["email"], name: "index_users_on_email", unique: true

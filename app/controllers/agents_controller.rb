@@ -1,7 +1,8 @@
 class AgentsController < ApplicationController
   layout "scaffold"
   before_action :authorize_admin, except: [:show]
-  before_action :set_agent, only: [:show, :edit, :update, :destroy]
+  before_action :user_id, only: [:show, :edit, :update, :destroy]
+
 
   # GET /agents
   def index

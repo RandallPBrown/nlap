@@ -36,6 +36,8 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'devise'
+gem "paranoia", "~> 2.2"
+gem 'paranoia_uniqueness_validator', '3.1.0'
 
 gem 'pg_search'
 gem "will_paginate", "~> 3.0.4"
@@ -46,6 +48,7 @@ gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary'
 gem 'figaro'
 gem "letter_opener", :group => :development
+
 
 # gem 'bootstrap'
 gem 'popper_js'
