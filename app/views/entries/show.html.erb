@@ -92,7 +92,7 @@
                 <% end %>
               </li><br />
               <li>
-                <% if @entry.agent.user.daps.map {|f| f.occurence_since_dap.blank? } then %>
+                <% if @entry.agent.user.daps.map {|f| f.occurrence_since_dap.blank? } then %>
                   <strong>Since Writeup: <span class="text-danger">0</span></strong>
                 <% elsif @entry.agent.user.daps.map.first.to_f {|m| m.occurence_since_dap} >= 1 then %>
                 <strong>Since Writeup: <span class="text-danger"><%= @entry.agent.user.daps.map.first {|m| m.occurence_since_dap} %></span></strong>
