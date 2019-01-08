@@ -44,7 +44,8 @@ gem "simple_calendar", "~> 2.0"
 # pdf to create forms
 gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary'
-
+gem 'figaro'
+gem "letter_opener", :group => :development
 
 # gem 'bootstrap'
 gem 'popper_js'
