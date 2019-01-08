@@ -1,0 +1,2 @@
+class EntryMailer < ApplicationMailer
+end

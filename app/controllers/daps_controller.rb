@@ -42,6 +42,7 @@ class DapsController < ApplicationController
     @dap = Dap.new(dap_params)
 
     if @dap.save
+      DapMailer.dap_email(@dap).deliver_now
       redirect_to @dap, notice: 'Dap was successfully created.'
     else
       render :new
