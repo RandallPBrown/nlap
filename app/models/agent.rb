@@ -1,7 +1,6 @@
 class Agent < ApplicationRecord
-  validates :deleted_at, uniqueness_without_deleted: true
   belongs_to :department
-  belongs_to :user, -> { with_deleted }
+  belongs_to :user
   has_many :daps
 	has_many :entries
   has_many :occurrences, :through => :entries
