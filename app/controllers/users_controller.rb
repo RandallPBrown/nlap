@@ -35,17 +35,14 @@ class UsersController < ApplicationController
   # POST /agents
   def create
     @user = User.new(user_params)
-    respond_to do |format|
     if @user.save
       UserMailer.welcome_email(@user).deliver_now
       redirect_to agents_path, notice: 'User was successfully created.'
       Agent.create({:department_id => @user.department_id, :user_id => @user.id})
-      format.html { redirect_to agents_path, notice: 'User was successfully created.' }
-      format.json { render :show, status: :created, location: @user }
+
     else
       render :new
     end
-  end
   end
 
   # PATCH/PUT /agents/1
