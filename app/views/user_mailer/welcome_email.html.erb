@@ -1,7 +1,21 @@
-<h1>Hello, <%= @user.first_name %></h1>
+<%= image_tag 'logo.png' %><br /><br />
 
-<h3>Welcome to Roots, the New Leaf Agent Portal</h3>
-  <p>
-    You have been registered with the username [<%= @user.email%>] and the password your admin has provided for you. Please begin by selecting "Change my password" in the user menu located in the top right-hand corner of your screen.<br>
-  </p>
-<p>We at New Leaf are excited to have you with us and look forward to a happy career together.</p>
+<div class="container-fluid">
+	<div class="card">
+		<div class="card-header">
+			<h1>Hello, <%= @user.first_name %>!</h1>
+		</div>
+		<div class="card-body">
+			<h3>Welcome to Service Roots, the New Leaf Agent Portal!</h3>
+			  <p>
+			    You have been registered with the username [<%= @user.email%>] and the password your admin has provided for you. Please begin by selecting "Change my password" in the user menu located in the top right-hand corner of your screen.<br>
+			  </p>
+			<p>We at New Leaf are excited to have you with us and look forward to a happy career together.</p><br /><br />
+			<small>
+				<p class="text-justify">New Leaf Service Contracts, LLC.</p>
+				<p class="text-justify">909 Lake Carolyn Pkwy, Ste 900</p>
+				<p class="text-justify">Irving, TX 75039-3919</p>
+			</small>
+		</div>
+	</div>
+</div>
