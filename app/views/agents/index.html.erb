@@ -16,7 +16,6 @@
               <table class="table table-striped table-hover">
                 <thead>
                   <tr>
-                                          <th>Status</th>
                                           <th>Agent ID</th>
                                           <th>Full Name</th>
                                           <th>Email</th>
@@ -32,8 +31,6 @@
                 <% @agents.each do |agent| %>
                   <tr>
                                           <% if agent.user.deleted_at.blank? then %>
-                                          <td>
-                                          </td>
                                           <td><%= agent.user.id %></td>
                                           <td><%= agent.user.full_name %></td>
                                           <td><%= agent.user.email %></td>
