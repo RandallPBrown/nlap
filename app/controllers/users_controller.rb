@@ -24,7 +24,11 @@ class UsersController < ApplicationController
 
   # GET /agents/new
   def new
-    @user = User.new
+    if current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @user = User.new
+    else
+      redirect_to agents_path, notice: 'Unauthorized'
+    end
   #  @departments = Department.new
   end
 
@@ -34,15 +38,14 @@ class UsersController < ApplicationController
 
   # POST /agents
   def create
-    @user = User.new(user_params)
-    if @user.save
-      # UserMailer.welcome_email(@user).deliver_now
-      redirect_to agents_path, notice: 'User was successfully created.'
-      Agent.create({:department_id => @user.department_id, :user_id => @user.id})
-
-    else
-      render :new
-    end
+      @user = User.new(user_params)
+      if @user.save
+        # UserMailer.welcome_email(@user).deliver_now
+        redirect_to agents_path, notice: 'User was successfully created.'
+        Agent.create({:department_id => @user.department_id, :user_id => @user.id})
+      else
+        render :new
+      end
   end
 
   # PATCH/PUT /agents/1
@@ -58,7 +61,7 @@ class UsersController < ApplicationController
 
 def destroy
   # DELETE /resource
-  if current_user.has_role?(:manager && :executive) then
+  if current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
     @user.soft_delete
     # Devise.sign_out_all_scopes ? sign_out : sign_out(@user)
     # set_flash_message :notice, :destroyed

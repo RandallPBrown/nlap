@@ -15,7 +15,7 @@ class User < ApplicationRecord
   after_create :assign_default_role
 
   def assign_default_role
-    self.add_role(:newuser) if self.roles.blank?
+    self.add_role(:agent) if self.roles.blank?
   end
 
   def allow_department

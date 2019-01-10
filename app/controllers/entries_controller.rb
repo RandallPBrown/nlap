@@ -15,9 +15,9 @@ class EntriesController < ApplicationController
     @body_class = "with-sidebar show-sidebar" #system generated
     @current_department = current_user.department.name # keep for now
     @entries = Entry.all.includes(occurrence: params[:ovalue]).joins(agent: :user).order(updated_at: :desc).paginate(page: params[:page], :per_page => 5) # keep for now
-    if @current_department.eql? "Executive"
+    if current_user.has_role?(:executive) then
       #Dan/dad/rick
-      then @chart_data_dept_today = Entry.today.grouped_dept.order('departments.name asc').sum(:ovalue).values
+           @chart_data_dept_today = Entry.today.grouped_dept.order('departments.name asc').sum(:ovalue).values
            @chart_labels_dept_today = Entry.today.grouped_dept.order('departments.name asc').pluck('departments.name').to_s  
            @chart_data_dept_effective = Entry.effective.grouped_dept.order('departments.name asc').sum(:ovalue).values
            @chart_labels_dept_effective = Entry.effective.grouped_dept.order('departments.name asc').pluck('departments.name').to_s  
@@ -27,7 +27,7 @@ class EntriesController < ApplicationController
            @chart_labels_agent_today = Entry.today.grouped_user.order('users.email asc').pluck('users.email').to_s  
            @chart_data_agent_effective = Entry.effective.grouped_user.order('users.email asc').sum(:ovalue).values
            @chart_labels_agent_effective = Entry.effective.grouped_user.order('users.email asc').pluck('users.email').to_s  
-    elsif @current_department.eql? "Call Center Director"
+    elsif @current_department.eql? "Contact Center" || current_user.has_role?(:director)
       #Aubrey
       then @chart_data_dept_today = Entry.today.grouped_dept.where('departments.name = ? OR departments.name = ?', 'Ferguson', 'Service-Contract').order('departments.name asc').sum(:ovalue).values
            @chart_labels_dept_today = Entry.today.grouped_dept.where('departments.name = ? OR departments.name = ?', 'Ferguson', 'Service-Contract').order('departments.name asc').pluck('departments.name').to_s  
@@ -39,7 +39,7 @@ class EntriesController < ApplicationController
            @chart_labels_agent_today = Entry.today.grouped_user.where('departments.name = ? OR departments.name = ?', 'Ferguson', 'Service-Contract').order('users.email asc').pluck('users.email').to_s  
            @chart_data_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ?', 'Ferguson', 'Service-Contract').order('users.email asc').sum(:ovalue).values
            @chart_labels_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ?', 'Ferguson', 'Service-Contract').order('users.email asc').pluck('users.email').to_s  
-    elsif @current_department.eql? "Back Office Director"
+    elsif @current_department.eql? "Back Office" || current_user.has_role?(:director)
       #Adrian
       then @chart_data_dept_today = Entry.today.grouped_dept.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').sum(:ovalue).values
            @chart_labels_dept_today = Entry.today.grouped_dept.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').pluck('departments.name').to_s  
@@ -51,7 +51,7 @@ class EntriesController < ApplicationController
            @chart_labels_agent_today = Entry.today.grouped_user.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('users.email asc').pluck('users.email').to_s  
            @chart_data_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('users.email asc').sum(:ovalue).values
            @chart_labels_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('users.email asc').pluck('users.email').to_s  
-    elsif @current_department.eql? "Claims/Service Network Supervisor"
+    elsif @current_department.eql? "Back Office" || current_user.has_role?(:manager)
       #missy
       then @chart_data_dept_today = Entry.today.grouped_dept.where('departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network').order('departments.name asc').sum(:ovalue).values
            @chart_labels_dept_today = Entry.today.grouped_dept.where('departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network').order('departments.name asc').pluck('departments.name').to_s  
@@ -63,7 +63,7 @@ class EntriesController < ApplicationController
            @chart_labels_agent_today = Entry.today.grouped_user.where('departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network').order('users.email asc').pluck('users.email').to_s  
            @chart_data_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network').order('users.email asc').sum(:ovalue).values
            @chart_labels_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network').order('users.email asc').pluck('users.email').to_s  
-    elsif @current_department.eql? "Pre-Approval/Pending-Review Supervisor"
+    elsif @current_department.eql? "Back Office" || current_user.has_role?(:supervisor)
       #Juan
       then @chart_data_dept_today = Entry.today.grouped_dept.where('departments.name = ? OR departments.name = ?', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').sum(:ovalue).values
            @chart_labels_dept_today = Entry.today.grouped_dept.where('departments.name = ? OR departments.name = ?', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').pluck('departments.name').to_s  
@@ -150,9 +150,13 @@ end
 
   # GET /entries/new
   def new
-    @entry = Entry.new
-    @department = Entry.joins(agent: :department)
-    @user = Entry.joins(agent: :user).group('users.email')
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @entry = Entry.new
+      @department = Entry.joins(agent: :department)
+      @user = Entry.joins(agent: :user).group('users.email')
+    else
+      redirect_to entries_path, notice: 'unauthorized'
+    end  
   end
 
   # GET /entries/1/edit
@@ -161,14 +165,16 @@ end
 
   # POST /entries
   def create
-    @entry = Entry.new(entry_params)
-    @user = Entry.joins(agent: :user).group('users.email')
-    if @entry.save
-      # redirect_to @entry, notice: 'Entry was successfully created.'
-      redirect_to '/entries', notice: 'Entry was successfully created.'
-    else
-      render :new
-    end
+
+      @entry = Entry.new(entry_params)
+      @user = Entry.joins(agent: :user).group('users.email')
+      if @entry.save
+        # redirect_to @entry, notice: 'Entry was successfully created.'
+        redirect_to '/entries', notice: 'Entry was successfully created.'
+      else
+        render :new
+      end
+
   end
 
   # PATCH/PUT /entries/1
@@ -182,8 +188,12 @@ end
 
   # DELETE /entries/1
   def destroy
-    @entry.destroy
-    redirect_to entries_url, notice: 'Entry was successfully destroyed.'
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @entry.destroy
+      redirect_to entries_url, notice: 'Entry was successfully destroyed.'
+    else
+      redirect_to entries_url, notice: 'unauthorized'
+    end
   end
 
   private

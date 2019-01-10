@@ -30,7 +30,11 @@ class DapsController < ApplicationController
 
   # GET /daps/new
   def new
-    @dap = Dap.new
+    if current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @dap = Dap.new
+    else 
+      redirect_to daps_path, notice: 'Unauthorized'
+    end    
   end
 
   # GET /daps/1/edit
@@ -39,14 +43,14 @@ class DapsController < ApplicationController
 
   # POST /daps
   def create
-    @dap = Dap.new(dap_params)
+      @dap = Dap.new(dap_params)
 
-    if @dap.save
-      DapMailer.dap_email(@dap).deliver_now
-      redirect_to @dap, notice: 'Dap was successfully created.'
-    else
-      render :new
-    end
+      if @dap.save
+        DapMailer.dap_email(@dap).deliver_now
+        redirect_to @dap, notice: 'Dap was successfully created.'
+      else
+        render :new
+      end
   end
 
   # PATCH/PUT /daps/1
