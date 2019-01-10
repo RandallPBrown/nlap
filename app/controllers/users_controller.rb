@@ -58,6 +58,7 @@ class UsersController < ApplicationController
 
 def destroy
   # DELETE /resource
+  if current_user.has_role?(:manager && :executive) then
     @user.soft_delete
     # Devise.sign_out_all_scopes ? sign_out : sign_out(@user)
     # set_flash_message :notice, :destroyed
@@ -66,6 +67,9 @@ def destroy
 
   # @user.destroy!
   redirect_to agents_path, notice: 'User was successfully destroyed.'
+  else
+    redirect_to agents_path, notice: 'Unauthorized'
+  end
 end
 
   def index
