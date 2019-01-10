@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190110155116) do
+ActiveRecord::Schema.define(version: 20190110184056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,13 @@ ActiveRecord::Schema.define(version: 20190110155116) do
     t.integer "resource_id"
   end
 
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.bigint "role_id"
+    t.bigint "user_id"
+    t.index ["role_id"], name: "index_roles_users_on_role_id"
+    t.index ["user_id"], name: "index_roles_users_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -160,6 +167,8 @@ ActiveRecord::Schema.define(version: 20190110155116) do
   add_foreign_key "daps", "users"
   add_foreign_key "daps", "writeups"
   add_foreign_key "daps", "wunatures"
+  add_foreign_key "roles_users", "roles"
+  add_foreign_key "roles_users", "users"
   add_foreign_key "users", "agents"
   add_foreign_key "users", "departments"
 end

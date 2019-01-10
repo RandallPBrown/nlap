@@ -73,7 +73,7 @@ def destroy
 end
 
   def index
-    @users = User.with_role(:agent).all.includes(:daps, agent: :entries).joins(agent: :entries).order('users.first_name asc')
+    @users = User.all.includes(:daps, agent: :entries).joins(agent: :entries).order('users.first_name asc')
   end
 
   private
