@@ -30,6 +30,7 @@
                 <tbody>
                 <% @agents.each do |agent| %>
                   <tr>
+                    
                                           <% if agent.user.deleted_at.blank? then %>
                                           <td><%= agent.user.id %></td>
                                           <td><%= agent.user.full_name %></td>

@@ -48,7 +48,7 @@ gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary'
 gem 'figaro'
 gem "letter_opener", :group => :development
-
+gem 'rolify'
 
 # gem 'bootstrap'
 gem 'popper_js'

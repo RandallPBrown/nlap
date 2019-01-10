@@ -8,7 +8,7 @@ class AgentsController < ApplicationController
   def index
     # @agent = Agent.all
     @agent = Agent.all
-    @users = User.all
+    @users = User.with_role(:agent).all
     @agents = Agent.includes(:entries, user: :daps).order('users.first_name asc')
     # @occurrences_since = Dap.find_by(user_id: @users.ids) 
   end

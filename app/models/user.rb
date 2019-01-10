@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  rolify
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :department
@@ -11,6 +12,12 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :daps
   before_validation :allow_department
   has_one :agent, dependent: :destroy
+  after_create :assign_default_role
+
+  def assign_default_role
+    self.add_role(:newuser) if self.roles.blank?
+  end
+
   def allow_department
   		self.department_id
   end

@@ -1,4 +1,5 @@
 class Agent < ApplicationRecord
+  resourcify
   belongs_to :department
   belongs_to :user
   has_many :daps

@@ -1,4 +1,5 @@
 class Entry < ApplicationRecord
+  resourcify
   include PgSearch
   attr_accessor :total_effective_occurrence, :occurrences_today, :occurrence_ovalue_today, :occurrence_total
   belongs_to :agent

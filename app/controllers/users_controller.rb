@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      UserMailer.welcome_email(@user).deliver_now
+      # UserMailer.welcome_email(@user).deliver_now
       redirect_to agents_path, notice: 'User was successfully created.'
       Agent.create({:department_id => @user.department_id, :user_id => @user.id})
 
@@ -69,7 +69,7 @@ def destroy
 end
 
   def index
-    @users = User.all.includes(:daps, agent: :entries).joins(agent: :entries).order('users.first_name asc')
+    @users = User.with_role(:agent).all.includes(:daps, agent: :entries).joins(agent: :entries).order('users.first_name asc')
   end
 
   private
