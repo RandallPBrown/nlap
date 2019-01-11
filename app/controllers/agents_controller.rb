@@ -9,7 +9,7 @@ class AgentsController < ApplicationController
     # @agent = Agent.all
     # @agent = Agent.all
     # @users = User.with_role(:agent).all
-    @agents = Agent.includes(:entries, user: :daps).order('users.first_name asc')
+    @agents = Agent.includes(:department, entries: :user, user: :daps).order('users.first_name asc')
     # @occurrences_since = Dap.find_by(user_id: @users.ids) 
   end
 

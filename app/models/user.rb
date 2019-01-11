@@ -42,6 +42,7 @@ class User < ApplicationRecord
   end  
 
 
+
   scope :written,  -> {
     where("daps.ddate > ?", Time.now-90.days)
   }
