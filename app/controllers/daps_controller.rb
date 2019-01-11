@@ -9,9 +9,9 @@ class DapsController < ApplicationController
     # @daps = Dap.all.paginate(page: params[:page], :per_page => 5)
     require 'will_paginate/array'
     if params[:search].present?
-      @daps = Dap.perform_search(params[:search]).order(ddate: :desc).paginate(page: params[:page], :per_page => 5)
+      @daps = Dap.includes(:wunature, :user, :writeup).perform_search(params[:search]).order(ddate: :desc).paginate(page: params[:page], :per_page => 5)
     else
-      @daps = Dap.all.order(ddate: :desc).paginate(page: params[:page], :per_page => 5)
+      @daps = Dap.all.includes(:wunature, :user, :writeup).order(ddate: :desc).paginate(page: params[:page], :per_page => 5)
     end
   end
 
