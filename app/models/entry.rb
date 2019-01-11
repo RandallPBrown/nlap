@@ -8,6 +8,32 @@ class Entry < ApplicationRecord
   has_one :department, :through => :agent
   accepts_nested_attributes_for :agent
   accepts_nested_attributes_for :occurrence
+
+
+  scope :acd, -> {
+    group("occurrences.name").order("occurrences.name DESC").count("occurrences.name").values
+  }
+
+  scope :acl, -> {
+    group("occurrences.name").order("occurrences.name DESC").pluck("occurrences.name")
+  }
+
+  scope :ueae, -> {
+    where("occurrences.ovalue > ?", 0.5).count(:name)
+  }
+
+  scope :uete2, -> {
+    where("occurrences.name = ?", "Tardy").count(:name)
+  }
+
+  scope :uete, -> {
+    sum(:ovalue)
+  }
+
+  scope :ue, -> {
+    group(:id).order("entries.edate DESC")
+  }
+
   scope :effective,  -> {
   	where("entries.edate > ?", Time.now-180.days)
   }

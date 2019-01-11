@@ -6,15 +6,15 @@ class UsersController < ApplicationController
   def dashboard          
     # @body_class = "with-sidebar show-sidebar"
     # @current_user = current_user
-    @user_entry = Entry.ue.paginate(page: params[:page], :per_page => 3)
-    @user_entry_today = Entry.today.ue
-    @user_entry_effective = Entry.effective.ue
-    @user_entry_total_effective = Entry.effective.uete
-    @user_entry_tardy_effective = Entry.effective.uete2
-    @user_entry_absent_effective = Entry.effective.ueae
-  	@agent_chart_labels = Entry.effective.acl
-  	@agent_chart_data = Entry.effective.acd
-    @user_writeup_written = Dap.written.uww
+    @user_entry = Entry.occurrence_user.where("users.id = ?", current_user.id).ue.paginate(page: params[:page], :per_page => 3)
+    @user_entry_today = Entry.today.occurrence_user.where("users.id = ?", current_user.id).ue
+    @user_entry_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).ue
+    @user_entry_total_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).uete
+    @user_entry_tardy_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).uete2
+    @user_entry_absent_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).ueae
+  	@agent_chart_labels = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).acl
+  	@agent_chart_data = Entry.effective.occurrence_user.acd
+    @user_writeup_written = Dap.written.joins(:writeup, :user).where("users.id = ?", current_user.id).count(:writeup_id)
     @user_dap = Dap.joins(:writeup, :user).where("users.id = ?", current_user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
   require 'will_paginate/array'
   end

@@ -41,33 +41,6 @@ class User < ApplicationRecord
     !deleted_at ? super : :deleted_account  
   end  
 
-  scope :uww, -> {
-    joins(:writeup, :user).where("users.id = ?", current_user.id).count(:writeup_id)
-  }
-
-  scope :acd, -> {
-    joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).group("occurrences.name").order("occurrences.name DESC").count("occurrences.name").values
-  }
-
-  scope :acl, -> {
-    joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).group("occurrences.name").order("occurrences.name DESC").pluck("occurrences.name")
-  }
-
-  scope :ueae, -> {
-    joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).where("occurrences.ovalue > ?", 0.5).count(:name)
-  }
-
-  scope :uete2, -> {
-    joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).where("occurrences.name = ?", "Tardy").count(:name)
-  }
-
-  scope :uete, -> {
-    joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).sum(:ovalue)
-  }
-
-  scope :ue, -> {
-    joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).group(:id).order("entries.edate DESC")
-  }
 
   scope :written,  -> {
     where("daps.ddate > ?", Time.now-90.days)
