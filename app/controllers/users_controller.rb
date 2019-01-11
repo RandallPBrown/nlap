@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def dashboard          
     # @body_class = "with-sidebar show-sidebar"
     # @current_user = current_user
-    @user_entry = Entry.occurrence_user.where("users.id = ?", current_user.id).ue.paginate(page: params[:page], :per_page => 3)
+    @user_entry = Entry.occurrence_user.where("users.id = ?", current_user.id).group('agents.id', 'occurrences.id', 'departments.id', 'users.id').includes(:occurrence, agent: [:department, :user]).ue.paginate(page: params[:page], :per_page => 3)
     @user_entry_today = Entry.today.occurrence_user.where("users.id = ?", current_user.id).ue
     @user_entry_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).ue
     @user_entry_total_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).uete

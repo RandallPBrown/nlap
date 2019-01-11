@@ -14,7 +14,7 @@ class EntriesController < ApplicationController
     
     @body_class = "with-sidebar show-sidebar" #system generated
     @current_department = current_user.department.name # keep for now
-    @entries = Entry.all.includes(agent: [:user, :department], occurrence: params[:ovalue]).joins(agent: :user).order(updated_at: :desc).paginate(page: params[:page], :per_page => 5) # keep for now
+    @entries = Entry.all.joins(agent: :user).order(updated_at: :desc).includes(agent: [:user, :department], occurrence: params[:ovalue]).paginate(page: params[:page], :per_page => 5) # keep for now
     if current_user.has_role?(:executive) then
       #Dan/dad/rick
            @chart_data_dept_today = Entry.today.grouped_dept.order('departments.name asc').sum(:ovalue).values
@@ -108,11 +108,11 @@ class EntriesController < ApplicationController
   def index
     require 'will_paginate/array'
     if params[:search].present?
-      @entries = Entry.includes(:user, :department, :occurrence).order(edate: :desc).perform_search(params[:search]).paginate(page: params[:page], :per_page => 5)
+      @entries = Entry.order(edate: :desc).perform_search(params[:search]).includes(:user, :department, :occurrence).paginate(page: params[:page], :per_page => 5)
     else
-      @entries = Entry.all.includes(:user, :department, :occurrence).joins(:department, :occurrence, agent: :user).order(params[:sort]).paginate(page: params[:page], :per_page => 5)
+      @entries = Entry.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).includes(:user, :department, :occurrence).paginate(page: params[:page], :per_page => 5)
     end
-    @agents_list = Agent.all.includes(:entries, :user).order(params[:sort])
+    @agents_list = Agent.all.order(params[:sort]).includes(:entries, :user)
   end
 
 
@@ -145,7 +145,7 @@ end
 
   def agent_list
     @entry = Entry.all
-    @agents_list = Agent.includes(:entries, user: :daps).order('users.first_name ASC')
+    @agents_list = Agent.order('users.first_name ASC').includes(:entries, user: :daps)
   end
 
   # GET /entries/new
