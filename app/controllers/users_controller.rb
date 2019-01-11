@@ -6,15 +6,15 @@ class UsersController < ApplicationController
   def dashboard          
     # @body_class = "with-sidebar show-sidebar"
     # @current_user = current_user
-    @user_entry = Entry.joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).group(:id).order("entries.edate DESC").paginate(page: params[:page], :per_page => 3)
-    @user_entry_today = Entry.today.joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).group(:id).order("entries.edate DESC")
-    @user_entry_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).group(:id).order("entries.edate DESC")
-    @user_entry_total_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).sum(:ovalue)
-    @user_entry_tardy_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).where("occurrences.name = ?", "Tardy").count(:name)
-    @user_entry_absent_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).where("occurrences.ovalue > ?", 0.5).count(:name)
-  	@agent_chart_labels = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).group("occurrences.name").order("occurrences.name DESC").pluck("occurrences.name")
-  	@agent_chart_data = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", current_user.id).group("occurrences.name").order("occurrences.name DESC").count("occurrences.name").values
-    @user_writeup_written = Dap.written.joins(:writeup, :user).where("users.id = ?", current_user.id).count(:writeup_id)
+    @user_entry = Entry.ue.paginate(page: params[:page], :per_page => 3)
+    @user_entry_today = Entry.today.ue
+    @user_entry_effective = Entry.effective.ue
+    @user_entry_total_effective = Entry.effective.uete
+    @user_entry_tardy_effective = Entry.effective.uete2
+    @user_entry_absent_effective = Entry.effective.ueae
+  	@agent_chart_labels = Entry.effective.acl
+  	@agent_chart_data = Entry.effective.acd
+    @user_writeup_written = Dap.written.uww
     @user_dap = Dap.joins(:writeup, :user).where("users.id = ?", current_user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
   require 'will_paginate/array'
   end
@@ -50,7 +50,8 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /agents/1
   def update
-    if @user.update(user_params)
+    if @user.update_without_password(user_params)
+      Agent.where("user_id = ?", @user.id).update({:department_id => @user.department_id, :user_id => @user.id})
       redirect_to @user, notice: 'User was successfully updated.'
     else
       render :edit
