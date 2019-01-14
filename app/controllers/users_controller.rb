@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   # GET /agents/new
   def new
-    if current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+    if current_user.has_role?(:trainer) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       @user = User.new
     else
       redirect_to agents_path, notice: 'Unauthorized'
@@ -40,6 +40,7 @@ class UsersController < ApplicationController
   def create
       @user = User.new(user_params)
       if @user.save
+        @user.add_role params[:user][:role]
         # UserMailer.welcome_email(@user).deliver_now
         redirect_to agents_path, notice: 'User was successfully created.'
         Agent.create({:department_id => @user.department_id, :user_id => @user.id})
@@ -88,6 +89,6 @@ end
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:id, :first_name, :last_name, :email, :department_id, :password, :password_confirmation, :department, :agent)
+      params.require(:user).permit(:id, :first_name, :last_name, :email, :department_id, :password, :password_confirmation, :department, :agent, :role)
     end
 end

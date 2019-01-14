@@ -12,11 +12,12 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :daps
   before_validation :allow_department
   has_one :agent, dependent: :destroy
-  after_create :assign_default_role
+  accepts_nested_attributes_for :roles
+  # after_create :assign_default_role
 
-  def assign_default_role
-    self.add_role(:agent) if self.roles.blank?
-  end
+  # def assign_default_role
+  #   self.add_role(:agent) if self.roles.blank?
+  # end
 
   def allow_department
   		self.department_id

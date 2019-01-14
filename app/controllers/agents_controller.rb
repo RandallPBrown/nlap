@@ -80,7 +80,7 @@ class AgentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def agent_params
-      params.require(:agent).permit(:id, :fname, :lname, :hire, :dept, :department_id, user: [:full_name], occurrence: [:ovalue])
+      params.require(:agent).permit(:id, :fname, :lname, :hire, :dept, :department_id, :role, user: [:full_name], occurrence: [:ovalue])
     end
   
     def department_params
