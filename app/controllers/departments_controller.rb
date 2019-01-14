@@ -1,11 +1,15 @@
 class DepartmentsController < ApplicationController
   layout "scaffold"
-before_action :authorize_admin
+  before_action :authorize_admin
   before_action :set_department, only: [:show, :edit, :update, :destroy]
 
   # GET /departments
   def index
-    @departments = Department.all
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @departments = Department.all
+    else
+      puts 'Unauthorized'
+    end
   end
 
   # GET /departments/1
@@ -14,11 +18,20 @@ before_action :authorize_admin
 
   # GET /departments/new
   def new
-    @department = Department.new
+    if current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @department = Department.new
+    else
+      redirect_to departments_path, notice: 'Unauthorized'
+    end
   end
 
   # GET /departments/1/edit
   def edit
+    if current_user.has_role?(:director) || current_user.has_role?(:executive) then
+
+    else
+      redirect_to departments_path, notice: 'Unauthorized'
+    end
   end
 
   # POST /departments
@@ -43,8 +56,12 @@ before_action :authorize_admin
 
   # DELETE /departments/1
   def destroy
-    @department.destroy
-    redirect_to departments_url, notice: 'Department was successfully destroyed.'
+    if current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @department.destroy
+      redirect_to departments_url, notice: 'Department was successfully destroyed.'
+    else
+      redirect_to departments_path, notice: 'Unauthorized'
+    end
   end
 
   private

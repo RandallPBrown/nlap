@@ -118,34 +118,62 @@ class EntriesController < ApplicationController
 
   # GET /entries/1
   def show
-    @user_entry = Entry.occurrence_user
-      .where("users.id = ?", @entry.agent.user.id)
-      .group(:id).order("entries.edate DESC")
-      .paginate(page: params[:page], :per_page => 3)
-    @user_dap = Dap.joins(:writeup, :user)
-      .where("users.id = ?", @entry.agent.user.id)
-      .group(:id).order("daps.ddate DESC")
-      .paginate(page: params[:page], :per_page => 3)
+    if current_user.has_role?(:agent) && (@entry.agent.user_id != current_user.id) then
+      redirect_to users_dashboard_path, notice: 'Unauthorized'
+    elsif current_user.has_role?(:agent) && (@entry.agent.user_id = current_user.id)
+      @user_entry = Entry.includes(:agent, :occurrence).occurrence_user.group('agents.id', 'occurrences.id')
+        .where("users.id = ?", @entry.agent.user.id)
+        .group(:id).order("entries.edate DESC")
+        .paginate(page: params[:page], :per_page => 3)
+      @user_dap = Dap.joins(:writeup, :user)
+        .where("users.id = ?", @entry.agent.user.id)
+        .group(:id).order("daps.ddate DESC")
+        .paginate(page: params[:page], :per_page => 3)
       respond_to do |format|
-  format.html
-  format.pdf do
-    render  pdf: "your-filename"
+        format.html
+        format.pdf do
+          render  pdf: "your-filename"
+        end
+      end
+    elsif current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @user_entry = Entry.occurrence_user
+        .where("users.id = ?", @entry.agent.user.id)
+        .group(:id).order("entries.edate DESC")
+        .paginate(page: params[:page], :per_page => 3)
+      @user_dap = Dap.joins(:writeup, :user)
+        .where("users.id = ?", @entry.agent.user.id)
+        .group(:id).order("daps.ddate DESC")
+        .paginate(page: params[:page], :per_page => 3)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf: "your-filename"
+      end
+    end
   end
 end
-  end
+
 
   def calendar
-    @entry = Entry.new
-    if params[:search].present?
-      @entries = Entry.perform_search(params[:search]).order(edate: :desc).paginate(page: params[:page], :per_page => 5)
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @entry = Entry.new
+      if params[:search].present?
+        @entries = Entry.perform_search(params[:search]).order(edate: :desc).paginate(page: params[:page], :per_page => 5)
+      else
+        @entries = Entry.all
+      end
     else
-      @entries = Entry.all
+      redirect_to entries_path, notice: 'Unauthorized'
     end
   end
 
   def agent_list
-    @entry = Entry.all
-    @agents_list = Agent.order('users.first_name ASC').includes(:entries, user: :daps)
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @entry = Entry.all
+      @agents_list = Agent.order('users.first_name ASC').includes(:entries, user: :daps)
+    else
+      redirect_to entries_path, notice: 'Unauthorized'
+    end
   end
 
   # GET /entries/new
@@ -155,20 +183,25 @@ end
       @department = Entry.joins(agent: :department)
       @user = Entry.joins(agent: :user).group('users.email')
     else
-      redirect_to entries_path, notice: 'unauthorized'
+      redirect_to entries_path, notice: 'Unauthorized'
     end  
   end
 
   # GET /entries/1/edit
   def edit
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+
+    else
+      redirect_to entries_path, notice: 'Unauthorized'
+    end
   end
 
   # POST /entries
   def create
-
       @entry = Entry.new(entry_params)
       @user = Entry.joins(agent: :user).group('users.email')
       if @entry.save
+        EntryMailer.entry_email(@entry).deliver_now
         # redirect_to @entry, notice: 'Entry was successfully created.'
         redirect_to '/entries', notice: 'Entry was successfully created.'
       else

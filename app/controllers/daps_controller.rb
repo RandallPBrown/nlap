@@ -1,6 +1,5 @@
 class DapsController < ApplicationController
   layout "scaffold"
-  
   before_action :set_dap, only: [:show, :edit, :update, :destroy]
   before_action :authorize_admin, except: [:show]
 
@@ -18,13 +17,21 @@ class DapsController < ApplicationController
 
   # GET /daps/1
   def show
-    @future_time = @dap.ddate + 90.days
-    @daps = Dap.all.joins(:user).where('user_id = ?', @dap.user_id)
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render  pdf: "your-filename"
+    if current_user.has_role?(:agent) && (@dap.user_id != current_user.id) then
+      redirect_to users_dashboard_path, notice: 'Unauthorized'
+    elsif current_user.has_role?(:agent) && (@dap.user_id = current_user.id)
+
+    elsif current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @future_time = @dap.ddate + 90.days
+      @daps = Dap.all.joins(:user).where('user_id = ?', @dap.user_id)
+      respond_to do |format|
+        format.html
+        format.pdf do
+          render  pdf: "your-filename"
+        end
       end
+    else
+      redirect_to users_path, notice: 'Unauthorized'
     end
   end
 

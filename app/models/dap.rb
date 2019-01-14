@@ -1,4 +1,5 @@
 class Dap < ApplicationRecord
+  resourcify
   attr_accessor :occurrence_since_dap
   attr_accessor :total_active_writeup
   attr_accessor :written_end

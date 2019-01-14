@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   	@agent_chart_labels = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).acl
   	@agent_chart_data = Entry.effective.occurrence_user.acd
     @user_writeup_written = Dap.written.joins(:writeup, :user).where("users.id = ?", current_user.id).count(:writeup_id)
-    @user_dap = Dap.joins(:writeup, :user).where("users.id = ?", current_user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
+    @user_dap = Dap.includes(:writeup, :user).joins(:writeup, :user).group('writeups.id', 'users.id').where("users.id = ?", current_user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
   require 'will_paginate/array'
   end
 
