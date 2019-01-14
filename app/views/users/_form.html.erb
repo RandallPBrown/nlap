@@ -4,15 +4,14 @@
 
 <div id="main" class="devise-1">
   <div class="container-fluid">
-    <div class="row">
-      <header class="text-center">
-        <h1><%=app_name%></h1>
-        <p class="p-0 m-0 text-uppercase">Sign Up</p>
-      </header>
-    </div>
     <div class="row mt-5">
-      <div class="col-12 col-md-6 mr-auto ml-auto">
+      <div class="col-12 col-md-12 mr-auto ml-auto">
         <div class="card">
+          <div class="card-header bg-primary">
+            <div class="row mx-auto">
+              <%= image_tag('service_roots.png', size: "100x125", class: 'p-auto m-auto') %>
+            </div>
+          </div>
           <div class="card-body">
             <div class="container">
               <%= form_for (@user),
@@ -45,7 +44,7 @@
 
                 <%= f.form_group :role, class: "row" do |f| %>
                   <%= f.label :role, class: "form-label" %>
-                  <%= f.collection_select :role, Role.order(:name), :name, :name, {}, { :class => "form-control" } %>
+                  <%= f.collection_select :role, Role.order(:name), :name, :name, {}, { :class => "form-control text-capitalize" } %>
                   <%= f.error_messages %>
                 <% end %>
 

@@ -67,6 +67,14 @@
                   </div>
                   <div class="row">
                     <div class="col-4">
+                      <span class="pull-left"><strong>Position:</strong></span> 
+                    </div>
+                    <div class="col-8">
+                      <span class="pull-left text-capitalize"><%= current_user.roles.all.map{|f| f.name}.join(" ") %></span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4">
                       <span class="pull-left"><strong>Write-ups:</strong></span> 
                     </div>
                     <div class="col-8">
