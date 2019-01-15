@@ -135,7 +135,7 @@ class EntriesController < ApplicationController
           render  pdf: "your-filename"
         end
       end
-    elsif current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+    elsif current_user.has_role?(:reporting) || current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       @user_entry = Entry.occurrence_user
         .where("users.id = ?", @entry.agent.user.id)
         .group(:id).order("entries.edate DESC")
@@ -155,7 +155,7 @@ end
 
 
   def calendar
-    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+    if current_user.has_role?(:reporting) || current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       @entry = Entry.new
       if params[:search].present?
         @entries = Entry.perform_search(params[:search]).order(edate: :desc).paginate(page: params[:page], :per_page => 5)
@@ -168,7 +168,7 @@ end
   end
 
   def agent_list
-    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+    if current_user.has_role?(:reporting) || current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       @entry = Entry.all
       @agents_list = Agent.order('users.first_name ASC').includes(:entries, user: :daps)
     else
@@ -178,7 +178,7 @@ end
 
   # GET /entries/new
   def new
-    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+    if current_user.has_role?(:reporting) || current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       @entry = Entry.new
       @department = Entry.joins(agent: :department)
       @user = Entry.joins(agent: :user).group('users.email')
@@ -189,7 +189,7 @@ end
 
   # GET /entries/1/edit
   def edit
-    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+    if current_user.has_role?(:reporting) || current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
 
     else
       redirect_to entries_path, notice: 'Unauthorized'
