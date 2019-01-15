@@ -59,8 +59,8 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "ops_#{Rails.env}"
-  config.action_controller.asset_host 
-  config.action_mailer.asset_host
+  config.action_controller.asset_host = 'http://nlscap.net'
+  config.action_mailer.asset_host = config.action_controller.asset_host
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { :host => 'mighty-mountain-66346.heroku.com' }
   ActionMailer::Base.smtp_settings = {
