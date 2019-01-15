@@ -6,42 +6,58 @@ class AgentsController < ApplicationController
 
   # GET /agents
   def index
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
     # @agent = Agent.all
     # @agent = Agent.all
     # @users = User.with_role(:agent).all
-    @agents = Agent.includes(:department, entries: :user, user: :daps).order('users.first_name asc')
+      @agents = Agent.includes(:department, entries: :user, user: :daps).order('users.first_name asc')
+    else
+      redirect_to users_dashboard_path, notice: 'Unauthorized'
+    end
     # @occurrences_since = Dap.find_by(user_id: @users.ids) 
   end
 
   # GET /agents/1
   def show
-    @user_entry = Entry.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).group(:id).order("entries.edate DESC").paginate(page: params[:page], :per_page => 3)
-    @user_entry_today = Entry.today.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).group(:id).order("entries.edate DESC")
-    @user_entry_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).group(:id).order("entries.edate DESC")
-    @user_entry_total_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).sum(:ovalue)
-    @user_entry_tardy_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).where("occurrences.name = ?", "Tardy").count(:name)
-    @user_entry_absent_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).where("occurrences.ovalue > ?", 0.5).count(:name)
-    @agent_chart_labels = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).group("occurrences.name").order("occurrences.name DESC").pluck("occurrences.name")
-    @agent_chart_data = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).group("occurrences.name").order("occurrences.name DESC").count("occurrences.name").values
-    @user_writeup_written = Dap.written.joins(:writeup, :user).where("users.id = ?", @agent.user.id).count(:writeup_id)
-    @user_dap = Dap.joins(:writeup, :user).where("users.id = ?", @agent.user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
-    @user_entry_total_effective = Entry.effective.occurrence_user
-      .where("users.id = ?", @agent.user.id)
-      .sum(:ovalue)
-    @user_dap_total_effective = Dap.written.joins(:user)
-      .where("users.id = ?", @agent.user.id)
-      .count(:id)  
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @user_entry = Entry.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).group(:id).order("entries.edate DESC").paginate(page: params[:page], :per_page => 3)
+      @user_entry_today = Entry.today.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).group(:id).order("entries.edate DESC")
+      @user_entry_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).group(:id).order("entries.edate DESC")
+      @user_entry_total_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).sum(:ovalue)
+      @user_entry_tardy_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).where("occurrences.name = ?", "Tardy").count(:name)
+      @user_entry_absent_effective = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).where("occurrences.ovalue > ?", 0.5).count(:name)
+      @agent_chart_labels = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).group("occurrences.name").order("occurrences.name DESC").pluck("occurrences.name")
+      @agent_chart_data = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @agent.user.id).group("occurrences.name").order("occurrences.name DESC").count("occurrences.name").values
+      @user_writeup_written = Dap.written.joins(:writeup, :user).where("users.id = ?", @agent.user.id).count(:writeup_id)
+      @user_dap = Dap.joins(:writeup, :user).where("users.id = ?", @agent.user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
+      @user_entry_total_effective = Entry.effective.occurrence_user
+        .where("users.id = ?", @agent.user.id)
+        .sum(:ovalue)
+      @user_dap_total_effective = Dap.written.joins(:user)
+        .where("users.id = ?", @agent.user.id)
+        .count(:id)  
+    else 
+      redirect_to users_dashboard_path, notice: 'Unauthorized'
+    end
   end
 
   # GET /agents/new
   def new
-    @agent = Agent.new
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @agent = Agent.new
   #  @departments = Department.new
+    else
+      redirect_to users_dashboard_path, notice: 'Unauthorized'
+    end
   end
 
   # GET /agents/1/edit
   def edit
-  end
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+    else
+      redirect_to users_dashboard_path, notice: 'Unauthorized'
+    end
+end
 
   # POST /agents
   def create
@@ -64,8 +80,12 @@ class AgentsController < ApplicationController
 
   # DELETE /agents/1
   def destroy
-    @agent.destroy
-    redirect_to agents_url, notice: 'Agent was successfully destroyed.'
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @agent.destroy
+      redirect_to agents_url, notice: 'Agent was successfully destroyed.'
+    else
+      redirect_to users_dashboard_path, notice: 'Unauthorized'
+    end
   end
 
   private
