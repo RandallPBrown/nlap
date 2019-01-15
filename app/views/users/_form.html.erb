@@ -44,7 +44,7 @@
 
                 <%= f.form_group :role, class: "row" do |f| %>
                   <%= f.label :role, class: "form-label" %>
-                  <%= f.collection_select :role, Role.order(:name), :name, :name, {}, { :class => "form-control text-capitalize" } %>
+                  <%= f.collection_select :role, Role.global, :name, :name, {}, { :class => "form-control text-capitalize" } %>
                   <%= f.error_messages %>
                 <% end %>
 
