@@ -23,7 +23,8 @@ class DapsController < ApplicationController
 
     elsif current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       @future_time = @dap.ddate + 90.days
-      @daps = Dap.all.joins(:user).where('user_id = ?', @dap.user_id)
+      @daps = Dap.all.joins(:user).where('user_id = ?', @dap.user_id).order('ddate desc')
+      @entries = Entry.all.joins(agent: :user).where('user_id = ?', @dap.user_id).order('edate desc')
       respond_to do |format|
         format.html
         format.pdf do
