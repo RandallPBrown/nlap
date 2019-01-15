@@ -10,7 +10,7 @@
         <li class="nav-item">
           <a class="nav-link text-white font-weight-bold" href="../users/dashboard"> <%= fa_icon_tag("home") %></a>
         </li>
-        <% if current_user.admin? then %>
+        <% if current_user.admin? && current_user.has_role?(:reporting)  then %>
         <li class="nav-item">
           <a class="nav-link text-white font-weight-bold" href="../entries/dashboard"> <%= fa_icon_tag("pie-chart") %></a>
         </li>
@@ -18,6 +18,14 @@
           <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"> <%= fa_icon_tag("list") %></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../entries">Occurrence Log</a>
+        <% elsif current_user.admin? && (current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive)) %>
+        <li class="nav-item">
+          <a class="nav-link text-white font-weight-bold" href="../entries/dashboard"> <%= fa_icon_tag("pie-chart") %></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"> <%= fa_icon_tag("list") %></a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../entries">Occurrence Log</a>    
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../daps">Write-up Log</a>
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../agents">Agents List</a>
           </div>  
