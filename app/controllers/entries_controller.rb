@@ -108,9 +108,9 @@ class EntriesController < ApplicationController
   def index
     require 'will_paginate/array'
     if params[:search].present?
-      @entries = Entry.order(edate: :desc).perform_search(params[:search]).includes(:user, :department, :occurrence).paginate(page: params[:page], :per_page => 5)
+      @entries = Entry.order(edate: :desc).perform_search(params[:search]).order('edate desc').includes(:user, :department, :occurrence).paginate(page: params[:page], :per_page => 5)
     else
-      @entries = Entry.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).includes(:user, :department, :occurrence).paginate(page: params[:page], :per_page => 5)
+      @entries = Entry.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).order('edate desc').includes(:user, :department, :occurrence).paginate(page: params[:page], :per_page => 5)
     end
     @agents_list = Agent.all.order(params[:sort]).includes(:entries, :user)
   end
@@ -129,12 +129,12 @@ class EntriesController < ApplicationController
         .where("users.id = ?", @entry.agent.user.id)
         .group(:id).order("daps.ddate DESC")
         .paginate(page: params[:page], :per_page => 3)
-      respond_to do |format|
-        format.html
-        format.pdf do
-          render  pdf: "your-filename"
-        end
-      end
+      # respond_to do |format|
+      #   format.html
+      #   format.pdf do
+      #     render  pdf: "OCCURRENCE-#{current_user.full_name}-#{Date.today}"
+      #   end
+      # end
     elsif current_user.has_role?(:reporting) || current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       @user_entry = Entry.occurrence_user
         .where("users.id = ?", @entry.agent.user.id)
@@ -144,12 +144,12 @@ class EntriesController < ApplicationController
         .where("users.id = ?", @entry.agent.user.id)
         .group(:id).order("daps.ddate DESC")
         .paginate(page: params[:page], :per_page => 3)
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render  pdf: "your-filename"
-      end
-    end
+    # respond_to do |format|
+    #   format.html
+    #   format.pdf do
+    #     render  pdf: "OCCURRENCE-#{current_user.full_name}-#{Date.today}"
+    #   end
+    # end
   end
 end
 
@@ -207,7 +207,6 @@ end
       else
         render :new
       end
-
   end
 
   # PATCH/PUT /entries/1

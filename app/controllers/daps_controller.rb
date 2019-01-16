@@ -25,12 +25,12 @@ class DapsController < ApplicationController
       @future_time = @dap.ddate + 90.days
       @daps = Dap.written.joins(:user).where('user_id = ?', @dap.user_id).where('ddate <= ?', @dap.ddate).order('ddate desc')
       @entries = Entry.effective.joins(agent: :user).where('user_id = ?', @dap.user_id).where('edate <= ?', @dap.ddate).order('edate desc')
-      respond_to do |format|
-        format.html
-        format.pdf do
-          render  pdf: "DAP-#{current_user.full_name}-#{Date.today}"
-        end
-      end
+      # respond_to do |format|
+      #   format.html
+      #   format.pdf do
+      #     render  pdf: "DAP-#{current_user.full_name}-#{Date.today}"
+      #   end
+      # end
     else
       redirect_to users_path, notice: 'Unauthorized'
     end
@@ -54,7 +54,7 @@ class DapsController < ApplicationController
       @dap = Dap.new(dap_params)
 
       if @dap.save
-        DapMailer.dap_email(@dap).deliver_now
+        # DapMailer.dap_email(@dap).deliver_now
         redirect_to @dap, notice: 'Dap was successfully created.'
       else
         render :new
