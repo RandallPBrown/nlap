@@ -76,17 +76,35 @@
 
       <div class="col-12 col-md-9">
         <div class="card" style="background-color: #ffffff !important">
+                <div class="card-header d-flex align-items-center">
+        <h6 class="mr-auto">Occurrences by Department</h6>
+        <div class="d-flex">
+          <div class="dropdown">
+            <button class="nav-link btn btn-icon " type="button" id="salesAndRefundButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= theme_icon_tag "more" %>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-badgeledby="salesAndRefundButton" id="chart-selector">
+              <button class="dropdown-item" id="userChartEffective">Active</button>
+              <button class="dropdown-item" id="userChartTotal">All Time</button>
+            </div>
+          </div>
+        </div>
+      </div>
           <div class="card-body">
-            <canvas id="myChart" width="200" height="100"></canvas>
+            <canvas id="userChart" width="200" height="100"></canvas>
             <script>
-            var ctx = document.getElementById("myChart").getContext('2d');
-            var myChart = new Chart(ctx, {
+            var chart_labels = <%= raw @agent_chart_labels_effective %>;
+            var chart_data = <%= raw @agent_chart_data_effective %>;
+            var dataset_label = "Today";
+            var chart_type = 'bar';
+            var ctx = document.getElementById("userChart").getContext('2d');
+            var config = {
                 type: 'bar',
                 data: {
-                    labels: <%= raw @agent_chart_labels %>,
+                    labels: chart_labels,
                     datasets: [{
-                        label: 'Count',
-                        data: <%= raw @agent_chart_data %>,
+                        label: dataset_label,
+                        data: chart_data,
                         backgroundColor: '#8e8e8e',
                         borderColor: '#373737',
                         borderWidth: 1
@@ -101,6 +119,27 @@
                         }]
                     }
                 }
+            };
+            var user_chart = new Chart(ctx, config);
+            $("#userChartEffective").click(function() {
+                var chart_labels = <%= raw @agent_chart_labels_effective %>;
+                var chart_data = <%= raw @agent_chart_data_effective %>;
+                var dataset_label = "Effective";
+                var data = user_chart.config.data;
+                data.datasets[0].data = chart_data;
+                data.labels = chart_labels;
+                data.datasets[0].label = dataset_label;
+                user_chart.update();
+            });
+            $("#userChartTotal").click(function() {
+                var chart_labels = <%= raw @agent_chart_labels_total %>;
+                var chart_data = <%= raw @agent_chart_data_total %>;
+                var dataset_label = "Total";
+                var data = user_chart.config.data;
+                data.datasets[0].data = chart_data;
+                data.labels = chart_labels;
+                data.datasets[0].label = dataset_label;
+                user_chart.update();
             });
             </script>
           </div>
