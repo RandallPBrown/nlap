@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   layout 'scaffold'
   before_action :authorize_admin, except: [:show, :dashboard, :edit, :update]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  helper_method :is_admin?
 
   def dashboard          
     # @body_class = "with-sidebar show-sidebar"
@@ -53,13 +54,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /agents/1
   def update
-    if (@user.id = current_user.id) then
-      if @user.update(user_params)
-        redirect_to users_dashboard_path, notice: 'User was successfully updated.'
-      else
-        render :edit
-      end
-    else
+    if (current_user.admin) then
       if @user.update_without_password(user_params)
         @user.add_role params[:user][:role]
         Agent.where("user_id = ?", @user.id).update({:department_id => @user.department_id, :user_id => @user.id})
@@ -67,10 +62,14 @@ class UsersController < ApplicationController
       else
         render :edit
       end
+    else
+      if @user.update(user_params)
+        redirect_to users_dashboard_path, notice: 'User was successfully updated.'
+      else
+        render :edit
+      end
     end
   end
-
-
 
 def destroy
   # DELETE /resource
