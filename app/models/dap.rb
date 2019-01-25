@@ -37,10 +37,8 @@ class Dap < ApplicationRecord
   end
 
   def self.user_writeups(user_id)
-  dap_total = Dap.written.joins(:user)
-      .group(user_id)
-      .where("users.id = ?", user_id)
-      .select(self.ids)
+    
+    Dap.where('ddate > ?', Time.now.end_of_day-90.days).joins(:user).group(:user_id).where("users.id = ?", user_id).pluck(:user_id).count
   end
 
   def occurrence_since_dap
