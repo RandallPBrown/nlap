@@ -16,8 +16,8 @@
               <table class="table table-striped table-hover">
                 <thead>
                   <tr>
-                                          <th>Agent ID</th>
-                                          <th>Full Name</th>
+                                          <th>ID</th>
+                                          <th>Name</th>
                                           <th>Email</th>
                                           <th>Department Name</th>
                                           <th>TAO <small><%= link_to fa_icon_tag("question-circle"), agent, 'data-toggle': 'tooltip', title: 'Total Active Occurrences (180 days)' %></small></th>
@@ -85,6 +85,7 @@
                 </tbody>
               </table>
             </div>
+            <%= will_paginate(@agents) %>
             </div>  
           </div>
         </div>

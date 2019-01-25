@@ -10,7 +10,7 @@ class AgentsController < ApplicationController
     # @agent = Agent.all
     # @agent = Agent.all
     # @users = User.with_role(:agent).all
-      @agents = Agent.includes(:department, entries: :user, user: :daps).order('users.first_name asc')
+      @agents = Agent.includes(:department, entries: :user, user: :daps).order('users.first_name asc').paginate(page: params[:page], :per_page => 15)
     else
       redirect_to users_dashboard_path, notice: 'Unauthorized'
     end
