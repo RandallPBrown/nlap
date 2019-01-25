@@ -201,7 +201,7 @@ end
       @entry = Entry.new(entry_params)
       @user = Entry.joins(agent: :user).group('users.email')
       if @entry.save
-        EntryMailer.entry_email(@entry).deliver_now
+        # EntryMailer.entry_email(@entry).deliver_now
         # redirect_to @entry, notice: 'Entry was successfully created.'
         redirect_to '/entries', notice: 'Entry was successfully created.'
       else

@@ -8,6 +8,7 @@ class Entry < ApplicationRecord
   has_one :department, :through => :agent
   accepts_nested_attributes_for :agent
   accepts_nested_attributes_for :occurrence
+  accepts_nested_attributes_for :user
 
 
   scope :acd, -> {

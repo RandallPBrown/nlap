@@ -1,0 +1,26 @@
+<%# app/views/students/_list.html.erb %>
+<div id="filterrific_results">
+
+  <div>
+    <%= page_entries_info students # provided by will_paginate %>
+  </div>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Country</th>
+      <th>Registered at</th>
+    </tr>
+    <% students.each do |entries| %>
+      <tr>
+        <td><%= link_to(entries.agent.user.full_name, entries_path(entries)) %></td>
+        <td><%= entries.agent.user.email %></td>
+        <td><%= entries.agent.department_name %></td>
+        <td><%= entries.decorated_created_at %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= will_paginate students # provided by will_paginate %>

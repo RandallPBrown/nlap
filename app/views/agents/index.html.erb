@@ -22,7 +22,9 @@
                                           <th>Department Name</th>
                                           <th>TAO <small><%= link_to fa_icon_tag("question-circle"), agent, 'data-toggle': 'tooltip', title: 'Total Active Occurrences (180 days)' %></small></th>
                                           <th>TAW <small><%= link_to fa_icon_tag("question-circle"), agent, 'data-toggle': 'tooltip', title: 'Total Active Writeups (90 days)' %></small></th>
-                                          <th>OSW <small><%= link_to fa_icon_tag("question-circle"), agent, 'data-toggle': 'tooltip', title: 'Total Occurrences Since Writeup' %></small></th>
+                                          <th>OSAW <small><%= link_to fa_icon_tag("question-circle"), agent, 'data-toggle': 'tooltip', title: 'Total Occurrences Since Active Writeup' %></small></th>
+                                          <th>OSW <small><%= link_to fa_icon_tag("question-circle"), agent, 'data-toggle': 'tooltip', title: 'Total Occurrences Since Writeup' %></small>
+                                          </th>
                                           <th>AR? <small><%= link_to fa_icon_tag("question-circle"), agent, 'data-toggle': 'tooltip', title: 'Disciplinary Action Required' %></small></th>
                                         <th></th>
                   </tr>
@@ -54,7 +56,13 @@
                                                 <span><%= agent.user.daps.map{|m| m.occurrence_since_dap}.first %></span>
                                               <% end %>
                                           </td>
-                                          <td><% if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 || agent.entries.map {|a| a.total_effective_occurrence.to_f}.first.to_f > 2.5 && agent.user.daps.map.count {|m| m.total_active_writeup} == 0 then %>
+                                          <td><% if agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 then %>
+                                            <span class="text-danger"><%= agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first %></span>
+                                            <% else %>
+                                              <span><%= agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first %></span>
+                                            <% end %>
+                                          </td>
+                                          <td><% if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 || agent.entries.map {|a| a.total_effective_occurrence}.first.to_f > 2.5 && agent.user.daps.map.count {|m| m.total_active_writeup} == 0 || agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 then %>
                                                 <span class="text-danger"><%= fa_icon_tag("times-circle-o") %></span>
                                               <% else %>
                                                 <span class="text-success"><%= fa_icon_tag("check-circle-o") %></span>
