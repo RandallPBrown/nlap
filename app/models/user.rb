@@ -2,6 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   rolify
+    include PgSearch
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :department
@@ -42,7 +43,11 @@ class User < ApplicationRecord
     !deleted_at ? super : :deleted_account  
   end  
 
-
+    pg_search_scope :search,
+                    :associated_against => {
+        :department => [:name]
+      }, :against =>
+        [:first_name, :last_name]
 
   scope :written,  -> {
     where("daps.ddate > ?", Time.now-90.days)

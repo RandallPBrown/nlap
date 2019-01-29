@@ -10,6 +10,19 @@
 
       <div class="container">
         <div class="row">
+        <!-- search card -->
+        <div class="col-3">
+          <div class="card card-mini card-mini-solid-icon">
+            <div class="card-body">
+              <h6 class="ml-3"><%= fa_icon_tag "search" %> Search</h6>
+              <%= form_tag(agents_path, method: "get") do %>
+                <%= text_field_tag :search, nil, class: "form-control" %>
+                  <%= submit_tag "", style: "display: none;" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <!-- /search card -->
           <div class="col-md-12">
             <div class="card card-sheet sheet-condensed">
               <div class="table-responsive">
