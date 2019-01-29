@@ -97,10 +97,10 @@ class EntriesController < ApplicationController
   end
 
   def my_results
-    @results = Entry.all
+    @results = Entry.all.joins(:agent, :occurrence)
     respond_to do |format|
       format.html
-      format.csv { send_data @results.to_csv }
+      format.csv { send_data @results.to_csv, filename: "entries-#{Date.today}.csv" }
     end
   end
 

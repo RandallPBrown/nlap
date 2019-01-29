@@ -1,0 +1,23 @@
+<%# app/views/agents/_list.html.erb %>
+<div id="filterrific_results">
+
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Country</th>
+      <th>Registered at</th>
+    </tr>
+    <% @agents.each do |agent| %>
+      <tr>
+        <td><%= link_to(agent.user.full_name, agents_path(agent)) %></td>
+        <td><%= agent.user.email %></td>
+        <td><%= agent.user.full_name %></td>
+        <td><%= agent.created_at %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%#= will_paginate @agents %>
