@@ -51,7 +51,7 @@ gem "letter_opener", :group => :development
 gem 'bullet', group: 'development'
 gem 'rolify'
 
-# gem 'bootstrap'
+gem 'bootstrap'
 gem 'popper_js'
 gem 'toastr-rails'
 
