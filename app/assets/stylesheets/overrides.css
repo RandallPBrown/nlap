@@ -1,3 +1,7 @@
 .form-control {
   border-radius: 5px !important;
 }
+
+.hiddenrow {
+	padding: 0 !important;
+}

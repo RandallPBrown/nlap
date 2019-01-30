@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                 <% @agents_list.each do |agent_list| %>
-                  <tr>
+                  <tr data-toggle="collapse" data-target="#accordion" class="clickable">
                                           <td><%= agent_list.user.full_name %></td>
                                           <td><%= agent_list.department.name.truncate(15) %></td>
                                           <td><% if agent_list.entries.map {|a| a.total_effective_occurrence.to_f}.first.to_f > 2.5 then %>
@@ -50,6 +50,9 @@
                                                 <span class="text-success"><%= fa_icon_tag("check-circle-o") %></span>
                                               <% end %>  
                                           </td>
+                                                      <td colspan="3">
+                <div id="accordion" class="collapse">Hidden by default</div>
+            </td>
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to theme_icon_tag("eye"), agent_list, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>

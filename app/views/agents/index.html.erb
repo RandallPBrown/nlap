@@ -26,7 +26,7 @@
           <div class="col-md-12">
             <div class="card card-sheet sheet-condensed">
               <div class="table-responsive">
-              <table class="table table-striped table-hover">
+              <table class="table table-striped table-hover table-condensed">
                 <thead>
                   <tr>
                                           <th>Agent ID</th>
@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                 <% @agents.each do |agent| %>
-                  <tr>
+                  <tr data-toggle="collapse" data-target="#accordion<%= agent.user.id %>" class="accordion-toggle">
                     
                                           <% if agent.user.deleted_at.blank? then %>
                                           <td><%= agent.user.id %></td>
@@ -91,6 +91,95 @@
                       <% else %>
                       <% end %>
                     </tr>
+                    <!-- Agent Card Section -->
+                    <tr>
+                      <td colspan="10" class="hiddenrow">
+                        <div id="accordion<%= agent.user.id %>" class="collapse">
+                          <div class="card card-mini p-0 m-0">
+<!--                             <div class="card-header" style="background-image: url('<%= asset_path('background.png') %>')">
+                              <h3 class="font-weight-bold"><%= agent.user.full_name %></h3>
+                            </div> -->
+                            <div class="card-body border">
+                              <div class="row pb-2">
+                                <div class="col-4">
+                                  <small class="pl-5">Prepare Occurrence:</small>
+                                  <div class="pl-5">
+                                    <h3><%= fa_icon_tag("clock-o") %> <%= link_to "NEW", new_entry_path %></h3>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <small class="pl-5">Agent Writeup:</small>
+                                  <div class="pl-5">
+                                   <h3><%= fa_icon_tag("file-text-o") %> <%= link_to "NEW", new_dap_path %></h3>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <small class="pl-5">Agent Status:</small>
+                                  <div class="pl-5">
+                                    <% if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 || agent.entries.map {|a| a.total_effective_occurrence}.first.to_f > 2.5 && agent.user.daps.map.count {|m| m.total_active_writeup} == 0 || agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 then %>
+                                      <h3><span class="text-danger"><%= fa_icon_tag("times-circle-o") %></span> ACTION REQUIRED</h3>
+                                    <% else %>
+                                      <h3><span class="text-success"><%= fa_icon_tag("check-circle-o") %></span> AGENT OK</h3>
+                                    <% end %> 
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-3">
+                                  <div class="text-center">
+                                      <small>Total Active Occurrences</small>
+                                    <h4>
+                                  <% if agent.entries.map {|a| a.total_effective_occurrence.to_f}.first.to_f > 2.5 then %>
+                                    <span class="text-danger"><%= agent.entries.map {|a| a.total_effective_occurrence.to_f}.first %></span>
+                                  <% else %>
+                                    <span><%= agent.entries.map {|a| a.total_effective_occurrence.to_f}.first %></span>
+                                  <% end %> 
+                                    </h4>
+                                  </div>
+                                </div>
+                                <div class="col-3">
+                                  <div class="text-center">
+                                      <small>Total Active Writeups</small>
+                                    <h4>
+                                      <% if agent.user.daps.map {|m| m.total_active_writeup.to_f}.join(' ').to_f > 0 then %>
+                                                <span class="text-danger"><%= agent.user.daps.map {|m| m.total_active_writeup.to_f}.join(' ').to_i %></span>
+                                              <% else %>
+                                                <span><%= agent.user.daps.map {|m| m.total_active_writeup.to_i}.join(' ').to_f %></span> 
+                                              <% end %> 
+                                    </h4>
+                                  </div>
+                                </div>
+                                <div class="col-3">
+                                  <div class="text-center">
+                                      <small>Total Occurrences Since Active Writeup</small>
+                                    <h4>
+                                  <% if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 then %>
+                                                <span class="text-danger"><%= agent.user.daps.map{|m| m.occurrence_since_dap}.first %></span>
+                                              <% else %>
+                                                <span><%= agent.user.daps.map{|m| m.occurrence_since_dap}.first %></span>
+                                              <% end %>
+                                    </h4>
+                                  </div>
+                                </div>
+                                <div class="col-3">
+                                  <div class="text-center">
+                                      <small>Total Occurrences Since Writeup</small>
+                                    <h4>
+                                      <% if agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 then %>
+                                        <span class="text-danger"><%= agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first %></span>
+                                      <% else %>
+                                        <span><%= agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first %></span>
+                                      <% end %>
+                                    </h4>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <!-- /agent card section -->
                     <% end %>
                     <% if @agents.length == 0 %>
                     <tr><td colspan=42 class='text-center'>No agents.</td></tr>
