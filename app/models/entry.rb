@@ -10,9 +10,6 @@ class Entry < ApplicationRecord
   accepts_nested_attributes_for :occurrence
   accepts_nested_attributes_for :user
 
-pusher_client.trigger('my-channel', 'my-event', {
-  message: 'asdf'
-})
 
   scope :acd, -> {
     group("occurrences.name").order("occurrences.name DESC").count("occurrences.name").values
