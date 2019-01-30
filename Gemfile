@@ -56,7 +56,7 @@ gem 'popper_js'
 gem 'toastr-rails'
 
 source "https://gems.rapidrailsthemes.com/gems" do
-  gem "rrt", "~> 1.0.17"
+  gem "rrt"
 end
 
 group :development, :test do
