@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   get 'entry/dashboard'
   get 'entries/calendar'
   get 'entries/agent_list'
+  get 'agents/new_entry'
+  get 'agents/new_writeup'  
   get 'entries/new'
+  get 'entries/form2'
+  get 'daps/form2'  
   get 'home/dashboard'
   get 'myresults', to: 'entries#my_results', defaults: { format: 'csv'}
 

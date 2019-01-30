@@ -18,7 +18,16 @@ class AgentsController < ApplicationController
     else
       redirect_to users_dashboard_path, notice: 'Unauthorized'
     end
-    # @occurrences_since = Dap.find_by(user_id: @users.ids) 
+    @entries = Entry.all.joins(agent: :user).order(updated_at: :desc).includes(agent: [:user, :department], occurrence: params[:ovalue]).paginate(page: params[:page], :per_page => 5) # keep for now
+
+  end
+
+  def new_entry
+    @entry = Entry.new
+  end
+
+  def new_writeup
+    @dap = Dap.new
   end
 
   # GET /agents/1
@@ -104,7 +113,7 @@ end
 
     # Only allow a trusted parameter "white list" through.
     def agent_params
-      params.require(:agent).permit(:id, :fname, :lname, :hire, :dept, :department_id, :role, user: [:full_name], occurrence: [:ovalue])
+      params.require(:agent).permit(:id, :fname, :lname, :hire, :dept, :department_id, :role, user: [:full_name], occurrence: [:ovalue], agent: [:id])
     end
   
     def department_params

@@ -9,23 +9,6 @@
     <% end %>
   <% end %>
 
-<script src="https://js.pusher.com/4.3/pusher.min.js"></script>
-  <script>
-
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('8cf8fd15c749af7a59fd', {
-      cluster: 'us2',
-      forceTLS: true
-    });
-
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-      alert(JSON.stringify(data));
-    });
-  </script>
-
 <style>
 .pretty th .current {
   padding-right: 12px;
