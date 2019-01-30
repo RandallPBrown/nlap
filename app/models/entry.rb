@@ -9,15 +9,6 @@ class Entry < ApplicationRecord
   accepts_nested_attributes_for :agent
   accepts_nested_attributes_for :occurrence
   accepts_nested_attributes_for :user
-require 'pusher'
-
-pusher_client = Pusher::Client.new(
-  app_id: '702523',
-  key: '8cf8fd15c749af7a59fd',
-  secret: '6abca814725ada236cfb',
-  cluster: 'us2',
-  encrypted: true
-)
 
 pusher_client.trigger('my-channel', 'my-event', {
   message: 'asdf'
