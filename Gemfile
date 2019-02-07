@@ -75,9 +75,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
-  gem "letter_opener"
-  gem 'bullet'
-
   gem 'spring-commands-rspec'
   gem 'guard', '>= 2.14.1', require: false
   gem 'guard-rspec', require: false

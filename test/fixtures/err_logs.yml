@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  department: one
+  errdate: 2019-01-31
+  err_name: one
+  errdesc: MyText
+  err_status: one
+  errsubmitby: MyString
+
+two:
+  user: two
+  department: two
+  errdate: 2019-01-31
+  err_name: two
+  errdesc: MyText
+  err_status: two
+  errsubmitby: MyString

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190110184056) do
+ActiveRecord::Schema.define(version: 20190131183628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,35 @@ ActiveRecord::Schema.define(version: 20190110184056) do
     t.index ["occurrence_id"], name: "index_entries_on_occurrence_id"
   end
 
+  create_table "err_logs", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "department_id"
+    t.date "errdate"
+    t.bigint "err_name_id"
+    t.text "errdesc"
+    t.bigint "err_status_id"
+    t.string "errsubmitby"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_err_logs_on_department_id"
+    t.index ["err_name_id"], name: "index_err_logs_on_err_name_id"
+    t.index ["err_status_id"], name: "index_err_logs_on_err_status_id"
+    t.index ["user_id"], name: "index_err_logs_on_user_id"
+  end
+
+  create_table "err_names", force: :cascade do |t|
+    t.string "errname"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "err_statuses", force: :cascade do |t|
+    t.string "statusname"
+    t.integer "errvalue"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "models", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -101,13 +130,6 @@ ActiveRecord::Schema.define(version: 20190110184056) do
     t.string "name"
     t.string "resource_type"
     t.integer "resource_id"
-  end
-
-  create_table "roles_users", id: false, force: :cascade do |t|
-    t.bigint "role_id"
-    t.bigint "user_id"
-    t.index ["role_id"], name: "index_roles_users_on_role_id"
-    t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -167,8 +189,10 @@ ActiveRecord::Schema.define(version: 20190110184056) do
   add_foreign_key "daps", "users"
   add_foreign_key "daps", "writeups"
   add_foreign_key "daps", "wunatures"
-  add_foreign_key "roles_users", "roles"
-  add_foreign_key "roles_users", "users"
+  add_foreign_key "err_logs", "departments"
+  add_foreign_key "err_logs", "err_names"
+  add_foreign_key "err_logs", "err_statuses"
+  add_foreign_key "err_logs", "users"
   add_foreign_key "users", "agents"
   add_foreign_key "users", "departments"
 end

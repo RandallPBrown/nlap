@@ -81,7 +81,7 @@
                 <% end %>
               </li><br />
               <li>
-                <% if @agent.user.daps.map {|m| m.occurrence_since_dap.first}.first.to_f > 1.0  %>
+                <% if @agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f > 1.0  %>
                 <strong>Since Writeup: <span class="text-danger"><%= @agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f %></span></strong>
                 <center><small class ="text-danger">**Agent Writeup Required**</small></center>
                 <% else %>

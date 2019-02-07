@@ -1,0 +1,2 @@
+module ErrLogsHelper
+end
