@@ -17,4 +17,5 @@
 //= require turbolinks
 // require bootstrap
 //= require rrt
+//= require validator
 //= require_tree .
