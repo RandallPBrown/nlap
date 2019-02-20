@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :daps
   get 'users/dashboard'
   get 'users/index'
+  get 'tools/validator'
   get 'entries/dashboard'
 
   get 'entry/dashboard'
