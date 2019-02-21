@@ -11,6 +11,10 @@ $("#estForm").submit(function(e){
         e.preventDefault();
     });
 
+$("#estForm2").submit(function(e){
+        e.preventDefault();
+    });
+
 // SMOOTH GLIDE SECTION TRANSITIONS
 
 $('#logoToggle').on('click',function(){
@@ -210,7 +214,7 @@ $('#secondaryButton').on('click',function(){
 //});
 
 function alertBoxVal() {
-  if ($('#lolAlert').hasClass("red-text", true) || $('#rspAlert').hasClass("red-text", true) || $('#mjcAlert').hasClass("red-text", true) || $('#300Alert').hasClass("red-text", true)) {
+  if ($('#lolAlert').hasClass("text-danger", true) || $('#rspAlert').hasClass("text-danger", true) || $('#mjcAlert').hasClass("text-danger", true) || $('#300Alert').hasClass("text-danger", true)) {
     $('#alertBoxButton').prop("disabled", false);
     $('#formSubmitButton').prop("disabled", true);
     $('#formSubmitButton').removeClass("bg-success").addClass("bg-warning");
@@ -237,7 +241,7 @@ function skuVerification() {
     var triggerWords = ['MJC5', 'GMJC5', 'MJC10', 'MJC5-V', 'MJC10-NC', 'MJC210', 'D-MJC10', 'D-MJC210', 'MJR10', 'MJC5E', 'MJC5-NC', 'MJC8', 'MJC10-NL', 'NLMJC10', 'GMJC10', 'MJC10NLF', 'MJR5', 'RPL1U50', 'RPL1U100', 'RPL1U200', 'RPL1U300', 'RPL1U400', 'RPL1U500', 'RPL1U750', 'RPL1U1000', 'RPL2U50', 'RPL2U100', 'RPL2U200', 'RPL2U300', 'RPL2U400', 'RPL2U500', 'RPL2U1000'];
     for (var i = 0; i < triggerWords.length; i++) {
         if ($('#skuVerification').val().toUpperCase() == triggerWords[i]) {
-            $('#mjcAlert').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("red-text");
+            $('#mjcAlert').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("text-danger");
             $('#overrideSubmitButton').prop( "disabled", false );
             alert('CHECK PLAN SKU BEFORE CONTINUING');
         }; 
@@ -299,10 +303,10 @@ function calculateLiabilities() {
       $('#limitLiability').tooltip({trigger: 'manual'}).tooltip('show');
       $('#overrideWarranty').prop("disabled", false );
       $('#overrideWarrantyVis').prop( "hidden", false );
-      $('#300Alert').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("red-text");
+      $('#300Alert').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("text-danger");
   } else {
       $('#limitLiability').tooltip({trigger: 'manual'}).tooltip('hide');
-      $('#300Alert').removeClass("fa-times-circle").removeClass("red-text").addClass("fa-check-circle-o");
+      $('#300Alert').removeClass("fa-times-circle").removeClass("text-danger").addClass("fa-check-circle-o");
   }
 }
 
@@ -321,9 +325,9 @@ function rspCheckVal() {
           )).toFixed(0)); 
     };
   if ($('#rspCheck').val() > 70) {
-      $('#rspAlert').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("red-text");
+      $('#rspAlert').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("text-danger");
   }   else {
-    $('#rspAlert').removeClass("fa-times-circle").addClass("fa-times-check-o").removeClass("red-text");
+    $('#rspAlert').removeClass("fa-times-circle").addClass("fa-times-check-o").removeClass("text-danger");
   };
 };
 
@@ -355,9 +359,9 @@ function calculateExpenseCharge() {
             )).toFixed(0))
     };     
   if ($('#rspCheck2').val() > 70) {
-      $('#rspAlert').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("red-text");
+      $('#rspAlert').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("text-danger");
     }   else {
-      $('#rspAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
+      $('#rspAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
     };       
 };
 
@@ -378,10 +382,10 @@ function calculateLOL() {
   var txt = "";
   if ($('#remainingLOL').val() < 0) {    
       $('#remainingLOL').tooltip({trigger: 'manual'}).tooltip('show');
-      $('#lolAlert').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("red-text");
+      $('#lolAlert').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("text-danger");
   } else {
       $('#remainingLOL').tooltip({trigger: 'manual'}).tooltip('hide');
-      $('#lolAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
+      $('#lolAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
   }
 }
 
@@ -467,12 +471,12 @@ function resetestForm() {
     $('#bypassModalCloseButton').prop( "disabled", true );  
     $('#rspCheckField').prop( "hidden", true );  
     $('#rspCheckField2').prop( "hidden", true );   
-    $('#300Alert').removeClass("red-text").removeClass("fa-times-circle").addClass("fa-check-circle-o");
+    $('#300Alert').removeClass("text-danger").removeClass("fa-times-circle").addClass("fa-check-circle-o");
     $('#limitLiability').tooltip({trigger: 'manual'}).tooltip('hide');
     $('#remainingLOL').tooltip({trigger: 'manual'}).tooltip('hide');
-    $('#rspAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
-    $('#mjcAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
-    $('#lolAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
+    $('#rspAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
+    $('#mjcAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
+    $('#lolAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
     $('#alertFAB').removeClass("bg-danger").addClass("bg-success"); 
     $('#alertBoxButton').removeClass("bg-success").addClass("bg-light");
     $('#overrideHeader').prop( "hidden", true );
@@ -497,12 +501,12 @@ function resetestFormButton() {
   $('#bypassModalCloseButton').prop( "disabled", true );  
   $('#rspCheckField').prop( "hidden", true );  
   $('#rspCheckField2').prop( "hidden", true );  
-  $('#300Alert').removeClass("red-text").removeClass("fa-times-circle").addClass("fa-check-circle-o");  
+  $('#300Alert').removeClass("text-danger").removeClass("fa-times-circle").addClass("fa-check-circle-o");  
   $('#limitLiability').tooltip({trigger: 'manual'}).tooltip('hide');  
   $('#remainingLOL').tooltip({trigger: 'manual'}).tooltip('hide');
-  $('#rspAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");    
-  $('#mjcAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
-  $('#lolAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
+  $('#rspAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");    
+  $('#mjcAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
+  $('#lolAlert').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
   $('#alertFAB').removeClass("bg-danger").addClass("bg-success");   
   $('#alertBoxButton').removeClass("bg-success").addClass("bg-light"); 
   $('#overrideHeader').prop( "hidden", true );
@@ -686,7 +690,7 @@ $('#samCheckButton2').on('click',function(){
 });
 
 function alertBoxVal2() {
-  if ($('#lolAlert2').hasClass("red-text", true) || $('#rspAlert2').hasClass("red-text", true) || $('#mjcAlert2').hasClass("red-text", true) || $('#300Alert2').hasClass("red-text", true)) {
+  if ($('#lolAlert2').hasClass("text-danger", true) || $('#rspAlert2').hasClass("text-danger", true) || $('#mjcAlert2').hasClass("text-danger", true) || $('#300Alert2').hasClass("text-danger", true)) {
     $('#alertBoxButton2').prop("disabled", false);
     $('#formSubmitButton2').prop("disabled", true);
     $('#formSubmitButton2').removeClass("bg-success").addClass("bg-warning");
@@ -713,7 +717,7 @@ function skuVerification2() {
     var triggerWords2 = ['MJC5', 'GMJC5', 'MJC10', 'MJC5-V', 'MJC10-NC', 'MJC210', 'D-MJC10', 'D-MJC210', 'MJR10', 'MJC5E', 'MJC5-NC', 'MJC8', 'MJC10-NL', 'NLMJC10', 'GMJC10', 'MJC10NLF', 'MJR5', 'RPL1U50', 'RPL1U100', 'RPL1U200', 'RPL1U300', 'RPL1U400', 'RPL1U500', 'RPL1U750', 'RPL1U1000', 'RPL2U50', 'RPL2U100', 'RPL2U200', 'RPL2U300', 'RPL2U400', 'RPL2U500', 'RPL2U1000'];
     for (var i = 0; i < triggerWords2.length; i++) {
         if ($('#skuVerification2').val().toUpperCase() == triggerWords2[i]) {
-            $('#mjcAlert2').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("red-text");
+            $('#mjcAlert2').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("text-danger");
             $('#overrideSubmitButton2').prop( "disabled", false );
             alert('CHECK PLAN SKU BEFORE CONTINUING');
         } 
@@ -779,10 +783,10 @@ function calculateLiabilities2() {
       $('#limitLiability2').tooltip({trigger: 'manual'}).tooltip('show');
       $('#overrideWarranty2').prop("disabled", false );
       $('#overrideWarrantyVis2').prop( "hidden", false );
-      $('#300Alert2').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("red-text");
+      $('#300Alert2').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("text-danger");
   } else {
       $('#limitLiability2').tooltip({trigger: 'manual'}).tooltip('hide')
-      $('#300Alert2').removeClass("fa-times-circle").removeClass("red-text").addClass("fa-check-circle-o");
+      $('#300Alert2').removeClass("fa-times-circle").removeClass("text-danger").addClass("fa-check-circle-o");
   }
 }
 
@@ -801,9 +805,9 @@ function rspCheckVal2() {
           )).toFixed(0)); 
     };
   if ($('#rspCheck2').val() > 70) {
-      $('#rspAlert2').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("red-text");
+      $('#rspAlert2').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("text-danger");
   }   else {
-    $('#rspAlert2').removeClass("fa-times-circle").addClass("fa-times-check-o").removeClass("red-text");
+    $('#rspAlert2').removeClass("fa-times-circle").addClass("fa-times-check-o").removeClass("text-danger");
   };    
 };
 
@@ -835,9 +839,9 @@ function calculateExpenseCharge2() {
             )).toFixed(0))
     };    
   if ($('#rspCheck4').val() > 70) {
-      $('#rspAlert2').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("red-text");
+      $('#rspAlert2').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("text-danger");
     }   else {
-      $('#rspAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
+      $('#rspAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
     };            
 };
 
@@ -858,10 +862,10 @@ function calculateLOL2() {
   var txt = "";
   if ($('#remainingLOL2').val() < 0) {    
       $('#remainingLOL2').tooltip({trigger: 'manual'}).tooltip('show');
-      $('#lolAlert2').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("red-text");
+      $('#lolAlert2').removeClass("fa-check-circle-o").addClass("fa-times-circle").addClass("text-danger");
   } else {
       $('#remainingLOL2').tooltip({trigger: 'manual'}).tooltip('hide')
-      $('#lolAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
+      $('#lolAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
   }
 }
 
@@ -947,12 +951,12 @@ function resetestForm2() {
     $('#bypassModalCloseButton2').prop( "disabled", true );
     $('#rspCheckField3').prop( "hidden", true );  
     $('#rspCheckField4').prop( "hidden", true );           
-    $('#300Alert2').removeClass("red-text").removeClass("fa-times-circle").addClass("fa-check-circle-o");
+    $('#300Alert2').removeClass("text-danger").removeClass("fa-times-circle").addClass("fa-check-circle-o");
     $('#limitLiability2').tooltip({trigger: 'manual'}).tooltip('hide');
     $('#remainingLOL2').tooltip({trigger: 'manual'}).tooltip('hide');
-    $('#rspAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
-    $('#mjcAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
-    $('#lolAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
+    $('#rspAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
+    $('#mjcAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
+    $('#lolAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
     $('#alertFAB2').removeClass("bg-danger").addClass("bg-success"); 
     $('#alertBoxButton2').removeClass("bg-success").addClass("bg-light");
     $('#overrideHeader2').prop( "hidden", true );
@@ -981,12 +985,12 @@ function resetestFormButton2() {
   $('#bypassModalCloseButton2').prop( "disabled", true );
   $('#rspCheckField3').prop( "hidden", true );  
   $('#rspCheckField4').prop( "hidden", true );   
-  $('#300Alert2').removeClass("red-text").removeClass("fa-times-circle").addClass("fa-check-circle-o");  
+  $('#300Alert2').removeClass("text-danger").removeClass("fa-times-circle").addClass("fa-check-circle-o");  
   $('#limitLiability2').tooltip({trigger: 'manual'}).tooltip('hide');  
   $('#remainingLOL2').tooltip({trigger: 'manual'}).tooltip('hide');
-  $('#rspAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");    
-  $('#mjcAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
-  $('#lolAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("red-text");
+  $('#rspAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");    
+  $('#mjcAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
+  $('#lolAlert2').removeClass("fa-times-circle").addClass("fa-check-circle-o").removeClass("text-danger");
   $('#alertFAB2').removeClass("bg-danger").addClass("bg-success");   
   $('#alertBoxButton2').removeClass("bg-success").addClass("bg-light"); 
   $('#overrideHeader2').prop( "hidden", true );
