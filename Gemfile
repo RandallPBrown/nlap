@@ -50,6 +50,7 @@ gem 'figaro'
 gem "letter_opener", :group => :development
 gem 'bullet', group: 'development'
 gem 'rolify'
+gem 'best_in_place', '~> 3.0.1'
 
 gem 'bootstrap'
 gem 'popper_js'

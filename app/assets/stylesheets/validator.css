@@ -1,7 +1,86 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-  
+/*     .navbar-header li {
+    padding: 2px;
+   }*/
+
+   .navbar-l-cornertab {
+    position: absolute;
+    left: 0px;
+    top: 40px;
+    width: 0;
+    height: 0;
+    border-top: 30px solid transparent;
+    border-left: 50px solid #4caf50;
+    border-bottom: 30px solid transparent;
+   }
+
+   .navbar-r-cornertab {
+    position: absolute;
+    right: 0px;
+    top: 40px;
+    width: 0;
+    height: 0;
+    border-top: 30px solid transparent;
+    border-right: 50px solid #4caf50;
+    border-bottom: 30px solid transparent;
+   }
+
+   .navbar-brand img {
+    padding: 2px;
+   }
+
+   #navFoot {
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 22px;
+   }
+
+   .navbar-br-cornertab {
+    position: absolute;
+    right: 40px;
+    bottom: 5px;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-left: 30px solid #8bc34a;
+    border-bottom: 15px solid transparent;
+   }
+
+   .navbar-bl-centertab {
+    position: absolute;
+    left: 70px;
+    bottom: 15px;
+    width: 600px;
+    height: 20px;
+    background-color: #8bc34a;
+   }
+
+   .navbar-br-centertab {
+    position: absolute;
+    right: 70px;
+    bottom: 15px;
+    width: 600px;
+    height: 20px;
+    background-color: #8bc34a;
+   }
+
+   .navbar-bl-cornertab {
+    position: absolute;
+    left: 40px;
+    bottom: 5px;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-right: 30px solid #8bc34a;
+    border-bottom: 15px solid transparent;
+   }
+
+   .form-check-input {
+    margin-right: 5px !important;
+   }
+
 
    .form-check-input {
     margin-right: 5px !important;

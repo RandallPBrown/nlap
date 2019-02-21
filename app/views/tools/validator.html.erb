@@ -5,14 +5,18 @@
   <nav class="navbar navbar-expand-md sticky-top navbar-dark green" role="navigation">
     <div class="container">
         <ul class="nav navbar-nav mr-auto nav-pills" role="tablist">
-          <li class="nav-item" id="logoToggle">
-            <a class="font-weight-bold nav-link green darken-1">
-              SCROLL TOGGLE
-            </a>  
+          <li class="nav-item">
+            <%= image_tag 'service_roots.png', size: "30x35"%>
           </li>
+          <li class="nav-item">
+            <a class="nav-link green darken-1 text-white font-weight-bold" role="button" href="/"><%= fa_icon_tag("home") %></a>
+          </li>  
         </ul>     
         <div class="navbar-header">  
         <ul class="nav navbar-nav mr-auto nav-pills" id="pills-tab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link green darken-1 text-white font-weight-bold" role="button" href="../parts/new" target="_blank">PARTS</a>
+          </li>  
           <li class="nav-item">
             <a class="nav-link green darken-1 text-white font-weight-bold" role="button" aria-expanded="false" onclick="$('#setModal').modal('show');">SETTLEMENT</a>
           </li>  
@@ -30,6 +34,11 @@
           </li>
           <li class="nav-item">
             <a data-toggle="pill" id="secondaryButton" class="nav-link green darken-1 text-white font-weight-bold" href="#secondaryTab" role="tab" aria-controls="secondaryTab" aria-selected="false">DASHBOARD</a>
+          </li>
+          <li class="nav-item" id="logoToggle">
+            <a class="font-weight-bold nav-link green darken-1">
+              <%= fa_icon_tag("angle-double-down") %>
+            </a>  
           </li>
         </ul> 
         </div> 

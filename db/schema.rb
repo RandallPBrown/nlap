@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190131183628) do
+ActiveRecord::Schema.define(version: 20190221154039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,12 @@ ActiveRecord::Schema.define(version: 20190131183628) do
   create_table "agents_departments", id: false, force: :cascade do |t|
     t.bigint "agent_id", null: false
     t.bigint "department_id", null: false
+  end
+
+  create_table "buying_groups", force: :cascade do |t|
+    t.string "bgname"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "create_join_table_agent_departments", force: :cascade do |t|
@@ -126,6 +132,26 @@ ActiveRecord::Schema.define(version: 20190131183628) do
     t.string "name"
   end
 
+  create_table "parts", force: :cascade do |t|
+    t.string "part_number"
+    t.string "part_name"
+    t.text "part_description"
+    t.bigint "product_id"
+    t.bigint "buying_group_id"
+    t.date "dop"
+    t.string "covered"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buying_group_id"], name: "index_parts_on_buying_group_id"
+    t.index ["product_id"], name: "index_parts_on_product_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "pname"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
@@ -193,6 +219,8 @@ ActiveRecord::Schema.define(version: 20190131183628) do
   add_foreign_key "err_logs", "err_names"
   add_foreign_key "err_logs", "err_statuses"
   add_foreign_key "err_logs", "users"
+  add_foreign_key "parts", "buying_groups"
+  add_foreign_key "parts", "products"
   add_foreign_key "users", "agents"
   add_foreign_key "users", "departments"
 end
