@@ -4,7 +4,7 @@ class Part < ApplicationRecord
   belongs_to :buying_group
 
   pg_search_scope :search,
-                  :against => [:part_number]
+                  :against => [:part_number, :covered]
    
    def self.perform_search(keyword)
       if keyword.present?

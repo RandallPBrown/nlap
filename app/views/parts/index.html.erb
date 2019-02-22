@@ -1,10 +1,15 @@
 <% @title = "Listing Parts" %>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 
 <script>
   $(document).ready(function() {
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
 });
+
+  $(document).ready( function () {
+    $('#parts_index').DataTable();
+} );
 </script>
 
 <% content_for :description do %>
@@ -18,10 +23,24 @@
 
       <div class="container">
         <div class="row">
+          <div class="col-4">
+          </div>
+          <div class="col-4">
+          </div>
+          <div class="col-4">
+            <div class="card card-mini card-mini-solid-icon">
+              <div class="card-body">
+                <h6 class="ml-3"><%= fa_icon_tag "question" %> Pending Decision</h6>
+                <h2><center><%= @pending %></center></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-md-12">
             <div class="card card-sheet sheet-condensed">
               <div class="table-responsive">
-              <table class="table table-striped table-hover table-sm-responsive">
+              <table class="table table-striped table-hover table-sm-responsive display" id="parts_index">
                 <thead>
                   <tr>
                                           <th>Covered</th>
@@ -69,3 +88,13 @@
                               </div>
             </div>
           </div>
+<script>
+$('#pn-search').keyup(function() {
+    $('#pn-form').val($(this).val());
+});
+
+
+$('#pn-form').keyup(function() {
+    $('#pn-search').val($(this).val());
+});
+</script>

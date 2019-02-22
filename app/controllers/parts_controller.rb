@@ -5,7 +5,12 @@ class PartsController < ApplicationController
 
   # GET /parts
   def index
-    @parts = Part.all
+    if params[:search].present?
+      @parts = Part.perform_search(params[:search]).order(params[:sort]).paginate(page: params[:page], :per_page => 5)
+    else
+      @parts = Part.all
+    end
+    @pending = Part.where('parts.covered = ?', 'pending').count
   end
 
   # GET /parts/1
@@ -60,6 +65,6 @@ class PartsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def part_params
-      params.require(:part).permit(:part_number, :part_name, :part_description, :product_id, :buying_group_id, :dop, :covered)
+      params.require(:part).permit(:part_number, :part_name, :part_description, :product_id, :buying_group_id, :dop, :covered, :submitted_by, :approved_by)
     end
 end
