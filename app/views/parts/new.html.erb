@@ -19,9 +19,9 @@
                 <thead>
                   <tr>
                                           <th>Covered</th>
+                                          <th>Approved By</th>
                                           <th>Number</th>
                                           <th>Name</th>
-                                          <th>Submitted</th>
                                         <th></th>
                   </tr>
                 </thead>
@@ -29,9 +29,9 @@
                 <% @parts.each do |part| %>
                   <tr>
                                           <td class="text-capitalize"><%= best_in_place part, :covered, :as => :select, :collection => {"pending" => "Pending", "not-covered" => "Not-Covered", "covered" => "Covered", "special" => "Special"} %></td>
+                                          <td><%= part.approved_by %></td>
                                           <td><%= part.part_number %></td>
                                           <td><%= part.part_name %></td>
-                                          <td><%= part.submitted_by %></td>
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to theme_icon_tag("eye"), part, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
@@ -67,7 +67,7 @@
           <div class="card-body">
             <%= form_for(@part, html: { class: 'form-horizontal' }) do |f| %>
   <%= f.error_notification %>
-
+  <center><h3>PART INQUIRY</h3></center><hr>
   <div class="form-inputs">
     <%= f.form_group :part_number, class: 'row' do |f| %>
       <%= f.label 'Number', class: 'control-label col-md-3' %>

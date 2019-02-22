@@ -51,6 +51,11 @@
         <% end %>
       </ul>
       <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item font-weight-bold text-white">
+          <% if current_user.department.name = 'Pre-Approvals'  then %>
+          Pending Inquiries <%= pending_count %>
+          <% end %>
+        </li>
         <li class="nav-item dropdown user-nav">
           <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <%= fa_icon_tag("user") %>

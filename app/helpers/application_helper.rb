@@ -23,4 +23,8 @@ end
     end
     flash_messages.join("\n").html_safe
   end
+
+  def pending_count
+    Part.all.where('parts.covered = ?', 'pending').count
+  end
 end
