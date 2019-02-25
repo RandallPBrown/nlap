@@ -10,9 +10,18 @@ def sortable(column, title = nil)
   link_to title, {:sort => column, :direction => direction}, {:class => css_class}
 end
 
+def new_parts
+    @test = Part.all.where(:submitted_by => current_user.full_name, :read_at => nil).where.not(approved_by: nil).count
+end
+
   def user_email
     current_user.email
   end  
+
+  def user_department
+    current_user.department.name
+  end
+
   def custom_bootstrap_flash
     flash_messages = []
     flash.each do |type, message|

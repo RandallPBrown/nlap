@@ -6,7 +6,7 @@ class Part < ApplicationRecord
 
   pg_search_scope :search,
                   :against => [:part_number, :covered]
-   
+
    def self.perform_search(keyword)
       if keyword.present?
       then Part.search(keyword).order(part_number: :desc)

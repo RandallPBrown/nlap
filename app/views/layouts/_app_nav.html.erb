@@ -51,11 +51,25 @@
         <% end %>
       </ul>
       <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item font-weight-bold text-white">
-          <% if current_user.department.name = 'Pre-Approvals'  then %>
-          Pending Inquiries <%= pending_count %>
+        <% if (current_user.department.name === 'Pre-Approvals') || (current_user.department.name === 'Back Office') || (current_user.department.name === 'Executive') then %>
+          <% if current_user.admin? %>
+          <li class="nav-item font-weight-bold text-white">
+            <% if pending_count > 0 %>
+              <a href="../parts" class="nav-link"><span class="text-danger"><%= fa_icon_tag("hourglass") %></span> <span class="notification font-w"> <%= pending_count %></a>
+            <% else %>
+              <a href="../parts" class="nav-link"><span><%= fa_icon_tag("hourglass") %></span> <span class="notification"> 0</a>
+            <% end %>    
+          </li>
           <% end %>
-        </li>
+          <li class="nav-item font-weight-bold text-white">
+            <% if new_parts > 0 %>
+              <a href="../parts" class="nav-link"><span class="text-danger"><%= fa_icon_tag("envelope") %></span> <span class="notification"> <%= new_parts %></span></a>
+            <% else %>
+              <a href="../parts" class="nav-link"><%= fa_icon_tag("envelope") %> <span class="notification"> 0</span></a>
+            <% end %>
+          </li>
+          <% else %>
+        <% end %>
         <li class="nav-item dropdown user-nav">
           <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <%= fa_icon_tag("user") %>
@@ -81,7 +95,7 @@
                       <span class="pull-left"><strong>Department:</strong></span> 
                     </div>
                     <div class="col-8">
-                      <span class="pull-left"><%= current_user.department.name %></span>
+                      <span class="pull-left"><%= user_department %></span>
                     </div>
                   </div>
                   <div class="row">
