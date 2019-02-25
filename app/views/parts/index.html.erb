@@ -26,7 +26,7 @@
           <div class="col-6">
             <div class="card card-mini card-mini-solid-icon">
               <div class="card-header">
-                <h5 class="text-uppercase m-auto"><%= current_user.full_name %>'s OPEN INQUIRIES</h5>
+                <h5 class="text-uppercase m-auto"><%= current_user.first_name %>'s OPEN INQUIRIES</h5>
               </div>
               <div class="table-responsive">
               <table class="table table-striped table-hover table-sm-responsive display">
@@ -42,14 +42,13 @@
                 <tbody>
                 <% @pendinguser.each do |part| %>
                   <tr>
-                                          <td class="text-capitalize"><%= part.covered %></td>
-                                          <td><%= part.part_number %></td>
-                                          <td><%= part.part_name %></td>
-                                          <td><%= part.product.pname %></td>
+                                          <td class="text-capitalize"><%= part.covered.truncate(15) %></td>
+                                          <td><%= part.part_number.truncate(15) %></td>
+                                          <td><%= part.part_name.truncate(15) %></td>
+                                          <td><%= part.product.pname.truncate(15) %></td>
                                           
                                         <td class="actions text-right">
                       <div class="btn-group">
-                        <%= link_to theme_icon_tag("eye"), part, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
                         <%= link_to theme_icon_tag("pencil-alt"), edit_part_path(part), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
                         <%= link_to theme_icon_tag("trash"), part, 'data-toggle': 'tooltip', title: 'Delete',
                         data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
@@ -57,7 +56,7 @@
                       </td>
                     </tr>
                     <% end %>
-                    <% if @parts.length == 0 %>
+                    <% if @pendinguser.length == 0 %>
                     <tr><td colspan=42 class='text-center'>No parts.</td></tr>
                     <% end %>
                     </tbody>
@@ -68,13 +67,14 @@
           <div class="col-6">
             <div class="card card-mini card-mini-solid-icon">
               <div class="card-header">
-                <h5 class="text-uppercase m-auto">UNREAD DECISIONS</h5>
+                <h5 class="text-uppercase m-auto">DECISIONS</h5>
               </div>
               <div class="table-responsive">
               <table class="table table-striped table-hover table-sm-responsive display">
                 <thead>
                   <tr>
                                           <th>Covered</th>
+                                          <th>Approved</th>
                                           <th>Number</th>
                                           <th>Name</th>
                                           <th>Product</th>
@@ -85,22 +85,21 @@
                 <% @alluser.each do |part| %>
                   <tr>
                                         <% if part.approved_by.present? %>
-                                          <td class="text-capitalize"><%= part.covered %></td>
-                                          <td><%= part.part_number %></td>
-                                          <td><%= part.part_name %></td>
-                                          <td><%= part.product.pname %></td>
+                                          <td class="text-capitalize"><%= part.covered.truncate(15) %></td>
+                                          <td><%= part.approved_by %></td>
+                                          <td><%= part.part_number.truncate(15) %></td>
+                                          <td><%= part.part_name.truncate(15) %></td>
+                                          <td><%= part.product.pname.truncate(15) %></td>
                                         
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to fa_icon_tag("envelope-o"), part, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("trash"), part, 'data-toggle': 'tooltip', title: 'Delete',
-                        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                       </div>
                       </td>
                       <% end %>  
                     </tr>
                     <% end %>
-                    <% if @parts.length == 0 %>
+                    <% if @alluser.length == 0 %>
                     <tr><td colspan=42 class='text-center'>No parts.</td></tr>
                     <% end %>
                     </tbody>
@@ -123,7 +122,7 @@
                                           <th>Description</th>
                                           <th>Product</th>
                                           <th>Buying Group</th>
-                                          <th>Dop</th>
+                                          <th>DOP</th>
                                           <th>Submitted By</th>
                                         <th></th>
                   </tr>
@@ -131,15 +130,15 @@
                 <tbody>
                 <% @parts.each do |part| %>
                   <tr>
-                                          <td class="text-capitalize"><%= best_in_place part, :covered, :as => :select, :collection => {"pending" => "Pending", "not-covered" => "Not-Covered", "covered" => "Covered", "special" => "Special"} %></td>
-                                          <td><%= best_in_place part, :approved_by, :as => :select, :collection => @approvedby %></td>
-                                          <td><%= best_in_place part, :part_number, :as => :input %></td>
-                                          <td><%= part.part_name %></td>
-                                          <td><%= part.part_description %></td>
-                                          <td><%= part.product.pname %></td>
-                                          <td><%= part.buying_group.bgname %></td>
+                                          <td class="text-capitalize"><%= part.covered.truncate(15) %></td>
+                                          <td><%= part.approved_by %></td>
+                                          <td><%= part.part_number.truncate(15) %></td>
+                                          <td><%= part.part_name.truncate(15) %></td>
+                                          <td><%= part.part_description.truncate(15) %></td>
+                                          <td><%= part.product.pname.truncate(15) %></td>
+                                          <td><%= part.buying_group.bgname.truncate(15) %></td>
                                           <td><%= part.dop %></td>
-                                          <td><%= part.submitted_by %></td>
+                                          <td><%= part.submitted_by.truncate(15) %></td>
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to theme_icon_tag("eye"), part, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>

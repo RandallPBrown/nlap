@@ -1,6 +1,7 @@
 class PartsController < ApplicationController
   layout "scaffold"
-
+  before_action :authenticate_user!
+  before_action :authorize_admin, only: [:dashboard]
   before_action :set_part, only: [:show, :edit, :update, :destroy]
 
   # GET /parts
@@ -15,6 +16,13 @@ class PartsController < ApplicationController
     @pending = Part.where('parts.covered = ?', 'pending')
     @pendinguser = Part.order(updated_at: :desc).where('parts.covered = ?', 'pending').where('parts.submitted_by = ?', current_user.full_name).paginate(page: params[:page], :per_page => 5)
     @alluser = Part.order(updated_at: :desc).where(:read_at => nil).where('parts.submitted_by = ?', current_user.full_name).paginate(page: params[:page], :per_page => 5)
+  end
+
+  def dashboard
+    require 'will_paginate/array'
+      @parts = Part.all.where('parts.covered = ?', 'pending').order(created_at: :desc, updated_at: :desc)
+    @allparts = Part.all
+        @approvedby = User.all.where('users.admin = ?', true).pluck(:first_name, :last_name)
   end
 
   # GET /parts/1
@@ -38,6 +46,7 @@ class PartsController < ApplicationController
 
   # GET /parts/1/edit
   def edit
+    @approvedby = User.all.where('users.admin = ?', true)
   end
 
   # POST /parts
@@ -54,7 +63,7 @@ class PartsController < ApplicationController
   # PATCH/PUT /parts/1
   def update
     if @part.update(part_params)
-      redirect_to @part, notice: 'Part was successfully updated.'
+      redirect_to parts_path, notice: 'Part was successfully updated.'
     else
       render :edit
     end
@@ -74,6 +83,6 @@ class PartsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def part_params
-      params.require(:part).permit(:part_number, :part_name, :part_description, :product_id, :buying_group_id, :dop, :covered, :submitted_by, :approved_by)
+      params.require(:part).permit(:part_number, :part_name, :part_description, :product_id, :buying_group_id, :dop, :covered, :submitted_by, :approved_by, :source)
     end
 end

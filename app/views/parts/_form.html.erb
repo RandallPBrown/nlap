@@ -43,6 +43,14 @@
       </div>
     <% end %>
 
+    <%= f.form_group :source, class: 'row' do |f| %>
+      <%= f.label 'Source Link', class: 'control-label col-md-3' %>
+      <div class='col-12 col-md-9'>
+        <%= f.text_field :source, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
     <%= f.form_group :dop, class: 'row' do |f| %>
       <%= f.label :dop, class: 'control-label col-md-2' %>
       <div class='col-12 col-md-10'>
@@ -51,12 +59,23 @@
       </div>
     <% end %>
 
-    <%= f.form_group :covered, class: 'row' do |f| %>
-      <%= f.label :covered, class: 'control-label col-md-2' %>
-      <div class='col-12 col-md-10'>
-        <%= f.select :covered, options_for_select(['pending', 'covered', 'not-covered', 'special']), class: 'form-control' %>
-        <%= f.error_messages %>
-      </div>
+    <% if current_user.admin? %>
+      <%= f.form_group :covered, class: 'row' do |f| %>
+        <%= f.label :covered, class: 'control-label col-md-2' %>
+        <div class='col-12 col-md-10'>
+          <%= f.select :covered, options_for_select(['pending', 'covered', 'not-covered', 'special']), class: 'form-control' %>
+          <%= f.error_messages %>
+        </div>
+      <% end %>
+
+      <%= f.form_group :approved_by, class: 'row' do |f| %>
+        <%= f.label :approved_by, class: 'control-label col-md-2' %>
+        <div class='col-12 col-md-10'>
+          <%= f.collection_select :approved_by, @approvedby, :first_name, :full_name, {}, class: 'form-control' %>
+          <%= f.error_messages %>
+        </div>
+      <% end %> 
+    <% else %>
     <% end %>
 
 <%#= f.hidden_field :covered, value: 'pending' %>

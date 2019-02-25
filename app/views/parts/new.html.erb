@@ -28,10 +28,10 @@
                 <tbody>
                 <% @parts.each do |part| %>
                   <tr>
-                                          <td class="text-capitalize"><%= best_in_place part, :covered, :as => :select, :collection => {"pending" => "Pending", "not-covered" => "Not-Covered", "covered" => "Covered", "special" => "Special"} %></td>
+                                          <td class="text-capitalize"><%= part.covered %></td>
                                           <td><%= part.approved_by %></td>
-                                          <td><%= part.part_number %></td>
-                                          <td><%= part.part_name %></td>
+                                          <td><%= part.part_number.truncate(15) %></td>
+                                          <td><%= part.part_name.truncate(15) %></td>
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to theme_icon_tag("eye"), part, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
@@ -105,6 +105,14 @@
       <%= f.label 'Buying Group', class: 'control-label col-md-3' %>
       <div class='col-12 col-md-9'>
         <%= f.collection_select :buying_group_id, BuyingGroup.order(:id), :id, :bgname, {}, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :source, class: 'row' do |f| %>
+      <%= f.label 'Source Link', class: 'control-label col-md-3' %>
+      <div class='col-12 col-md-9'>
+        <%= f.text_field :source, class: 'form-control' %>
         <%= f.error_messages %>
       </div>
     <% end %>

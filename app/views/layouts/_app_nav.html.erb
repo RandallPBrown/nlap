@@ -55,9 +55,9 @@
           <% if current_user.admin? %>
           <li class="nav-item font-weight-bold text-white">
             <% if pending_count > 0 %>
-              <a href="../parts" class="nav-link"><span class="text-danger"><%= fa_icon_tag("hourglass") %></span> <span class="notification font-w"> <%= pending_count %></a>
+              <a href="../parts/dashboard" class="nav-link"><span class="text-danger"><%= fa_icon_tag("hourglass") %></span> <span class="notification font-w"> <%= pending_count %></a>
             <% else %>
-              <a href="../parts" class="nav-link"><span><%= fa_icon_tag("hourglass") %></span> <span class="notification"> 0</a>
+              <a href="../parts/dashboard" class="nav-link"><span><%= fa_icon_tag("hourglass") %></span> <span class="notification"> 0</a>
             <% end %>    
           </li>
           <% end %>

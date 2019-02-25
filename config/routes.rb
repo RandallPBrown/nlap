@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'users/dashboard'
   get 'users/index'
   get 'tools/validator'
+  get 'parts/dashboard'
   get 'entries/dashboard'
   get 'agent_department/index'
   get 'entry/dashboard'
