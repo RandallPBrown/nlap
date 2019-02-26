@@ -49,8 +49,8 @@
                                           
                                         <td class="actions text-right">
                       <div class="btn-group">
-                        <%= link_to theme_icon_tag("pencil-alt"), edit_part_path(part), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("trash"), part, 'data-toggle': 'tooltip', title: 'Delete',
+                        <%= link_to theme_icon_tag("pencil-alt"), edit_part_path(part), class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("trash"), part,
                         data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                       </div>
                       </td>
@@ -93,7 +93,7 @@
                                         
                                         <td class="actions text-right">
                       <div class="btn-group">
-                        <%= link_to fa_icon_tag("envelope-o"), part, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                        <%= link_to fa_icon_tag("envelope-o"), part, class: "btn btn-link" %>
                       </div>
                       </td>
                       <% end %>  
