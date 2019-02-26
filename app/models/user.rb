@@ -8,6 +8,8 @@ class User < ApplicationRecord
   belongs_to :department
 	has_many :entries
   has_many :daps
+  has_many :messages
+  has_many :chatrooms, through: :messages
   accepts_nested_attributes_for :department
   accepts_nested_attributes_for :entries
   accepts_nested_attributes_for :daps

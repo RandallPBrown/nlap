@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+  resources :messages
+  resources :chatrooms
+  get 'messages/message'
   get 'users/dashboard'
   get 'users/index'
   get 'tools/validator'

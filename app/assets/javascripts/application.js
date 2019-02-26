@@ -21,4 +21,5 @@
 //= require best_in_place
 //= require best_in_place.jquery-ui
 //= require datatables.min
+//= require_tree ./channels
 //= require_tree .

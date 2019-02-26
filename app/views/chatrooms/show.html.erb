@@ -1,0 +1,22 @@
+<% @title = "Showing chatroom" %>
+
+<% content_for :description do %>
+  <p>Edit this template in <code>app/views/Chatrooms/show.html.erb</code>.</p>
+  <% end %>
+
+<div class="row col-md-8 col-md-offset-2">
+
+<div class="panel panel-default">
+  <% if @chatroom.messages.any? %>
+    <div class="panel-body" id="messages">
+      <%= render partial: 'messages/message', collection: @chatroom.messages%>
+    </div>
+  <%else%>
+    <div class="panel-body hidden" id="messages">
+    </div>
+  <%end%>
+</div>
+
+  <%= render partial: 'messages/form', locals: {message: @message, chatroom: @chatroom}%>
+</div>
+
