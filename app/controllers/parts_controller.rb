@@ -20,9 +20,9 @@ class PartsController < ApplicationController
 
   def dashboard
     require 'will_paginate/array'
-      @parts = Part.all.where('parts.covered = ?', 'pending').order(created_at: :desc, updated_at: :desc)
+    @parts = Part.all.where('parts.covered = ?', 'pending').order(created_at: :desc, updated_at: :desc).paginate(page: params[:page], :per_page => 5)
     @allparts = Part.all
-        @approvedby = User.all.where('users.admin = ?', true).pluck(:first_name, :last_name)
+    @approvedby = User.all.where('users.admin = ?', true).pluck(:first_name, :last_name)
   end
 
   # GET /parts/1
@@ -72,7 +72,7 @@ class PartsController < ApplicationController
   # DELETE /parts/1
   def destroy
     @part.destroy
-    redirect_to parts_url, notice: 'Part was successfully destroyed.'
+    redirect_to parts_dashboard_path, notice: 'Part was successfully destroyed.'
   end
 
   private
@@ -83,6 +83,6 @@ class PartsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def part_params
-      params.require(:part).permit(:part_number, :part_name, :part_description, :product_id, :buying_group_id, :dop, :covered, :submitted_by, :approved_by, :source)
+      params.require(:part).permit(:part_number, :part_name, :part_description, :product_id, :buying_group_id, :dop, :covered, :submitted_by, :approved_by, :source, :note)
     end
 end

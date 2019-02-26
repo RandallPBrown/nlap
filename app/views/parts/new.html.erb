@@ -4,7 +4,7 @@
     $('#parts_index').DataTable();
 } );
 </script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
 
 <% content_for :description do %>
   <% end %>
@@ -35,9 +35,6 @@
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to theme_icon_tag("eye"), part, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("pencil-alt"), edit_part_path(part), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("trash"), part, 'data-toggle': 'tooltip', title: 'Delete',
-                        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                       </div>
                       </td>
                     </tr>
