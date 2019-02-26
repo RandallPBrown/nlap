@@ -1,5 +1,4 @@
 class Part < ApplicationRecord
-  rolify
   include PgSearch
   belongs_to :product
   belongs_to :buying_group
