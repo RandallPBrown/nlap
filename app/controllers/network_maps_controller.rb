@@ -16,16 +16,16 @@ class NetworkMapsController < ApplicationController
     #   folder.features << KML::Placemark.new(
     #     :name => name.name,
     #     :geometry => KML::Point.new(:coordinates => {:lat => name.latitude, :lng => name.longitude}),
-    #     :description => '<ExtendedData>' + name.provider_number.to_s + '</ExtendedData>'
+    #     :description => '<br>' + name.provider_number.to_s + '<br>',
     #   )
     # end
     # kml.objects << folder
     # puts kml.render
 
-    # require 'httparty'
-    # url = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAf_3lQsQ2GBDCzK_QZ8U142Rg2THxUr3k&callback=initMap&libraries=places&callback=initAutocomplete'
-    # response = HTTParty.get(url)
-    # @asdf = response.parsed_response
+    require 'httparty'
+    url = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAf_3lQsQ2GBDCzK_QZ8U142Rg2THxUr3k&callback=initMap&libraries=places&callback=initAutocomplete'
+    response = HTTParty.get(url)
+    @asdf = response.parsed_response
   end
 
   # GET /network_maps/1
