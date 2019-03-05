@@ -16,6 +16,7 @@
 //= require rails-ujs
 //= require turbolinks
 // require bootstrap
+//= require bootstrap-datepicker
 //= require rrt
 //= require validator
 //= require best_in_place

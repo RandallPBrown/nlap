@@ -4,19 +4,20 @@
   <p>Edit this template in <code>app/views/Chatrooms/show.html.erb</code>.</p>
   <% end %>
 
-<div class="row col-md-8 col-md-offset-2">
+<div class="row col-md-8 m-auto">
 
-<div class="panel panel-default">
+<div class="card">
   <% if @chatroom.messages.any? %>
-    <div class="panel-body" id="messages">
+    <div class="card-body" id="messages">
       <%= render partial: 'messages/message', collection: @chatroom.messages%>
     </div>
   <%else%>
-    <div class="panel-body hidden" id="messages">
+    <div class="card-body hidden" id="messages">
     </div>
   <%end%>
 </div>
-
+  <div class="card card-mini m-auto p-2">
   <%= render partial: 'messages/form', locals: {message: @message, chatroom: @chatroom}%>
+</div>
 </div>
 

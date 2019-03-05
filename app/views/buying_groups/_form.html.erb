@@ -4,8 +4,8 @@
 
   <div class="form-inputs">
     <%= f.form_group :bgname, class: 'row' do |f| %>
-      <%= f.label :bgname, class: 'control-label col-md-2' %>
-      <div class='col-12 col-md-10'>
+      <%= f.label 'Buying Group Name', class: 'control-label col-md-5 text-capitalize' %>
+      <div class='col-12 col-md-7'>
         <%= f.text_field :bgname, class: 'form-control' %>
         <%= f.error_messages %>
       </div>
@@ -16,7 +16,6 @@
   <div class="d-flex">
     <div class="ml-auto">
       <%= f.submit class: 'btn btn-primary' %>
-      <%= link_to "Cancel", buying_groups_path, class: 'btn btn-outline-default' %>
     </div>
   </div>
 <% end %>

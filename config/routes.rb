@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+  resources :network_maps
   mount ActionCable.server => '/cable'
   resources :messages
   resources :chatrooms
+  get 'network_map/index'
   get 'messages/message'
   get 'users/dashboard'
   get 'users/index'

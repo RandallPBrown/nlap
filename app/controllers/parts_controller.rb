@@ -20,6 +20,8 @@ class PartsController < ApplicationController
 
   def dashboard
     require 'will_paginate/array'
+    # @part = Part.find(params[:id])
+    @approved_by = User.order(:id).where('users.admin = ?', true)
     @parts = Part.all.where('parts.covered = ?', 'pending').order(created_at: :desc, updated_at: :desc).paginate(page: params[:page], :per_page => 5)
     @allparts = Part.all
     @approvedby = User.all.where('users.admin = ?', true).pluck(:first_name, :last_name)
@@ -37,6 +39,8 @@ class PartsController < ApplicationController
   # GET /parts/new
   def new
     @part = Part.new
+    @product = Product.new
+    @buying_group = BuyingGroup.new
     if params[:search].present?
       @parts = Part.perform_search(params[:search]).order(params[:sort]).paginate(page: params[:page], :per_page => 5)
     else

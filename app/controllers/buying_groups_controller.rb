@@ -26,7 +26,7 @@ class BuyingGroupsController < ApplicationController
     @buying_group = BuyingGroup.new(buying_group_params)
 
     if @buying_group.save
-      redirect_to @buying_group, notice: 'Buying group was successfully created.'
+      redirect_to new_part_path, notice: 'Buying group was successfully created.'
     else
       render :new
     end

@@ -31,9 +31,11 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
+gem 'geocoder'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'httparty'
+gem 'ruby_kml'
 
 gem 'devise'
 # gem "paranoia", "~> 2.2"
@@ -42,6 +44,7 @@ gem 'devise'
 gem 'pg_search'
 gem "will_paginate", "~> 3.0.4"
 gem 'alphabetical_paginate'
+gem 'bootstrap-datepicker-rails'
 gem "simple_calendar", "~> 2.0"
 # pdf to create forms
 gem 'wicked_pdf', '~> 1.1'

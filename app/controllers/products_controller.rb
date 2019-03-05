@@ -26,7 +26,7 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     if @product.save
-      redirect_to @product, notice: 'Product was successfully created.'
+      redirect_to new_part_path, notice: 'Product was successfully created.'
     else
       render :new
     end

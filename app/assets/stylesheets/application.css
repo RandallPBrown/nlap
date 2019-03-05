@@ -17,4 +17,5 @@
  *= require overrides
  *= require validator
  *= require datatables
+ *= require bootstrap-datepicker
  */
