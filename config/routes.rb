@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get 'daps/form2'  
   get 'home/dashboard'
   get 'myresults', to: 'entries#my_results', defaults: { format: 'csv'}  
-
+  put 'parts/read_at' => 'parts#read_at'
   resources :parts
   resources :products
   resources :buying_groups

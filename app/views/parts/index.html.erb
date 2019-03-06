@@ -9,6 +9,8 @@
   $(document).ready( function () {
     $('#parts_index').DataTable();
 } );
+
+
 </script>
 
 <% content_for :description do %>
@@ -84,22 +86,50 @@
                   </tr>
                 </thead>
                 <tbody>
-                <% @alluser.each do |part| %>
+                <% @alluser.each do |alluser| %>
                   <tr>
-                                        <% if part.approved_by.present? %>
-                                          <td class="text-capitalize"><%= part.covered.truncate(15) %></td>
-                                          <td><%= part.approved_by %></td>
-                                          <td><%= part.part_number.truncate(15) %></td>
-                                          <td><%= part.part_name.truncate(15) %></td>
-                                          <td><%= part.product.pname.truncate(15) %></td>
+                                        <% if alluser.approved_by.present? %>
+                                          <td class="text-capitalize"><%= alluser.covered.truncate(15) %></td>
+                                          <td><%= alluser.approved_by %></td>
+                                          <td><%= alluser.part_number.truncate(15) %></td>
+                                          <td><%= alluser.part_name.truncate(15) %></td>
+                                          <td><%= alluser.product.pname.truncate(15) %></td>
                                         
                                         <td class="actions text-right">
                       <div class="btn-group">
-                        <%= link_to fa_icon_tag("envelope-o"), part, class: "btn btn-link" %>
+                        <a class="btn btn-link" data-toggle="modal" data-target="#showModal" id="modalShow">
+                          <%= fa_icon_tag "envelope-o" %>
+                        </a>
+                        <%#= link_to fa_icon_tag("envelope-o"), alluser, class: "btn btn-link" %>
                       </div>
                       </td>
+                      <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="showLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="showLabel">Modal title</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" onclick="location.reload();">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <%= render :partial => 'display', :locals => { :part => alluser } %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <script>
+                          $('#modalShow').on('click', function() {
+                            $.ajax({
+                              url: '/parts/read_at',
+                              type: 'put',
+                              data: {id: <%= alluser.id %>}
+                            });
+                          });
+                      </script>
                       <% end %>  
                     </tr>
+
                     <% end %>
                     <% if @alluser.length == 0 %>
                     <tr><td colspan=42 class='text-center'>No parts.</td></tr>
@@ -164,6 +194,11 @@
                               </div>
             </div>
           </div>
+
+
+
+
+
 <script>
 $('#pn-search').keyup(function() {
     $('#pn-form').val($(this).val());
@@ -173,4 +208,5 @@ $('#pn-search').keyup(function() {
 $('#pn-form').keyup(function() {
     $('#pn-search').val($(this).val());
 });
+
 </script>

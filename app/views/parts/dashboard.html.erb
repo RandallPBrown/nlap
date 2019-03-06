@@ -61,17 +61,17 @@
                               <div class="card m-1 p-1">
                                 <%= form_for(part, html: { class: 'form-horizontal' }) do |f| %>
                                 <div class="row">
-                                  <div class="col-5">
+                                  <div class="col-3">
                                     <div class="d-flex justify-content-end">
                                       <label class="form-label pl-1 pr-1">
                                         Covered: 
                                       </label>
                                       <span class="pl-1 pr-1">
-                                        <%= f.select :covered, options_for_select({"pending" => "Pending", "not-covered" => "Not-Covered", "covered" => "Covered", "special" => "Special"}), class: "form-control" %>
+                                        <%= f.select :covered, options_for_select({"Pending" => "Pending", "Not-Covered" => "Not-Covered", "Covered" => "Covered", "Special" => "Special"}), class: "form-control text-capitalize" %>
                                       </span>
                                     </div>
                                   </div>
-                                  <div class="col-5">
+                                  <div class="col-3">
                                     <div class="d-flex justify-content-start">
                                       <label class="form-label pl-1 pr-1">
                                         Approved By: 
@@ -81,7 +81,17 @@
                                       </span>
                                     </div>
                                   </div>
-                                  <div class="col-2">
+                                  <div class="col-3">
+                                    <div class="d-flex justify-content-start">
+                                      <label class="form-label pl-1 pr-1">
+                                        Notes: 
+                                      </label>
+                                      <span class="pl-1 pr-1">
+                                        <%= f.text_field :note, class: "form-control form-control-sm" %>
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div class="col-3">
                                     <div class="d-flex justify-content-start">
                                       <span class="pl-1 pr-1">
                                         <%= f.submit "Submit", class: "btn btn-sm btn-primary" %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190302163126) do
+ActiveRecord::Schema.define(version: 20190305203029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,6 +180,7 @@ ActiveRecord::Schema.define(version: 20190302163126) do
     t.string "source"
     t.time "read_at"
     t.text "note"
+    t.string "serviceorder"
     t.index ["buying_group_id"], name: "index_parts_on_buying_group_id"
     t.index ["product_id"], name: "index_parts_on_product_id"
   end

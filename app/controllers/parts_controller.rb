@@ -7,6 +7,7 @@ class PartsController < ApplicationController
   # GET /parts
   def index
     require 'will_paginate/array'
+
     if params[:search].present?
       @parts = Part.order(created_at: :desc, updated_at: :desc).perform_search(params[:search]).order(params[:sort]).paginate(page: params[:page], :per_page => 10)
     else
@@ -29,11 +30,18 @@ class PartsController < ApplicationController
 
   # GET /parts/1
   def show
-  @pending_parts = Part.find(params[:id])
-  if @pending_parts.submitted_by == current_user.full_name
-    @pending_parts.read_at = Time.now
-    @pending_parts.save
+    @part = Part.find(params[:id])
+    @pending_parts = Part.find(params[:id])
+    if @pending_parts.submitted_by == current_user.full_name
+      @pending_parts.read_at = Time.now
+      @pending_parts.save
+    end
   end
+
+  def read_at
+    part = Part.find(params[:id])
+    part.read_at = Time.now
+    part.save
   end
 
   # GET /parts/new
@@ -87,6 +95,6 @@ class PartsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def part_params
-      params.require(:part).permit(:part_number, :part_name, :part_description, :product_id, :buying_group_id, :dop, :covered, :submitted_by, :approved_by, :source, :note)
+      params.require(:part).permit(:serviceorder, :part_number, :part_name, :part_description, :product_id, :buying_group_id, :dop, :covered, :submitted_by, :approved_by, :source, :note)
     end
 end
