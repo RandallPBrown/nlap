@@ -1,5 +1,6 @@
 <!-- START SCRIPTS -->
 <%= stylesheet_link_tag "validator.css" %>
+<%= javascript_include_tag "validator.js" %>
 
   <!-- Begin top navbar -->
   <nav class="navbar navbar-expand-md sticky-top navbar-dark green" role="navigation">
@@ -469,10 +470,10 @@
                  <!-- Modal Tab Headers -->
                  <ul class="nav md-pills nav-justified pills-secondary" role="tablist">
                     <li class="nav-item">
-                      <a class="btn btn-dark-green active" href="#est1Tab" role="tab" data-toggle="tab">EST1</a>
+                      <a class="btn btn-primary m-1 active" href="#est1Tab" role="tab" data-toggle="tab">EST1</a>
                     </li>
                     <li class="nav-item">
-                      <a href="#jfrrTab" class="btn btn-dark-green" role="tab" data-toggle="tab">JFRR</a>
+                      <a href="#jfrrTab" class="btn btn-primary m-1" role="tab" data-toggle="tab">JFRR</a>
                     </li>
                  </ul>                
               </div>
@@ -491,8 +492,9 @@
                 </div>                 
               </div>
               <div class="modal-footer">
-                <button id="modalCloseButton" type="button" class="btn btn-light-green" data-dismiss="modal" onclick="appendTemplate()" data-target="#estForm">Save & Reset</button>
-                <button type="button" class="btn btn-light-green" data-dismiss="modal">Cancel</button>                
+                <button id="modalCloseButton" type="button" class="btn btn-primary m-1" data-dismiss="modal" onclick="appendTemplate()" data-target="#estForm">Save & Reset</button>
+                <button id="emailFormButton" type="button" class="btn btn-warning m-1">OTL Send</button>
+                <button type="button" class="btn btn-primary m-1" data-dismiss="modal">Cancel</button>                
               </div>
             </div>
           </div>
@@ -916,10 +918,10 @@
                  <!-- Modal Tab Headers -->
                  <ul class="nav md-pills nav-justified pills-secondary" role="tablist">
                         <li class="nav-item">
-                        <a class="btn btn-dark-green active" href="#est1Tab2" role="tab" data-toggle="tab">EST1</a>
+                        <a class="btn btn-primary m-1 active" href="#est1Tab2" role="tab" data-toggle="tab">EST1</a>
                         </li>
                         <li class="nav-item">
-                        <a href="#jfrrTab2" class="btn btn-dark-green" role="tab" data-toggle="tab">JFRR</a>
+                        <a href="#jfrrTab2" class="btn btn-primary m-1" role="tab" data-toggle="tab">JFRR</a>
                         </li>
                     </ul>                
               </div>
@@ -938,8 +940,9 @@
                 </div>                 
               </div>
               <div class="modal-footer">
-                <button id="modalCloseButton2" type="button" class="btn btn-light-green" data-dismiss="modal" onclick="appendTemplate2()" data-target="#estForm2">Save & Reset</button>
-                <button type="button" class="btn btn-light-green" data-dismiss="modal">Cancel</button>                
+                <button id="modalCloseButton2" type="button" class="btn btn-primary m-1" data-dismiss="modal" onclick="appendTemplate2()" data-target="#estForm2">Save & Reset</button>
+                <button id="emailFormButton2" type="button" class="btn btn-warning m-1">OTL Send</button>
+                <button type="button" class="btn btn-primary m-1" data-dismiss="modal">Cancel</button>                
               </div>
             </div>
           </div>

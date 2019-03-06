@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  
   resources :network_maps
-  mount ActionCable.server => '/cable'
+  # mount ActionCable.server => '/cable'
   resources :messages
   resources :chatrooms
   get 'network_map/index'
@@ -22,6 +23,8 @@ Rails.application.routes.draw do
   get 'home/dashboard'
   get 'myresults', to: 'entries#my_results', defaults: { format: 'csv'}  
   put 'parts/read_at' => 'parts#read_at'
+  put 'tools/validator_email' => 'tools#validator_email'
+  resources :tools
   resources :parts
   resources :products
   resources :buying_groups
