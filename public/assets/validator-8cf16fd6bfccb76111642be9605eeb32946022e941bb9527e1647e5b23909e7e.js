@@ -1105,7 +1105,6 @@ function emailOTL2() {
       url: 'validator_email',
       type: 'put',
       data: { 
-        username: <%= current_user.full_name %>,
         receipt: $('#formReceipt2').val(),
         caller_name: $('#callerName2').val(), 
         service_provider: $('#serviceProvider2').val(), 
@@ -1172,3 +1171,4 @@ function appendTemplate2(){
     
 }
 
+;
