@@ -14,6 +14,8 @@
 		<div class="card-body">
 			<h3><%= @tool.serviceorder %></h3>
 			  <span> 
+			  		<b>Reviewed By:</b> <%= current_user.full_name %><br>
+			  		<br>
 				    <b>Name of s/p and person supplying estimate:</b> <%= @tool.caller_name %> @ <%= @tool.service_provider %><br>
 				    <b>Model number:</b> <%= @tool.model_number %><br>
 				    <b>Serial number:</b> <%= @tool.serial_number %><br>
