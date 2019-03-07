@@ -72,6 +72,6 @@ class ToolsController < ApplicationController
     end
 
     def validator_params
-      params.permit(:receipt, :serviceorder)
+      params.permit(:receipt, :serviceorder, :caller_name, :service_provider, :model_number, :serial_number, :failure_cause, :warranty_link, :sku, :opp, :ppc, :lol, :distributor, :total_parts, :total_labor, :total_tax, :total_mileage, :total_misc, :total_deductible, :total_estimate, :approved, :diagnostic)
     end
 end

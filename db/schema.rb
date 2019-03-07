@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190306205024) do
+ActiveRecord::Schema.define(version: 20190307003830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -202,6 +202,26 @@ ActiveRecord::Schema.define(version: 20190306205024) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "serviceorder"
+    t.string "caller_name"
+    t.string "service_provider"
+    t.string "model_number"
+    t.string "serial_number"
+    t.text "failure_cause"
+    t.string "warranty_link"
+    t.string "sku"
+    t.float "opp"
+    t.float "ppc"
+    t.float "lol"
+    t.string "distributor"
+    t.float "total_parts"
+    t.float "total_labor"
+    t.float "total_tax"
+    t.float "total_mileage"
+    t.float "total_misc"
+    t.float "total_deductible"
+    t.float "total_estimate"
+    t.string "approved"
+    t.float "diagnostic"
   end
 
   create_table "users", force: :cascade do |t|

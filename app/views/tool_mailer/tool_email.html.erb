@@ -9,13 +9,36 @@
 <div class="container-fluid">
 	<div class="card">
 		<div class="card-header">
-			<h1>New OTL Authorization Request</h1>
+			<h1><b>New OTL Authorization Request</b></h1>
 		</div>
 		<div class="card-body">
 			<h3><%= @tool.serviceorder %></h3>
-			  <p>
-			    <%= @tool.receipt %>
-			  </p>
+			  <span> 
+			  	<% @tool do |t| %> 
+				    <%= t.serviceorder %><br>
+				    <br>
+				    <b>Name of s/p and person supplying estimate:</b> <%= t.caller_name %> @ <%= t.service_provider %><br>
+				    <b>Model number:</b> <%= t.model_number %><br>
+				    <b>Serial number:</b> <%= t.serial_number %><br>
+				    <b>Cause of Failure:</b> <%= t.failure_cause %><br>
+				    <b>Manufacturer\'s Warranty Link:</b> <%= t.warranty_link %><br>
+				    <b>Plan SKU:</b> <%= t.sku %><br>
+				    <b>*If exception exists for this MFG refer service provider to the manufacturer if within exception period.*</b><br>
+				    <b>OPP:</b> <%= t.opp %> <b>Previous Paid Claims:</b> <%= t.ppc %> <b>Limit of Liability:</b> <%= t.lol %><br>
+				    <b>Where were part prices verified:</b> <%= t.distributor %><br>
+				    <br>
+				    <b>Total Parts:</b> <%= t.total_parts %> <b>Labor:</b> <%= t.total_labor %> <b>Tax:</b> <%= t.total_tax %><br>
+				    <b>Mileage:</b> <%= t.total_mileage %> <b>Misc:</b> <%= t.total_misc %><br>
+				    <b>Deductible (if applicable):</b> <%= t.total_deductible %><br>
+				    <b>Total Estimate:</b> <%= t.total_estimate %><br>
+				    ___________________________<br>
+				    <b>Estimate:</b> <%= t.approved %><br>
+				    <b>Attempted Repair or Diagnostic Fee if Pending:</b> <%= t.diagnostic %><br>
+				    <b>Pre-Approval Code:</b> <br>
+				    <br>
+				    <b>"As a reminder, all pre-approvals are contingent upon verification of your contracted or agreed upon service rates. Contracted rates supersede preliminary estimates and approvals"</b>
+    			<% end %>
+			  </span>
 			<small>
 				<p class="text-justify"><center>New Leaf Service Contracts, LLC.</center></p>
 				<p class="text-justify"><center>909 Lake Carolyn Pkwy, Ste 900</center></p>
