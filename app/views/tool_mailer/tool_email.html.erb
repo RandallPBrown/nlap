@@ -14,30 +14,28 @@
 		<div class="card-body">
 			<h3><%= @tool.serviceorder %></h3>
 			  <span> 
-			  	<% @tool.each do |t| %> 
 				    <%= t.serviceorder %><br>
 				    <br>
-				    <b>Name of s/p and person supplying estimate:</b> <%= t.caller_name %> @ <%= t.service_provider %><br>
-				    <b>Model number:</b> <%= t.model_number %><br>
-				    <b>Serial number:</b> <%= t.serial_number %><br>
-				    <b>Cause of Failure:</b> <%= t.failure_cause %><br>
-				    <b>Manufacturer\'s Warranty Link:</b> <%= t.warranty_link %><br>
-				    <b>Plan SKU:</b> <%= t.sku %><br>
+				    <b>Name of s/p and person supplying estimate:</b> <%= @tool.caller_name %> @ <%= @tool.service_provider %><br>
+				    <b>Model number:</b> <%= @tool.model_number %><br>
+				    <b>Serial number:</b> <%= @tool.serial_number %><br>
+				    <b>Cause of Failure:</b> <%= @tool.failure_cause %><br>
+				    <b>Manufacturer\'s Warranty Link:</b> <%= @tool.warranty_link %><br>
+				    <b>Plan SKU:</b> <%= @tool.sku %><br>
 				    <b>*If exception exists for this MFG refer service provider to the manufacturer if within exception period.*</b><br>
-				    <b>OPP:</b> <%= t.opp %> <b>Previous Paid Claims:</b> <%= t.ppc %> <b>Limit of Liability:</b> <%= t.lol %><br>
-				    <b>Where were part prices verified:</b> <%= t.distributor %><br>
+				    <b>OPP:</b> <%= @tool.opp %> <b>Previous Paid Claims:</b> <%= @tool.ppc %> <b>Limit of Liability:</b> <%= @tool.lol %><br>
+				    <b>Where were part prices verified:</b> <%= @tool.distributor %><br>
 				    <br>
-				    <b>Total Parts:</b> <%= t.total_parts %> <b>Labor:</b> <%= t.total_labor %> <b>Tax:</b> <%= t.total_tax %><br>
-				    <b>Mileage:</b> <%= t.total_mileage %> <b>Misc:</b> <%= t.total_misc %><br>
-				    <b>Deductible (if applicable):</b> <%= t.total_deductible %><br>
-				    <b>Total Estimate:</b> <%= t.total_estimate %><br>
+				    <b>Total Parts:</b> <%= @tool.total_parts %> <b>Labor:</b> <%= @tool.total_labor %> <b>Tax:</b> <%= @tool.total_tax %><br>
+				    <b>Mileage:</b> <%= @tool.total_mileage %> <b>Misc:</b> <%= @tool.total_misc %><br>
+				    <b>Deductible (if applicable):</b> <%= @tool.total_deductible %><br>
+				    <b>Total Estimate:</b> <%= @tool.total_estimate %><br>
 				    ___________________________<br>
-				    <b>Estimate:</b> <%= t.approved %><br>
-				    <b>Attempted Repair or Diagnostic Fee if Pending:</b> <%= t.diagnostic %><br>
+				    <b>Estimate:</b> <%= @tool.approved %><br>
+				    <b>Attempted Repair or Diagnostic Fee if Pending:</b> <%= @tool.diagnostic %><br>
 				    <b>Pre-Approval Code:</b> <br>
 				    <br>
 				    <b>"As a reminder, all pre-approvals are contingent upon verification of your contracted or agreed upon service rates. Contracted rates supersede preliminary estimates and approvals"</b>
-    			<% end %>
 			  </span>
 			<small>
 				<p class="text-justify"><center>New Leaf Service Contracts, LLC.</center></p>
