@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190307163556) do
+ActiveRecord::Schema.define(version: 20190307201946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -191,13 +191,6 @@ ActiveRecord::Schema.define(version: 20190307163556) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "receipients", force: :cascade do |t|
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_receipients_on_user_id"
-  end
-
   create_table "recipients", force: :cascade do |t|
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -264,6 +257,7 @@ ActiveRecord::Schema.define(version: 20190307163556) do
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.datetime "deleted_at"
+    t.string "extension"
     t.index ["agent_id"], name: "index_users_on_agent_id"
     t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -304,7 +298,6 @@ ActiveRecord::Schema.define(version: 20190307163556) do
   add_foreign_key "messages", "users"
   add_foreign_key "parts", "buying_groups"
   add_foreign_key "parts", "products"
-  add_foreign_key "receipients", "users"
   add_foreign_key "recipients", "users"
   add_foreign_key "users", "agents"
   add_foreign_key "users", "departments"
