@@ -14,7 +14,7 @@
 		<div class="card-body">
 			<h3><%= @tool.serviceorder %></h3>
 			  <span> 
-			  	<% @tool do |t| %> 
+			  	<% @tool.each do |t| %> 
 				    <%= t.serviceorder %><br>
 				    <br>
 				    <b>Name of s/p and person supplying estimate:</b> <%= t.caller_name %> @ <%= t.service_provider %><br>
