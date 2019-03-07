@@ -38,24 +38,12 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
 
-  config.action_mailer.delivery_method = :sendmail
-  # Defaults to:
-  # config.action_mailer.sendmail_settings = {
-  #   location: '/usr/sbin/sendmail',
-  #   arguments: '-i'
-  # }
-  config.action_mailer.perform_deliveries = true
+config.action_mailer.delivery_method = :letter_opener
+config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_options = {from: 'rpeytonb@gmail.com'}
 
 config.action_mailer.delivery_method = :letter_opener
-config.action_mailer.smtp_settings = {
-address:              'smtp.sendgrid.net',
-port:                 587,
-user_name:            'apikey',
-password:             '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',
-authentication:       'plain',
-enable_starttls_auto: true  }
 
 
   config.action_mailer.perform_caching = false

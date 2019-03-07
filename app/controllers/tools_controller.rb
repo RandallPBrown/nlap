@@ -26,7 +26,10 @@ class ToolsController < ApplicationController
   	# @tool.receipt = :receipt
   	@tool.save
   	if @tool.save
-        ToolMailer.tool_email(@tool).deliver_now
+  		@recipient = Recipient.all
+     	@recipient.each do |recipient|
+        	ToolMailer.tool_email(@tool, recipient).deliver_now
+        end
     end
   end
 

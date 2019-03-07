@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :recipients
   resources :network_maps
   # mount ActionCable.server => '/cable'
   resources :messages
