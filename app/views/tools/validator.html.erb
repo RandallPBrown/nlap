@@ -47,7 +47,7 @@
     </div>           
   </nav>
 
-
+<input type="text" value="<%= current_user.full_name %>" id="username" hidden>  
 
         <!-- start form -->
   <div class="tab-content" id="myTabContent">
@@ -259,7 +259,8 @@
                  <div class="form-group col-xs-2 col-md-2"><label>  </label>
                  </div>               
                </div>
-             <button type="submit" hidden="true"></button>     
+             <button type="submit" hidden="true"></button>  
+             
         <!-- Begin Override modal -->
         <div class="modal fade" data-backdrop="true" id="overrideModal" tabindex="-1" role="dialog" aria-labelledby="overrideModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
