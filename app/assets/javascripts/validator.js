@@ -576,6 +576,7 @@ function emailOTL() {
       url: 'validator_email',
       type: 'put',
       data: { 
+        username: <%= current_user.full_name %>,
         receipt: $('#formReceipt').val(),
         caller_name: $('#callerName').val(), 
         service_provider: $('#serviceProvider').val(), 
