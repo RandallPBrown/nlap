@@ -267,7 +267,7 @@ function completeFn(results)
 						direct_calls: results.data[i]["Direct Calls"],
 						direct_talk: results.data[i]["Direct Talk"],
 						name: results.data[i]["Name"],
-						net_Login: results.data[i]["Net Login"],
+						net_login: results.data[i]["Net Login"],
 						occupancy: results.data[i]["Occupancy"],
 						outbound_calls: results.data[i]["Outb'nd Calls"],
 						outbound_talk: results.data[i]["Outb'nd Talk"],
