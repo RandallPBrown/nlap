@@ -1,0 +1,2 @@
+module AgentStatsHelper
+end

@@ -1,5 +1,7 @@
 {
   "name": "ops",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "papaparse": "^4.6.3"
+  }
 }

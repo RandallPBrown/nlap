@@ -1,0 +1,61 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  extension: MyString
+  name: MyString
+  date: 2019-03-07
+  shift: 2019-03-07 20:23:42
+  total_login: 2019-03-07 20:23:42
+  total_break: 2019-03-07 20:23:42
+  net_login: 2019-03-07 20:23:42
+  requested_worktime: 2019-03-07 20:23:42
+  availability: 1.5
+  occupancy: 1.5
+  queue_calls: 1
+  queue_talk: 2019-03-07 20:23:42
+  direct_calls: 1
+  direct_talk: 2019-03-07 20:23:42
+  outbound_calls: 1
+  outbound_talk: 2019-03-07 20:23:42
+  callback_calls: 1
+  callback_talk: 2019-03-07 20:23:42
+  deleted: 1
+  un_ans: 1
+  picked: 1
+  recover: 1
+  power_dial: 1
+  acw: 2019-03-07 20:23:42
+  wrapup_time: 2019-03-07 20:23:42
+  total_calls: 1
+  total_talk: 2019-03-07 20:23:42
+  aht: 2019-03-07 20:23:42
+
+two:
+  extension: MyString
+  name: MyString
+  date: 2019-03-07
+  shift: 2019-03-07 20:23:42
+  total_login: 2019-03-07 20:23:42
+  total_break: 2019-03-07 20:23:42
+  net_login: 2019-03-07 20:23:42
+  requested_worktime: 2019-03-07 20:23:42
+  availability: 1.5
+  occupancy: 1.5
+  queue_calls: 1
+  queue_talk: 2019-03-07 20:23:42
+  direct_calls: 1
+  direct_talk: 2019-03-07 20:23:42
+  outbound_calls: 1
+  outbound_talk: 2019-03-07 20:23:42
+  callback_calls: 1
+  callback_talk: 2019-03-07 20:23:42
+  deleted: 1
+  un_ans: 1
+  picked: 1
+  recover: 1
+  power_dial: 1
+  acw: 2019-03-07 20:23:42
+  wrapup_time: 2019-03-07 20:23:42
+  total_calls: 1
+  total_talk: 2019-03-07 20:23:42
+  aht: 2019-03-07 20:23:42

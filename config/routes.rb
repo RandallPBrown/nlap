@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  put 'agent_stats/csv_upload' => 'agent_stats#csv_upload'
+  resources :agent_stats 
   resources :recipients
   resources :network_maps
   # mount ActionCable.server => '/cable'
@@ -25,6 +27,7 @@ Rails.application.routes.draw do
   get 'myresults', to: 'entries#my_results', defaults: { format: 'csv'}  
   put 'parts/read_at' => 'parts#read_at'
   put 'tools/validator_email' => 'tools#validator_email'
+
   resources :tools
   resources :parts
   resources :products

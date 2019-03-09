@@ -5,6 +5,7 @@ class ToolsController < ApplicationController
 
   # GET /tools
   def index
+    
     @tools = Tool.all
   end
 

@@ -40,6 +40,14 @@
                   </div>
                 <% end %>
 
+                <%= f.form_group :extension, class: "row" do |f| %>
+                  <%= f.label :extension, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                  <%= f.text_field :extension, autofocus: true, class: "form-control" %>
+                  <%= f.error_messages %>
+                </div>
+                <% end %>
+
                 <% if current_user.admin? then %>
                 <%= f.form_group :department_id, class:"row" do |f| %>
                   <%= f.label :department_id, class: "col-sm-4 col-form-label" %>
@@ -49,11 +57,14 @@
                   </div>
                 <% end %>
                                 <%= f.form_group :role, class: "row" do |f| %>
-                  <%= f.label :role, class: "form-label" %>
+                  <%= f.label :role, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
                   <%= f.collection_select :role, Role.order(:name), :name, :name, {}, { :class => "form-control text-capitalize" } %>
                   <%= f.error_messages %>
+                </div>
                 <% end %>
                 <% else %>
+
                 <%= f.form_group :department_id, class:"row" do |f| %>
                   <%= f.label :department_id, class: "col-sm-4 col-form-label" %>
                   <div class="col-md-8">
