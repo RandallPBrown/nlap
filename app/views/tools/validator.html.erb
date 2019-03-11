@@ -22,13 +22,10 @@
             <a class="nav-link green darken-1 text-white font-weight-bold" role="button" aria-expanded="false" onclick="$('#setModal').modal('show');">SETTLEMENT</a>
           </li>  
           <li class="nav-item dropdown">
-            <a class="nav-link green darken-1 text-white font-weight-bold dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link green darken-1 text-white font-weight-bold"  role="button" data-toggle="modal" data-target="#historyModal">
              HISTORY
             </a>
-              <div class="dropdown-menu green darken-1" aria-labelledby="navbarDropdown" style="padding: 5px">
-                <label><h5>HISTORY</h5></label>       
-                <textarea class="mirror3 light-green" name="receiptHistory" id="receiptHistory" rows="10" style="width: 300px !important;"></textarea>
-              </div>
+
           </li>        
           <li class="nav-item">
             <a data-toggle="pill" id="primaryButton" class="nav-link green darken-1 text-white font-weight-bold" href="#primaryTab" role="tab" aria-controls="primaryTab" aria-selected="true">QUEUE CALL</a>
@@ -46,6 +43,21 @@
       </div>
     </div>           
   </nav>
+
+
+<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="text-center m-auto text-white font-weight-bold">HISTORY</h5>
+      </div>
+      <div class="modal-body">
+        <textarea class="mirror3 form-control" name="receiptHistory" id="receiptHistory" rows="10" style="width: 100% !important; height: 75% !important;"></textarea><br />
+        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">CLOSE</button>   
+      </div>
+    </div>
+  </div>
+</div>
 
 <input type="text" value="<%= current_user.full_name %>" id="username" hidden>  
 
@@ -326,7 +338,7 @@
               </div>
               <div class="modal-footer">
                 <button id="bypassModalCloseButton" type="button" class="btn btn-light-green"" data-dismiss="modal" onclick="receiptModalBypass()" disabled>Bypass</button>
-                <button type="button" class="btn btn-light-green"" data-dismiss="modal">Cancel</button>                
+                <button type="button" class="btn btn-light-green" data-dismiss="modal">Cancel</button>                
               </div>
             </div>
           </div>
@@ -494,7 +506,7 @@
               </div>
               <div class="modal-footer">
                 <button id="modalCloseButton" type="button" class="btn btn-primary m-1" data-dismiss="modal" onclick="appendTemplate()" data-target="#estForm">Save & Reset</button>
-                <button id="emailFormButton" type="button" class="btn btn-warning m-1">OTL Send</button>
+                <button id="emailFormButton" type="button" class="btn btn-warning m-1" hidden>OTL Send</button>
                 <button type="button" class="btn btn-primary m-1" data-dismiss="modal">Cancel</button>                
               </div>
             </div>
