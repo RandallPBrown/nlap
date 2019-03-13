@@ -313,3 +313,4 @@ function now()
 			? window.performance.now()
 			: 0;
 }
+;

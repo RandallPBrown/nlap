@@ -6,6 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :department
+  has_many :agent_stats
 	has_many :entries
   has_many :daps
   has_many :messages

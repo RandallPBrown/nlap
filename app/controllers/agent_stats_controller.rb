@@ -6,23 +6,35 @@ class AgentStatsController < ApplicationController
   # GET /agent_stats
   def index
     require 'will_paginate/array'
-    @agent_stats = AgentStat.all.paginate(page: params[:page], :per_page => 5)
+    @agent_stats = AgentStat.all
+    @agent_stat_count = AgentStat.all.count(:id).to_i
+  end
+
+  def all_stats
+    @agent_stats = AgentStat.all
   end
 
   # GET /agent_stats/1
   def show
   end
 
-def csv_upload
+  def csv_upload
     @agent_stat = AgentStat.new(agent_stat_params_upload)
+    @test = User.where(extension: params[:extension]).pluck(:id)
+    if @test.present?
+      @agent_stat.user_id = @test.first
+    else 
+      @agent_stat.user_id = "unknown"
+    end
     @agent_stat.save
-
-end
+  end
 
 
   # GET /agent_stats/new
   def new
     @agent_stat = AgentStat.new
+        @agent_stats = AgentStat.all
+    @agent_stat_count = AgentStat.all.count(:id).to_i
   end
 
   # GET /agent_stats/1/edit
@@ -67,6 +79,6 @@ end
     end
 
     def agent_stat_params_upload
-      params.permit(:extension, :abnd, :name, :date, :shift, :total_login, :total_break, :net_login, :requested_worktime, :availability, :occupancy, :queue_calls, :queue_talk, :direct_calls, :direct_talk, :outbound_calls, :outbound_talk, :callback_calls, :callback_talk, :deleted, :un_ans, :picked, :recover, :power_dial, :acw, :wrapup_time, :total_calls, :total_talk, :aht)
+      params.permit(:user_id, :extension, :abnd, :name, :date, :shift, :total_login, :total_break, :net_login, :requested_worktime, :availability, :occupancy, :queue_calls, :queue_talk, :direct_calls, :direct_talk, :outbound_calls, :outbound_talk, :callback_calls, :callback_talk, :deleted, :un_ans, :picked, :recover, :power_dial, :acw, :wrapup_time, :total_calls, :total_talk, :aht)
     end
 end

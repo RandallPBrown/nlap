@@ -1,12 +1,114 @@
 <% @title = "New agent_stat" %>
+<style>
+.loading-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+}
+.loader
+{
+    display: none;
+    width:200px;
+    height: 200px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    text-align:center;
+    margin-left: -50px;
+    margin-top: -100px;
+    z-index:2;
+    overflow: auto;
+}
 
-<% content_for :description do %>
-  <p>Edit this template in <code>app/views/AgentStats/new.html.erb</code>.</p>
+</style>
+
+  <% content_for :actions do %>
+    <%= link_to "../agent_stats", class: 'btn btn-primary btn-large pull-right' do %>
+      <span class="font-weight-bold">INDEX</span>
+    <% end %>
   <% end %>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+            <div class="card card-mini" style="height: 100%;">
+              <div class="card-header bg-primary">
+                <h5 class="font-weight-bold m-auto text-white">OPTIONS</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-group form-check">
+                  <div class="text-center border bg-light">
+                    <input type="checkbox" id="stream" class="form-check-input"> 
+                    <label class="form-check-label font-weight-bold text-right" for="stream">Stream</label><br>
+                  </div>
+                  <span>Results are delivered row by row to a step function. Use with large inputs that would crash the browser.</span>
+                </div>
+              <hr>
+                <div class="form-group form-check">
+                  <div class="text-center border bg-light">
+                    <input type="checkbox" id="worker" class="form-check-input"> 
+                    <label class="form-check-label font-weight-bold text-right" for="worker">Worker thread</label><br>
+                  </div>
+                  <span>Uses a separate thread so the web page doesn't lock up.</span>
+                </div>
+              <hr>  
+                <div class="form-group form-check">
+                  <div class="text-center border bg-light">
+                    <input type="checkbox" id="header" checked class="form-check-input"> 
+                    <label class="form-check-label font-weight-bold text-right" for="header">Header row</label><br>
+                  </div>
+                  <span>Keys data by field name rather than an array.</span>
+                </div>
+              <hr>
+                <div class="form-group form-check">
+                  <div class="text-center border bg-light">
+                    <input type="checkbox" id="dynamicTyping" class="form-check-input" checked> 
+                    <label class="form-check-label font-weight-bold text-right" for="dynamicTyping">Dynamic typing</label><br>
+                  </div>
+                  <span>Turns numeric data into numbers and true/false into booleans.</span>
+                </div>
+              <hr>
+                <div class="form-group form-check">
+                  <div class="text-center border bg-light">
+                    <input type="checkbox" id="skipEmptyLines" class="form-check-input"> 
+                    <label class="form-check-label font-weight-bold text-right" for="skipEmptyLines">Skip empty lines</label><br>
+                  </div>
+                  <span>By default, empty lines are parsed; check to skip.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+<div class="loader">
+   <center>
+       <%= image_tag ("ajax-loader.gif"), class: 'loading-image' %>
+   </center>
+</div>
+
+            <div class="col-8">
+              <div class="card card-mini" style="height: 100%;">
+              <div class="card-header bg-primary">
+                <h5 class="font-weight-bold m-auto text-white">DATA</h5>
+              </div>
+              <div class="card-body">
+                <textarea id="input" placeholder="Copy and paste CSV data here" class="form-control" style="height: 75%;"></textarea>
+              <div class="text-center">
+                <div class="see-results">
+                  Results will appear in the console of your browser's inspector tools
+                </div>
+                <button id="submit" class="btn btn-primary font-weight-bold">PARSE</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
   <div class="container">
     <div class="row">
-      <div id="content" class="col-12 col-md-9">
+      <div id="content" class="col-12 col-md-12">
         <div class="card card-sheet">
           <div class="card-body">
             <%= render 'form' %>
@@ -15,23 +117,6 @@
       </div>
 
 
-      <div id="sidebar" class="col-12 col-md-3">
-        <ul class="nav nav-stacked nav-caret-left bg-gray-200 card small pb-2">
-          <li><h6 class="mt-3 ml-3">Sub Menu</h6></li>
-          <li class="nav-item">
-          <a class="nav-link" href="#">Vacation Days</a>
-          </li>
-          <li class="nav-item active">
-          <a class="nav-link" href="#">Salaries</a>
-          </li>
-          <li class="nav-item">
-          <a class="nav-link" href="#">Disciplinary Items</a>
-          </li>
-          <li class="nav-item">
-          <a class="nav-link" href="#">Firings</a>
-          </li>
-        </ul>
-      </div> <!-- /#sidebar -->
 
     </div>
   </div>

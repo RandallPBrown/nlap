@@ -143,11 +143,11 @@
                                           <td class="text-capitalize"><%= best_in_place part, :covered, :as => :select, :collection => {"pending" => "Pending", "not-covered" => "Not-Covered", "covered" => "Covered", "special" => "Special"} %></td>
                                           <td><%= best_in_place part, :approved_by, :as => :select, :collection => @approvedby %></td>
                                           <td><%= best_in_place part, :part_number, :as => :input %></td>
-                                          <td><%= part.part_name %></td>
-                                          <td><%= part.product.pname %></td>
-                                          <td><%= part.buying_group.bgname %></td>
+                                          <td><%= part.part_name.truncate(15) %></td>
+                                          <td><%= part.product.pname.truncate(15) %></td>
+                                          <td><%= part.buying_group.bgname.truncate(15) %></td>
                                           <td><%= part.dop %></td>
-                                          <td><%= part.submitted_by %></td>
+                                          <td><%= part.submitted_by.truncate(15) %></td>
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to theme_icon_tag("eye"), part, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>

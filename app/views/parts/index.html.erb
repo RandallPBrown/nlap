@@ -89,11 +89,11 @@
                 <% @alluser.each do |alluser| %>
                   <tr>
                                         <% if alluser.approved_by.present? %>
-                                          <td class="text-capitalize"><%= alluser.covered.truncate(15) %></td>
+                                          <td class="text-capitalize"><%= alluser.covered.truncate(10) %></td>
                                           <td><%= alluser.approved_by %></td>
-                                          <td><%= alluser.part_number.truncate(15) %></td>
-                                          <td><%= alluser.part_name.truncate(15) %></td>
-                                          <td><%= alluser.product.pname.truncate(15) %></td>
+                                          <td><%= alluser.part_number.truncate(10) %></td>
+                                          <td><%= alluser.part_name.truncate(10) %></td>
+                                          <td><%= alluser.product.pname.truncate(10) %></td>
                                         
                                         <td class="actions text-right">
                       <div class="btn-group">

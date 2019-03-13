@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+  put 'agent_stats/all_stats' => 'agent_stats#all_stats'
   put 'agent_stats/csv_upload' => 'agent_stats#csv_upload'
   resources :agent_stats 
   resources :recipients
