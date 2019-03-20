@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'users/index'
   get 'tools/validator'
   get 'parts/dashboard'
+  get 'err_logs/dashboard'
   get 'entries/dashboard'
   get 'agent_department/index'
   get 'entry/dashboard'
@@ -43,6 +44,9 @@ Rails.application.routes.draw do
   resources :roles
   resources :departments
   resources :agents
+  resources :err_logs
+  resources :err_names
+  resources :err_statuses
   devise_for :users, :skip => [:registrations], controllers: {
         sessions: 'users/sessions'
         # registrations: 'users/registrations'

@@ -1,11 +1,22 @@
 class ErrLogsController < ApplicationController
   layout "scaffold"
-
+  before_action :authenticate_user!
+  # before_action :authorize_admin, only: [:dashboard]
   before_action :set_err_log, only: [:show, :edit, :update, :destroy]
 
   # GET /err_logs
   def index
     @err_logs = ErrLog.all
+    @err_log = ErrLog.new
+  end
+
+  def dashboard
+    require 'will_paginate/array'
+    # @part = Part.find(params[:id])
+    @approved_by = User.order(:id).where('users.admin = ?', true)
+    @err_logs = ErrLog.includes(:err_status).joins(:err_status).where('statusname = ?', 'Pending').order(created_at: :desc, updated_at: :desc).paginate(page: params[:page], :per_page => 5)
+    @allerrors = ErrLog.all
+    @approvedby = User.all.where('users.admin = ?', true).pluck(:first_name, :last_name)
   end
 
   # GET /err_logs/1
@@ -26,7 +37,7 @@ class ErrLogsController < ApplicationController
     @err_log = ErrLog.new(err_log_params)
 
     if @err_log.save
-      redirect_to @err_log, notice: 'Err log was successfully created.'
+      redirect_to err_logs_path, notice: 'Err log was successfully created.'
     else
       render :new
     end
@@ -55,6 +66,6 @@ class ErrLogsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def err_log_params
-      params.require(:err_log).permit(:user_id, :department_id, :errdate, :err_name_id, :errdesc, :err_status_id, :errsubmitby)
+      params.require(:err_log).permit(:serviceorder, :approved_by, :err_notes, :err_cost, :user_id, :department_id, :errdate, :err_name_id, :errdesc, :err_status_id, :errsubmitby)
     end
 end

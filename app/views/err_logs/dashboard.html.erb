@@ -1,0 +1,179 @@
+<script>
+    $(document).ready(function() {
+    /* Activating Best In Place */
+    jQuery(".best_in_place").best_in_place();
+  });
+
+    $(document).ready( function () {
+    $('#parts_index_all').DataTable();
+  });
+</script>
+
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header bg-primary text-white">
+                <h5 class="text-uppercase m-auto font-weight-bold">PENDING APPROVAL ERRORS</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover table-sm-responsive display border rounded" id="parts_index_pending">
+                    <thead>
+                    <tr>
+                                            <th>User</th>
+                                            <th>Department</th>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Submitted</th>
+                                          <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% @err_logs.each do |err_log| %>
+                      <tr data-toggle="collapse" data-target="#accordion<%= err_log.id %>" class="accordion-toggle">
+                                            <td><%= err_log.user.full_name %></td>
+                                            <td><%= err_log.department.name %></td>
+                                            <td><%= err_log.errdate %></td>
+                                            <td><%= err_log.err_name.errname %></td>
+                                            <td><%= err_log.errdesc %></td>
+                                            <td><%= err_log.err_status.statusname %></td>
+                                            <td><%= err_log.errsubmitby %></td>
+                                          <td class="actions text-right">
+                        <div class="btn-group">
+                          <%= link_to theme_icon_tag("eye"), err_log, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                          <%= link_to theme_icon_tag("pencil-alt"), edit_err_log_path(err_log), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                          <%= link_to theme_icon_tag("trash"), err_log, 'data-toggle': 'tooltip', title: 'Delete',
+                          data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+                        </div>
+                        </td>
+                        </tr>
+                        <tr>
+                          <td colspan="10" class="hiddenrow">
+                            <div id="accordion<%= err_log.id %>" class="collapse">
+                              <div class="card m-1 p-1">
+                                <%= form_for(err_log, html: { class: 'form-horizontal' }) do |f| %>
+                                  <%= f.error_notification %>
+
+                                  <div class="form-inputs">
+                                    <%= f.form_group :err_name_id, class: 'row' do |f| %>
+                                      <%= f.label 'Error Type', class: 'control-label col-md-3' %>
+                                      <div class='col-12 col-md-9'>
+                                        <%= f.collection_select :err_name_id, ErrName.order(:id), :id, :errname, class: 'form-control form-control-sm' %>
+                                        <%= f.error_messages %>
+                                      </div>
+                                    <% end %>
+
+                                    <%= f.form_group :err_status_id, class: 'row' do |f| %>
+                                      <%= f.label 'Disposition', class: 'control-label col-md-3' %>
+                                      <div class='col-12 col-md-9'>
+                                        <%= f.collection_select :err_status_id, ErrStatus.order(:id), :id, :statusname, class: 'form-control form-control-sm' %>
+                                        <%= f.error_messages %>
+                                      </div>
+                                    <% end %>
+
+                                    <%= f.form_group :err_cost, class: 'row' do |f| %>
+                                      <%= f.label 'Error Cost', class: 'control-label col-md-3' %>
+                                      <div class='col-12 col-md-9'>
+                                        <%= f.number_field :err_cost, class: 'form-control form-control-sm' %>
+                                        <%= f.error_messages %>
+                                      </div>
+                                    <% end %>
+
+                                    <%= f.form_group :approved_by, class: 'row' do |f| %>
+                                      <%= f.label 'Trainer', class: 'control-label col-md-3' %>
+                                      <div class='col-12 col-md-9'>
+                                        <%= f.collection_select :approved_by, @approved_by, :last_name, :full_name, class: "form-control form-control-sm" %>
+                                        <%= f.error_messages %>
+                                      </div>
+                                    <% end %>
+
+                                    <%= f.form_group :err_notes, class: 'row' do |f| %>
+                                      <%= f.label 'Notes', class: 'control-label col-md-3' %>
+                                      <div class='col-12 col-md-9'>
+                                        <%= f.text_area :err_notes, class: "form-control form-control-sm" %>
+                                        <%= f.error_messages %>
+                                      </div>
+                                    <% end %>
+                                  </div>
+
+                                  <div class="d-flex">
+                                    <div class="ml-auto">
+                                      <%= f.submit 'UPDATE', class: 'btn btn-primary' %>
+                                    </div>
+                                  </div>
+                                <% end %>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <% end %>
+                        <% if @err_logs.length == 0 %>
+                        <tr><td colspan=42 class='text-center'>No Errors</td></tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                  </div>
+                </div>
+              </div>
+
+                                  <%# Remove the trailing if condition if you're using pagination. %>
+                  <%= will_paginate @err_logs %>
+                
+                              </div>
+            </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-sheet sheet-condensed">
+              <div class="table-responsive">
+                <table class="table table-striped table-hover table-sm-responsive" id="table_id">
+                  <thead>
+                    <tr>
+                                            <th>User</th>
+                                            <th>Department</th>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Submitted</th>
+                                          <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <% @allerrors.each do |err_log| %>
+                    <tr>
+                                            <td><%= err_log.user.full_name %></td>
+                                            <td><%= err_log.department.name %></td>
+                                            <td><%= err_log.errdate %></td>
+                                            <td><%= err_log.err_name.errname %></td>
+                                            <td><%= err_log.errdesc %></td>
+                                            <td><%= err_log.err_status.statusname %></td>
+                                            <td><%= err_log.errsubmitby %></td>
+                                          <td class="actions text-right">
+                        <div class="btn-group">
+                          <%= link_to theme_icon_tag("eye"), err_log, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                          <%= link_to theme_icon_tag("pencil-alt"), edit_err_log_path(err_log), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                          <%= link_to theme_icon_tag("trash"), err_log, 'data-toggle': 'tooltip', title: 'Delete',
+                          data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+                        </div>
+                        </td>
+                      </tr>
+                      <% end %>
+                      <% if @err_logs.length == 0 %>
+                      <tr><td colspan=42 class='text-center'>No err_logs.</td></tr>
+                      <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                                  <%# Remove the trailing if condition if you're using pagination. %>
+                  <%= will_paginate @err_logs if @err_logs.respond_to?(:total_pages) %>
+                
+                              </div>
+            </div>
+          </div>

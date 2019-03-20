@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190311191542) do
+ActiveRecord::Schema.define(version: 20190318194428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,10 +74,33 @@ ActiveRecord::Schema.define(version: 20190311191542) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.bigint "language_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["language_id"], name: "index_categories_on_language_id"
+  end
+
   create_table "chatrooms", force: :cascade do |t|
     t.string "topic"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "components", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.text "chtml"
+    t.text "ccss"
+    t.text "cjavascript"
+    t.text "cror"
+    t.text "cinfo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_components_on_category_id"
   end
 
   create_table "create_join_table_agent_departments", force: :cascade do |t|
@@ -129,6 +152,10 @@ ActiveRecord::Schema.define(version: 20190311191542) do
     t.string "errsubmitby"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "approved_by"
+    t.text "err_notes"
+    t.float "err_cost"
+    t.string "serviceorder"
     t.index ["department_id"], name: "index_err_logs_on_department_id"
     t.index ["err_name_id"], name: "index_err_logs_on_err_name_id"
     t.index ["err_status_id"], name: "index_err_logs_on_err_status_id"
@@ -144,6 +171,13 @@ ActiveRecord::Schema.define(version: 20190311191542) do
   create_table "err_statuses", force: :cascade do |t|
     t.string "statusname"
     t.integer "errvalue"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -324,6 +358,8 @@ ActiveRecord::Schema.define(version: 20190311191542) do
   add_foreign_key "agent_stats", "users"
   add_foreign_key "agents", "departments"
   add_foreign_key "agents", "users"
+  add_foreign_key "categories", "languages"
+  add_foreign_key "components", "categories"
   add_foreign_key "daps", "users"
   add_foreign_key "daps", "writeups"
   add_foreign_key "daps", "wunatures"
