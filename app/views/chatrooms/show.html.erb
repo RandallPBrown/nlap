@@ -9,6 +9,11 @@
 <div class="card">
   <% if @chatroom.messages.any? %>
     <div class="card-body" id="messages">
+      <% @messages.each do |f| %>
+        <span class="font-weight-bold"><%= f.user.full_name %>:</span> <%= f.content %><br>
+        <% end %>
+        <small>last message: <%= @messages.map { |f| f.created_at.in_time_zone("Central Time (US & Canada)") }.last %></small>
+        <hr>
       <%= render partial: 'messages/message', collection: @chatroom.messages%>
     </div>
   <%else%>
