@@ -46,7 +46,7 @@ class ErrLogsController < ApplicationController
   # PATCH/PUT /err_logs/1
   def update
     if @err_log.update(err_log_params)
-      redirect_to @err_log, notice: 'Err log was successfully updated.'
+      redirect_to err_logs_dashboard_path, notice: 'Err log was successfully updated.'
     else
       render :edit
     end
