@@ -337,7 +337,7 @@
                 </div>                           
               </div>
               <div class="modal-footer">
-                <button id="bypassModalCloseButton" type="button" class="btn btn-light-green"" data-dismiss="modal" onclick="receiptModalBypass()" disabled>Bypass</button>
+                <button id="bypassModalCloseButton" type="button" class="btn btn-light-green"" data-dismiss="modal" onclick="receiptModalBypass();" disabled>Bypass</button>
                 <button type="button" class="btn btn-light-green" data-dismiss="modal">Cancel</button>                
               </div>
             </div>
@@ -406,7 +406,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-light-green"" data-dismiss="modal">Okay</button>  
+                <button type="button" class="btn btn-light-green"" data-dismiss="modal" onclick="samOverride();">Okay</button>  
               </div>
             </div>
           </div>
@@ -442,7 +442,7 @@
           <i class="fa fa-check-circle-o text-white font-weight-bold" id="lolAlert" aria-hidden="true"> LOL</i><br>
         </ul>  
         <ul>
-          <button class="form-button btn btn-sm bg-light" id="alertBoxButton" disabled="true" onclick="alertBoxOverride()">OVERRIDE</button>
+          <button class="form-button btn btn-sm bg-light" id="alertBoxButton" disabled="true" onclick="alertBoxOverride();">OVERRIDE</button>
         </ul>  
         </div>                      
       </div>  
@@ -856,7 +856,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-light-green"" data-dismiss="modal">Okay</button>  
+                <button type="button" class="btn btn-light-green"" data-dismiss="modal" onclick="samOverride2();">Okay</button>  
               </div>
             </div>
           </div>
@@ -982,7 +982,10 @@
                     </li>
                     <li class="nav-item">
                       <a href="#setJfrr" class="btn btn-primary" role="tab" data-toggle="tab">JFRR</a>
-                    </li>                    
+                    </li>       
+                    <li class="nav-item">
+                      <a href="#edgprt" class="btn btn-primary" role="tab" data-toggle="tab">EDGPRT</a>
+                    </li>           
                  </ul>                
               </div>
               <div class="modal-body" style="max-height: calc(100% - 120px) !important; overflow-y: scroll;">
@@ -1065,6 +1068,37 @@ Total of all previous paid, pending and current owed clams:
 Is Proof of Purchase required? Yes _____        No _____'
 If Yes make sure it been received'
 If open SO was dispatched you will need to create Sub SO and assigned to Pending Review'
+                    </textarea>
+                    <br />                    
+                  </div> 
+                  <div role="tabpanel" class="tab-pane" id="edgprt">
+                    <textarea class="form-control textarea" id="shortJfrr" rows="12" style="min-width: 100%">
+Subject Line: 
+NEW LEAF PARTS ORDER REQUEST/ CUSTOMERNAME / SO / MODEL / SERIAL
+
+Hello,
+
+Would you please continue with placing the part order and shipping parts to the customer? Could you also provide the tracking number for the order once it becomes available?
+
+CUSTOMER INFORMATION:
+CUSTOMERNAME
+STREETADDRESS
+CITY, ST ZIP
+
+PARTS:
+PARTNAME - PARTNUMBER - PRICE
+SHIPPING: $
+TAX: $
+
+APPROVAL:
+Total Estimate: $
+Estimate: Approved (  ), Pending (  ), DENIED (  ), REVISED (  )
+Pre-Approval Code: CODE
+
+Thank you,
+
+<%= current_user.full_name %>
+<%= current_user.department.name %>
                     </textarea>
                     <br />                    
                   </div> 
