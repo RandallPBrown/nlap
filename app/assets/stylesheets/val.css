@@ -39,6 +39,11 @@ label {
   max-height: 25px;
 }
 
+.custom-select {
+	border-radius: 0px 5px 5px 0px !important;
+	max-height: 25px;
+}
+
 .form-control-lol {
   border-radius: 0px !important;
   max-height: 25px;
