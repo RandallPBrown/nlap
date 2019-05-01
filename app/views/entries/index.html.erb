@@ -53,6 +53,7 @@
                 <% @entries.each do |entry| %>
 
                   <tr>
+                                        <% if entry.user.deleted_at.blank? then %>
                                           <td><%= entry.user.full_name.truncate(15) %></td>
                                           <td><%= entry.department.name.truncate(15) %></td>
                                           <td><%= entry.occurrence.name.truncate(12) %></td>
@@ -67,6 +68,8 @@
                         data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                       </div>
                       </td>
+                      <% else %>
+                      <% end %>
                     </tr>
                     <% end %>
                     </tbody>

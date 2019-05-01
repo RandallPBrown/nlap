@@ -49,8 +49,8 @@
                                           <th>Department Name</th>
                                           <th>TAO <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Total Active Occurrences (180 days)' %></small></th>
                                           <th>TAW <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Total Active Writeups (90 days)' %></small></th>
-                                          <th>OSAW <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Total Occurrences Since Active Writeup' %></small></th>
-                                          <th>OSW <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Total Occurrences Since Active Writeup' %></small>
+                                          <th>OSAW <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Total Occurrences Since Active Progressive Action' %></small></th>
+                                          <th>OSW <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Total Occurrences Since Active Progressive Action' %></small>
                                           </th>
                                           <th>AR? <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Disciplinary Action Required' %></small></th>
                                         <th></th>
@@ -118,7 +118,7 @@
                                   </div>
                                 </div>
                                 <div class="col-4">
-                                  <small class="pl-5">Agent Writeup:</small>
+                                  <small class="pl-5">Agent Progressive Action:</small>
                                   <div class="pl-5">
                                    <h3><%= fa_icon_tag("file-text-o") %> <%= link_to "CREATE", agents_new_writeup_path(agent.id), :remote => true, "data-toggle" => "modal", "data-target" => "#modal-window2" %></h3>
                                   </div>
@@ -149,7 +149,7 @@
                                 </div>
                                 <div class="col-3">
                                   <div class="text-center">
-                                      <small>Total Active Writeups</small>
+                                      <small>Total Active Progressive Action</small>
                                     <h4>
                                       <% if agent.user.daps.map {|m| m.total_active_writeup.to_f}.join(' ').to_f > 0 then %>
                                                 <span class="text-danger"><%= agent.user.daps.map {|m| m.total_active_writeup.to_f}.join(' ').to_i %></span>
@@ -161,7 +161,7 @@
                                 </div>
                                 <div class="col-3">
                                   <div class="text-center">
-                                      <small>Total Occurrences Since Active Writeup</small>
+                                      <small>Total Occurrences Since Active Progressive Action</small>
                                     <h4>
                                   <% if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 then %>
                                                 <span class="text-danger"><%= agent.user.daps.map{|m| m.occurrence_since_dap}.first %></span>
@@ -173,7 +173,7 @@
                                 </div>
                                 <div class="col-3">
                                   <div class="text-center">
-                                      <small>Total Occurrences Since Writeup</small>
+                                      <small>Total Occurrences Since Progressive Action</small>
                                     <h4>
                                       <% if agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 then %>
                                         <span class="text-danger"><%= agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first %></span>

@@ -20,6 +20,7 @@
                 <tbody>
                 <% @entries.each do |entry| %>
                   <tr>
+                                          <% if entry.agent.user.deleted_at.blank? then %>
                                           <td><%= entry.agent.user.email %></td>
                                           <td><%= entry.agent.department.name.truncate(15) %></td>
                                           <td><%= entry.occurrence.ovalue %></td>
@@ -33,6 +34,8 @@
                         data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                       </div>
                       </td>
+                      <% else %>
+                      <% end %>
                     </tr>
                     <% end %>
                     <% if @entries.length == 0 %>

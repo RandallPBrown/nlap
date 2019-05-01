@@ -33,7 +33,7 @@
           <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"> <%= fa_icon_tag("list") %></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../entries">Occurrence Log</a>    
-            <a class="downdown-item nav-link text-dark font-weight-bold" href="../daps">Write-up Log</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../daps">Prog Action Log</a>
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../agents">Agents List</a>
           </div>  
         </li>
@@ -43,7 +43,7 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../departments">Departments</a>
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../occurrences">Occurrences</a>
-            <a class="downdown-item nav-link text-dark font-weight-bold" href="../writeups">Disciplinary Actions</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../writeups">Prog Actions</a>
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../wunatures">Types of Incidents</a>
           </div>  
         </li>
@@ -108,7 +108,7 @@
                   </div>
                   <div class="row">
                     <div class="col-4">
-                      <span class="pull-left"><strong>Write-ups:</strong></span> 
+                      <span class="pull-left"><strong>Prog Actions:</strong></span> 
                     </div>
                     <div class="col-8">
                       <span class="pull-left"><%= current_user.daps.ids.count %></span>

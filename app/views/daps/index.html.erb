@@ -1,12 +1,12 @@
 <%= stylesheet_link_tag "pagination.css" %>
-<% @title = "Listing Disciplinary Actions" %>
+<% @title = "Listing Progressive Actions" %>
 
 <% content_for :description do %>
   <% end %>
 
   <% content_for :actions do %>
     <%= link_to new_dap_path, class: 'btn btn-primary btn-large pull-right' do %>
-      <%= fa_icon_tag "plus" %> Add Dap
+      <%= fa_icon_tag "plus" %> Add PA
       <% end %>
       <% end %>
 
@@ -31,6 +31,7 @@
                 <tbody>
                 <% @daps.each do |dap| %>
                   <tr>
+                                          <% if dap.user.deleted_at.blank? then %>
                                           <td><%= dap.wunature.description %></td>
                                           <td><%= dap.ddate %></td>
                                           <td><%= dap.user.full_name %></td>
@@ -44,6 +45,8 @@
                         data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                       </div>
                       </td>
+                      <% else %>
+                      <% end %>
                     </tr>
                     <% end %>
                     <% if @daps.length == 0 %>
