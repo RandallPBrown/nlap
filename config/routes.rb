@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'users/dashboard'
   get 'users/index'
   get 'tools/validator'
+  get 'tools/val'
   get 'parts/dashboard'
   get 'err_logs/dashboard'
   get 'entries/dashboard'

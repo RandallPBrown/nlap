@@ -1,5 +1,5 @@
 class ToolsController < ApplicationController
-
+ layout "scaffold"
 
   before_action :set_tool, only: [:show, :edit, :update, :destroy]
 
