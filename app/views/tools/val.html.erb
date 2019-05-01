@@ -2,7 +2,9 @@
 <%= stylesheet_link_tag "val.css" %>
 <!-- /SCRIPTS -->
 
-
+<!-- SET USER -->
+<input type="text" value="<%= current_user.full_name %>" id="username" hidden>  
+<!-- /SET USER -->
 
 
 <!-- BODY -->
@@ -614,7 +616,7 @@
 				<div class="col-9">
 			    	<div class="tab-content" id="v-pills-tabContent">
 			    		<div class="tab-pane fade show active" id="v-pills-cshofr" role="tabpanel" aria-labelledby="v-pills-cshofr-tab">
-			    			<textarea class="form-control m-2" style="min-height: 100% !important; width: 98% !important">
+			    			<textarea class="form-control m-2" style="min-height: 100% !important; max-height: 100% !important; width: 98% !important">
 Customer has been informed and accepted cash out amount of: $     
 Is the customer’s ADDRESS on the service order the MAILING ADDRESS? Yes ( ) No ( )   
 Is the customer’s MAILING ADDRESS different than the address on the Contract? Yes ( ) No ( )
@@ -637,7 +639,7 @@ THIS WILL FULFILL ALL OBLIGATIONS OF THIS CONTRACT FOR THIS UNIT
 			    			</textarea>
 			    		</div>
 			    		<div class="tab-pane fade" id="v-pills-rplofr" role="tabpanel" aria-labelledby="v-pills-rplofr-tab">
-			    			<textarea class="form-control m-2" style="min-height: 100% !important; width: 98% !important">
+			    			<textarea class="form-control m-2" style="min-height: 100% !important; max-height: 100% !important; width: 98% !important">
 Customer has been informed and accepted replacement model: (Model #) from (Vendor name).         
 Is the customer’s PHYSICAL ADDRESS different than the address on the service order: Yes ( ) No ( )
 ***If YES, update on contract***  
@@ -661,7 +663,7 @@ THIS WILL FULFILL ALL OBLIGATIONS OF THIS CONTRACT FOR THIS UNIT.
 			    			</textarea>
 			    		</div>
 			    		<div class="tab-pane fade" id="v-pills-crdofr" role="tabpanel" aria-labelledby="v-pills-crdofr-tab">
-			    			<textarea class="form-control m-2" style="min-height: 100% !important; width: 98% !important">
+			    			<textarea class="form-control m-2" style="min-height: 100% !important; max-height: 100% !important; width: 98% !important">
 Customer has been informed of the store credit in the amount of: $_____________________.    
 Is the customer’s MAILING ADDRESS different than the address on the service order: Yes ( ) No ( )   
 Customer address has been verified: Yes ( ) No ( )    
@@ -678,7 +680,7 @@ WE TRY TO GET CHECKS OUT AS QUICKLY AS WE CAN BUT PLEASE ALLOW UP TO 30 DAYS. AS
 			    			</textarea>
 			    		</div>
 			    		<div class="tab-pane fade" id="v-pills-jfrr" role="tabpanel" aria-labelledby="v-pills-jfrr-tab">
-			    			<textarea class="form-control m-2" style="min-height: 100% !important; width: 98% !important">
+			    			<textarea class="form-control m-2" style="min-height: 100% !important; max-height: 100% !important; width: 98% !important">
 Justification for Replacement Review (why) :  
 Initial purchase price of unit (OPP): 
 Attempted Repair or Diagnostic Fee: 
@@ -690,7 +692,7 @@ If open SO was dispatched you will need to create Sub SO and assigned to Pending
 			    			</textarea>
 			    		</div>
 			    		<div class="tab-pane fade" id="v-pills-edgprt" role="tabpanel" aria-labelledby="v-pills-edgprt-tab">
-			    			<textarea class="form-control m-2" style="min-height: 100% !important; width: 98% !important">
+			    			<textarea class="form-control m-2" style="min-height: 100% !important; max-height: 100% !important; width: 98% !important">
 Subject Line: 
 NEW LEAF PARTS ORDER REQUEST/ CUSTOMERNAME / SO / MODEL / SERIAL
 
@@ -1003,6 +1005,7 @@ Thank you,
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button id="emailFormButtonCalls" type="button" class="btn btn-warning m-1" hidden>OTL Send</button>
 	        <button type="button" class="btn btn-primary" onclick="appendTemplate()" data-dismiss="modal">Save changes</button>
 	      </div>
 	    </div>
@@ -1035,6 +1038,7 @@ Thank you,
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button id="emailFormButtonEmails" type="button" class="btn btn-warning m-1" hidden>OTL Send</button>
 	        <button type="button" class="btn btn-primary" onclick="appendTemplate2()" data-dismiss="modal">Save changes</button>
 	      </div>
 	    </div>
