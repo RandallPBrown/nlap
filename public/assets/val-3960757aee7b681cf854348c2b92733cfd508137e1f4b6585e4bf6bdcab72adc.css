@@ -5,6 +5,7 @@
     padding: 2px;
    }*/
 
+
    .navbar-l-cornertab {
     position: absolute;
     left: 0px;
@@ -238,8 +239,7 @@
   text-align: center;
   padding-top: 6px;
   position: relative;
-  -webkit-transition: all .1s ease-out;
-          transition: all .1s ease-out;        
+  transition: all .1s ease-out;        
 }
 
 .fabbuttons:disabled {
@@ -262,7 +262,6 @@
   padding-top: 6px !important;
   opacity: 0;
   -webkit-transform: translateY(50px);
-      -ms-transform: translateY(50px);
           transform: translateY(50px);
 }
 
@@ -270,7 +269,6 @@
 .fabbuttons:not(:last-child) {
   opacity: 1;
   -webkit-transform: none;
-      -ms-transform: none;
           transform: none;
   margin-top: 5px !important;
   text-align: center;
@@ -280,26 +278,22 @@
 /* Unessential styling for sliding up buttons at differnt speeds */
 
 .fabbuttons:nth-last-child(1) {
-  -webkit-transition-delay: 25ms;
-          transition-delay: 25ms;
+  transition-delay: 25ms;
   background-size: contain;
 }
 
 .fabbuttons:not(:last-child):nth-last-child(2) {
-  -webkit-transition-delay: 50ms;
-          transition-delay: 20ms;
+  transition-delay: 20ms;
   background-size: contain;
 }
 
 .fabbuttons:not(:last-child):nth-last-child(3) {
-  -webkit-transition-delay: 75ms;
-          transition-delay: 40ms;
+  transition-delay: 40ms;
   background-size: contain;
 }
 
 .fabbuttons:not(:last-child):nth-last-child(4) {
-  -webkit-transition-delay: 100ms;
-          transition-delay: 60ms;
+  transition-delay: 60ms;
   background-size: contain;
 }
 
@@ -347,9 +341,12 @@ select {
   background-color: rgba(0, 0, 0, 0.42);
   outline: none;
   opacity: 0;
-  transform: scale(1);
+  -webkit-transform: scale(1);
+          transform: scale(1);
   -ms-transform: scale(0); /* Graceful degradation for IE */
+  transition: opacity 0.5s, -webkit-transform 0.5s;
   transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
 }
 
 .material-checkbox > input:checked {
@@ -358,8 +355,11 @@ select {
 
 .material-checkbox:active > input {
   opacity: 1;
-  transform: scale(0);
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  transition: opacity 0s, -webkit-transform 0s;
   transition: opacity 0s, transform 0s;
+  transition: opacity 0s, transform 0s, -webkit-transform 0s;
 }
 
 .material-checkbox > input:disabled {
@@ -416,7 +416,8 @@ select {
   border: solid 2px transparent;
   border-left: none;
   border-top: none;
-  transform: translate(5.5px, 1px) rotate(45deg);
+  -webkit-transform: translate(5.5px, 1px) rotate(45deg);
+          transform: translate(5.5px, 1px) rotate(45deg);
   -ms-transform: translate(5.5px, 2px) rotate(45deg);
 }
 
