@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   resources :agent_stats 
   resources :recipients
   resources :network_maps
-  # mount ActionCable.server => '/cable'
   resources :messages
   resources :chatrooms
   get 'network_map/index'
