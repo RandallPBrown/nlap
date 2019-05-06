@@ -176,12 +176,10 @@ function samVal() {
     	var snArray = ['HC', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9'];
     	for (var i = 0; i < snArray.length; i++) {
     		if (modVal.toUpperCase().includes("RF", 0-2) == true) {
-        		$('#modelNumberCalls').addClass("alert-calls bg-warning");
-        		$('#samAlertCalls').addClass("alert-calls");
-            	$('#samCollapse').addClass('show');
+        		$('#modelNumberCalls').addClass("alert-calls");
     		};
-    		if (serVal.toUpperCase().includes(snArray[i], 5-7) === true) {
-        		$('#serialNumberCalls').addClass("alert-calls bg-warning"); 
+    		if ((serVal.toUpperCase().includes(snArray[i], 5-7) === true) && (modVal.toUpperCase().includes("RF", 0-2) == true)) {
+        		$('#serialNumberCalls').addClass("alert-calls"); 
         		$('#samAlertCalls').addClass("alert-calls");
             	$('#samCollapse').addClass('show'); 
     		};
@@ -555,7 +553,7 @@ $('#extCheckEmails').on('click',function(){
 $('#samCheckEmails').on('click', function(){
 	$('#modelNumberEmails').removeClass("alert-emails bg-warning");
 	$('#serialNumberEmails').removeClass("alert-emails bg-warning");
-	samVal();
+	samVal2();
 })
 
 // Reset button
@@ -621,12 +619,10 @@ function samVal2() {
     	var snArray2 = ['HC', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9'];
     	for (var i = 0; i < snArray2.length; i++) {
     		if (modVal2.toUpperCase().includes("RF", 0-2) == true) {
-        		$('#modelNumberEmails').addClass("alert-emails bg-warning");
-        		$('#samAlertEmails').addClass("alert-emails");
-            	$('#samCollapseEmails').addClass('show');
+        		$('#modelNumberEmails').addClass("alert-emails");
     		};
-    		if (serVal2.toUpperCase().includes(snArray2[i], 5-7) === true) {
-        		$('#serialNumberEmails').addClass("alert-emails bg-warning"); 
+    		if ((serVal2.toUpperCase().includes(snArray2[i], 5-7) === true) && (modVal2.toUpperCase().includes("RF", 0-2) == true)) {
+        		$('#serialNumberEmails').addClass("alert-emails"); 
         		$('#samAlertEmails').addClass("alert-emails");
             	$('#samCollapseEmails').addClass('show'); 
     		};
