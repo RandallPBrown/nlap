@@ -3,88 +3,10 @@
 <%= wicked_pdf_image_tag 'logo.png' %><br /><br />
 <div class="card" >
   <div class="card-header p-3">
-    <center><h1 class="font-weight-bold text-monospace">COUNSELING FORM</h1></center>
+	<h1 class="font-weight-bold text-monospace"><%= @dap.user.full_name %></h1>
   </div>
   <div class="card-body">
-	    <div class="row">
-	    	<div class="col">
-			    <div>
-			    	<strong>EMPLOYEE NAME:</strong> <%= @dap.user.full_name %>
-			    </div>
-			    <div>
-			    	<strong>DEPARTMENT:</strong> <%= @dap.user.department.name %>
-			    </div>
-			    <div style="position: absolute; margin-left: 450px; margin-top: -50px; width: 300px;">
-			    	<strong>DATE START:</strong> <%= @dap.ddate %>
-			    </div><br />
-			    <div style="position: absolute; margin-left: 450px; margin-top: -50px; width: 300px;">
-			    	<strong>DATE END:</strong> <%= @future_time %>
-			    </div>
-			</div>
-	    </div>
-	    <div class="row">
-	    	<div class="col-6">
-	    		<strong>DISCIPLINARY ACTION LEVEL:</strong> <span class="text-uppercase"> <%= @dap.writeup.name %></span>
-	    	</div>
-	    </div><br /><hr>
-	    <div class="row">
-	    	<div class="col-4">
-	    		<table class="table">
-	    			<thead class="thead-dark">
-		    			<tr>
-		    				<th>NATURE OF INCIDENT</th>
-		    			</tr>
-		    		</thead>
-	    		</table>
-	    	</div>
-	    </div>
-	    <div class="row">
-	    	<div class="col-12">
-	    		<strong>TYPE:</strong> <%= @dap.wunature.description %>
-	    	</div>
-	    </div><br />
-	    <div class="row">
-	    	<div class="col-12">
-	    		<strong>DETAILS:</strong><br /> <%= @dap.description %>
-	    	</div>
-	    </div><br /><hr>
-	    <div class="row">
-	    	<div class="col-12">
-	    		<strong>WITNESSES:</strong><br /><br />
-	    		<p>___________________________________________________________________________________________________</p>
-	    	</div>
-	    </div>
-	    <div class="row">
-	    	<div class="col-12">
-	    		<strong>EMPLOYEE COMMENTS:</strong><br /><br />
-	    		<p>___________________________________________________________________________________________________</p>
-	    		<p>___________________________________________________________________________________________________</p>
-	    	</div><br />
-	    	<div class="col-12">
-	    		<center><p class="text-danger font-weight-bold">***CONSEQUENCES OF FAILURE TO IMPROVE INCLUDE UP TO TERMINATION***</p></center>
-	    	</div>
-	    </div><br /><hr>
-	    <div class="row">
-	    	<div class="col-12">
-	    		<center><p class="text-danger font-weight-bold">I HAVE READ AND UNDERSTAND THIS COUNSELING FORM</p></center>
-	    	</div>
-	    	<div class="col-12">
-	    		<strong>SUPERVISOR SIGNATURE:</strong><br /><br />
-	    		<p>_____________________________________________________________________________________ DATE:___________</p>
-	    	</div>
-	    </div>
-	    <div class="row">
-	    	<div class="col-12">
-	    		<strong>EMPLOYEE SIGNATURE:</strong><br /><br />
-	    		<p>_____________________________________________________________________________________ DATE:___________</p>
-	    	</div>
-	    </div><br />
-	    <div class="row">
-	    	<div class="col-12">
-	    		<center><p class="text-danger font-weight-bold">THE ABOVE OFFENSE HAS BEEN NOTED AND ARE MADE A PART OF THE OF EMPLOYEE'S PERSONNEL FILE AS OF THE DATE LISTED ABOVE</p></center>
-	    	</div><br /><hr>
-	    </div>
-	    <center><h1 class="font-weight-bold text-monospace">COUNSELING HISTORY</h1></center>
+	    <center><h1 class="font-weight-bold text-monospace">PROGRESSIVE ACTION HISTORY</h1></center>
 	    <div class="row">
 	        <div class="table-responsive">
 	            <table class="table table-hover table-striped" id="userDapTable">
