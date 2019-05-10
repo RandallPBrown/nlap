@@ -10,7 +10,8 @@ label {
   width: 12em;
   margin-top: -2.5em;
   opacity: 0.6;
-  columns: 2;
+  -webkit-columns: 2;
+          columns: 2;
   height: 50px;
 }
 
