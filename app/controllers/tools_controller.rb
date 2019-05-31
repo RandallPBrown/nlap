@@ -22,6 +22,33 @@ class ToolsController < ApplicationController
 
   end
 
+  def pendingreview
+    if params[:search].present?
+      @dealer = Dealer.joins(:contact).perform_search(params[:search])
+    else
+      @dealer = Dealer.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).order('edate desc').includes(:user, :department, :occurrence).paginate(page: params[:page], :per_page => 5)
+    end
+  end
+
+  def get_dealer
+    submitted_code = params[:submitted_code]
+    asdf = Dealer.where("dealer.id = ")
+    
+    # do something with submitted_code and return the results
+    if params[:submitted_code].present?
+      @dealer_code = Dealer.all.find_by(code: submitted_code)
+      @contacts = Contact.all.joins(:dealer).where("dealer_id = ?", @dealer_code.id)
+      @emails = Contact.all.joins(:dealer).where("dealer_id = ?", @dealer_code.id).where("priority = ?", "Primary")
+    else
+      @dealer_code = " "
+      @contacts = " "
+    end
+    respond_to do |format|
+      format.html
+      format.json {render :json => [@dealer_code.to_json(:include => :buying_group),@contacts.order(priority: :asc),@emails]}
+    end
+  end
+
   def validator_email
   	@tool = Tool.new(validator_params)
   	# @tool.receipt = :receipt

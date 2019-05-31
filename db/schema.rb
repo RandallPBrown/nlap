@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190318194428) do
+ActiveRecord::Schema.define(version: 20190531124242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,18 @@ ActiveRecord::Schema.define(version: 20190318194428) do
     t.index ["category_id"], name: "index_components_on_category_id"
   end
 
+  create_table "contacts", force: :cascade do |t|
+    t.string "priority"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "phone"
+    t.bigint "dealer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dealer_id"], name: "index_contacts_on_dealer_id"
+  end
+
   create_table "create_join_table_agent_departments", force: :cascade do |t|
     t.string "agent"
     t.string "department"
@@ -121,6 +133,20 @@ ActiveRecord::Schema.define(version: 20190318194428) do
     t.index ["user_id"], name: "index_daps_on_user_id"
     t.index ["writeup_id"], name: "index_daps_on_writeup_id"
     t.index ["wunature_id"], name: "index_daps_on_wunature_id"
+  end
+
+  create_table "dealers", force: :cascade do |t|
+    t.bigint "buying_group_id"
+    t.boolean "appliance"
+    t.boolean "electronic"
+    t.boolean "furniture"
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "instructions"
+    t.text "body_prefix"
+    t.text "body_suffix"
+    t.index ["buying_group_id"], name: "index_dealers_on_buying_group_id"
   end
 
   create_table "departments", force: :cascade do |t|
@@ -360,9 +386,11 @@ ActiveRecord::Schema.define(version: 20190318194428) do
   add_foreign_key "agents", "users"
   add_foreign_key "categories", "languages"
   add_foreign_key "components", "categories"
+  add_foreign_key "contacts", "dealers"
   add_foreign_key "daps", "users"
   add_foreign_key "daps", "writeups"
   add_foreign_key "daps", "wunatures"
+  add_foreign_key "dealers", "buying_groups"
   add_foreign_key "err_logs", "departments"
   add_foreign_key "err_logs", "err_names"
   add_foreign_key "err_logs", "err_statuses"

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :contacts
+  resources :dealers
   put 'agent_stats/all_stats' => 'agent_stats#all_stats'
   put 'agent_stats/csv_upload' => 'agent_stats#csv_upload'
   resources :agent_stats 
@@ -12,6 +14,7 @@ Rails.application.routes.draw do
   get 'users/index'
   get 'tools/validator'
   get 'tools/val'
+  get 'tools/pendingreview'
   get 'parts/dashboard'
   get 'err_logs/dashboard'
   get 'entries/dashboard'
@@ -29,7 +32,11 @@ Rails.application.routes.draw do
   put 'parts/read_at' => 'parts#read_at'
   put 'tools/validator_email' => 'tools#validator_email'
 
-  resources :tools
+  resources :tools do
+      collection do
+        get 'get_dealer'
+      end
+    end
   resources :parts
   resources :products
   resources :buying_groups

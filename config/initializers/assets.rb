@@ -13,4 +13,4 @@ Rails.application.config.assets.precompile += %w( alphabetical_paginate.js )
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w( dynamicuser.js papaparse.js papaparse.css demo.js demo.css network_maps.css pagination.css validator.css validator.js val.js val.css calendar.js datatables.min.js datatables.min.css )
+Rails.application.config.assets.precompile += %w( dynamicuser.js papaparse.js nicEdit.js dtbuttons.min.js buttons.colVis.js dataTables.buttons.min.js papaparse.css demo.js demo.css network_maps.css pagination.css validator.css validator.js val.js val.css calendar.js datatables.min.js datatables.min.css )

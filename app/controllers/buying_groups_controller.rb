@@ -55,6 +55,6 @@ class BuyingGroupsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def buying_group_params
-      params.require(:buying_group).permit(:bgname)
+      params.require(:buying_group).permit(:bgname, :id)
     end
 end
