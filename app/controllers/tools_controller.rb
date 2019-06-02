@@ -23,11 +23,10 @@ class ToolsController < ApplicationController
   end
 
   def pendingreview
-    if params[:search].present?
-      @dealer = Dealer.joins(:contact).perform_search(params[:search])
-    else
-      @dealer = Dealer.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).order('edate desc').includes(:user, :department, :occurrence).paginate(page: params[:page], :per_page => 5)
-    end
+    @product = Product.new
+    @buying_group = BuyingGroup.new
+    @dealer = Dealer.new
+    @contact = Contact.new
   end
 
   def get_dealer

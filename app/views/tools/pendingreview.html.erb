@@ -1,19 +1,26 @@
 <style>
 .nav-pills .nav-link.active, .nav-pills .show > a.nav-link .a {
-	background-color: #BD3632;
+	background-color: #c5e1a5;
+		box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+
 }
 .nav-pills .nav-link:hover {
-	background-color: #BD3632;
+	background-color: #c5e1a5;
 	color: white;
+	box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.1);
 }
 .nav-pills .nav-link.active {
-	background-color: #BD3632;
+	background-color: #c5e1a5;
+		box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+
 }
 .nav-pills .nav-link.active:hover {
 	color: black !important;
+		box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+
 }
 .nav-item a:hover {
-	background: #BD3632 /* red */ !important;
+	background: #c5e1a5 /* red */ !important;
 }
 .bg-field-label {
 	background-color: transparent!important;
@@ -30,13 +37,29 @@
 	color: black !important;
 }
 .nav-pills > .nav-item > .nav-link.active {
-	background-color: #BD3632;
+	background-color: #c5e1a5;
 }
 .dealer-icon {
 	border-width: 10px; 
 	border-style: solid;
 	border-color: #494949; 
 	background-color: #8d8d8d
+}
+.bg-main {
+	background-color: #c5e1a5
+}
+.bg-container {
+	background-color: #9ccc65
+}
+.bg-content {
+	background-color: #6b9b37
+
+}
+.nicEdit-main {
+	background-color: #fff !important;
+	border-radius: 0px 0px 5px 5px !important;
+	margin: 0px !important;
+	width: 100% !important;
 }
 </style>
 <script>
@@ -66,153 +89,163 @@ function copyDivToClipboard2() {
 	document.execCommand("copy");
 	window.getSelection().removeAllRanges();// to deselect
 }
+$(function() {
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+});
 </script>
 
 
 
 <div class="container">
-	<div class="card shadow-sm pl-2 pr-2" style="height: 500px;background-color: #F2EFE4">
+	<div class="card shadow-sm pl-2 pr-2 bg-main" style="height: 500px;">
 		<div class="row pl-2 pr-2">
-			<div class="col-2 align-items-stretch d-flex p-1 m-0" style="height: 520px">
-				<div class="card shadow-sm p-1" style="background-color: #CB8C1D">
-					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-						<a class="nav-link font-weight-bold a text-center active text-body text-monospace" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">STEP 1</a>
-						<a class="nav-link font-weight-bold a text-center text-body text-monospace" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">STEP 2</a>
-						<a class="nav-link font-weight-bold a text-center text-body text-monospace" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab" aria-controls="v-pills-3" aria-selected="false">STEP 3</a>
-						<a class="nav-link font-weight-bold a text-center text-body text-monospace" id="v-pills-4-tab" data-toggle="pill" href="#v-pills-4" role="tab" aria-controls="v-pills-4" aria-selected="false">STEP 4</a>
-						<a class="nav-link font-weight-bold a text-center text-body text-monospace btn-block" id="v-pills-4-tab" data-toggle="pill" href="#v-pills-config" role="tab" aria-controls="v-pills-4" aria-selected="false" style="bottom:10px;position: absolute;width:95%">CONFIG</a>
+			<div class="col-2 align-items-stretch d-flex p-1 m-0" style="height: 513px">
+				<div class="card shadow-sm p-2 bg-content">
+					<div class="card shadow-sm p-2 bg-container" style="height: 467px">
+						<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+							<a class="nav-link font-weight-bold a text-center active text-body text-monospace" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">STEP 1 <%= fa_icon_tag("caret-square-o-right") %></a>
+							<a class="nav-link font-weight-bold a text-center text-body text-monospace" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">STEP 2 <%= fa_icon_tag("caret-square-o-right") %></a>
+							<a class="nav-link font-weight-bold a text-center text-body text-monospace btn-block" id="v-pills-4-tab" data-toggle="pill" href="#v-pills-config" role="tab" aria-controls="v-pills-4" aria-selected="false" style="bottom:10px;position: absolute;width:90%">CONFIG <%= fa_icon_tag("caret-square-o-right") %></a>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-10 align-items-stretch d-flex p-1 m-0">
-				<div class="card shadow-sm p-2" style="background-color: #e5ca9b">
+				<div class="card shadow-sm p-2 bg-content">
 					<div class="tab-content" id="v-pills-tabContent">
 						<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab" >
 							<div class="tab-content" id="pills-tabContent">
-								<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" style="height: 400px">
-									<div class="card shadow-sm p-2" style="background-color: #CB8C1D;height: 390px">
-										<form id="emailForm">
-											<div class="row">
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoSOLabel">SO Number</span>
-														</div>
-														<input type="text" class="form-control form-control-val" id="infoSO" aria-describedby="inputGroup-sizing-sm">
+								<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" style="height: 390px">
+									<div class="card shadow-sm p-2 bg-container" style="height: 390px">
+										<div class="card p-2 bg-main" style="height:373px">
+											<form id="emailForm">
+												<div class="row pb-2">
+													<div class="col-12">
+														<center><h2 class="font-weight-bold m-auto">REPLACE-O-MATIC 9000</h2></center>
 													</div>
 												</div>
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoDealerCodeLabel">Code</span>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoSOLabel">SO Number</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoSO" aria-describedby="inputGroup-sizing-sm">
 														</div>
-														<input type="text" class="form-control form-control-val" id="infoDealerCode">
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoDealerCodeLabel">Code</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoDealerCode">
+														</div>
 													</div>
 												</div>
-											</div>
-											<div class="row">
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoCustomerLabel">Customer</span>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoCustomerLabel">Customer</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoCustomer">
 														</div>
-														<input type="text" class="form-control form-control-val" id="infoCustomer">
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoAddressLabel">Address</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoAddress">
+														</div>
 													</div>
 												</div>
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoAddressLabel">Address</span>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoPhoneLabel">Phone</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoPhone">
 														</div>
-														<input type="text" class="form-control form-control-val" id="infoAddress">
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoEmailLabel">Email</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoEmail">
+														</div>
 													</div>
 												</div>
-											</div>
-											<div class="row">
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoPhoneLabel">Phone</span>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoMFGLabel">MFG</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoMFG">
 														</div>
-														<input type="text" class="form-control form-control-val" id="infoPhone">
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoProductLabel">Product</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoProduct">
+														</div>
 													</div>
 												</div>
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoEmailLabel">Email</span>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoModelLabel">Model</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoModel">
 														</div>
-														<input type="text" class="form-control form-control-val" id="infoEmail">
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoSerialLabel">Serial</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoSerial">
+														</div>
 													</div>
 												</div>
-											</div>
-											<div class="row">
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoMFGLabel">MFG</span>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoDOPLabel">DOP</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoDOP"  data-provide="datepicker">
 														</div>
-														<input type="text" class="form-control form-control-val" id="infoMFG">
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoInvoiceLabel">Invoice</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoInvoice">
+														</div>
 													</div>
 												</div>
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoProductLabel">Product</span>
-														</div>
-														<input type="text" class="form-control form-control-val" id="infoProduct">
+												<div class="row justify-content-center">
+													<div class="col-4">
+														<button type="button" class="btn btn-primary btn-block font-weight-bold" onclick="emailSet()">SUBMIT</button>
 													</div>
 												</div>
-											</div>
-											<div class="row">
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoModelLabel">Model</span>
-														</div>
-														<input type="text" class="form-control form-control-val" id="infoModel">
-													</div>
-												</div>
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoSerialLabel">Serial</span>
-														</div>
-														<input type="text" class="form-control form-control-val" id="infoSerial">
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoDOPLabel">DOP</span>
-														</div>
-														<input type="text" class="form-control form-control-val" id="infoDOP">
-													</div>
-												</div>
-												<div class="col-6">
-													<div class="input-group input-group-sm mb-3">
-														<div class="input-group-prepend">
-															<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoInvoiceLabel">Invoice</span>
-														</div>
-														<input type="text" class="form-control form-control-val" id="infoInvoice">
-													</div>
-												</div>
-											</div>
-											<div class="row justify-content-center">
-												<div class="col-4">
-													<button type="button" class="btn btn-primary btn-block font-weight-bold" onclick="emailSet()">SUBMIT</button>
-												</div>
-											</div>
-										</form>
+											</form>
+										</div>
 									</div>
 								</div>
-								<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" style="height: 400px">
-									<div class="card shadow-sm p-2" style="background-color: #CB8C1D;height: 390px">
+								<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" style="height: 390px">
+									<div class="card shadow-sm p-2 bg-container" style="height: 390px">
 										<div class="row">
 											<div class="col-4">
-												<div class="card p-2" style="background-color: #e5ca9b;height: 374px">
+												<div class="card p-2 bg-main" style="height: 374px">
 													<div class="row">
 														<div class="col-5">
 															<span class="font-weight-bold">Dealer Code: </span>
@@ -257,7 +290,7 @@ function copyDivToClipboard2() {
 												</div>
 											</div>
 											<div class="col-8">
-												<div class="card p-2" style="background-color: #e5ca9b;height: 374px">
+												<div class="card p-2 bg-main" style="height: 374px">
 													<div class="row">
 														<div class="col-6">
 															<span class="font-weight-bold pull-left">Email: </span>
@@ -334,16 +367,18 @@ function copyDivToClipboard2() {
 										</div>
 									</div>
 								</div>
-								<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" style="height: 400px">
-									<div class="card shadow-sm" style="background-color: #CB8C1D;height: 390px">
-										<div class="row " id="contactBlock">
-
+								<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" style="height: 390px">
+									<div class="card shadow-sm bg-container p-2" style="height: 390px">
+										<div class="card bg-main p-2" style="height: 372px">
+											<div class="row " id="contactBlock">
+												
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="card shadow-sm" style="background-color: #CB8C1D; top: 25px">
-								<ul class="nav nav-pills justify-content-start p-1" id="pills-tab" role="tablist">
+							<div class="card shadow-sm bg-container" style="top: 20px">
+								<ul class="nav nav-pills justify-content-start p-2" id="pills-tab" role="tablist">
 									<li class="nav-item" style="width: 33.3%">
 								    	<a class="nav-link text-body active font-weight-bold text-monospace" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><%= fa_icon_tag("list") %> FORM</a>
 									</li>
@@ -356,7 +391,7 @@ function copyDivToClipboard2() {
 								</ul>
 							</div>
 						</div>
-						<div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
+						<div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab" style="height:300px">
 							<script src="https://apis.google.com/js/api.js"></script>
 							<script>
 							  /**
@@ -365,7 +400,32 @@ function copyDivToClipboard2() {
 							   * https://developers.google.com/explorer-help/guides/code_samples#javascript
 							   */
 							  
+							   
+							  
+
 							  function loadClient() {
+							    
+								var t = $('#pricingTable').DataTable({ columnDefs: [ {
+								        targets: 0,
+								        render: function ( data, type, row ) {
+								            return data.substr( 0, 15 );
+								        }
+								    },{
+						                "targets": [ 3 ],
+						                "visible": false,
+						                "searchable": false
+						            } ], columns: [ 
+						            { title: 'Description'}, 
+						            { title: 'Link' }, 
+						            { title: 'Price' } ] 
+					        	});
+					        	$('#pricingTable tbody').on( 'click', 'tr', function() {
+								    var data = t.row( this ).data();
+								    $('#quoteTitle').html(data[1]);
+								    $('#quoteLink').html(data[3]);
+								    $('#quotePrice').html(data[2]);
+								    $('#quotePrice2').html(data[2]);
+								} );
 							    gapi.client.setApiKey("AIzaSyAf_3lQsQ2GBDCzK_QZ8U142Rg2THxUr3k");
 							    return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/customsearch/v1/rest")
 							        .then(function() { console.log("GAPI client loaded for API"); },
@@ -373,39 +433,26 @@ function copyDivToClipboard2() {
 							  }
 							  // Make sure the client is loaded before calling this method.
 							  function execute() {
-							  	var t = $('#pricingTable').DataTable({ columnDefs: [ {
-							        targets: 0,
-							        render: function ( data, type, row ) {
-							            return data.substr( 0, 15 );
-							        }
-							    },{
-					                "targets": [ 3 ],
-					                "visible": false,
-					                "searchable": false
-					            } ], columns: [ { title: 'Description'}, {title: 'Link'}, {title: 'Price' }] });
 							    return gapi.client.search.cse.list({
 							      "q": $('#pricingSearch').val(),
 							      "cx": "004340804614389168203:gvxq_xtyv4w"
 							    })
 							        .then(function(response) {
-							               $('#pricingTable tbody').on( 'click', 'tr', function () {
-											    var data = t.row( this ).data();
-											    $('#quoteTitle').html(data[1]);
-											    $('#quoteLink').html(data[3]);
-											    $('#quotePrice').html(data[2]);
-											    $('#quotePrice2').html(data[2]);
-											} );
+							        		var table = $('#pricingTable').DataTable()
+							            	table.clear().draw
+							                
 							                console.log("Response", response);
 							                var pricingList = response.result.items
 							                $.each(pricingList , function (index, value){
-							                	if (response.result.items[index].pagemap.offer == undefined){
+							                	if ( response.result.items[index].pagemap == undefined || response.result.items[index].pagemap.offer == undefined || response.result.items[index].pagemap.offer[0].price == undefined){
 
 							                	} else {
+
 							                		var description = response.result.items[index].title;
 							                		var link = '<a href="'+response.result.items[index].link+'" target="_blank">'+response.result.items[index].displayLink+'</a>';
 							                		var bigLink = response.result.items[index].link
 							                		var price = response.result.items[index].pagemap.offer[0].price
-							                		t.row.add([description, link, price, bigLink]).draw()
+							                		table.row.add([description, link, price, bigLink]).draw();
 							                		console.log(response.result.items[index].pagemap.offer[0].price)
 							                	}
 							                	
@@ -418,51 +465,81 @@ function copyDivToClipboard2() {
 							  }
 							  gapi.load("client");
 
+							  function shyButton(){
+							  	$('#load').hide()
+							  }
 							</script>
 							<div class="row">
 								<div class="col-8">
-									<div class="card shadow-sm p-2" style="background-color: #CB8C1D;height: 475px; overflow-y: scroll">
-										<input type="text" class="form-control" id="pricingSearch">
-										<div class="table-responsive">
-											<table id="pricingTable" class="table table-sm table-striped table-bordered table-hover" style="width:100%">
-												<thead>
-													<tr>
-														<th scope="col">Description</th>
-														<th scope="col">Link</th>
-														<th scope="col">Price</th>
-														<th scope="col">Full Link</th>
-													</tr>
-												</thead>
-												<tbody id="pricingTableBody">
-													
-												</tbody>
-											</table>
+									<div class="copyDivToClipboard shadow-sm p-2 bg-container">
+										<div class="card p-2 bg-main" style="height: 450px; overflow-y: scroll">
+											<nav class="navbar navbar-light bg-light">
+											  	<div class="row">
+													<div class="input-group">
+													 	<p class="h5 font-weight-bold mt-2 mr-4 ml-2 mb-2">MODEL: </p>
+													 	<input type="text" class="form-control mr-5" id="pricingSearch">
+													 	<div class="input-group-append" id="button-addon4">
+													    <button class="btn btn-primary btn-sm pull-right ml-4" onclick="loadClient();shyButton()" id="load">API LOAD</button>
+														<button class="btn btn-primary btn-sm pull-right" onclick="execute()">SEARCH</button>
+													 	</div>
+													</div>
+											    </div>	
+											</nav>
+											<!-- <div class="row">
+												<div class="col-2">
+													<span class="font-weight-bold">Model: </span>
+												</div>
+												<div class="col-5">
+													<input type="text" class="form-control" id="pricingSearch">
+												</div>
+												<div class="col-5">
+													<button class="btn btn-primary" onclick="loadClient();shyButton()" id="load">API LOAD</button>
+													<button class="btn btn-primary" onclick="execute()">SEARCH</button>
+												</div>
+											</div>	
+											<hr style="border-color: black !important;"> -->
+											<div class="table-responsive-sm pt-3">
+												<table id="pricingTable" class="table table-sm table-striped table-bordered table-hover" style="width:100%">
+													<thead>
+														<tr>
+															<th scope="col">Description</th>
+															<th scope="col">Link</th>
+															<th scope="col">Price</th>
+															<th scope="col">Full Link</th>
+														</tr>
+													</thead>
+													<tbody id="pricingTableBody">
+														
+													</tbody>
+												</table>
+											</div>
+											
 										</div>
-										<button onclick="loadClient()">load</button>
-										<button onclick="execute()">execute</button>
 									</div>
 								</div>
 								<div class="col-4">
-									<div class="card shadow-sm p-2" style="background-color: #CB8C1D;height: 475px">
-										<div class="row">
-											<div class="col-6">
-												<span class="font-weight-bold pull-left">Replacement: </span>
-											</div>
-											<div class="col-6 pull-right">
-												<button class="btn btn-link p-0 m-0 pull-right" onclick="copyDivToClipboard2()">Copy</button>
-											</div><br>
-											<div class="col-12">
-												<div id="replacementTemplate" class="border rounded bg-white p-1" style="height:425px;overflow-y: scroll">
-													<span class="font-weight-bold">Replacement quote received from: </span><span id="quoteTitle"></span><br>
-													<span class="font-weight-bold">Via Fax ( ) Phone ( ) Email ( ) Web ( x )</span><br>
-													<span class="font-weight-bold">Replacement mfg: </span><br>
-													<span class="font-weight-bold">Replacement model: </span><br>
-													<span class="font-weight-bold">Is quote: ( ) New  ( ) Refurbished</span><br>
-													<span class="font-weight-bold">Retail: $ </span><span id="quotePrice"></span><br>
-													<span class="font-weight-bold">Retail verified how: </span><span id="quoteLink"></span><br>
-													<span class="font-weight-bold">New Leaf replacement cost:  </span></span><span id="quotePrice2"></span><br>
-													<span class="font-weight-bold">Current Servicer obligation amount: </span><br>
-													<span class="font-weight-bold">Total cost of replacement:</span> <br>
+									<div class="card shadow-sm p-2 bg-container" style="height: 468px">
+										<div class="card p-2 bg-main" style="height:450px">
+											<div class="row">
+												<div class="col-6">
+													<span class="font-weight-bold pull-left">Replacement: </span>
+												</div>
+												<div class="col-6 pull-right">
+													<button class="btn btn-link p-0 m-0 pull-right" onclick="copyDivToClipboard2()">Copy</button>
+												</div><br>
+												<div class="col-12 pt-2">
+													<div id="replacementTemplate" class="border rounded bg-white p-1" style="height:400px;overflow-y: scroll">
+														<span class="font-weight-bold">Replacement quote received from: </span><span id="quoteTitle"></span><br>
+														<span class="font-weight-bold">Via Fax ( ) Phone ( ) Email ( ) Web ( x )</span><br>
+														<span class="font-weight-bold">Replacement mfg: </span><br>
+														<span class="font-weight-bold">Replacement model: </span><br>
+														<span class="font-weight-bold">Is quote: ( ) New  ( ) Refurbished</span><br>
+														<span class="font-weight-bold">Retail: $ </span><span id="quotePrice"></span><br>
+														<span class="font-weight-bold">Retail verified how: </span><span id="quoteLink"></span><br>
+														<span class="font-weight-bold">New Leaf replacement cost:  </span></span><span id="quotePrice2"></span><br>
+														<span class="font-weight-bold">Current Servicer obligation amount: </span><br>
+														<span class="font-weight-bold">Total cost of replacement:</span> <br>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -470,14 +547,43 @@ function copyDivToClipboard2() {
 								</div>
 							</div>
 						</div>
-						<div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
-							"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-						</div>
-						<div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
-							"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-						</div>
-						<div class="tab-pane fade" id="v-pills-config" role="tabpanel" aria-labelledby="v-pills-4-tab">
-							"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+						<div class="tab-pane fade" id="v-pills-config" role="tabpanel" aria-labelledby="v-pills-4-tab" style="height:300px">
+							<div class="card shadow-sm p-2 bg-container" style="height:468px;width:100%">
+								<div class="row">
+									<div class="col-9">
+										<div class="tab-content" id="v-pills-tabContent">
+									    	<div class="tab-pane fade show active" id="v-pills-bg" role="tabpanel" aria-labelledby="v-pills-bg-tab">
+									    		<div class="card bg-main p-2" style="height: 450px; overflow-y: scroll">
+									    			<%= render "buying_groups/form" %>
+									    		</div>
+									    	</div>
+									    	<div class="tab-pane fade" id="v-pills-d" role="tabpanel" aria-labelledby="v-pills-d-tab">
+									    		<div class="card bg-main p-2" style="height: 450px; overflow-y: scroll">
+									    			<%= render "dealers/form" %>
+									    		</div>
+									    	</div>
+									    	<div class="tab-pane fade" id="v-pills-c" role="tabpanel" aria-labelledby="v-pills-c-tab">
+									    		<div class="card bg-main p-2" style="height: 450px; overflow-y: scroll">
+									    			<%= render "contacts/form" %>
+									    		</div>
+									    	</div>
+									    	<div class="tab-pane fade" id="v-pills-p" role="tabpanel" aria-labelledby="v-pills-p-tab">
+									    		<div class="card bg-main p-2" style="height: 450px; overflow-y: scroll">
+									    			<%= render "products/form" %>
+									    		</div>
+									    	</div>
+									    </div>
+									</div>
+									<div class="col-3">
+										<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+											<a class="nav-link font-weight-bold a active text-body text-monospace pull-left" id="v-pills-bg-tab" data-toggle="pill" href="#v-pills-bg" role="tab" aria-controls="v-pills-bg" aria-selected="true"><%= fa_icon_tag("caret-square-o-left") %> BUYING GROUP</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-d-tab" data-toggle="pill" href="#v-pills-d" role="tab" aria-controls="v-pills-d" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> DEALER</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-c-tab" data-toggle="pill" href="#v-pills-c" role="tab" aria-controls="v-pills-c" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> CONTACT</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-p-tab" data-toggle="pill" href="#v-pills-p" role="tab" aria-controls="v-pills-p" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> PRODUCT</a>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -485,6 +591,15 @@ function copyDivToClipboard2() {
 		</div>
 	</div>
 </div>
+
+<script>
+
+  $(function() {
+    $('.datepicker').datepicker({dateFormat: 'yyyy-mm-dd'});
+});
+</script>
+
+
 <script>
 function reset(){
 	$('#pills-tab li:first-child a').tab('show');
