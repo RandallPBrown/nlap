@@ -78,3 +78,10 @@
   </div>
 <% end %>
 
+<%= javascript_include_tag "nicEdit.js" %>
+<script type="text/javascript">
+//<![CDATA[
+        bkLib.onDomLoaded(function() { nicEditors.allTextAreas({iconsPath : '<%= asset_path('nicEditorIcons.gif') %>', buttonList: ['bold','italic','underline','ol', 'ul', 'left', 'center', 'right', 'fontSize']}) });
+  //]]>
+    
+</script>
