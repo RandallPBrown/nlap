@@ -154,24 +154,15 @@ $("#chartLine").click(function() {
         <h6>Occurrence Rankings</h6>
       </div>
       <div class="card-body">
-        <div class="timeline" style="height: 450px">
-          <ul class="left-timeline">
-            <% @agent_occurrence_values.zip(@agent_occurrence_labels).sort{ |a, b| b <=> a }.each do |entry| %>
-              <li class="timeline-item">
-
-                <time class=''>
-                  <strong>
-                    <%= entry.join(" ").truncate(25) %>
-                  </strong>
-                </time>
-                <div class="activity-text">
-                  <strong><%#= @fdsa %></strong>
-                  <small class="text-muted"><%#= entry.agent.department.name %></small>
-                </div>
-              </li>
+        <ul>
+          <% if @agent_occurrence_values.nil? %>
+          error
+          <% else %>
+            <% @agent_occurrence_values.sort_by {|obj| obj[1] }.reverse.each do |f| %>
+            <li><%= f[1] %> - <%= f[0][1] %> <%= f[0][2] %></li>
             <% end %>
-          </ul>
-        </div>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
