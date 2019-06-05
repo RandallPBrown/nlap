@@ -148,12 +148,12 @@ $("#chartLine").click(function() {
   </div>
 
   <div class="col-12 col-md-3 animate-fade-in-1000">
-    <div class="card card-full-height d-flex inspectable">
+    <div class="card d-flex inspectable">
       <!-- component-title: Timeline Card -->
       <div class="card-header">
         <h6>Occurrence Rankings</h6>
       </div>
-      <div class="card-body" style="overflow-y: scroll">
+      <div class="card-body" style="height: 500px;overflow-y: scroll">
         <ul>
           <% if @agent_occurrence_values.nil? %>
           error
