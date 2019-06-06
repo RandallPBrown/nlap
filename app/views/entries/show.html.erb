@@ -79,26 +79,26 @@
               <li>
                 <% if @entry.total_effective_occurrence > 2.5 && @entry.user.daps.map.count {|m| m.total_active_writeup} == 0 then %>
                 <strong>Occurrences: <span class="text-danger pull-right"> <%= @entry.total_effective_occurrence %></span>
-                  <center><small class="text-danger">***Agent Writeup Required***</small></center>
+                  <center><small class="text-danger">***Progressive Action Required***</small></center>
                 <% else %>
                 <strong>Occurrences: <span class="pull-right"><%= @entry.total_effective_occurrence %></span>
                 <% end %>
               </li><br />
               <li>
                 <% if @entry.agent.user.daps.map.count {|m| m.total_active_writeup} > 0 then %>
-                  <strong>Writeups: <span class="text-danger pull-right"><%= @entry.agent.user.daps.map.count {|m| m.total_active_writeup} %></span>
+                  <strong>Progressive Actions: <span class="text-danger pull-right"><%= @entry.agent.user.daps.map.count {|m| m.total_active_writeup} %></span>
                 <% else %>
-                  <strong>Writeups: <span class="pull-right"><%= @entry.agent.user.daps.map.count {|m| m.total_active_writeup} %></span>
+                  <strong>Progressive Actions: <span class="pull-right"><%= @entry.agent.user.daps.map.count {|m| m.total_active_writeup} %></span>
                 <% end %>
               </li><br />
               <li>
                 <% if @entry.agent.user.daps.map {|f| f.occurrence_since_dap.blank? } then %>
-                  <strong>Since Writeup: <span class="text-danger">0</span></strong>
+                  <strong>Since Prog Action: <span class="text-danger">0</span></strong>
                 <% elsif @entry.agent.user.daps.map.first.to_f {|m| m.occurence_since_dap} >= 1 then %>
-                <strong>Since Writeup: <span class="text-danger"><%= @entry.agent.user.daps.map.first {|m| m.occurence_since_dap} %></span></strong>
-                <center><small class ="text-danger">**Agent Writeup Required**</small></center>
+                <strong>Since Prog Action: <span class="text-danger"><%= @entry.agent.user.daps.map.first {|m| m.occurence_since_dap} %></span></strong>
+                <center><small class ="text-danger">**Progressive Action Required**</small></center>
                 <% else %>
-                <strong>Since Writeup: <span><%= @entry.agent.user.daps.map.first {|m| m.occurence_since_dap}%></span></strong>
+                <strong>Since Prog Action: <span><%= @entry.agent.user.daps.map.first {|m| m.occurence_since_dap}%></span></strong>
                 <% end %> 
               </li>
             </ul>
@@ -153,7 +153,7 @@
     <div class="col-12 col-md-12">
       <div class="card inspectable">      
         <div class="card-header d-flex align-items-center">
-          <h6><%= @entry.agent.user.first_name %>'s Active Disciplinary Actions</h6>   
+          <h6><%= @entry.agent.user.first_name %>'s Active Progressive Actions</h6>   
         </div>
 
         <div class="table-responsive">

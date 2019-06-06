@@ -112,6 +112,10 @@ class EntriesController < ApplicationController
   def index
       @entries = Entry.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).order('edate desc').includes(:user, :department, :occurrence)
     @agents_list = Agent.all.order(params[:sort]).includes(:entries, :user)
+    respond_to do |format|
+      format.html
+      format.json {render :json => @entries}
+    end
   end
 
 
