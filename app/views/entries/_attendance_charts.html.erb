@@ -154,15 +154,15 @@ $("#chartLine").click(function() {
         <h6>Occurrence Rankings</h6>
       </div>
       <div class="card-body" style="height: 500px;overflow-y: scroll">
-        <ul>
+        <ol class="list-group">
           <% if @agent_occurrence_values.nil? %>
-          error
+          ERROR - Report to Admin
           <% else %>
             <% @agent_occurrence_values.sort_by {|obj| obj[1] }.reverse.each do |f| %>
-            <li><%= f[1] %> - <%= f[0][1] %> <%= f[0][2] %></li>
+            <li class="list-group-item list-group-item-action"> <%= link_to (f[0][1]+" "+f[0][2]), user_path(f[0][0], class: 'btn-link') %> <span class="badge badge-primary badge-pill pull-right"><%= f[1] %></span></li>
             <% end %>
           <% end %>
-        </ul>
+        </ol>
       </div>
     </div>
   </div>

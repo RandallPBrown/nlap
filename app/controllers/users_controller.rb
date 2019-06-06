@@ -22,10 +22,11 @@ class UsersController < ApplicationController
     @user_aht = AgentStat.all.group(:id).where("user_id = ?", current_user.id).where(:date => 2.months.ago.to_date..Date.today.to_date.end_of_day).group(:date)
     @user_aht_label = AgentStat.all.group(:id).where("user_id = ?", current_user.id).where(:date => 2.months.ago.to_date..Date.today.to_date.end_of_day)
     @calls = AgentStat.all.group(:id).where("user_id = ?", current_user.id).where(:date => 2.months.ago.to_date..Date.today.to_date.end_of_day).group(:date)
-  require 'will_paginate/array'
+
   end
 
   def show
+    redirect_to agent_path(@user.agent.id)
   end
 
   # GET /agents/new
@@ -102,6 +103,6 @@ end
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:extension, :id, :first_name, :last_name, :email, :department_id, :password, :password_confirmation, :department, :agent, :role)
+      params.require(:user).permit(:extension, :id, :first_name, :last_name, :email, :department_id, :password, :password_confirmation, :department, :agent_id, :role)
     end
 end
