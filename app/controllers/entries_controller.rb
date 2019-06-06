@@ -110,12 +110,7 @@ class EntriesController < ApplicationController
 
   # GET /entries
   def index
-    require 'will_paginate/array'
-    if params[:search].present?
-      @entries = Entry.order(edate: :desc).perform_search(params[:search]).order('edate desc').includes(:user, :department, :occurrence).paginate(page: params[:page], :per_page => 5)
-    else
-      @entries = Entry.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).order('edate desc').includes(:user, :department, :occurrence).paginate(page: params[:page], :per_page => 5)
-    end
+      @entries = Entry.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).order('edate desc').includes(:user, :department, :occurrence)
     @agents_list = Agent.all.order(params[:sort]).includes(:entries, :user)
   end
 
