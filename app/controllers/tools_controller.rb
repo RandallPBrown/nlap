@@ -24,9 +24,13 @@ class ToolsController < ApplicationController
 
   def pendingreview
     @product = Product.new
+    @products = Product.all
     @buying_group = BuyingGroup.new
+    @buying_groups = BuyingGroup.all
     @dealer = Dealer.new
+    @dealers = Dealer.all
     @contact = Contact.new
+    @contacts = Contact.all
   end
 
   def get_dealer

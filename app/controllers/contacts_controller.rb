@@ -26,7 +26,7 @@ class ContactsController < ApplicationController
     @contact = Contact.new(contact_params)
 
     if @contact.save
-      redirect_to @contact, notice: 'Contact was successfully created.'
+      redirect_back(fallback_location: root_path)
     else
       render :new
     end
@@ -35,7 +35,7 @@ class ContactsController < ApplicationController
   # PATCH/PUT /contacts/1
   def update
     if @contact.update(contact_params)
-      redirect_to @contact, notice: 'Contact was successfully updated.'
+      redirect_back(fallback_location: root_path)
     else
       render :edit
     end
@@ -44,7 +44,7 @@ class ContactsController < ApplicationController
   # DELETE /contacts/1
   def destroy
     @contact.destroy
-    redirect_to contacts_url, notice: 'Contact was successfully destroyed.'
+    redirect_back(fallback_location: root_path)
   end
 
   private

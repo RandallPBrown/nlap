@@ -26,7 +26,7 @@ class DealersController < ApplicationController
     @dealer = Dealer.new(dealer_params)
 
     if @dealer.save
-      redirect_to @dealer, notice: 'Dealer was successfully created.'
+      redirect_back(fallback_location: root_path)
     else
       render :new
     end
@@ -35,7 +35,7 @@ class DealersController < ApplicationController
   # PATCH/PUT /dealers/1
   def update
     if @dealer.update(dealer_params)
-      redirect_to @dealer, notice: 'Dealer was successfully updated.'
+      redirect_back(fallback_location: root_path)
     else
       render :edit
     end
@@ -44,7 +44,7 @@ class DealersController < ApplicationController
   # DELETE /dealers/1
   def destroy
     @dealer.destroy
-    redirect_to dealers_url, notice: 'Dealer was successfully destroyed.'
+    redirect_back(fallback_location: root_path)
   end
 
   private

@@ -26,7 +26,7 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     if @product.save
-      redirect_to :back, notice: 'Product was successfully created.'
+      redirect_back(fallback_location: root_path)
     else
       render :new
     end
@@ -35,7 +35,7 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1
   def update
     if @product.update(product_params)
-      redirect_to @product, notice: 'Product was successfully updated.'
+      redirect_back(fallback_location: root_path)
     else
       render :edit
     end
@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   def destroy
     @product.destroy
-    redirect_to products_url, notice: 'Product was successfully destroyed.'
+    redirect_back(fallback_location: root_path)
   end
 
   private

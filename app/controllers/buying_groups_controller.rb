@@ -26,7 +26,7 @@ class BuyingGroupsController < ApplicationController
     @buying_group = BuyingGroup.new(buying_group_params)
 
     if @buying_group.save
-      redirect_to new_part_path, notice: 'Buying group was successfully created.'
+      redirect_back(fallback_location: root_path)
     else
       render :new
     end
@@ -35,7 +35,7 @@ class BuyingGroupsController < ApplicationController
   # PATCH/PUT /buying_groups/1
   def update
     if @buying_group.update(buying_group_params)
-      redirect_to @buying_group, notice: 'Buying group was successfully updated.'
+      redirect_back(fallback_location: root_path)
     else
       render :edit
     end
@@ -44,7 +44,7 @@ class BuyingGroupsController < ApplicationController
   # DELETE /buying_groups/1
   def destroy
     @buying_group.destroy
-    redirect_to buying_groups_url, notice: 'Buying group was successfully destroyed.'
+    redirect_back(fallback_location: root_path)
   end
 
   private
