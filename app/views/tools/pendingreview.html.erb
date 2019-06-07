@@ -351,7 +351,7 @@ $(function() {
 																<p>Thank you in advance for your prompt response. If/when New Leaf decides to replace, a Service Order will be dispatched to you for the replacement with additional instructions.</p>
 																<span>Sincerely,</span><br>
 																<br>
-																<span><%= current_user.full_name %></span><br>
+																<span><%= current_user.first_name %> <%= current_user.last_name.truncate(3, omission: ". ") %></span><br>
 																<span><%= current_user.department.name %></span><br>
 																<span>New Leaf Service Contracts, LLC.</span><br>
 															</div>
