@@ -85,6 +85,16 @@
 
 </style>
 <script>
+
+$(document).ready(function(){
+	$('#dealerTable').DataTable().draw();
+	$('#productTable').DataTable().draw();
+	$('#bgTable').DataTable().draw();
+	$('#contactTable').DataTable().draw();
+});
+
+
+
 function copyEmail() {
   var copyText = document.getElementById("dealerEmail");
   copyText.select();
@@ -421,14 +431,6 @@ $(function() {
 							   * See instructions for running APIs Explorer code samples locally:
 							   * https://developers.google.com/explorer-help/guides/code_samples#javascript
 							   */
-							  
-							   $(document).ready(function(){
-							   	$('#dealerTable').DataTable().draw();
-							   	$('#productTable').DataTable().draw();
-							   	$('#bgTable').DataTable().draw();
-							   	$('#contactTable').DataTable().draw();
-							   })
-							  
 
 							  function loadClient() {
 							    
@@ -588,7 +590,7 @@ $(function() {
 										    			<table class="table table-striped table-hover" id="bgTable">
 											                <thead>
 											                    <tr>
-											                        <th>Bgname</th>
+											                        <th>Name</th>
 											                        <th></th>
 											                    </tr>
 											                </thead>
@@ -765,7 +767,7 @@ $(function() {
 <!-- MODALS -->
 <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content bg-light">
       <div class="modal-header">
         <h5 class="modal-title" id="modalLabel">NEW PRODUCT</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -781,7 +783,7 @@ $(function() {
 
 <div class="modal fade" id="bgModal" tabindex="-1" role="dialog" aria-labelledby="bgmodalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
+    <div class="modal-content bg-light">
       <div class="modal-header">
         <h5 class="modal-title" id="bgmodalLabel">NEW BUYING GROUP</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -797,7 +799,7 @@ $(function() {
 
 <div class="modal fade" id="dealerModal" tabindex="-1" role="dialog" aria-labelledby="dealerModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
+    <div class="modal-content bg-light">
       <div class="modal-header">
         <h5 class="modal-title" id="dealerModalLabel">NEW DEALER</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -813,7 +815,7 @@ $(function() {
 
 <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
+    <div class="modal-content bg-light">
       <div class="modal-header">
         <h5 class="modal-title" id="contactModalLabel">NEW DEALER</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -932,10 +934,10 @@ function emailSet(){
 	})
 }
 </script>
-<%= javascript_include_tag "nicEdit.js" %>
-<script type="text/javascript">
+<%#= javascript_include_tag "nicEdit.js" %>
+<!-- <script type="text/javascript">
 //<![CDATA[
-        bkLib.onDomLoaded(function() { nicEditors.allTextAreas({iconsPath : '<%= asset_path('nicEditorIcons.gif') %>', buttonList: ['bold','italic','underline','ol', 'ul', 'left', 'center', 'right', 'fontSize']}) });
+        bkLib.onDomLoaded(function() { nicEditors.allTextAreas({iconsPath : '<%#= asset_path('nicEditorIcons.gif') %>', buttonList: ['bold','italic','underline','ol', 'ul', 'left', 'center', 'right', 'fontSize']}) });
   //]]>
 
-</script>
+</script> -->

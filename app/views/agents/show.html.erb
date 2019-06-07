@@ -67,17 +67,17 @@
             <ul class="left-timeline">
               <li>
                 <% if @user_entry_total_effective > 2.5 && @user_dap_total_effective == 0 then %>
-                <strong>Occurrences: <span class="text-danger pull-right"> <%= @user_entry_total_effective %></span>
+                <strong>Occurrences: <span class="text-danger pull-right"> <%= @user_entry_total_effective %></span></strong>
                   <center><small class="text-danger">***Agent Writeup Required***</small></center>
                 <% else %>
-                <strong>Occurrences: <span class="pull-right"><%= @user_entry_total_effective %></span>
+                <strong>Occurrences: <span class="pull-right"><%= @user_entry_total_effective %></span></strong>
                 <% end %>
               </li><br />
               <li>
                 <% if @user_dap_total_effective >= 1 then %>
-                <strong>Writeups: <span class="text-danger pull-right"><%= @user_dap_total_effective %></span>
+                <strong>Writeups: <span class="text-danger pull-right"><%= @user_dap_total_effective %></span></strong>
                 <% else %>
-                <strong>Writeups: <span class="pull-right"><%= @user_dap_total_effective %></span>
+                <strong>Writeups: <span class="pull-right"><%= @user_dap_total_effective %></span></strong>
                 <% end %>
               </li><br />
               <li>
@@ -175,4 +175,3 @@
     </div>
   </div>  
 </div>
-</body>

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get 'agents/new_writeup'  
   get 'entries/new'
   get 'entries/form2'
+  get 'entries/agentview', to: 'entries#agentview'
   get 'daps/form2'  
   get 'home/dashboard'
   get 'myresults', to: 'entries#my_results', defaults: { format: 'csv'}  

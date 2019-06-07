@@ -1,0 +1,65 @@
+<div class="modal-header pb-5">
+  <button type="button" class="close" data-dismiss="modal">x</button>
+</div>
+<div class="modal-body">
+	<div class="container">
+	    <div class="row">
+	    	<div class="col-12 col-md-12">
+	        	<div class="card">
+	        		<div class="card-body">
+	        			<div class="row">
+	        				<div class="col-4">
+	        					AGENT: 
+	        				</div>
+	        				<div class="col-4">
+	        					<%= @user.full_name %>
+	        				</div>
+	        			</div>
+	        			<div class="row">
+	        				<div class="col-4">
+	        					POSITION: 
+	        				</div>
+	        				<div class="col-4">
+	        					<span class="text-capitalize">
+	        						<%= @user.roles.map {|n| n.name}.join(" ") %>
+	        					</span>
+	        				</div>
+	        			</div>
+	        			<div class="row">
+	        				<div class="col-4">
+	        					DEPARTMENT: 
+	        				</div>
+	        				<div class="col-4">
+	        					<%= @user.department.name %>
+	        				</div>
+	        			</div>
+	        			<div class="row">
+	        				<div class="col-4">
+	        					OCCURRENCES: 
+	        				</div>
+	        				<div class="col-4">
+	        					<%= @entries_count %> (active)
+	        				</div>
+	        			</div>
+	        			<div class="row">
+	        				<div class="col-4">
+	        					PROGRESSIVE ACTIONS: 
+	        				</div>
+	        				<div class="col-4">
+	        					<%= @daps_count %> (active)
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
+	    	</div>
+		</div>
+	</div>
+</div>
+
+
+
+	        					
+	        					
+	        					
+
+	        					

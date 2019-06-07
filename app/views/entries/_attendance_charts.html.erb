@@ -147,6 +147,12 @@ $("#chartLine").click(function() {
     </div>
   </div>
 
+<div id="modal-agents" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
   <div class="col-12 col-md-3 animate-fade-in-1000">
     <div class="card d-flex inspectable">
       <!-- component-title: Timeline Card -->
@@ -159,7 +165,7 @@ $("#chartLine").click(function() {
           ERROR - Report to Admin
           <% else %>
             <% @agent_occurrence_values.sort_by {|obj| obj[1] }.reverse.each do |f| %>
-            <li class="list-group-item list-group-item-action"> <%= link_to (f[0][1]+" "+f[0][2]), user_path(f[0][0], class: 'btn-link') %> <span class="badge badge-primary badge-pill pull-right"><%= f[1] %></span></li>
+            <li class="list-group-item list-group-item-action"> <%= link_to (f[0][1]+" "+f[0][2]), entries_agentview_path(:id => f[0][0]), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-agents', class: 'btn btn-link' %> <span class="badge badge-primary badge-pill pull-right"><%= f[1] %></span></li>
             <% end %>
           <% end %>
         </ol>
@@ -167,3 +173,5 @@ $("#chartLine").click(function() {
     </div>
   </div>
 </div>
+
+

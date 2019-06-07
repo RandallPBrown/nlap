@@ -108,6 +108,17 @@ class EntriesController < ApplicationController
     end
   end
 
+def agentview
+  @users = User.all
+  @user = User.find(params[:id])
+  @daps_count = Dap.written.joins(:user).where("users.id = ?", @user.id).count
+  @entries_count = Entry.effective.joins(:occurrence, agent: [:user, :department]).where("users.id = ?", @user.id).group(:ovalue).pluck(:ovalue).sum
+  respond_to do |format|
+    format.html
+    format.js
+  end
+end
+
   # GET /entries
   def index
       @entries = Entry.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).order('edate desc').includes(:user, :department, :occurrence)
