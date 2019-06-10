@@ -161,9 +161,12 @@ function emailOTL() {
 
 function otlVal() {
   if ($('#totalFieldCalls').val() > 849.99) {
-    $('#emailFormButtonCalls').prop('hidden', false)
+    $('#emailFormButtonCalls').prop('hidden', false);
+    $('#emailFormButtonCalls').prop('disabled', false);
   } else {
-    $('#emailFormButtonCalls').prop('hidden', true)
+    $('#emailFormButtonCalls').prop('hidden', true);
+    $('#emailFormButtonCalls').prop('disabled', true);
+
   }
 }
 

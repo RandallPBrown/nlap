@@ -47,9 +47,14 @@ var t = $('#entryTable').DataTable({ "pageLength": 10, columnDefs: [ {
           });
   t.draw();
 
+
 <% @entries.each do |entry| -%>
 t.row.add(['<%= entry.user.full_name.truncate(15) %>', '<%= entry.department.name.truncate(15) %>', '<%= entry.occurrence.name.truncate(15) %>', '<%= entry.occurrence.ovalue %>', '<%= entry.edate %>', '<%= entry.edesc.gsub(/\R+/, " ").truncate(15) %>', '<%= link_to theme_icon_tag("eye"), entry, "data-toggle": "tooltip", title: "Show", class: "btn btn-link"%> <%= link_to theme_icon_tag("pencil-alt"), edit_entry_path(entry), "data-toggle": "tooltip", title: "Edit", class: "btn btn-link" %> <%= link_to theme_icon_tag("trash"), entry, "data-toggle": "tooltip", title: "Delete", data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %>']).draw();
 <% end -%>
+$('#entryTable tbody').on('click', function(){
+  t.state.save();
+})
+
 });
   </script>
 
