@@ -120,7 +120,7 @@ def agentview
 
   else
         @entries_since_dap = [0,0]
-        @entries_since_dap_dates = "none"
+        @entries_since_dap_dates = ["none"]
   end
   respond_to do |format|
     format.html
