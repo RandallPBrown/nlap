@@ -37,7 +37,7 @@ $(function () {
     					<span class="font-weight-bold">OCCURRENCES:</span>
     				</div>
     				<div class="col-4 bg-white rounded">
-    					<%= @entries_count %> <% if @entries_count > 0 %><small></small><% else %><% end %>
+    					<%= @entries_count %> <% if @entries_count > 0 %><small><%= @entries_count_dates %></small><% else %><% end %>
     				</div>
     			</div>
     			<div class="row p-1">
@@ -45,7 +45,7 @@ $(function () {
     					<span class="font-weight-bold">PROGRESSIVE ACTIONS:</span>
     				</div>
     				<div class="col-4 bg-white rounded">
-    					<%= @daps_count %> <% if @daps_count > 0 %><small data-toggle="tooltip" data-placement="top" title="<%= @dap_last.join(" ") %>"><%= fa_icon_tag("clock-o") %></small><% else %><% end %>
+    					<%= @daps_count %> <% if @daps_count > 0 %><small class="pl-1 font-weight-bold" data-toggle="tooltip" data-placement="top" title="<%= @dap_last.join(" ") %>"><%= fa_icon_tag("clock-o") %></small><% else %><small class="pl-1 font-weight-bold" data-toggle="tooltip" data-placement="top" title="none"><%= fa_icon_tag("clock-o") %></small><% end %>
     				</div>
     			</div>
                 <div class="row p-1">
@@ -53,7 +53,7 @@ $(function () {
                         <span class="font-weight-bold">SINCE PROGRESSIVE ACTION:</span>
                     </div>
                     <div class="col-4 bg-white rounded">
-                        <%= @entries_since_dap.sum %> <small data-toggle="tooltip" data-placement="top" title="<%= @entries_since_dap_dates.join(", ") %>"><%= fa_icon_tag("clock-o") %></small>
+                        <%= @entries_since_dap.sum %> <% if @entries_since_dap.sum > 0 %><small class="pl-1 font-weight-bold" data-toggle="tooltip" data-placement="top" title="<%= @entries_since_dap_dates.join(", ") %>"><%= fa_icon_tag("clock-o") %></small><% else %><small class="pl-1 font-weight-bold" data-toggle="tooltip" data-placement="top" title="none"><%= fa_icon_tag("clock-o") %></small><% end %>
                     </div>
                 </div>
 	    	</div>
