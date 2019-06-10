@@ -27,30 +27,24 @@
   <script>
 
 $(document).ready(function(t){
-var t = $('#entryTable').DataTable({ "pageLength": 10, columnDefs: [ {
-              targets: 0,
-              render: function ( data, type, row ) {
-                  return data.substr( 0, 15 );
-              }
-          },{
-                  "targets": [ 3 ],
-                  "visible": false,
-                  "searchable": false
-              } ], columns: [ 
-              { title: 'Agent'}, 
-              { title: 'Department' }, 
-              { title: 'Occurrence' },
-              { title: 'Value' },
-              { title: 'Date' },
-              { title: 'Description' },
-              { title: '' } ] 
+var t = $('#entryTable').DataTable({ "pageLength": 10, columns: [ 
+              { data: 'Agent'}, 
+              { data: 'Department' }, 
+              { data: 'Occurrence' },
+              { data: 'Value' },
+              { data: 'Date' },
+              { data: 'Description' },
+              { data: '' } ] 
           });
   t.draw();
 
 
-<% @entries.each do |entry| -%>
-t.row.add(['<%= entry.user.full_name.truncate(15) %>', '<%= entry.department.name.truncate(15) %>', '<%= entry.occurrence.name.truncate(15) %>', '<%= entry.occurrence.ovalue %>', '<%= entry.edate %>', '<%= entry.edesc.gsub(/\R+/, " ").truncate(15) %>', '<%= link_to theme_icon_tag("eye"), entry, "data-toggle": "tooltip", title: "Show", class: "btn btn-link"%> <%= link_to theme_icon_tag("pencil-alt"), edit_entry_path(entry), "data-toggle": "tooltip", title: "Edit", class: "btn btn-link" %> <%= link_to theme_icon_tag("trash"), entry, "data-toggle": "tooltip", title: "Delete", data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %>']).draw();
-<% end -%>
+
+t.rows.add(
+  
+  [<% @entries.each do |entry| -%>{'Agent': '<%= entry.user.full_name.truncate(15) %>', 'Department': '<%= entry.department.name.truncate(15) %>', 'Occurrence': '<%= entry.occurrence.name.truncate(15) %>', 'Value': '<%= entry.occurrence.ovalue %>', 'Date': '<%= entry.edate %>', 'Description': '<%= entry.edesc.gsub(/\R+/, " ").truncate(15) %>', '':'<%= link_to theme_icon_tag("eye"), entry, "data-toggle": "tooltip", title: "Show", class: "btn btn-link"%> <%= link_to theme_icon_tag("pencil-alt"), edit_entry_path(entry), "data-toggle": "tooltip", title: "Edit", class: "btn btn-link" %> <%= link_to theme_icon_tag("trash"), entry, "data-toggle": "tooltip", title: "Delete", data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %>'},<% end -%>]
+  ).draw();
+
 $('#entryTable tbody').on('click', function(){
   t.state.save();
 })
