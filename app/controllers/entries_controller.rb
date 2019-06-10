@@ -113,6 +113,15 @@ def agentview
   @user = User.find(params[:id])
   @daps_count = Dap.written.joins(:user).where("users.id = ?", @user.id).count
   @entries_count = Entry.effective.joins(:occurrence, agent: [:user, :department]).where("users.id = ?", @user.id).group(:ovalue).pluck(:ovalue).sum
+  @dap_last = Dap.written.joins(:user).where("users.id = ?", @user.id).group('daps.id').group(:ddate).pluck(:ddate)
+  if @dap_last.present?
+        @entries_since_dap = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @user.id).group(:edate).where(edate: @dap_last.last.end_of_day...Date.today.end_of_day).group(:ovalue).pluck(:ovalue)
+        @entries_since_dap_dates = Entry.effective.joins(:occurrence, agent: :user).where("users.id = ?", @user.id).group(:edate).where(edate: @dap_last.last.end_of_day...Date.today.end_of_day).group(:edate).pluck(:edate)
+
+  else
+        @entries_since_dap = [0,0]
+        @entries_since_dap_dates = "none"
+  end
   respond_to do |format|
     format.html
     format.js
