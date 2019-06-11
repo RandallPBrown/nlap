@@ -60,7 +60,7 @@
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0 text-muted"><u>Total Active Progressive Actions</u></h6>
+                <h6 class="m-0 text-muted"><u>Active Prog Actions</u></h6>
                 <h4 class="m-0"><%= @user_writeup_written %></h4>
               </div>
               <div class="d-flex align-self-center text-primary ml-3">
@@ -84,7 +84,6 @@
               <%= theme_icon_tag "more" %>
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-badgeledby="salesAndRefundButton" id="chart-selector">
-              <button class="dropdown-item" id="ahtChartMonth">Stats</button>
               <button class="dropdown-item" id="userChartEffective">Occurrences Active</button>
               <button class="dropdown-item" id="userChartTotal">Occurrences All Time</button>
             </div>
@@ -94,9 +93,9 @@
           <div class="card-body">
             <canvas id="statChart" width="200" height="100"></canvas>
             <script>
-            var chart_labels = <%= raw @user_aht_label.map { |e| e.date.to_date.strftime("%m/%d/%Y")  } %>;
-            var chart_data = <%= raw @user_aht.map { |e| e.aht.strftime('%M.%S')  } %>;
-            var dataset_label = "AHT";
+            var chart_labels = <%= raw @agent_chart_labels_effective %>;
+            var chart_data = <%= raw @agent_chart_data_effective %>;
+            var dataset_label = "Effective";
             var chart_type = 'bar';
             var ctx = document.getElementById("statChart").getContext('2d');
             var config = {
@@ -122,16 +121,6 @@
                 }
             };
             var stat_chart = new Chart(ctx, config);
-            $("#ahtChartMonth").click(function() {
-                var chart_labels = <%= raw @user_aht_label.map { |e| e.date.to_date.strftime("%m/%d/%Y")  } %>;
-                var chart_data = <%= raw @user_aht.map { |e| e.aht.strftime('%M.%S')  } %>;
-                var dataset_label = "AHT";
-                var data = stat_chart.config.data;
-                data.datasets[0].data = chart_data;
-                data.labels = chart_labels;
-                data.datasets[0].label = dataset_label;
-                stat_chart.update();
-            });
             $("#userChartEffective").click(function() {
                 var chart_labels = <%= raw @agent_chart_labels_effective %>;
                 var chart_data = <%= raw @agent_chart_data_effective %>;
@@ -192,6 +181,7 @@
                     <th>Name</th>
                     <th>Type</th>
                     <th>Date</th>
+                    <th>Expires</th>
                     <th>Description</th>
                     <th></th>
                   </tr>
@@ -199,8 +189,9 @@
                 <% @user_entry.each do |entry| %>
                   <tr>
                     <td><%= entry.agent.user.full_name %></td>
-                    <td><%= entry.occurrence.name %></td>
+                    <td><%= entry.occurrence.name.truncate(15) %></td>
                     <td><%= entry.edate %></td>
+                    <td><%= entry.edate + 180.days %></td>
                     <td><%= entry.edesc.truncate(15) %></td>
                     <td class="actions text-right">
                           <div class="btn-group">
@@ -235,6 +226,7 @@
                     <th>Name</th>
                     <th>Type</th>
                     <th>Date</th>
+                    <th>Expires</th>
                     <th>Description</th>
                     <th></th>
                   </tr>
@@ -244,6 +236,7 @@
                     <td><%= dap.user.full_name %></td>
                     <td><%= dap.writeup.name %></td>
                     <td><%= dap.ddate %></td>
+                    <td><%= dap.ddate + 90.days %></td>
                     <td><%= dap.description %></td>
                     <td class="actions text-right">
                           <div class="btn-group">
