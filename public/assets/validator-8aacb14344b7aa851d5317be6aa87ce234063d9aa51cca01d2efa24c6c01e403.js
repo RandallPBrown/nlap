@@ -903,3 +903,4 @@ function appendTemplate2(){
     $('#emailsForm').trigger('reset');
 	$('.alert-emails').removeClass('alert-emails bg-warning').addClass('text-muted');
 }
+;
