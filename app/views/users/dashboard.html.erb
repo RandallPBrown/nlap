@@ -25,9 +25,6 @@ $(document).ready(function() {
         $('#morningModal').modal('show');
     }
 });
-$(document).ready(function() {
-          $('#morningModal').modal('show');
-});
 </script>
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -48,13 +45,13 @@ $(document).ready(function() {
               <tr>
                 <td>Occurrences</td>
                 <td><center><%= @user_entry_total_effective %></center></td>
-                <td><center><% if @user_entry_total_effective > 0 %><%= (@user_entry.reverse.first.edate + 180.days).strftime("%m/%d/%Y") %><% else %>NONE<% end %></center></td>
+                <td><center><% if @user_entry_total_effective > 0 %><%= (@user_entry.reverse.first.edate + 180.days) %><% else %>NONE<% end %></center></td>
                 <td><center><% if @user_entry_total_effective > 0 %><%= @user_entry.reverse.first.occurrence.ovalue %><% else %>NONE<% end %></center></td>
               </tr>
               <tr>
                 <td>Progressive Actions</td>
                 <td><center><%= @user_writeup_written %></center></td>
-                <td><center><% if @user_writeup_written > 0 %><% if @user_writeup_written == 1 %><%= (@user_dap_written.map {|d| d.ddate + 90.days}.first).strftime("%m/%d/%Y") %><% else %><%= (@user_dap_written.reverse.first.ddate + 90.days).strftime("%m/%d/%Y") %><% end %><% else %>NONE<% end %></center></td>
+                <td><center><% if @user_writeup_written > 0 %><% if @user_writeup_written == 1 %><%= (@user_dap_written.map {|d| d.ddate + 90.days}.first) %><% else %><%= (@user_dap_written.reverse.first.ddate + 90.days) %><% end %><% else %>NONE<% end %></center></td>
                 <td><center></center></td>
               </tr>
             </tbody>
