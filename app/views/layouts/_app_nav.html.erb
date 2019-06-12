@@ -71,7 +71,7 @@
           </li>
           <% else %>
         <% end %>
-        <li class="nav-item dropdown user-nav">
+        <li class="nav-item dropdown user-nav rounded">
           <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <%= fa_icon_tag("user") %>
             <span class="caret caret-light"></span>
@@ -79,44 +79,46 @@
           <ul class="dropdown-menu dropdown-menu-right" role="menu">
             <li class="dropdown-item text-center">
               <div class="card">
-                <div class="card-header">
-                  <h4 class="m-auto text-uppercase font-weight-bold"><%= current_user.full_name %></h4>
+                <div class="card-header pb-2 m-auto bg-white">
+                  <div class="row justify-content-center m-auto">
+                    <h3 class="m-auto text-uppercase font-weight-bold m-auto"><%= current_user.full_name %></h3>
+                  </div>
                 </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-4">
+                <div class="card-body bg-light">
+                  <div class="row p-1">
+                    <div class="col-5">
                       <span class="pull-left"><strong>Email:</strong></span>
                     </div>
-                    <div class="col-8">
-                        <span class="pull-left text-capitalize"><%= user_email %></span>
+                    <div class="col-7 bg-white rounded">
+                        <span class="pull-left"><%= user_email %></span>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-4">
+                  <div class="row p-1">
+                    <div class="col-5">
                       <span class="pull-left"><strong>Department:</strong></span> 
                     </div>
-                    <div class="col-8">
+                    <div class="col-7 bg-white rounded">
                       <span class="pull-left"><%= user_department %></span>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-4">
+                  <div class="row p-1">
+                    <div class="col-5">
                       <span class="pull-left"><strong>Position:</strong></span> 
                     </div>
-                    <div class="col-8">
+                    <div class="col-7 bg-white rounded">
                       <span class="pull-left text-capitalize"><%= current_user.roles.all.map{|f| f.name}.join(" ") %></span>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-4">
+                  <div class="row p-1">
+                    <div class="col-5">
                       <span class="pull-left"><strong>Prog Actions:</strong></span> 
                     </div>
-                    <div class="col-8">
+                    <div class="col-7 bg-white rounded">
                       <span class="pull-left"><%= current_user.daps.ids.count %></span>
                     </div>
                   </div>
                 </div>
-                <div class="card-footer d-flex justify-content-between">
+                <div class="card-footer d-flex justify-content-between bg-white">
                   <div>
                     <%= link_to "Change your password", edit_user_path(current_user.id), :class => 'btn  text-dark' %>
                   </div>
