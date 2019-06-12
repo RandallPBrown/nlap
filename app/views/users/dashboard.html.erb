@@ -11,6 +11,9 @@
 {
     opacity: 1 !important;
 }
+table tbody tr:hover {
+  color:black;
+}
 </style>
 
 <body>
@@ -25,13 +28,34 @@ $(document).ready(function() {
 </script>
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-    <div class="modal-content bg-primary rounded p-5" style="opacity:0.8">
-        <span class="font-weight-bold text-white text-uppercase morning-message"><center>WELCOME, <%= current_user.first_name %>!</center></span><br>
-        <div class="row justify-content-center">
-          <div class="rounded border-white p-2" style="border-radius:10px !important;border-style:solid;">
-            <h4 class="text-white font-weight-bold">As of the last update by management, you are sitting at <u><%= @user_entry_total_effective %></u> occurrences. <% if @user_entry_total_effective > 0 %>Your oldest active occurrence is set to expire on <u><%= @user_entry.reverse.first.edate + 180.days %></u>.<% else %> Keep up the great work!<% end %></h4><br>
-            <h4 class="text-white font-weight-bold">You currently show to have <u><%= @user_writeup_written %></u> progressive actions. <% if @user_writeup_written > 0 %>Your oldest active progressive action is due to expire on <u><%= @user_dap_written.reverse.first.ddate + 90.days %></u>.<% else %>Keep up the great work!<% end %></h4>
-          </div>
+    <div class="modal-content bg-primary rounded p-1">
+      <div class="rounded border-light" style="height:100%;width:100%;border-radius: 5px;border-style: solid;">
+        <span class="font-weight-bold text-light text-uppercase morning-message"><center>WELCOME, <%= current_user.first_name %>!</center></span><br>
+        <div class="row justify-content-center p-3">
+          <table class="table table-hover bg-transparent text-white font-weight-bold">
+            <thead>
+              <tr>
+                <th></th>
+                <th><center>QUANTITY</center></th>
+                <th><center>NEXT EXPIRATION</center></th>
+                <th><center>DROPOFF VALUE</center></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Occurrences</td>
+                <td><center><%= @user_entry_total_effective %></center></td>
+                <td><center><% if @user_entry_total_effective > 0 %><%= (@user_entry.reverse.first.edate + 180.days).strftime("%m/%d/%Y") %><% else %>NONE<% end %></center></td>
+                <td><center><% if @user_entry_total_effective > 0 %><%= @user_entry.reverse.first.occurrence.ovalue %><% else %>NONE<% end %></center></td>
+              </tr>
+              <tr>
+                <td>Progressive Actions</td>
+                <td><center><%= @user_writeup_written %></center></td>
+                <td><center><% if @user_writeup_written > 0 %><%= (@user_dap_written.reverse.first.ddate + 90.days).strftime("%m/%d/%Y") %><% else %>NONE<% end %></center></td>
+                <td><center></center></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <button class="btn btn-light font-weight-bold text-primary" style="position:absolute;top:5px !important;right:5px !important" data-dismiss="modal"><%= fa_icon_tag("times") %></button>
         <span class="font-weight-bold text-white" style="position:absolute;bottom:0px !important;right:5px !important"><%= Time.now %></span>
@@ -130,56 +154,7 @@ $(document).ready(function() {
       </div>
           <div class="card-body">
             <canvas id="statChart" width="200" height="100"></canvas>
-            <script>
-            var chart_labels = <%= raw @agent_chart_labels_effective %>;
-            var chart_data = <%= raw @agent_chart_data_effective %>;
-            var dataset_label = "Effective";
-            var chart_type = 'bar';
-            var ctx = document.getElementById("statChart").getContext('2d');
-            var config = {
-                type: 'bar',
-                data: {
-                    labels: chart_labels,
-                    datasets: [{
-                        label: dataset_label,
-                        data: chart_data,
-                        backgroundColor: '#8e8e8e',
-                        borderColor: '#373737',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                stepSize: 1
-                            }
-                        }]
-                    }
-                }
-            };
-            var stat_chart = new Chart(ctx, config);
-            $("#userChartEffective").click(function() {
-                var chart_labels = <%= raw @agent_chart_labels_effective %>;
-                var chart_data = <%= raw @agent_chart_data_effective %>;
-                var dataset_label = "Effective";
-                var data = stat_chart.config.data;
-                data.datasets[0].data = chart_data;
-                data.labels = chart_labels;
-                data.datasets[0].label = dataset_label;
-                stat_chart.update();
-            });
-            $("#userChartTotal").click(function() {
-                var chart_labels = <%= raw @agent_chart_labels_total %>;
-                var chart_data = <%= raw @agent_chart_data_total %>;
-                var dataset_label = "Total";
-                var data = stat_chart.config.data;
-                data.datasets[0].data = chart_data;
-                data.labels = chart_labels;
-                data.datasets[0].label = dataset_label;
-                stat_chart.update();
-            });
-            </script>
+
           </div>
         </div>
       </div>
@@ -326,4 +301,54 @@ $(document).ready(function() {
     </div>
   </div>
 </div>
+            <script>
+            var chart_labels = <%= raw @agent_chart_labels_effective %>;
+            var chart_data = <%= raw @agent_chart_data_effective %>;
+            var dataset_label = "Effective";
+            var chart_type = 'bar';
+            var ctx = document.getElementById("statChart").getContext('2d');
+            var config = {
+                type: 'bar',
+                data: {
+                    labels: chart_labels,
+                    datasets: [{
+                        label: dataset_label,
+                        data: chart_data,
+                        backgroundColor: '#8e8e8e',
+                        borderColor: '#373737',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }]
+                    }
+                }
+            };
+            var stat_chart = new Chart(ctx, config);
+            $("#userChartEffective").click(function() {
+                var chart_labels = <%= raw @agent_chart_labels_effective %>;
+                var chart_data = <%= raw @agent_chart_data_effective %>;
+                var dataset_label = "Effective";
+                var data = stat_chart.config.data;
+                data.datasets[0].data = chart_data;
+                data.labels = chart_labels;
+                data.datasets[0].label = dataset_label;
+                stat_chart.update();
+            });
+            $("#userChartTotal").click(function() {
+                var chart_labels = <%= raw @agent_chart_labels_total %>;
+                var chart_data = <%= raw @agent_chart_data_total %>;
+                var dataset_label = "Total";
+                var data = stat_chart.config.data;
+                data.datasets[0].data = chart_data;
+                data.labels = chart_labels;
+                data.datasets[0].label = dataset_label;
+                stat_chart.update();
+            });
+            </script>
 </body>
