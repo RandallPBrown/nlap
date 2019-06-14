@@ -1,0 +1,137 @@
+<style>
+.indent-1 {
+	text-indent: 10%
+}
+.indent-2 {
+	text-indent: 15%
+}
+.indent-3 {
+	text-indent: 20%
+}
+</style>
+
+<div class="container" style="width: 500px">
+	<button name="timer-buttons" class="btn btn-success btn-block" id="start">START</button>
+	<button name="timer-buttons" class="btn btn-primary btn-block" id="1b" onclick="first()" hidden>NEXT</button>
+	<button name="timer-buttons" class="btn btn-primary btn-block" id="2b" onclick="second()" hidden>NEXT</button>
+	<button name="timer-buttons" class="btn btn-primary btn-block" id="stop" hidden>STOP</button>
+	<ul class="list-group">
+		<li class="list-group-item">
+			<div class="row">
+				<div class="col-6">
+					A. Opening Introduction
+				</div>
+				<div class="col-4">
+					<span name="ticker" class="font-weight-bold text-success active-clock" id="1">
+						00:00:00
+					</span> 
+				</div>
+				<div class="col-2">
+					
+				</div>
+			</div>
+		</li>
+		<li class="list-group-item">
+			<div class="row">
+				<div class="col-6">
+					B. Locating Customer 
+				</div>
+				<div class="col-4">
+					<span name="ticker" class="" id="2">
+						00:00:00
+					</span> 
+				</div>
+				<div class="col-2">
+					
+				</div>
+			</div>
+		</li>
+		<li class="list-group-item">
+			<div class="row">
+				<div class="col-6">
+					C. Verification
+				</div>
+			</div>
+		</li>
+		<li class="list-group-item">
+			<div class="row">
+				<div class="col-6 indent-1">
+					1. Name
+				</div>
+				<div class="col-4">
+					<span name="ticker" class="" id="3">
+						00:00:00
+					</span> 
+				</div>
+				<div class="col-2">
+					
+				</div>
+			</div>
+		</li>
+	</ul>
+	<button class="btn btn-primary btn-block" id="clear">RESET</button>
+</div>
+
+<script>
+var h1 = $('.active-clock'),
+	start = $('#start'),
+	stop = $('#stop'),
+	clear = $('#clear'),
+	seconds = 0, minutes = 0, hours = 0,
+	t;
+
+function add() {
+	var h1 = $('.active-clock')
+	seconds++;
+	if (seconds >= 60) {
+		seconds = 0;
+		minutes++;
+		if (minutes >= 60) {
+			minutes = 0;
+			hours++;
+		}
+	}
+
+	h1.text((hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds));
+	timer();
+}
+
+function timer() {
+	t = setTimeout(add, 1000);
+}
+
+start.on('click', function() {
+	new timer();
+	$('[name="timer-buttons"]').prop('hidden', true);
+	$('#1b').prop('hidden', false);
+})
+stop.on('click', function(){
+	clearTimeout(t);
+})
+
+function first() {
+	clearTimeout(t);
+	$('[name="ticker"]').removeClass("font-weight-bold text-success active-clock");
+	$('[name="timer-buttons"]').prop('hidden', true).removeClass('btn-primary');
+	$('#2').addClass("font-weight-bold text-success active-clock");
+	$('#2b').prop('hidden', false);
+	seconds = 0; minutes = 0; hours = 0;
+	timer();
+}
+function second() {
+	clearTimeout(t);
+	$('[name="ticker"]').removeClass("font-weight-bold text-success active-clock");
+	$('[name="timer-buttons"]').prop('hidden', true).removeClass('btn-primary');
+	$('#3').addClass("font-weight-bold text-success active-clock");
+	$('#stop').prop('hidden', false);
+	seconds = 0; minutes = 0; hours = 0;
+	timer();
+}
+clear.on('click', function() {
+	$('[name="ticker"]').html("00:00:00").removeClass("font-weight-bold text-success active-clock");
+	$('[name="timer-buttons"]').prop('hidden', true).removeClass('btn-primary');
+	$('#1').addClass("font-weight-bold text-success active-clock");
+	$('#start').prop('hidden', false);
+	seconds = 0; minutes = 0; hours = 0;
+})
+</script> 

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get 'agents/new_writeup'  
   get 'entries/new'
   get 'entries/form2'
+  get 'tools/speed_test'
   get 'entries/agentview', to: 'entries#agentview'
   get 'daps/form2'  
   get 'home/dashboard'

@@ -137,6 +137,7 @@ $(function() {
 						<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 							<a class="nav-link font-weight-bold a text-center active text-body text-monospace" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">STEP 1 <%= fa_icon_tag("caret-square-o-right") %></a>
 							<a class="nav-link font-weight-bold a text-center text-body text-monospace" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">STEP 2 <%= fa_icon_tag("caret-square-o-right") %></a>
+							<a class="nav-link font-weight-bold a text-center text-body text-monospace" id="v-pills-sk-tab" data-toggle="pill" href="#v-pills-sk" role="tab" aria-controls="v-pills-sk" aria-selected="false">SHORTKEY <%= fa_icon_tag("caret-square-o-right") %></a>
 							<a class="nav-link font-weight-bold a text-center text-body text-monospace btn-block" id="v-pills-4-tab" data-toggle="pill" href="#v-pills-config" role="tab" aria-controls="v-pills-4" aria-selected="false" style="bottom:10px;position: absolute;width:90%">CONFIG <%= fa_icon_tag("caret-square-o-right") %></a>
 						</div>
 					</div>
@@ -505,28 +506,17 @@ $(function() {
 											<nav class="navbar navbar-light bg-light">
 											  	<div class="row">
 													<div class="input-group">
-													 	<p class="h5 font-weight-bold mt-2 mr-4 ml-2 mb-2">MODEL: </p>
-													 	<input type="text" class="form-control mr-5" id="pricingSearch">
+													 	<p class="h5 font-weight-bold mt-2 mr-4 ml-2 mb-2">
+													 		MODEL: 
+													 	</p>
+													 		<input type="text" class="form-control mr-5" id="pricingSearch">
 													 	<div class="input-group-append" id="button-addon4">
-													    <button class="btn btn-primary btn-sm pull-right ml-4" onclick="loadClient();shyButton()" id="load">API LOAD</button>
-														<button class="btn btn-primary btn-sm pull-right" onclick="execute()">SEARCH</button>
+													    	<button class="btn btn-primary btn-sm pull-right ml-4" onclick="loadClient();shyButton()" id="load">API LOAD</button>
+															<button class="btn btn-primary btn-sm pull-right" onclick="execute()">SEARCH</button>
 													 	</div>
 													</div>
 											    </div>	
 											</nav>
-											<!-- <div class="row">
-												<div class="col-2">
-													<span class="font-weight-bold">Model: </span>
-												</div>
-												<div class="col-5">
-													<input type="text" class="form-control" id="pricingSearch">
-												</div>
-												<div class="col-5">
-													<button class="btn btn-primary" onclick="loadClient();shyButton()" id="load">API LOAD</button>
-													<button class="btn btn-primary" onclick="execute()">SEARCH</button>
-												</div>
-											</div>	
-											<hr style="border-color: black !important;"> -->
 											<div class="table-responsive-sm pt-3">
 												<table id="pricingTable" class="table table-sm table-striped table-bordered table-hover" style="width:100%">
 													<thead>
@@ -557,20 +547,43 @@ $(function() {
 													<button class="btn btn-link p-0 m-0 pull-right" onclick="copyDivToClipboard2()">Copy</button>
 												</div><br>
 												<div class="col-12 pt-2">
-													<div id="replacementTemplate" class="border rounded bg-white p-1" style="height:400px;overflow-y: scroll">
+													<div id="replacementTemplate" class="border rounded bg-white p-1" style="height:400px;overflow-y: scroll" contenteditable="true">
 														<span class="font-weight-bold">Replacement quote received from: </span><span id="quoteTitle"></span><br>
 														<span class="font-weight-bold">Via Fax ( ) Phone ( ) Email ( ) Web ( x )</span><br>
-														<span class="font-weight-bold">Replacement mfg: </span><br>
-														<span class="font-weight-bold">Replacement model: </span><br>
+														<span class="font-weight-bold">Replacement mfg: </span><span id="quoteMFG"></span><br>
+														<span class="font-weight-bold">Replacement model: </span><span id="quoteModel"></span><br>
 														<span class="font-weight-bold">Is quote: ( ) New  ( ) Refurbished</span><br>
 														<span class="font-weight-bold">Retail: $ </span><span id="quotePrice"></span><br>
 														<span class="font-weight-bold">Retail verified how: </span><span id="quoteLink"></span><br>
-														<span class="font-weight-bold">New Leaf replacement cost:  </span></span><span id="quotePrice2"></span><br>
-														<span class="font-weight-bold">Current Servicer obligation amount: </span><br>
-														<span class="font-weight-bold">Total cost of replacement:</span> <br>
+														<span class="font-weight-bold">New Leaf replacement cost:  </span><span id="quotePrice2"></span><br>
+														<span class="font-weight-bold">Current Servicer obligation amount: </span><span id="quoteSPAmount"></span><br>
+														<span class="font-weight-bold">Total cost of replacement:</span> <span id="quoteTotal"></span><br>
 													</div>
 												</div>
 											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="v-pills-sk" role="tabpanel" aria-labelledby="v-pills-sk-tab" style="height:300px">
+							<div class="card shadow-sm p-2 bg-container" style="height:468px;width:100%">
+								<div class="row">
+									<div class="col-9">
+										<div class="tab-content" id="v-pills-tabContent">
+									    	<div class="tab-pane fade show active" id="v-pills-bg" role="tabpanel" aria-labelledby="v-pills-bg-tab">
+									    		<div class="card bg-main p-2" style="height: 450px; overflow-y: scroll;">
+									    			Awaiting shortkeys, DO NOT USE THIS TAB YET!!
+									    		</div>
+									    	</div>
+									    </div>
+									</div>
+									<div class="col-3">
+										<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+											<a class="nav-link font-weight-bold a active text-body text-monospace pull-left" id="v-pills-bg-tab" data-toggle="pill" href="#v-pills-bg" role="tab" aria-controls="v-pills-bg" aria-selected="true"><%= fa_icon_tag("caret-square-o-left") %> BUYING GROUP</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-d-tab" data-toggle="pill" href="#v-pills-d" role="tab" aria-controls="v-pills-d" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> DEALER</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-c-tab" data-toggle="pill" href="#v-pills-c" role="tab" aria-controls="v-pills-c" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> CONTACT</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-p-tab" data-toggle="pill" href="#v-pills-p" role="tab" aria-controls="v-pills-p" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> PRODUCT</a>
 										</div>
 									</div>
 								</div>
