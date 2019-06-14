@@ -1,4 +1,5 @@
 <%= stylesheet_link_tag "pagination.css" %>
+<%= stylesheet_link_tag("https://cdn.datatables.net/select/1.3.0/css/select.bootstrap4.min.css") %>
 <% @title = "All Entries" %>
 
 <% content_for :description do %>
@@ -25,9 +26,14 @@ body::-webkit-scrollbar {
   <script>
 
 $(document).ready(function(t){
-var t = $('#entryTable').DataTable({ "pageLength": 10, dom: 'Bfrtip',buttons: [
-        'copy', 'csvHtml5'
-    ],columns: [ 
+var t = $('#entryTable').DataTable({ 
+        "pageLength": 10,
+        select: true,
+        dom: 'Bfrtip',
+        buttons: [
+          'copy', 'csvHtml5'
+          ], 
+        columns: [ 
               { data: 'Agent'}, 
               { data: 'Department' }, 
               { data: 'Occurrence' },
@@ -35,7 +41,8 @@ var t = $('#entryTable').DataTable({ "pageLength": 10, dom: 'Bfrtip',buttons: [
               { data: 'Date' },
               { data: 'Expiration' },
               { data: 'Description' },
-              { data: '' } ] 
+              { data: '' } 
+            ]
           });
   t.draw();
 
@@ -101,4 +108,5 @@ t.buttons().container()
           </div>
         </div>
       </div>
-
+      
+<%= javascript_include_tag("https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js") %>

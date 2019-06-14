@@ -75,7 +75,7 @@ class Entry < ApplicationRecord
   }
 
   def occurrence_total
-    Entry.joins(:occurrence).sum(:ovalue)
+    Entry.where(edate: 180.days.ago.beginning_of_day...Date.today.end_of_day).joins(:occurrence).sum(:ovalue)
   end
 
   def occurrence_ovalue_today
