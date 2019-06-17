@@ -14,7 +14,7 @@ class ToolsController < ApplicationController
   end
 
   def speed_test
-    @procedure = Procedure.all
+    @procedure = Procedure.all.order(section: :asc)
   end
 
   # GET /tools/new
