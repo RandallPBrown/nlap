@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :procedures
   resources :contacts
   resources :dealers
   put 'agent_stats/all_stats' => 'agent_stats#all_stats'

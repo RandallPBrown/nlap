@@ -13,6 +13,10 @@ class ToolsController < ApplicationController
   def show
   end
 
+  def speed_test
+    @procedure = Procedure.all
+  end
+
   # GET /tools/new
   def new
     @tool = Tool.new

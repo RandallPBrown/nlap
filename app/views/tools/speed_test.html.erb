@@ -8,68 +8,51 @@
 .indent-3 {
 	text-indent: 20%
 }
+.active-clock {
+	color: green;
+	font-weight: bold;
+}
 </style>
 
-<div class="container" style="width: 500px">
-	<button name="timer-buttons" class="btn btn-success btn-block" id="start">START</button>
-	<button name="timer-buttons" class="btn btn-primary btn-block" id="1b" onclick="first()" hidden>NEXT</button>
-	<button name="timer-buttons" class="btn btn-primary btn-block" id="2b" onclick="second()" hidden>NEXT</button>
-	<button name="timer-buttons" class="btn btn-primary btn-block" id="stop" hidden>STOP</button>
-	<ul class="list-group">
-		<li class="list-group-item">
+<div class="container pl-0 pr-0 border-dark" style="border-style: solid;border-radius: 5px;">
+	<div class="row">
+		<div class="col-12">
+			<button name="timer-buttons" class="btn btn-success btn-block m-0" id="start">START</button>
+			<button name="timer-buttons" class="btn btn-primary btn-block m-0" id="next" onclick="skip()" hidden>NEXT</button>
+			<button name="timer-buttons" class="btn btn-danger btn-block m-0" id="stop" hidden>STOP</button>
+			<button name="timer-buttons" class="btn btn-info btn-block m-0" id="clear" hidden>RESET</button>
 			<div class="row">
-				<div class="col-6">
-					A. Opening Introduction
-				</div>
 				<div class="col-4">
-					<span name="ticker" class="font-weight-bold text-success active-clock" id="1">
-						00:00:00
-					</span> 
+					<ul class="list-group">
+						<% @procedure.each do |f| %>
+						<li class="clock list-group-item">
+							<%= f.start %>
+						</li>
+						<% end %>
+					</ul>
 				</div>
-				<div class="col-2">
-					
-				</div>
-			</div>
-		</li>
-		<li class="list-group-item">
-			<div class="row">
-				<div class="col-6">
-					B. Locating Customer 
-				</div>
-				<div class="col-4">
-					<span name="ticker" class="" id="2">
-						00:00:00
-					</span> 
-				</div>
-				<div class="col-2">
-					
-				</div>
-			</div>
-		</li>
-		<li class="list-group-item">
-			<div class="row">
-				<div class="col-6">
-					C. Verification
+				<div class="col-8">
+					<ul class="list-group">
+						<% @procedure.each do |f| %>
+						<li class="details list-group-item">
+							<div class="row p-0 m-0">
+								<div class="col-5">
+									<%= f.section %>
+								</div>
+								<div class="col-2">
+									<%= f.goal %>
+								</div>
+								<div class="col-5">
+									<%= f.description %>
+								</div>
+							</div>
+						</li>
+						<% end %>
+					</ul>
 				</div>
 			</div>
-		</li>
-		<li class="list-group-item">
-			<div class="row">
-				<div class="col-6 indent-1">
-					1. Name
-				</div>
-				<div class="col-4">
-					<span name="ticker" class="" id="3">
-						00:00:00
-					</span> 
-				</div>
-				<div class="col-2">
-					
-				</div>
-			</div>
-		</li>
-	</ul>
-	<button class="btn btn-primary btn-block" id="clear">RESET</button>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -102,36 +85,38 @@ function timer() {
 
 start.on('click', function() {
 	new timer();
-	$('[name="timer-buttons"]').prop('hidden', true);
-	$('#1b').prop('hidden', false);
+	$('#start').prop('hidden', true);
+	$('#next').prop('hidden', false);
+	$('li.clock').first().addClass('active-clock')
 })
 stop.on('click', function(){
 	clearTimeout(t);
+	$('li.active-clock').removeClass("active-clock");
+	$('#stop').prop('hidden', true);
+	$('#clear').prop('hidden', false);
 })
 
-function first() {
+function skip() {
 	clearTimeout(t);
-	$('[name="ticker"]').removeClass("font-weight-bold text-success active-clock");
-	$('[name="timer-buttons"]').prop('hidden', true).removeClass('btn-primary');
-	$('#2').addClass("font-weight-bold text-success active-clock");
-	$('#2b').prop('hidden', false);
-	seconds = 0; minutes = 0; hours = 0;
-	timer();
+	var $this = $('li.active-clock');
+	if($this.index() == $this.siblings().length-1) {
+		$('li.active-clock').next().addClass("active-clock");
+		$('li.active-clock').prev().removeClass("active-clock");
+		seconds = 0; minutes = 0; hours = 0;
+		timer();
+		$('#next').prop('hidden', true);
+		$('#stop').prop('hidden', false);
+	} else {
+		$('li.active-clock').next().addClass("active-clock");
+		$('li.active-clock').prev().removeClass("active-clock");
+		seconds = 0; minutes = 0; hours = 0;
+		timer();
+	}
 }
-function second() {
-	clearTimeout(t);
-	$('[name="ticker"]').removeClass("font-weight-bold text-success active-clock");
-	$('[name="timer-buttons"]').prop('hidden', true).removeClass('btn-primary');
-	$('#3').addClass("font-weight-bold text-success active-clock");
-	$('#stop').prop('hidden', false);
-	seconds = 0; minutes = 0; hours = 0;
-	timer();
-}
+
 clear.on('click', function() {
-	$('[name="ticker"]').html("00:00:00").removeClass("font-weight-bold text-success active-clock");
-	$('[name="timer-buttons"]').prop('hidden', true).removeClass('btn-primary');
-	$('#1').addClass("font-weight-bold text-success active-clock");
+	$('li.clock').text("00:00:00");
+	$('#clear').prop('hidden', true);
 	$('#start').prop('hidden', false);
-	seconds = 0; minutes = 0; hours = 0;
 })
 </script> 
