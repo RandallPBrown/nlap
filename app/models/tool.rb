@@ -4,6 +4,7 @@ class Tool < ApplicationRecord
 	has_many :contacts, :through => :dealers
 	has_many :departments, :through => :dealers
 	has_many :procedures
+	has_many :sections, :through => :procedures
 	accepts_nested_attributes_for :dealers
 	accepts_nested_attributes_for :contacts
 	accepts_nested_attributes_for :departments

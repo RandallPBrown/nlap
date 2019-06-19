@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  procedure: one
+  goal: MyString
+  description: MyText
+  start: MyString
+
+two:
+  procedure: two
+  goal: MyString
+  description: MyText
+  start: MyString

@@ -55,6 +55,6 @@ class ProceduresController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def procedure_params
-      params.require(:procedure).permit(:section, :goal, :description, :start)
+      params.require(:procedure).permit(:name)
     end
 end

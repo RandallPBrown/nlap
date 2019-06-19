@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190617154321) do
+ActiveRecord::Schema.define(version: 20190619182506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -283,12 +283,9 @@ ActiveRecord::Schema.define(version: 20190617154321) do
   end
 
   create_table "procedures", force: :cascade do |t|
-    t.string "section"
-    t.string "goal"
-    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "start"
+    t.string "name"
   end
 
   create_table "products", force: :cascade do |t|
@@ -308,6 +305,17 @@ ActiveRecord::Schema.define(version: 20190617154321) do
     t.string "name"
     t.string "resource_type"
     t.integer "resource_id"
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.bigint "procedure_id"
+    t.string "goal"
+    t.text "description"
+    t.string "start"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "item"
+    t.index ["procedure_id"], name: "index_sections_on_procedure_id"
   end
 
   create_table "tools", force: :cascade do |t|
@@ -410,6 +418,7 @@ ActiveRecord::Schema.define(version: 20190617154321) do
   add_foreign_key "parts", "buying_groups"
   add_foreign_key "parts", "products"
   add_foreign_key "recipients", "users"
+  add_foreign_key "sections", "procedures"
   add_foreign_key "users", "agents"
   add_foreign_key "users", "departments"
 end

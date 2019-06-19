@@ -30,7 +30,7 @@
 							<th class="text-monospace">SECTION</th>
 						</tr>
 					<tbody>
-						<% @procedure.each do |f| %>
+						<% @section.each do |f| %>
 						<tr class="timer">
 							<td class="text-monospace clock">
 								<span class="text-monospace"><%= f.start %></span>
@@ -39,7 +39,7 @@
 								<span class="text-monospace"><%= f.goal %></span>
 							</td>
 							<td>
-								<span class="text-monospace"><%= f.section %> <%= f.description %></span>
+								<span class="text-monospace"><div class="row"><div class="col-2"><%= f.item %></div> <div class="col-10"><%= f.description %></div></div></span>
 							</td>
 						</tr>
 						<% end %>
@@ -161,7 +161,7 @@ $(document).bind('DOMSubtreeModified', function () {
 	} else {
 		h1.removeClass('text-danger');
 	}
-	if (h5[0] >= 1 && h5[1] > 0) {
+	if (h5[0] >= 7 && h5[1] > 0) {
 		h4.addClass('text-danger');
 	} else {
 		h4.removeClass('text-danger');

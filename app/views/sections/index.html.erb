@@ -1,12 +1,12 @@
-<% @title = "Listing procedures" %>
+<% @title = "Listing sections" %>
 
 <% content_for :description do %>
-  <p>Edit this template in <code>app/views/Procedures/index.html.erb</code>.</p>
+  <p>Edit this template in <code>app/views/Sections/index.html.erb</code>.</p>
   <% end %>
 
   <% content_for :actions do %>
-    <%= link_to new_procedure_path, class: 'btn btn-primary btn-large pull-right' do %>
-      <%= fa_icon_tag "plus" %> Add Procedure
+    <%= link_to new_section_path, class: 'btn btn-primary btn-large pull-right' do %>
+      <%= fa_icon_tag "plus" %> Add Section
       <% end %>
       <% end %>
 
@@ -17,33 +17,39 @@
               <table class="table table-striped table-hover table-sm-responsive">
                 <thead>
                   <tr>
-                                          <th>Name</th>
+                                          <th>Procedure</th>
+                                          <th>Goal</th>
+                                          <th>Description</th>
+                                          <th>Start</th>
                                         <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                <% @procedures.each do |procedure| %>
+                <% @sections.each do |section| %>
                   <tr>
-                                          <td><%= procedure.name %></td>
+                                          <td><%= section.procedure %></td>
+                                          <td><%= section.goal %></td>
+                                          <td><%= section.description %></td>
+                                          <td><%= section.start %></td>
                                         <td class="actions text-right">
                       <div class="btn-group">
-                        <%= link_to theme_icon_tag("eye"), procedure, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("pencil-alt"), edit_procedure_path(procedure), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("trash"), procedure, 'data-toggle': 'tooltip', title: 'Delete',
+                        <%= link_to theme_icon_tag("eye"), section, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("pencil-alt"), edit_section_path(section), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("trash"), section, 'data-toggle': 'tooltip', title: 'Delete',
                         data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                       </div>
                       </td>
                     </tr>
                     <% end %>
-                    <% if @procedures.length == 0 %>
-                    <tr><td colspan=42 class='text-center'>No procedures.</td></tr>
+                    <% if @sections.length == 0 %>
+                    <tr><td colspan=42 class='text-center'>No sections.</td></tr>
                     <% end %>
                     </tbody>
                   </table>
                 </div>
 
                                   <%# Remove the trailing if condition if you're using pagination. %>
-                  <%= will_paginate @procedures if @procedures.respond_to?(:total_pages) %>
+                  <%= will_paginate @sections if @sections.respond_to?(:total_pages) %>
                 
                               </div>
 
