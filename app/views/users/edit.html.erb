@@ -63,6 +63,14 @@
                   <%= f.error_messages %>
                 </div>
                 <% end %>
+
+                                <%= f.form_group :admin, class: "row" do |f| %>
+                  <%= f.label :admin, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                  <%= f.select :admin, [['Yes', true], ['No', false]] %>
+                  <%= f.error_messages %>
+                </div>
+                <% end %>
                 <% else %>
 
                 <%= f.form_group :department_id, class:"row" do |f| %>
