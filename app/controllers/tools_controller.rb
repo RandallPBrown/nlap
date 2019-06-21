@@ -14,7 +14,11 @@ class ToolsController < ApplicationController
   end
 
   def speed_test
-    @procedure = Procedure.all.order(section: :asc)
+    @procedure = Procedure.all
+    @section = Section.all
+  end
+
+  def procedure_view
     @section = Section.all
   end
 
@@ -111,6 +115,6 @@ class ToolsController < ApplicationController
     end
 
     def validator_params
-      params.permit(:username, :receipt, :serviceorder, :caller_name, :service_provider, :model_number, :serial_number, :failure_cause, :warranty_link, :sku, :opp, :ppc, :lol, :distributor, :total_parts, :total_labor, :total_tax, :total_mileage, :total_misc, :total_deductible, :total_estimate, :approved, :diagnostic)
+      params.permit(:username, :receipt, :serviceorder, :caller_name, :service_provider, :model_number, :serial_number, :failure_cause, :warranty_link, :sku, :opp, :ppc, :lol, :distributor, :total_parts, :total_labor, :total_tax, :total_mileage, :total_misc, :total_deductible, :total_estimate, :approved, :diagnostic, :asdf)
     end
 end

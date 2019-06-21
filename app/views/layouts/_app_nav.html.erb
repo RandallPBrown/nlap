@@ -18,7 +18,7 @@
             <a class="downdown-item nav-link text-dark font-weight-bold" href="../tools/pendingreview">Pending Review</a>
           </div>  
         </li>
-        <% if current_user.admin? && current_user.has_role?(:reporting)  then %>
+        <% if current_user.admin? && current_user.has_role?(:reporting) || current_user.has_role?(:lead)  then %>
         <li class="nav-item">
           <a class="nav-link text-white font-weight-bold" href="../entries/dashboard"> <%= fa_icon_tag("pie-chart") %></a>
         </li>

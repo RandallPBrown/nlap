@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get 'entries/new'
   get 'entries/form2'
   get 'tools/speed_test'
+  get 'tools/procedure_view'
   get 'entries/agentview', to: 'entries#agentview'
   get 'daps/form2'  
   get 'home/dashboard'

@@ -3,10 +3,10 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.form_group :procedure, class: 'row' do |f| %>
-      <%= f.label :procedure, class: 'control-label col-md-2' %>
+    <%= f.form_group :procedure_id, class: 'row' do |f| %>
+      <%= f.label :procedure_id, class: 'control-label col-md-2' %>
       <div class='col-12 col-md-10'>
-        <%= f.collection_select :procedure, Procedure.order(:id), :id, :name, class: 'custom-select'%>
+        <%= f.collection_select :procedure_id, Procedure.order(:id), :id, :name, class: 'custom-select'%>
         <%= f.error_messages %>
       </div>
     <% end %>

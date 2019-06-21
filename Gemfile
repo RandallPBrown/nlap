@@ -50,14 +50,20 @@ gem "simple_calendar", "~> 2.0"
 gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary'
 gem 'figaro'
+# testing mailers
 gem "letter_opener", :group => :development
+# generate error reports
 gem 'bullet', group: 'development'
+# Set agent roles
 gem 'rolify'
+# Edit forms in line
 gem 'best_in_place', '~> 3.0.1'
-
+# Bootstrap css library
 gem 'bootstrap'
 gem 'popper_js'
 gem 'toastr-rails'
+# Sorting and filtering
+gem 'ransack'
 
 source "https://gems.rapidrailsthemes.com/gems" do
   gem "rrt", "~> 1.0.17"
