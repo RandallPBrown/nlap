@@ -61,6 +61,7 @@ class UsersController < ApplicationController
   def update
     if (current_user.admin) then
       if @user.update_without_password(user_params)
+        @user.roles = []
         @user.add_role params[:user][:role]
         Agent.where("user_id = ?", @user.id).update({:department_id => @user.department_id, :user_id => @user.id})
         redirect_to @user, notice: 'User was successfully updated.'

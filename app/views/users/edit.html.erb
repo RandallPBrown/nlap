@@ -67,7 +67,7 @@
                                 <%= f.form_group :admin, class: "row" do |f| %>
                   <%= f.label :admin, class: "col-sm-4 col-form-label" %>
                   <div class="col-md-8">
-                  <%= f.select :admin, [['Yes', true], ['No', false]] %>
+                  <%= f.select :admin, [['Yes', true], ['No', false]], :include_blank => true %>
                   <%= f.error_messages %>
                 </div>
                 <% end %>
