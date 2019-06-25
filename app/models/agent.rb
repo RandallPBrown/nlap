@@ -19,6 +19,10 @@ class Agent < ApplicationRecord
     	joins(:occurrence, agent: :user)
   	}
 
+  scope :index_controller, -> {
+    includes(:user, :department, entries: :user, user: :daps).joins(:user).order('users.first_name asc')
+  }
+
 	def user_full_name
     	self.user.full_name
   end  

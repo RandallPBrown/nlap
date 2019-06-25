@@ -10,16 +10,15 @@ class AgentsController < ApplicationController
     # @agent = Agent.all
     # @agent = Agent.all
     # @users = User.with_role(:agent).all
-      if params[:search].present?
-        @agents = Agent.includes(:user, :department, entries: :user, user: :daps).joins(:user).perform_search(params[:search]).paginate(page: params[:page], :per_page => 15)
-      else
-        @agents = Agent.includes(:user, :department, entries: :user, user: :daps).joins(:user).order('users.first_name asc').paginate(page: params[:page], :per_page => 15)
-      end
+      @agents = Agent.index_controller
     else
       redirect_to users_dashboard_path, notice: 'Unauthorized'
     end
-    @entries = Entry.all.joins(agent: :user).order(updated_at: :desc).includes(agent: [:user, :department], occurrence: params[:ovalue]).paginate(page: params[:page], :per_page => 5) # keep for now
-
+    @entries = Entry.all.stats.includes(agent: [:user, :department], occurrence: params[:ovalue]).paginate(page: params[:page], :per_page => 5) # keep for now
+    respond_to do |format|
+      format.html
+      format.json {render :json => @agents}
+    end
   end
 
   def new_entry
