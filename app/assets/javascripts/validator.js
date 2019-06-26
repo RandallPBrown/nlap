@@ -117,6 +117,8 @@ function resetShortkey() {
 $('#resetCalls').on('click', function(){
 	$('#callsForm').trigger('reset');
 	$('.alert-calls').removeClass('alert-calls bg-warning').addClass('text-muted');
+  $('#est1ReceiptCallsJetsons').prop('hidden', true);
+  $('#est1ReceiptCalls').prop('hidden', false);
 })
 
 // Email over limits
@@ -209,15 +211,11 @@ function spVerification() {
         if ($('#spCodeCalls').val().toUpperCase() == triggerCodes[i] || $('#spCodeCalls').val().toUpperCase() == (" " + triggerCodes[i])) {
             alert('Credit Card Provider, fill out credit card tab'); 
         } else if ($('#spCodeCalls').val().toUpperCase() == jetsonCode || $('#spCodeCalls').val().toUpperCase() == (" " + jetsonCode)) {
-        	$('#est1CallsJetsons').prop('hidden', false);
-        	$('#est1Calls').prop('hidden', true);
-        	$('#est1Calls-tab-jetsons').prop('hidden', false);
-        	$('#est1Calls-tab').prop('hidden', true)
+        	$('#est1ReceiptCallsJetsons').prop('hidden', false);
+        	$('#est1ReceiptCalls').prop('hidden', true);
         } else {
-        	$('#est1CallsJetsons').prop('hidden', true);
-        	$('#est1Calls').prop('hidden', false);
-        	$('#est1Calls-tab-jetsons').prop('hidden', true);
-        	$('#est1Calls-tab').prop('hidden', false)
+        	$('#est1ReceiptCallsJetsons').prop('hidden', true);
+        	$('#est1ReceiptCalls').prop('hidden', false);
         }
 	}; 
 };
@@ -453,6 +451,8 @@ function appendTemplate(){
     document.getElementById("historyField").value += pasteTime3;
     $('#callsForm').trigger('reset');
 	$('.alert-calls').removeClass('alert-calls bg-warning').addClass('text-muted');
+  $('#est1ReceiptCallsJetsons').prop('hidden', true);
+  $('#est1ReceiptCalls').prop('hidden', false);
 }
 
 // 
@@ -569,6 +569,8 @@ $('#samCheckEmails').on('click', function(){
 $('#resetEmails').on('click', function(){
 	$('#emailsForm').trigger('reset');
 	$('.alert-emails').removeClass('alert-emails bg-warning').addClass('text-muted');
+  $('#est1ReceiptEmailsJetsons').prop('hidden', true);
+  $('#est1ReceiptEmails').prop('hidden', false);
 })
 
 // Email over limits
@@ -658,15 +660,11 @@ function spVerification2() {
         if ($('#spCodeEmails').val().toUpperCase() == triggerCodes2[i] || $('#spCodeEmails').val().toUpperCase() == (" " + triggerCodes2[i])) {
             alert('Credit Card Provider, fill out credit card tab'); 
         } else if ($('#spCodeEmails').val().toUpperCase() == jetsonCode2 || $('#spCodeEmails').val().toUpperCase() == (" " + jetsonCode2)) {
-        	$('#est1EmailsJetsons').prop('hidden', false);
-        	$('#est1Emails').prop('hidden', true);
-        	$('#est1Emails-tab-jetsons').prop('hidden', false);
-        	$('#est1Emails-tab').prop('hidden', true)
+        	$('#est1ReceiptEmailsJetsons').prop('hidden', false);
+        	$('#est1ReceiptEmails').prop('hidden', true);
         } else {
-        	$('#est1EmailsJetsons').prop('hidden', true);
-        	$('#est1Emails').prop('hidden', false);
-        	$('#est1Emails-tab-jetsons').prop('hidden', true);
-        	$('#est1Emails-tab').prop('hidden', false)
+        	$('#est1ReceiptEmailsJetsons').prop('hidden', true);
+        	$('#est1ReceiptEmails').prop('hidden', false);
         }; 
 	}; 
 };
@@ -902,4 +900,6 @@ function appendTemplate2(){
     document.getElementById("historyField").value += pasteTime4;
     $('#emailsForm').trigger('reset');
 	$('.alert-emails').removeClass('alert-emails bg-warning').addClass('text-muted');
+  $('#est1ReceiptEmailsJetsons').prop('hidden', true);
+  $('#est1ReceiptEmails').prop('hidden', false);
 }
