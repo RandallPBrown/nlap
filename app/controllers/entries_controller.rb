@@ -1,5 +1,6 @@
 
 require 'csv'
+require 'pusher'
 
 class EntriesController < ApplicationController
   before_action :authorize_admin, except: [:show]
@@ -7,6 +8,7 @@ class EntriesController < ApplicationController
   layout "scaffold"
 
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
+
 
 
   def dashboard
@@ -236,6 +238,23 @@ end
       if @entry.save
         # EntryMailer.entry_email(@entry).deliver_now
         # redirect_to @entry, notice: 'Entry was successfully created.'
+          pusher_client = Pusher::Client.new(
+            app_id: ENV["PUSHER_APP_ID"],
+            key: ENV["PUSHER_KEY"],
+            secret: ENV["PUSHER_SECRET"],
+            cluster: ENV["PUSHER_CLUSTER"],
+            encrypted: true
+          )
+        pusher_client.trigger('entry', 'new-entry', {
+            agent: @entry.user.full_name,
+            department: @entry.user.department.name,
+            occurrence: @entry.occurrence.name,
+            ovalue: @entry.occurrence.ovalue,
+            date: @entry.edate,
+            exp: @entry.edate + 180.days,
+            description: @entry.edesc,
+            id: @entry.user.id
+        })
         redirect_to '/entries', notice: 'Entry was successfully created.'
       else
         render :new

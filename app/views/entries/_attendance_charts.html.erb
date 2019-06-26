@@ -1,4 +1,19 @@
+  <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+<script>
+    Pusher.logToConsole = true;
 
+    var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>', {
+      cluster: '<%= ENV["PUSHER_CLUSTER"] %>',
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe('entry');
+    channel.bind('new-entry', function(data) {
+      var s = $('#occurrence-'+data.id).text();
+      $('#occurrence-'+data.id).html(parseFloat(s)+parseFloat(data.ovalue));
+    });
+
+</script>
 <div class="row equal-cols">
   <div class="col-12 col-md-9 animate-fade-in-1000">
     <div class="card card-full-height inspectable">
@@ -165,7 +180,7 @@ $("#chartLine").click(function() {
           ERROR - Report to Admin
           <% else %>
             <% @agent_occurrence_values.sort_by {|obj| obj[1] }.reverse.each do |f| %>
-            <li class="list-group-item list-group-item-action"> <%= link_to (f[0][1]+" "+f[0][2]), entries_agentview_path(:id => f[0][0]), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-agents', class: 'btn btn-link' %> <span class="badge badge-primary badge-pill pull-right"><%= f[1] %></span></li>
+            <li class="list-group-item list-group-item-action"> <%= link_to (f[0][1]+" "+f[0][2]), entries_agentview_path(:id => f[0][0]), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-agents', class: 'btn btn-link' %> <span class="badge badge-primary badge-pill pull-right" id="occurrence-<%= f[0][0] %>"><%= f[1] %></span></li>
             <% end %>
           <% end %>
         </ol>

@@ -41,14 +41,20 @@ gem 'devise'
 # gem "paranoia", "~> 2.2"
 # gem 'paranoia_uniqueness_validator', '3.1.0'
 
+# Bootstrap css library
+gem 'bootstrap'
+gem 'popper_js'
+gem 'toastr-rails'
+gem 'bootstrap-datepicker-rails'
+
 gem 'pg_search'
 gem "will_paginate", "~> 3.0.4"
-gem 'alphabetical_paginate'
-gem 'bootstrap-datepicker-rails'
 gem "simple_calendar", "~> 2.0"
 # pdf to create forms
 gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary'
+# Realtime updates
+gem 'pusher'
 gem 'figaro'
 # testing mailers
 gem "letter_opener", :group => :development
@@ -58,12 +64,7 @@ gem 'bullet', group: 'development'
 gem 'rolify'
 # Edit forms in line
 gem 'best_in_place', '~> 3.0.1'
-# Bootstrap css library
-gem 'bootstrap'
-gem 'popper_js'
-gem 'toastr-rails'
-# Sorting and filtering
-gem 'ransack'
+
 
 source "https://gems.rapidrailsthemes.com/gems" do
   gem "rrt", "~> 1.0.17"

@@ -12,3 +12,7 @@
 GMAIL_USERNAME: 'rpeytonb@gmail.com'  
 GMAIL_PASSWORD: 'kklbbqtlrljdyswl'
 
+PUSHER_APP_ID: '811932'
+PUSHER_KEY: '115b4ef1a1fe556e9252'
+PUSHER_SECRET: '6b6faad2d57fbeaacb2c'
+PUSHER_CLUSTER: 'us2'

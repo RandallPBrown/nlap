@@ -2,15 +2,17 @@ class DapsController < ApplicationController
   layout "scaffold"
   before_action :set_dap, only: [:show, :edit, :update, :destroy]
   before_action :authorize_admin, except: [:show]
+  require 'pusher'
+
 
   # GET /daps
   def index
     # @daps = Dap.all.paginate(page: params[:page], :per_page => 5)
     require 'will_paginate/array'
-    if params[:search].present?
-      @daps = Dap.includes(:wunature, :user, :writeup).perform_search(params[:search]).order(ddate: :desc).paginate(page: params[:page], :per_page => 5)
-    else
-      @daps = Dap.all.includes(:wunature, :user, :writeup).order(ddate: :desc).paginate(page: params[:page], :per_page => 5)
+      @daps = Dap.all.includes(:wunature, :user, :writeup)
+    respond_to do |format|
+      format.html
+      format.json {render :json => @daps}
     end
   end
 
@@ -55,6 +57,20 @@ class DapsController < ApplicationController
 
       if @dap.save
         # DapMailer.dap_email(@dap).deliver_now
+        pusher_client = Pusher::Client.new(
+            app_id: ENV["PUSHER_APP_ID"],
+            key: ENV["PUSHER_KEY"],
+            secret: ENV["PUSHER_SECRET"],
+            cluster: ENV["PUSHER_CLUSTER"],
+            encrypted: true
+          )
+        pusher_client.trigger('dap', 'new-dap', {
+            noi: @dap.wunature.description,
+            date: @dap.ddate,
+            agent: @dap.user.full_name,
+            wuname: @dap.writeup.name,
+            osd: @dap.occurrence_since_dap
+        })
         redirect_to @dap, notice: 'Dap was successfully created.'
       else
         render :new

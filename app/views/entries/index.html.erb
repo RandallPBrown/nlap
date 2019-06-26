@@ -22,10 +22,11 @@ body::-webkit-scrollbar {
 }
 
 </style>
-
+  <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
   <script>
 
 $(document).ready(function(t){
+
 var t = $('#entryTable').DataTable({ 
         "pageLength": 10,
         select: true,
@@ -44,9 +45,20 @@ var t = $('#entryTable').DataTable({
               { data: '' } 
             ]
           });
-  t.draw();
+  t.order( [ 4, 'desc' ] ).draw();
 
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
 
+    var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>', {
+      cluster: '<%= ENV["PUSHER_CLUSTER"] %>',
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe('entry');
+    channel.bind('new-entry', function(data) {
+      t.rows.add([{'Agent': data.agent, 'Department': data.department, 'Occurrence': data.occurrence, 'Value': data.ovalue, 'Date': data.date, 'Expiration': data.exp, 'Description': data.description, '': 'JUST ADDED'}]).draw();
+    });
 
 t.rows.add(
   [<% @entries.each do |entry| -%><% if entry.user.deleted_at.nil? %>{'Agent': '<%= entry.user.full_name %>', 'Department': '<%= entry.department.name.truncate(15) %>', 'Occurrence': '<%= entry.occurrence.name.truncate(12) %>', 'Value': '<%= entry.occurrence.ovalue %>', 'Date': '<%= entry.edate %>', 'Expiration': '<%= entry.edate + 180.days %>', 'Description': '<%= entry.edesc.gsub(/\R+/, " ").truncate(10) %>', '':'<%= link_to theme_icon_tag("eye"), entry, "data-toggle": "tooltip", title: "Show", class: "btn btn-link p-1"%> <%= link_to theme_icon_tag("pencil-alt"), edit_entry_path(entry), "data-toggle": "tooltip", title: "Edit", class: "btn btn-link p-1" %> <%= link_to theme_icon_tag("trash"), entry, "data-toggle": "tooltip", title: "Delete", data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link p-1" %>'},<% else %><% end %><% end -%>]
