@@ -72,6 +72,6 @@ class DepartmentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def department_params
-      params.require(:department).permit(:id, :name, :desc, :foreign_key)
+      params.require(:department).permit(:id, :name, :desc, :team_id)
     end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190619182506) do
+ActiveRecord::Schema.define(version: 20190627151706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,8 @@ ActiveRecord::Schema.define(version: 20190619182506) do
     t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "team_id"
+    t.index ["team_id"], name: "index_departments_on_team_id"
   end
 
   create_table "entries", force: :cascade do |t|
@@ -197,6 +199,12 @@ ActiveRecord::Schema.define(version: 20190619182506) do
   create_table "err_statuses", force: :cascade do |t|
     t.string "statusname"
     t.integer "errvalue"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -318,6 +326,14 @@ ActiveRecord::Schema.define(version: 20190619182506) do
     t.index ["procedure_id"], name: "index_sections_on_procedure_id"
   end
 
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "group_id"
+    t.index ["group_id"], name: "index_teams_on_group_id"
+  end
+
   create_table "tools", force: :cascade do |t|
     t.text "receipt"
     t.datetime "created_at", null: false
@@ -409,6 +425,7 @@ ActiveRecord::Schema.define(version: 20190619182506) do
   add_foreign_key "daps", "writeups"
   add_foreign_key "daps", "wunatures"
   add_foreign_key "dealers", "buying_groups"
+  add_foreign_key "departments", "teams"
   add_foreign_key "err_logs", "departments"
   add_foreign_key "err_logs", "err_names"
   add_foreign_key "err_logs", "err_statuses"
@@ -419,6 +436,7 @@ ActiveRecord::Schema.define(version: 20190619182506) do
   add_foreign_key "parts", "products"
   add_foreign_key "recipients", "users"
   add_foreign_key "sections", "procedures"
+  add_foreign_key "teams", "groups"
   add_foreign_key "users", "agents"
   add_foreign_key "users", "departments"
 end

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :groups
+  resources :teams
   resources :sections
   resources :procedures
   resources :contacts
