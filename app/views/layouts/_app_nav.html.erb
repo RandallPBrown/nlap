@@ -1,3 +1,28 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/4.4.0/pusher.min.js"></script>
+<script>
+    // Enable pusher logging - don't include this in production
+    var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>', {
+      cluster: '<%= ENV["PUSHER_CLUSTER"] %>',
+      forceTLS: true
+    });
+
+    var ind_entry_count_channel = pusher.subscribe('entry');
+    ind_entry_count_channel.bind('new-entry', function(data) {
+      var indEntryCount = $('.entry-count').first().text();
+      if (<%= current_user.id %> == data.id) {
+          $('.entry-count').html(parseFloat(indEntryCount) + parseFloat(data.ovalue))
+      }
+    });
+
+    var ind_dap_count_channel = pusher.subscribe('dap');
+    ind_dap_count_channel.bind('new-dap', function(data) {
+      var indDapCount = $('.dap-count').first().text();
+      if (<%= current_user.id %> == data.id) {
+          $('.dap-count').html(parseFloat(indDapCount) + 1)
+      }
+    });
+</script>
+
 <%= stylesheet_link_tag "pagination.css" %>
 <%= render :layout => "layouts/base" do %>
   <nav class="navbar navbar-expand-lg" style="background-color: #4caf50 !important">
@@ -115,7 +140,7 @@
                       <span class="pull-left"><strong>Prog Actions:</strong></span> 
                     </div>
                     <div class="col-7 bg-white rounded">
-                      <span class="pull-left"><%= current_user.daps.ids.count %></span>
+                      <span class="pull-left dap-count"><%= current_user.daps.ids.count %></span>
                     </div>
                   </div>
                 </div>

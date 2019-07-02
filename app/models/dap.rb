@@ -12,7 +12,7 @@ class Dap < ApplicationRecord
   	accepts_nested_attributes_for :writeup
   	accepts_nested_attributes_for :wunature
   	scope :written,  -> {
-    	where(ddate: 90.days.ago...Time.now)
+    	where(ddate: 90.days.ago...Date.tomorrow.beginning_of_day)
   	}
 
     scope :occurrence_user, -> {

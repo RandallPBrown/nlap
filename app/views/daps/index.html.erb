@@ -23,7 +23,6 @@ var t = $('#dapsTable').DataTable({
   t.order( [ 1, 'desc' ] ).draw();
 
     // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
 
     var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>', {
       cluster: '<%= ENV["PUSHER_CLUSTER"] %>',

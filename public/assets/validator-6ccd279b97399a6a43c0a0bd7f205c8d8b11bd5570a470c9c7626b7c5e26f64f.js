@@ -899,3 +899,4 @@ function appendTemplate2(){
   $('#est1ReceiptEmailsJetsons').prop('hidden', true);
   $('#est1ReceiptEmails').prop('hidden', false);
 }
+;

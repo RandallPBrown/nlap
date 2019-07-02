@@ -69,7 +69,8 @@ class DapsController < ApplicationController
             date: @dap.ddate,
             agent: @dap.user.full_name,
             wuname: @dap.writeup.name,
-            osd: @dap.occurrence_since_dap
+            osd: @dap.occurrence_since_dap,
+            id: @dap.user.id
         })
         redirect_to @dap, notice: 'Dap was successfully created.'
       else
