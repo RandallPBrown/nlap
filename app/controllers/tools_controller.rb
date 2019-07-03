@@ -15,7 +15,7 @@ class ToolsController < ApplicationController
 
   def speed_test
     @procedure = Procedure.all
-    @section = Section.all
+    @section = Section.all.order(item: :asc)
   end
 
   def procedure_view
