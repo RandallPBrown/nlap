@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   def dashboard          
     # @body_class = "with-sidebar show-sidebar"
     # @current_user = current_user
-    @user_entry = Entry.occurrence_user.where("users.id = ?", current_user.id).group('agents.id', 'occurrences.id', 'departments.id', 'users.id').includes(:occurrence, agent: [:department, :user]).ue.paginate(page: params[:page], :per_page => 3)
+    @user_entry = Entry.occurrence_user.where("users.id = ?", current_user.id).group('agents.id', 'occurrences.id', 'departments.id', 'users.id').includes(:occurrence, agent: [:department, :user]).ue
     @user_entry_today = Entry.today.occurrence_user.where("users.id = ?", current_user.id).ue
     @user_entry_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).ue
     @user_entry_total_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).uete
@@ -18,12 +18,15 @@ class UsersController < ApplicationController
     @agent_chart_labels_total = Entry.all.occurrence_user.where("users.id = ?", current_user.id).acl
     @agent_chart_data_total = Entry.all.occurrence_user.where("users.id = ?", current_user.id).acd
     @user_writeup_written = Dap.written.joins(:writeup, :user).where("users.id = ?", current_user.id).count(:writeup_id)
-    @user_dap = Dap.includes(:writeup, :user).joins(:writeup, :user).group('writeups.id', 'users.id').where("users.id = ?", current_user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
+    @user_dap = Dap.includes(:writeup, :user).joins(:writeup, :user).group('writeups.id', 'users.id').where("users.id = ?", current_user.id).group(:id).order("daps.ddate DESC")
     @user_dap_written = Dap.written.includes(:writeup, :user).joins(:writeup, :user).group('writeups.id', 'users.id').where("users.id = ?", current_user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
     @user_aht = AgentStat.all.group(:id).where("user_id = ?", current_user.id).where(:date => 2.months.ago.to_date..Date.today.to_date.end_of_day).group(:date)
     @user_aht_label = AgentStat.all.group(:id).where("user_id = ?", current_user.id).where(:date => 2.months.ago.to_date..Date.today.to_date.end_of_day)
     @calls = AgentStat.all.group(:id).where("user_id = ?", current_user.id).where(:date => 2.months.ago.to_date..Date.today.to_date.end_of_day).group(:date)
-
+    respond_to do |format|
+      format.html
+      format.json {render :json => @user_entry}
+    end
   end
 
   def show

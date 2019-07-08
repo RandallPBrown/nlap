@@ -1,3 +1,56 @@
+  <script>
+
+$(document).ready(function(t){
+// ENTRIES TABLE
+var t = $('#userEntryTable').DataTable({ 
+        "pageLength": 5,
+        select: true,
+        dom: 'Bfrtip',
+        columns: [ 
+              { data: 'Name' }, 
+              { data: 'Type' },
+              { data: 'Date' }, 
+              { data: 'Expires' },
+              { data: 'Description' },
+              { data: '' } 
+            ]
+          });
+  t.draw();
+
+
+
+t.rows.add(
+  [<% @user_entry.each do |entry| %>{'Name': '<%= entry.agent.user.full_name %>', 'Type': '<%= entry.occurrence.name.truncate(15) %>', 'Date':'<%= entry.edate %>', 'Expires':'<%= entry.edate + 180.days %>', 'Description':'<%= entry.edesc.truncate(15) %>', '':''},<% else %><% end %>]
+  ).draw();
+
+// DAPS TABLE
+var t = $('#userDapTable').DataTable({ 
+        "pageLength": 5,
+        select: true,
+        dom: 'Bfrtip',
+        columns: [ 
+              { data: 'Name' }, 
+              { data: 'Type' },
+              { data: 'Date' }, 
+              { data: 'Expires' },
+              { data: 'Description' },
+              { data: '' } 
+            ]
+          });
+  t.draw();
+
+
+
+t.rows.add(
+  [<% @user_dap.each do |dap| %>{'Name': '<%= dap.user.full_name %>', 'Type': '<%= dap.writeup.name %>', 'Date':'<%= dap.ddate %>', 'Expires':'<%= dap.ddate + 90.days %>', 'Description':'<%= dap.description.truncate(15) %>', '':''},<% else %><% end %>]
+  ).draw();
+
+});
+  </script>
+
+
+
+
 <%= stylesheet_link_tag "pagination.css" %>
 <% content_for :no_page_header, true %>
 <% content_for :js_libs, "modernizr gmaps flot chartjs demo-dashboard demo-chartjs demo-sparklines" %>
@@ -199,25 +252,10 @@ $(document).ready(function() {
                     <th></th>
                   </tr>
                 </thead>
-                <% @user_entry.each do |entry| %>
-                  <tr>
-                    <td><%= entry.agent.user.full_name %></td>
-                    <td><%= entry.occurrence.name.truncate(15) %></td>
-                    <td><%= entry.edate %></td>
-                    <td><%= entry.edate + 180.days %></td>
-                    <td><%= entry.edesc.truncate(15) %></td>
-                    <td class="actions text-right">
-                          <div class="btn-group">
-                            <%#= link_to theme_icon_tag("eye"), entry, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                          </div>
-                          </td>
-                  </tr>
-                <% end %>
-                <% if @user_entry.length == 0 %>
-                    <tr><td colspan=42 class='text-center'>-- NO ACTIVE OCCURRENCES --</td></tr>
-                <% end %>
+                <tbody>
+
+                </tbody>
               </table>
-              <center><%= will_paginate @user_entry %></center>
             </div>
           </div>
           <!-- /OCCURRENCE TABLE -->
@@ -244,27 +282,12 @@ $(document).ready(function() {
                     <th></th>
                   </tr>
                 </thead>
-                <% @user_dap.each do |dap| %>
-                  <tr>
-                    <td><%= dap.user.full_name %></td>
-                    <td><%= dap.writeup.name %></td>
-                    <td><%= dap.ddate %></td>
-                    <td><%= dap.ddate + 90.days %></td>
-                    <td><%= dap.description %></td>
-                    <td class="actions text-right">
-                          <div class="btn-group">
-                            <%#= link_to theme_icon_tag("eye"), dap, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                          </div>
-                          </td>
-                  </tr>
-                <% end %>
-                <% if @user_dap.length == 0 %>
-                    <tr><td colspan=42 class='text-center'>-- NO ACTIVE PROGRESSIVE ACTIONS --</td></tr>
-                <% end %>
+                <tbody>
+
+                </tbody>
               </table>
               
             </div>
-            <center><%= will_paginate @user_dap %></center>
           </div>
           <!-- /DAP TABLE -->
         </div>
