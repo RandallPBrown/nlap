@@ -301,8 +301,9 @@
 					</div>
 					<div class="card border border-dark bg-light rounded-left submit-menu" id="submitMenuCalls">
 						<div class="row justify-content-center pt-2">
-							<button type="submit" class="btn btn-primary p-1 m-auto" id="submitCalls" onclick="alertVal()">SUBMIT</button>
-							<button type="submit" class="btn btn-primary p-1 m-auto" id="resetCalls">RESET</button>
+							<button type="submit" class="btn btn-primary p-1 m-1" id="submitCalls" onclick="alertVal()">SUBMIT</button>
+							<button type="submit" class="btn btn-primary p-1 m-1" id="resetCalls">RESET</button>
+							<button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#partModal">PART</button>
 						</div>
 					</div>
 				</form>
@@ -1086,5 +1087,23 @@ Thank you,
 	  </div>
 	</div>
 	<!-- /WARRANTY EXTENSIONS MODAL EMAILS -->
+	<!-- PART MODAL UNIVERSAL -->
+	<div class="modal fade" id="partModal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      </div>
+	      <div class="modal-body">
+	      	<div class="tab-content">
+	      		asdlkjgfhasdjklghfljkasfhdljas
+	      	</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">SAVE</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- /PART MODAL -->
 <!-- /MODALS -->
 <%= javascript_include_tag "validator.js" %>

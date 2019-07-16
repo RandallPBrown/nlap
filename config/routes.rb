@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :mfg_parts
+  resources :manufacturers
   resources :groups
   resources :teams
   resources :sections

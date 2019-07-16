@@ -1,0 +1,73 @@
+  <script>
+
+$(document).ready(function(t){
+
+var t = $('#mfgPartsTable').DataTable({ 
+        "pageLength": 10,
+        select: true,
+        dom: 'Bfrtip',
+        buttons: [
+          'copy', 'csvHtml5'
+          ], 
+        columns: [ 
+              { data: 'Part Name'}, 
+              { data: 'Part Number' }, 
+              { data: 'Manufacturer' },
+              { data: '' } 
+            ]
+          });
+  t.order( [ 2, 'asc' ] ).draw();
+ 
+t.on( 'search.dt', function () {
+    $('#filterInfo').html( 'Returning Values For: '+'"'+t.rows().rows( {order:'index', search:'applied'} ).nodes()+'"' );
+    console.log(t.rows().rows( {order:'index', search:'applied'} ).data().length)
+} );
+
+t.rows.add(
+  [<% @mfg_parts.each do |mfg_part| %>{'Part Name':'<%= mfg_part.part_name %>', 'Part Number':'<%= mfg_part.part_number %>', 'Manufacturer':'<%= mfg_part.manufacturer.name %>', '':'<div class="btn-group"><%= link_to theme_icon_tag("eye"), mfg_part, "data-toggle": "tooltip", title: "Show", class: "btn btn-link" %><%= link_to theme_icon_tag("pencil-alt"), edit_mfg_part_path(mfg_part), "data-toggle": "tooltip", title: "Edit", class: "btn btn-link" %><%= link_to theme_icon_tag("trash"), mfg_part, "data-toggle": "tooltip", title: "Delete", data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %></div>'},<% else %><% end %>]
+  ).draw();
+t.buttons().container()
+    .appendTo( $('.col-sm-6:eq(0)', t.table().container() ) );
+});
+  </script>
+
+
+<% @title = "Listing mfg_parts" %>
+
+<% content_for :description do %>
+  <p>Edit this template in <code>app/views/MfgParts/index.html.erb</code>.</p>
+  <% end %>
+
+  <% content_for :actions do %>
+    <%= link_to new_mfg_part_path, class: 'btn btn-primary btn-large pull-right' do %>
+      <%= fa_icon_tag "plus" %> Add Mfg part
+      <% end %>
+      <% end %>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-sheet sheet-condensed">
+              <div class="table-responsive-sm">
+                <table class="table table-striped table-hover" id="mfgPartsTable">
+                  <thead>
+                    <tr>
+                                            <th>Part name</th>
+                                            <th>Part number</th>
+                                            <th>Manufacturer</th>
+                                          <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>                
+          </div>
+        </div>
+      </div>
+
+      <div id="filterInfo">
+
+      </div>
