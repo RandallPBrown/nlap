@@ -21,6 +21,51 @@ class AgentsController < ApplicationController
     end
   end
 
+  def agent_breakdown
+    @agents = Agent.index_controller
+    agent_array = Array.new
+    @agents.each do |agent| 
+       if agent.user.deleted_at.nil? && agent.user.has_role?(:agent) || agent.user.has_role?(:lead) || agent.user.has_role?(:reporting) 
+        agent_array << {
+          'Full Name': agent.user.full_name, 
+          'Email': agent.user.email, 
+          'Department': agent.department.name.truncate(15), 
+          'TAO': if agent.entries.map {|a| a.total_effective_occurrence.to_f}.first.to_f > 2.5 
+                agent.entries.map {|a| a.total_effective_occurrence.to_f}.first
+               else 
+                agent.entries.map {|a| a.total_effective_occurrence.to_f}.first
+               end, 
+          'TAW': if agent.user.daps.map {|m| m.total_active_writeup.to_f}.join(' ').to_f > 0 
+                 agent.user.daps.map {|m| m.total_active_writeup.to_f}.join(' ').to_i
+               else 
+                 agent.user.daps.map {|m| m.total_active_writeup.to_i}.join(' ').to_f
+               end, 
+          'OSAW': if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 
+                 agent.user.daps.map{|m| m.occurrence_since_dap}.first
+               else 
+                 agent.user.daps.map{|m| m.occurrence_since_dap}.first
+               end, 
+            'OSW': if agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 
+                   agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first
+                 else 
+                   agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first
+                 end, 
+            'AR': if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 || agent.entries.map {|a| a.total_effective_occurrence}.first.to_f > 2.5 && agent.user.daps.map.count {|m| m.total_active_writeup} == 0 || agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 
+                  "<i class='fa fa-times-circle text-danger'></i>"
+                 else 
+                  "<i class='fa fa-check-circle text-success'></i>"
+                 end, 
+            '': ("<div class='btn-group'> " + helpers.link_to(helpers.theme_icon_tag('eye'), agent_path(agent.id), 'data-toggle': 'tooltip', title: 'Show', class: 'btn btn-link') + helpers.link_to(helpers.theme_icon_tag('pencil-alt'), edit_user_path(agent.user.id), 'data-toggle': 'tooltip', title: 'Edit', class: 'btn btn-link') + helpers.link_to(helpers.theme_icon_tag('trash'), user_path(agent.user.id), confirm: 'Are you sure?', method: :delete, data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link') + "</div>")
+        }
+         else 
+       end 
+     end 
+    respond_to do |format|
+      format.html
+      format.json {render :json => agent_array}
+    end
+  end
+
   def new_entry
     @entry = Entry.new
   end

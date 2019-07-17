@@ -11,6 +11,7 @@ module Ops
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
+    config.active_support.escape_html_entities_in_json = false
 #     LetterOpener.configure do |config|
 #   # To overrider the location for message storage.
 #   # Default value is <tt>tmp/letter_opener</tt>
