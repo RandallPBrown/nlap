@@ -40,7 +40,7 @@ class DapsController < ApplicationController
 
   # GET /daps/new
   def new
-    if current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       @dap = Dap.new
     else 
       redirect_to daps_path, notice: 'Unauthorized'
@@ -80,17 +80,25 @@ class DapsController < ApplicationController
 
   # PATCH/PUT /daps/1
   def update
-    if @dap.update(dap_params)
-      redirect_to @dap, notice: 'Dap was successfully updated.'
-    else
-      render :edit
-    end
+    if current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      if @dap.update(dap_params)
+        redirect_to @dap, notice: 'Dap was successfully updated.'
+      else
+        render :edit
+      end
+    else 
+      redirect_to daps_path, notice: 'Unauthorized'
+    end  
   end
 
   # DELETE /daps/1
   def destroy
-    @dap.destroy
-    redirect_to daps_url, notice: 'Dap was successfully destroyed.'
+    if current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @dap.destroy
+      redirect_to daps_url, notice: 'Dap was successfully destroyed.'
+    else 
+      redirect_to daps_path, notice: 'Unauthorized'
+    end  
   end
 
   private
