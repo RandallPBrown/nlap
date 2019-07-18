@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190711190416) do
+ActiveRecord::Schema.define(version: 20190718140701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,6 +303,28 @@ ActiveRecord::Schema.define(version: 20190711190416) do
     t.string "serviceorder"
     t.index ["buying_group_id"], name: "index_parts_on_buying_group_id"
     t.index ["product_id"], name: "index_parts_on_product_id"
+  end
+
+  create_table "pcmi_contacts", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pcmi_imports", force: :cascade do |t|
+    t.string "status"
+    t.string "priority"
+    t.string "servicer"
+    t.string "claim"
+    t.string "invoice"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "report_date"
+    t.string "repair_date"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "procedures", force: :cascade do |t|

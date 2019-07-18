@@ -65,9 +65,9 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { :host => 'mighty-mountain-66346.heroku.com' }
   ActionMailer::Base.smtp_settings = {
-    :user_name            => ENV['SENDGRID_USERNAME'],
-    :password             => ENV['SENDGRID_PASSWORD'],
-    :address              => "smtp.sendgrid.net",
+    :user_name            => ENV['MAILGUN_USERNAME'],
+    :password             => ENV['MAILGUN_PASSWORD'],
+    :address              => "smtp.mailgun.org",
     :port                 => 587,
     :enable_starttls_auto => true,
     :authentication       => :plain,

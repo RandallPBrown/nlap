@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :pcmi_contacts
+  resources :pcmi_imports
   resources :mfg_parts
   resources :manufacturers
   resources :groups
