@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :network_maps
   resources :messages
   resources :chatrooms
+  get 'tools/snapshot'
   get 'network_map/index'
   get 'messages/message'
   get 'users/dashboard'

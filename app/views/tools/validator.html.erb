@@ -1,7 +1,70 @@
+<script>
+$(document).ready(function(){
+	if (window.location.search == "") {
+		window.location.href = "?template=Peyton.xml";
+	}
+})
+
+</script>
+
+<nav class="navbar fixed-bottom bg-transparent" style="margin-bottom: 0px !important;opacity: 0.6;box-shadow: 0 0 0 0 !important">
+	<div class="col-5">
+		<div class="row">
+			<div class="col-6">
+				<span class="font-weight-bold">SC-PA: </span> <u id="scPA"></u>% <small class="font-weight-bold">(<u id="scPA-qty">0</u> wait)</small>
+			</div>
+			<div class="col-6">
+				<span class="font-weight-bold">SC-Q: </span> <u id="scQ"></u>% <small class="font-weight-bold">(<u id="scQ-qty">0</u> wait)</small>
+			</div>
+		</div>
+	</div>
+	<div class="col-5">
+		<div class="row">
+			<div class="col-6">
+				<span class="font-weight-bold">SERVICE: </span> <u id="scService"></u> <small class="font-weight-bold">(<u id="scService-qty">0</u> qty)</small>
+			</div>
+			<div class="col-6">
+				<span class="font-weight-bold">DASHBOARD: </span> <u id="scDashboard"></u> <small class="font-weight-bold">(<u id="scDashboard-qty">0</u> qty)</small>
+			</div>
+		</div>
+	</div>
+	<div class="col-2">
+		<button type="button" class="btn btn-primary p-1 m-1 font-weight-bold pull-right" data-toggle="modal" data-target="#queueModal"><%= fa_icon_tag("user") %> AGENTS</button>
+	</div>
+</nav>
+
+	<!-- AGENT QUEUE MODAL UNIVERSAL -->
+	<div class="modal fade" id="queueModal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      	<ul class="nav nav-tabs" id="myTabQueues" role="tablist">
+	      		<li class="nav-item">
+					<a class="nav-link active" id="agentTiles-tab" data-toggle="tab" href="#agentTiles" role="tab" aria-controls="agentTiles" aria-selected="false">AGENT</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="queueTiles-tab" data-toggle="tab" href="#queueTiles" role="tab" aria-controls="queueTiles" aria-selected="true">QUEUE</a>
+				</li>
+			</ul>
+	      </div>
+	      <div class="modal-body" style="overflow-y: scroll;height: 575px">
+	      	<div class="tab-content" id="asdf">
+	      		<div class="tab-pane fade" id="agentTiles" role="tabpanel">
+
+	      		</div>
+	      	</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">CLOSE</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- /AGENT QUEUE MODAL -->
+
 <!-- SCRIPTS -->
 <%= stylesheet_link_tag "validator.css" %>
 <!-- /SCRIPTS -->
-
 <!-- SET USER -->
 <input type="text" value="<%= current_user.full_name %>" id="username" hidden>  
 <!-- /SET USER -->
@@ -303,7 +366,7 @@
 						<div class="row justify-content-center pt-2">
 							<button type="submit" class="btn btn-primary p-1 m-1" id="submitCalls" onclick="alertVal()">SUBMIT</button>
 							<button type="submit" class="btn btn-primary p-1 m-1" id="resetCalls">RESET</button>
-							<button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#partModal">PART</button>
+							
 						</div>
 					</div>
 				</form>
@@ -1087,23 +1150,2382 @@ Thank you,
 	  </div>
 	</div>
 	<!-- /WARRANTY EXTENSIONS MODAL EMAILS -->
-	<!-- PART MODAL UNIVERSAL -->
-	<div class="modal fade" id="partModal" tabindex="-1" role="dialog">
-	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	      </div>
-	      <div class="modal-body">
-	      	<div class="tab-content">
-	      		asdlkjgfhasdjklghfljkasfhdljas
-	      	</div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary" data-dismiss="modal">SAVE</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!-- /PART MODAL -->
+
 <!-- /MODALS -->
+<% if current_user.department.name == "Pre-Approvals" %>
+    <%= javascript_include_tag('Config.js') %>
+    <%= javascript_include_tag('kendo.dataviz.min.js') %>
+    <%= javascript_include_tag('https://kit.fontawesome.com/7932b0d104.js') %>
+    <script type="text/javascript">
+        //$.ajaxSetup({ error: handleError });
+        $.ajaxSetup({ error: function(jqXHR, exception) {
+                alert("Status: " + jqXHR.status + "\nStatusText: " + jqXHR.statusText + "\nException: " + exception + "\nResponseText: " + jqXHR.responseText);
+            }
+        });
+        $.ajaxSetup({ cache: false });
+        $.support.cors = true; 
+
+        var template = "";
+        var alertId = null;
+        var timerId = null;
+        var checkTemplateId = null;
+        var viewportwidth;
+        var viewportheight;
+        var viewportradius;
+        var isSmallScreen = false;
+        var enableStateText = false;
+		var agentShowSms = false;
+		var agentShowChat = false;
+		var agentShowEmail = false;
+		var agentShowFax = false;
+		var agentShowData = false;
+		var agentShowMediaTimer = false;
+        var body;
+        
+        // when working with px
+        var fontHeightTitleOnly = 0.56;
+        var fontHeightTitle     = 0.17;
+        var fontHeightValue     = 0.7;
+        var fontHeightScroll    = 0.56;
+        var fontHeightAlert     = 0.14;
+        var fontHeightAgent     = 0.84;
+
+        var queueSettings = [];
+		var graphSettings = [];
+        var queueCurrentText = [];
+        var agentSettings = [];
+        var dbSettings = [];
+
+        var dbReturnArray = [];
+
+        var canvasQueueList = [];
+        var canvasDbList = [];
+        var divAgentList = [];
+		var divGraphList = [];
+
+        var alertQueueList = [];
+        var alertDbList = [];
+        var alertAgentList = [];
+
+        var agentAlertToggle = false;
+
+        var databaseConnections = [];
+
+        var agentIds = [];
+        var agentClassIds = [];
+        var agentReportGroupIds = [];
+        var agentStateIds = [];
+
+        var isFirstScrollDraw = true;
+        var scrollTitleTiles = [];
+        var scrollTileCanvases = [];
+        var scrollTileXPositions = [];
+		var scrollTileStartTime = [];
+        var scrollIntervalId = null;
+
+        var templateLoadTime;
+		var refreshTick = 2.0;
+		
+		var statsData = [];
+		var thresholdData = [];
+		var timedata = [];
+
+        var CallStates = {"LINECALLSTATE_IDLE":1, "LINECALLSTATE_OFFERING":2, "LINECALLSTATE_ACCEPTED":4,
+        "LINECALLSTATE_DIALTONE":8, "LINECALLSTATE_DIALING":16, "LINECALLSTATE_RINGBACK":32, 
+        "LINECALLSTATE_BUSY":64, "LINECALLSTATE_SPECIALINFO":128, "LINECALLSTATE_CONNECTED":256, 
+        "LINECALLSTATE_PROCEEDING":512, "LINECALLSTATE_ONHOLD":1024, "LINECALLSTATE_CONFERENCED":2048, 
+        "LINECALLSTATE_ONHOLDPENDCONF":4096, "LINECALLSTATE_ONHOLDPENDTRANSFER":8192, "LINECALLSTATE_DISCONNECTED":16384,
+        "LINECALLSTATE_UNKNOWN":32768, "LINECALLSTATE_PARKED":16778240, "LINECALLSTATE_PREVIEW":16777224,
+        "LINECALLSTATE_HOLDING":8388608};
+
+        var CallReasons = {"LINECALLREASON_QUEUECALL":2147483648};
+
+        var CallOrigin = {"LINECALLORIGIN_OUTBOUND":1, "LINECALLORIGIN_INTERNAL":2, "LINECALLORIGIN_EXTERNAL":4,
+        "LINECALLORIGIN_UNKNOWN":16, "LINECALLORIGIN_UNAVAIL":32, "LINECALLORIGIN_CONFERENCE":64, 
+        "LINECALLORIGIN_INBOUND":128};
+
+		var debugString = "";
+		var debugTile = null;
+
+		var token;
+		var tokenRequested;
+		
+		var bIsHidden = false;
+				
+        $(window).resize(function () {
+            if (typeof window.innerWidth != 'undefined') {
+				if ((window.innerWidth >= window.outerWidth || window.innerHeight >= window.outerHeight) && window.innerHeight > window.screen.availHeight * 0.9)
+				{
+					viewportwidth = window.innerWidth;
+					viewportheight = window.innerHeight;
+					viewportradius = Math.round(15.0*viewportheight/1000.0);
+					
+					if (viewportwidth < 700)
+						isSmallScreen = true;
+
+					//debugString = "i:" + window.innerWidth + "," + window.innerHeight + " o:"  + window.outerWidth + "," + window.outerHeight + " s:" + window.screen.width + "," + window.screen.height 
+					//	+ " a:" + window.screen.availWidth + "," + window.screen.availHeight + " d:" + window.screen.pixelDepth + " p:" + window.pageXOffset + "," + window.pageYOffset;
+
+					//drawLoadScreen();
+					reLoadTemplate();
+				}
+				/*
+				else
+				{
+					debugString = "up i:" + window.innerWidth + "," + window.innerHeight + " o:"  + window.outerWidth + "," + window.outerHeight + " s:" + window.screen.width + "," + window.screen.height 
+						+ " a:" + window.screen.availWidth + "," + window.screen.availHeight + " d:" + window.screen.pixelDepth + " p:" + window.pageXOffset + "," + window.pageYOffset;
+					updateDebug();
+				}
+				*/
+            }
+        });
+		
+		function getHiddenProp(){
+			var prefixes = ['webkit','moz','ms','o'];
+			
+			// if 'hidden' is natively supported just return it
+			if ('hidden' in document) return 'hidden';
+			
+			// otherwise loop over all the known prefixes until we find one
+			for (var i = 0; i < prefixes.length; i++){
+				if ((prefixes[i] + 'Hidden') in document) 
+					return prefixes[i] + 'Hidden';
+			}
+
+			// otherwise it's not supported
+			return null;
+		}		
+		
+		function isHidden() {
+			var prop = getHiddenProp();
+			if (!prop) return false;
+			
+			return document[prop];
+		}
+
+		var lastLoadConfigTime = new Date();
+		var delayLoad = null;
+		
+		function visChange() {
+			bIsHidden = isHidden();
+			if (bIsHidden) {
+				//var now = new Date();
+				//console.log(now.toISOString() + ": 3 - Tab Hidden");
+				clearInterval(timerId);
+				clearInterval(alertId);
+				clearInterval(checkTemplateId);
+				clearInterval(scrollIntervalId);					
+				timerId = null;
+				alertId = null;
+				checkTemplateId = null;
+				scrollIntervalId = null;
+			}
+			else {				
+				//console.log("Tab Visible!");
+				//drawLoadScreen();
+				reLoadTemplate();
+			}
+		}			
+
+		function reLoadTemplate() {
+			if (template != null && template.length > 0) {
+				var now = new Date();
+				var diff = now.getTime() - lastLoadConfigTime.getTime();
+				if (diff / 1000 < refreshTick) {
+					if (timerId == null && delayLoad == null) {
+						delayLoad = setTimeout(function() {
+							delayLoad = null;
+							if (timerId == null) {
+								lastLoadConfigTime = new Date();
+								callWebService("LoadConfigurationJS", "?filename=" + urlParams["template"], loadTemplateComplete);
+							}
+						}, refreshTick * 1000);
+					}
+				}
+				else if (timerId == null) {
+					lastLoadConfigTime = new Date();
+					callWebService("LoadConfigurationJS", "?filename=" + urlParams["template"], loadTemplateComplete);
+				}
+			}
+		}
+		
+        var urlParams = null;
+        $(document).ready(function()
+        {
+            if (typeof window.innerWidth != 'undefined')
+            {
+                viewportwidth = window.innerWidth;
+                viewportheight = window.innerHeight;
+                viewportradius = Math.round(15.0 * viewportheight / 1000.0);
+
+                if (viewportwidth < 700)
+                    isSmallScreen = true;
+
+				//debugString = "i:" + window.innerWidth + "," + window.innerHeight + " o:"  + window.outerWidth + "," + window.outerHeight + " s:" + window.screen.width + "," + window.screen.height 
+				//	+ " a:" + window.screen.availWidth + "," + window.screen.availHeight + " d:" + window.screen.pixelDepth + " p:" + window.pageXOffset + "," + window.pageYOffset;
+            }
+			
+			// use the property name to generate the prefixed event name
+			var visProp = getHiddenProp();
+			if (visProp) {
+			  var evtname = visProp.replace(/[H|h]idden/,'') + 'visibilitychange';
+			  document.addEventListener(evtname, visChange);
+			}
+			
+            if (location.protocol === 'https:') {
+                webServiceUrl = webServiceUrlSecure;
+            }
+			if (/\[WebServiceLocation\]/i.test(webServiceUrl)) {
+				var url = document.URL;
+				var server = url.match(/\:\/\/([^:\/]+)/);
+				if (server != null && server.length > 1) {
+					server = server[1];
+					webServiceUrl = webServiceUrl.replace(/\[WebServiceLocation\]/i, server);
+				}
+			}
+
+			//$(window).onfocus = function () {
+			//	console.log("onfocus");
+			//	bIsHidden = false;
+			//};
+			
+			//$(window).onblur = function () {
+			//	console.log("onblur");
+			//	bIsHidden = true;
+			//};
+			
+            urlParams = getUrlVars();
+            if (urlParams["template"] != null) {
+                template = urlParams["template"];
+                drawLoadScreen();
+				lastLoadConfigTime = new Date();
+                callWebService("GetTokenJS", "", getTokenComplete);
+            } else {
+                drawInfoScreen();
+            }
+        });
+
+        function handleError(jqXHR, errtype, errObj) {
+            var XHRobj = jqXHR.__flXHR__;
+            //alert("Error: " + errObj.number + "\nType: " + errObj.name + "\nDescription: " + errObj.description);
+        }
+
+        function getTokenComplete(data) {
+            token = eval('(' + data + ')');
+            tokenRequested = false;
+
+            if (token == "Not licensed") {
+                drawUnlicensedScreen();
+            } else if (templateLoadTime == undefined) {
+                callWebService("LoadConfigurationJS", "?filename=" + urlParams["template"], loadTemplateComplete);
+            } else {
+                timerId = setInterval("refreshStatsTick()", template.RefreshTick * 1000);
+            }
+        }
+
+		function loadTemplateComplete(data) {
+            body = document.getElementById('asdf');
+            
+            var template = eval('(' + data + ')');
+
+            if (template.QueueSettings == null && template.DBSettings == null && template.AgentSettings == null && template.GraphSettings == null) {
+                alert("Template was either empty or not found. Please select another template.");
+                return;
+            }
+
+            if (template.RefreshTick == 0.0) {
+                template.RefreshTick = 2.0;
+            }
+			
+			enableStateText =      template.EnableStateText;
+		    agentShowSms =         template.AgentShowSms;
+		    agentShowChat =        template.AgentShowChat; 
+		    agentShowEmail =       template.AgentShowEmail;
+		    agentShowFax =         template.AgentShowFax;
+		    agentShowData =        template.AgentShowData; 
+		    agentShowMediaTimer =  template.AgentShowMediaTimer;
+			
+            templateLoadTime = new Date();
+
+            queueSettings = [];
+            agentSettings = [];
+            dbSettings = [];
+			graphSettings = [];
+
+            dbReturnArray = [];
+
+            canvasQueueList = [];
+            canvasDbList = [];
+            divAgentList = [];
+			divGraphList = [];
+
+            alertQueueList = [];
+            alertDbList = [];
+            alertAgentList = [];
+
+            agentAlertToggle = false;
+
+            agentIds = [];
+            agentClassIds = [];
+            agentReportGroupIds = [];
+            agentStateIds = [];
+
+            databaseConnections = [];
+
+            isFirstScrollDraw = true;
+            scrollTitleTiles = [];
+            scrollTileCanvases = [];
+            scrollTileXPositions = [];
+			scrollTileStartTime = [];
+            
+			if (template.GraphSettings != null) {
+				statsData = [template.GraphSettings.length];
+				thresholdData = [template.GraphSettings.length];
+				timeData = [template.GraphSettings.length];
+				
+				for (i = 0; i < template.GraphSettings.length; i++) {
+					statsData[i] = new Array(template.GraphSettings[i].TimeInterval * 60 / template.RefreshTick);
+					thresholdData[i] = new Array(template.GraphSettings[i].TimeInterval * 60 / template.RefreshTick);
+					timeData[i] = new Array(template.GraphSettings[i].TimeInterval * 60 / template.RefreshTick);
+				}
+			}
+			
+			if (refreshTick != template.RefreshTick) {
+				refreshTick = template.RefreshTick;
+				clearInterval(timerId);
+				timerId = null;
+			}
+			
+            displayTiles(template);
+            refreshStatsTick();
+			if (timerId == null)
+				timerId = setInterval("refreshStatsTick()", refreshTick * 1000);
+			if (alertId == null)
+				alertId = setInterval("alertTick()", 900);
+        }
+		
+        function queueSettingsUpdate(data) {
+            var queues = eval('(' + data + ')');
+
+            if (queues.length == 1) {
+                if (queues[0].LicenseStatus == "No license" && !tokenRequested) {
+					if (timerId)
+						clearInterval(timerId);
+                    callWebService("GetTokenJS", "", getTokenComplete);
+                    tokenRequested = true;
+                }
+            }
+
+            var i = 0;
+            for (i = 0; i < queues.length; i++) {
+                var id = queues[i].QueueNumber;
+
+                var canvas;
+                var tile;
+                var z = 0;
+                for (z = 0; z < queueSettings.length; z++) {
+                    canvas = canvasQueueList[z];
+                    tile = queueSettings[z];
+
+                    if (canvas != null && !tile.TitleOnly && id == tile.Queue + "|" + tile.Dnis && tile.Statistic != queues[i].Statistic) {
+                        updateCanvas(canvas, queues[i], tile, z);
+                    }
+                }
+				
+				for (z = 0; z < graphSettings.length; z++) {
+				tile = graphSettings[z];
+                    if (id == tile.Queue + "|" + tile.Dnis) {
+						updateGraphData(queues[i], tile, z);
+                    }
+                }
+            }
+        }
+		
+		function updateGraphData(liveReturn, stats, index) {
+			var value = 0;
+            switch (stats.Statistic) {
+                case "Abandoned Calls":
+                    value = liveReturn.TotalAbandonedCalls;
+                    break;
+                case "Available Agents":
+                    value = liveReturn.NumAvailableAgents;
+                    break;
+                case "Available Backup Agents":
+                    value = liveReturn.NumAvailableAgentsBackup;
+                    break;
+                case "Break Agents":
+                    value = liveReturn.NumBreakAgents;
+                    break;
+                case "Break Backup Agents":
+                    value = liveReturn.NumBreakAgentsBackup;
+                    break;
+                case "Callbacks in Queue":
+                    value = liveReturn.CallbacksInQueue;
+                    break;
+                case "Calls in Queue":
+                    value = liveReturn.CallsInQueue;
+                    break;
+                case "Current Call Wait Time":
+					value = liveReturn.CallWaitTime;
+                    break;
+                case "Current Callback Wait Time":
+                    value = liveReturn.CallbackWaitTime;
+                    break;
+                case "Idle Agents":
+                    value = liveReturn.NumIdleAgents;
+                    break;
+                case "Idle Backup Agents":
+                    value = liveReturn.NumIdleAgentsBackup;
+                    break;
+                case "Logged-In Agents":
+                    value = liveReturn.NumLoggedInAgents;
+                    break;
+                case "Logged-In Backup Agents":
+                    value = liveReturn.NumLoggedInAgentsBackup;
+                    break;
+                case "Pending Callbacks in Queue":
+                    value = liveReturn.PendingCallbacksInQueue;
+                    break;
+                case "Service Level":
+                    value = liveReturn.ServiceLevel;
+                    break;
+                case "Total Callbacks":
+                    value = liveReturn.TotalCallbacks;
+                    break;
+                case "Total Number of Calls":
+                    value = liveReturn.TotalCalls;
+                    break;
+                case "Work Time Agents":
+                    value = liveReturn.NumWorkTimeAgents;
+                    break;
+                case "Work Time Backup Agents":
+                    value = liveReturn.NumWorkTimeAgentsBackup;
+                    break;
+                case "Average Speed of Answer":
+					value = getTimeValue(liveReturn.AverageSpeedOfAnswer);
+                    break;
+                case "Average Handle Time":
+					value = getTimeValue(liveReturn.AverageHandleTime);
+                    break;
+                default:
+                    value = stats.Statistic;
+                    break;
+			}
+					
+			
+			var currentTime = new Date()
+			var dateTimeString = currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds()
+			
+			if (statsData[index].length > stats.TimeInterval * 60 / refreshTick) {
+				statsData[index].splice(0, 1);
+				thresholdData[index].splice(0, 1);
+				timeData[index].splice(0, 1);
+			}
+			
+			statsData[index].push(value);
+			thresholdData[index].push(stats.Threshold);
+			timeData[index].push(dateTimeString);
+			
+			var chart = $(divGraphList[index]).data("kendoChart");
+			//chart.refresh();
+			chart.dataSource.read();
+		}
+		
+        function updateCanvas(canvas, liveReturn, stats, index) {
+            var value = 0;
+            var originalValue = 0;
+            var oldValue = queueCurrentText[index];
+            switch (stats.Statistic) {
+                case "Abandoned Calls":
+                    value = liveReturn.TotalAbandonedCalls;
+                    originalValue = liveReturn.TotalAbandonedCalls;
+                    oldValue = stats.TotalAbandonedCalls;
+                    break;
+                case "Abandoned/Total Calls":
+                    value = liveReturn.TotalAbandonedCalls + "/" + liveReturn.TotalCalls;
+                    oldValue = stats.TotalAbandonedCalls + "/" + stats.TotalCalls;
+                    break;
+                case "Available Agents":
+                    value = liveReturn.NumAvailableAgents;
+                    originalValue = liveReturn.NumAvailableAgents;
+                    break;
+                case "Available Backup Agents":
+                    value = liveReturn.NumAvailableAgentsBackup;
+                    originalValue = liveReturn.NumAvailableAgentsBackup;
+                    break;
+                case "Break Agents":
+                    value = liveReturn.NumBreakAgents;
+                    originalValue = liveReturn.NumBreakAgents;
+                    break;
+                case "Break Backup Agents":
+                    value = liveReturn.NumBreakAgentsBackup;
+                    originalValue = liveReturn.NumBreakAgentsBackup;
+                    break;
+                case "Callbacks in Queue":
+                    value = liveReturn.CallbacksInQueue;
+                    originalValue = liveReturn.CallbacksInQueue;
+                    break;
+                case "Calls in Queue":
+                    value = liveReturn.CallsInQueue;
+                    originalValue = liveReturn.CallsInQueue;
+                    break;
+                case "Current Call Wait Time":
+                    if (liveReturn.CallWaitTime == 0) {
+                        value = "00:00";
+                        originalValue = 0;
+                    } else {
+                        value = getTimeValue(liveReturn.CallWaitTime);
+                        originalValue = liveReturn.CallWaitTime;
+                    }
+                    break;
+                case "Current Callback Wait Time":
+                    if (liveReturn.CallbackWaitTime == 0) {
+                        value = "00:00";
+                        originalValue = 0;
+                    } else {
+                        value = getTimeValue(liveReturn.CallbackWaitTime);
+                        originalValue = liveReturn.CallbackWaitTime;
+                    }
+                    break;
+                case "Idle Agents":
+                    value = liveReturn.NumIdleAgents;
+                    originalValue = liveReturn.NumIdleAgents;
+                    break;
+                case "Idle Backup Agents":
+                    value = liveReturn.NumIdleAgentsBackup;
+                    originalValue = liveReturn.NumIdleAgentsBackup;
+                    break;
+                case "Logged-In Agents":
+                    value = liveReturn.NumLoggedInAgents;
+                    originalValue = liveReturn.NumLoggedInAgents;
+                    break;
+                case "Logged-In Backup Agents":
+                    value = liveReturn.NumLoggedInAgentsBackup;
+                    originalValue = liveReturn.NumLoggedInAgentsBackup;
+                    break;
+                case "Pending Callbacks in Queue":
+                    value = liveReturn.PendingCallbacksInQueue;
+                    originalValue = liveReturn.PendingCallbacksInQueue;
+                    break;
+                case "Service Level":
+                    value = liveReturn.ServiceLevel;
+                    originalValue = liveReturn.ServiceLevel;
+                    break;
+                case "Total Callbacks":
+                    value = liveReturn.TotalCallbacks;
+                    originalValue = liveReturn.TotalCallbacks;
+                    break;
+                case "Total Number of Calls":
+                    value = liveReturn.TotalCalls;
+                    originalValue = liveReturn.TotalCalls;
+                    break;
+                case "Work Time Agents":
+                    value = liveReturn.NumWorkTimeAgents;
+                    originalValue = liveReturn.NumWorkTimeAgents;
+                    break;
+                case "Work Time Backup Agents":
+                    value = liveReturn.NumWorkTimeAgentsBackup;
+                    originalValue = liveReturn.NumWorkTimeAgentsBackup;
+                    break;
+                case "Average Speed of Answer":
+                    if (liveReturn.AverageSpeedOfAnswer == 0) {
+                        value = "00:00";
+                        originalValue = 0;
+                    } else {
+                        value = getTimeValue(liveReturn.AverageSpeedOfAnswer);
+                        originalValue = liveReturn.AverageSpeedOfAnswer;
+                    }
+                    break;
+                case "Average Handle Time":
+                    if (liveReturn.AverageHandleTime == 0) {
+                        value = "00:00";
+                        originalValue = 0;
+                    } else {
+                        value = getTimeValue(liveReturn.AverageHandleTime);
+                        originalValue = liveReturn.AverageHandleTime;
+                    }
+                    break;
+                default:
+                    value = stats.Statistic;
+                    break;
+            }
+
+            
+
+            var alertOn = null;
+            if (stats.Statistic != "Abandoned/Total Calls") {
+
+                alertOn = isOnAlert(stats.Alerts, index, originalValue, stats.Statistic);
+                if (alertOn.isOn) {
+                    if (alertQueueList["" + index] == null) {
+                        alertQueueList["" + index] = alertOn;
+                    }
+                    alertQueueList["" + index].value = value;
+                    alertQueueList["" + index].alertText = alertOn.alertText;
+                    alertQueueList["" + index].color = alertOn.color;
+                } else if (alertQueueList["" + index] != null) {
+                    delete alertQueueList["" + index];
+                }
+            }
+            var height = stats.HeightPercentage * viewportheight;
+            var width = stats.WidthPercentage * viewportwidth;
+            var r, g, b;
+            var alertText = "";
+            if (alertOn != null && alertOn.isOn) {
+                alertText = alertOn.alertText;
+            } else {
+                if (value != oldValue) {
+                    changeValue(canvas, stats.BackgroundRed, stats.BackgroundGreen, stats.BackgroundBlue, height, width, stats.Title, stats.TitleOnly, value, alertText, stats.FontRed, stats.FontGreen, stats.FontBlue);
+                }
+            }
+
+            queueCurrentText[index] = value;
+        }
+
+        function updateDbCanvas(canvas, dbReturn, stats, index) {
+            var value = dbReturn.Result;
+
+            var alertOn = isOnAlert(stats.Alerts, index, value, "");
+            if (alertOn.isOn) {
+                if (alertDbList["" + index] == null) {
+                    alertDbList["" + index] = alertOn;
+                }
+                alertDbList["" + index].value = value;
+                alertDbList["" + index].alertText = alertOn.alertText;
+                alertDbList["" + index].color = alertOn.color;
+            } else if (alertDbList["" + index] != null) {
+                delete alertDbList["" + index];
+            }
+
+            var height = stats.HeightPercentage * viewportheight;
+            var width = stats.WidthPercentage * viewportwidth;
+            var r, g, b;
+            var alertText = "";
+            if (alertOn != null && alertOn.isOn) {
+                alertText = alertOn.alertText;
+            } else {
+                changeValue(canvas, stats.BackgroundRed, stats.BackgroundGreen, stats.BackgroundBlue, height, width, stats.Title, stats.TitleOnly, value, alertText, stats.FontRed, stats.FontGreen, stats.FontBlue);
+            }
+        }
+
+        var body = document.getElementById('asdf');
+        var agentTab = document.createElement('div');
+        agentTab.id = "agentTiles";
+        agentTab.setAttribute("role", "tabpanel");
+        agentTab.className = "tab-pane fade show active";
+        var agentQueueList = document.createElement('ul');
+        agentQueueList.id = "agentQueueList";
+        agentQueueList.className = "list-group";
+
+        function updateAgentCanvas(div, agentTile, agentReturn) {
+
+            div.innerHTML = "";
+
+
+            var height = agentTile.HeightPercentage * viewportheight;
+            var width = agentTile.WidthPercentage * viewportwidth;
+
+            var fontSize = Math.min(height / agentReturn.length / 2.5, 30);
+            if (width / fontSize < 26) {
+                fontSize = width / 26;
+            }
+            var margin = 0;
+			var alert = false;
+
+            if (height * 0.05 > width * 0.05) {
+                margin = width * 0.05;
+            } else {
+                margin = height * 0.05;
+            }
+			
+            var imageSizeX = fontSize * 1.5;
+            var imageSizeY = fontSize * 1.5 * 37.0 / 40.0;
+            var padding = margin / 2;
+
+
+            var table = document.createElement('table');
+            table.setAttribute("id", "customers");
+            table.className = "table table-hover table-bordered";
+            //table.setAttribute("cellpadding", "0");
+            //table.setAttribute("cellspacing", "0");
+            //table.setAttribute("width", width - margin * 2);
+            //table.setAttribute("height", height - margin * 2);
+            //table.setAttribute("style", "font-size:" + fontSize + "px");
+
+            var tr = document.createElement('tr');
+            //tr.width = "100%";
+            var thAgent = document.createElement('th');
+            thAgent.innerHTML = "Agent Name";
+			thAgent.className = "text-align-center";
+			//thAgent.setAttribute("nowrap", "");
+            //thAgent.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;");
+            tr.appendChild(thAgent);
+            var thState = document.createElement('th');
+            thState.innerHTML = "State";
+			thState.className = "text-align-center";
+            //thState.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:center;");
+            tr.appendChild(thState);
+            var thTime = document.createElement('th');
+            thTime.innerHTML = "Time";
+			thTime.className = "text-align-center";
+            //thTime.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;");
+            tr.appendChild(thTime);
+            var thPhone = document.createElement('th');
+            thPhone.innerHTML = "Phone";
+			thPhone.className = "text-align-center";
+            //thPhone.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:center;");
+            tr.appendChild(thPhone);
+			if (enableStateText || agentTile.ShowStateText) {
+				var thText = document.createElement('th');
+				thText.innerHTML = "";
+				//thText.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:center;");
+				tr.appendChild(thText);
+			}
+			if (agentShowSms || agentTile.ShowSms) {
+				var thMedia = document.createElement('th');
+				thMedia.innerHTML = "SMS";
+				//thMedia.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;");
+				tr.appendChild(thMedia);
+			}
+			if (agentShowChat || agentTile.ShowChat) {
+				var thMedia = document.createElement('th');
+				thMedia.innerHTML = "Chat";
+				//thMedia.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;");
+				tr.appendChild(thMedia);
+			}
+			if (agentShowEmail || agentTile.ShowEmail) {
+				var thMedia = document.createElement('th');
+				thMedia.innerHTML = "Email";
+				//thMedia.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;");
+				tr.appendChild(thMedia);
+			}
+			if (agentShowFax || agentTile.ShowFax) {
+				var thMedia = document.createElement('th');
+				thMedia.innerHTML = "Fax";
+				//thMedia.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;");
+				tr.appendChild(thMedia);
+			}
+			if (agentShowData || agentTile.ShowData) {
+				var thMedia = document.createElement('th');
+				thMedia.innerHTML = "Task";
+				//thMedia.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;");
+				tr.appendChild(thMedia);
+			}
+            table.appendChild(tr);
+
+            if (agentTile.AgentTileType != "4") {
+                agentReturn.sort(compare);
+            }
+
+            for (var i = 0; i < agentReturn.length; i++) {
+                var value = agentReturn[i];
+
+				var alertStates = new Array();
+				var agentState = "";
+				var phoneState = "";
+
+				var statusHtml;
+                var phoneHtml;
+                var phoneStyle;
+				var textHTML;
+
+				var divImg = '<img style="vertical-align:middle" src="Icons/';
+				var divImgSuffix = '.png" height=' + imageSizeY + " width=" + imageSizeX + ">";
+
+                switch (value.AgentStatus.toUpperCase()) {
+                    case "LOGGED_IN":
+                        agentState = "Idle";
+                        statusHtml = "<i class='fa fa-user text-info'></i>"
+                        break;
+                    case "LOGGED_OUT":
+                        agentState = "";
+                        statusHtml = '<i class="fa fa-user"></i>'
+                        break;
+                    case "IN_AUTO_WORKTIME":
+                        agentState = "Work Time Auto";
+                        statusHtml = '<i class="fa fa-clock-o text-info"></i>'
+                        break;
+                    case "IN_MANUAL_WORKTIME":
+                        agentState = "Work Time Manual";
+                        statusHtml = '<i class="fa fa-clock-o text-info"></i>'
+                        break;
+                    case "IN_BREAKTIME":
+                        agentState = "Break";
+                        statusHtml = '<i class="fa fa-glass text-success"></i>'
+                        break;
+                    case "IN_WRAPUP":
+                        agentState = "Wrapup";
+                        statusHtml = '<i class="fa fa-pencil text-warning"></i>'
+                        break;
+                    default:
+                        statusHtml = "<i class='fa fa-user text-danger'></i>"
+                        break;
+                }
+
+                phoneHtml = "";
+                phoneStyle = "";
+
+                var yellowBackground = "background-color:#FAF087;opacity:0.5;";
+                var magentaBackground = "background-color:#FFADFE;opacity:0.5;";
+                var greenBackground = "background-color:#B6F779;opacity:0.5;";
+
+                switch (value.PhoneState) {
+                    case CallStates.LINECALLSTATE_IDLE:
+                        phoneHtml = "";
+                        phoneStyle = "";
+						textHTML = "Idle";
+                        break;
+                    case CallStates.LINECALLSTATE_DIALTONE:
+                        if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_INBOUND) == CallOrigin.LINECALLORIGIN_INBOUND) {
+                            if (value.PhoneReason >= CallReasons.LINECALLREASON_QUEUECALL) {
+                                phoneHtml = '<i class="fa fa-phone text-danger"></i>'
+                                phoneStyle;
+                                phoneState = "On Queue";
+								textHTML = "Queue Off Hook";
+                            } else {
+                                phoneHtml = '<i class="fa fa-phone text-danger"></i>'
+                                phoneStyle;
+                                phoneState = "On Direct";
+								textHTML = "Direct Off Hook";
+                            }
+                        } else if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_OUTBOUND) == CallOrigin.LINECALLORIGIN_OUTBOUND) {
+                            phoneHtml = '<i class="fa fa-phone text-danger"></i>'
+                            phoneStyle;
+                            phoneState = "On Outbound";
+							textHTML = "Outbound Off Hook";
+                        } else {
+                            phoneHtml = '<i class="fa fa-phone text-danger"></i>'
+                            phoneStyle;
+                            phoneState = "On Outbound";
+							textHTML = "Outbound Off Hook";
+                        }
+                        break;
+                    case CallStates.LINECALLSTATE_RINGBACK:
+                        if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_INBOUND) == CallOrigin.LINECALLORIGIN_INBOUND) {
+                            if (value.PhoneReason >= CallReasons.LINECALLREASON_QUEUECALL) {
+                                phoneHtml = '<i class="fa fa-volume-control-phone text-info"></i>'
+                                phoneStyle;
+                                phoneState = "Ringing Queue";
+								textHTML = "Queue Ringing";
+                            } else {
+                                phoneHtml = '<i class="fa fa-volume-control-phone text-info"></i>'
+                                phoneStyle;
+                                phoneState = "Ringing Direct";
+								textHTML = "Direct Ringing";
+                            }
+                        } else if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_OUTBOUND) == CallOrigin.LINECALLORIGIN_OUTBOUND) {
+                            phoneHtml = '<i class="fa fa-volume-control-phone text-info"></i>'
+                            phoneStyle;
+                            phoneState = "On Outbound";
+							textHTML = "Outbound Ringing";
+                        } else {
+                            phoneHtml = '<i class="fa fa-volume-control-phone text-info"></i>'
+                            phoneStyle;
+                            phoneState = "Ringing Direct";
+							textHTML = "Direct Ringing";
+                        }
+                        break;
+                    case CallStates.LINECALLSTATE_OFFERING:
+                        if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_INBOUND) == CallOrigin.LINECALLORIGIN_INBOUND) {
+                            if (value.PhoneReason >= CallReasons.LINECALLREASON_QUEUECALL) {
+                                phoneHtml = '<i class="fa fa-volume-control-phone text-info"></i>'
+                                phoneStyle;
+                                phoneState = "Ringing Queue";
+								textHTML = "Queue Offering";
+                            } else {
+                                phoneHtml = '<i class="fa fa-volume-control-phone text-info"></i>'
+                                phoneStyle;
+                                phoneState = "Ringing Direct";
+								textHTML = "Direct Offering";
+                            }
+                        } else if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_OUTBOUND) == CallOrigin.LINECALLORIGIN_OUTBOUND) {
+                            phoneHtml = '<i class="fa fa-phone text-info"></i>'
+                            phoneStyle;
+                            phoneState = "On Outbound";
+							textHTML = "Outbound Off Hook";
+                        } else {
+                            phoneHtml = '<i class="fa fa-phone text-info"></i>'
+                            phoneStyle;
+                            phoneState = "Ringing Queue";
+							textHTML = "Queue Offering";
+                        }
+                        break;
+                    case CallStates.LINECALLSTATE_CONNECTED:
+                        if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_INBOUND) == CallOrigin.LINECALLORIGIN_INBOUND) {
+                            if (value.PhoneReason >= CallReasons.LINECALLREASON_QUEUECALL) {
+                                phoneHtml = '<i class="fa fa-headphones text-success"></i>'
+                                phoneStyle;
+                                phoneState = "On Queue";
+								textHTML = "Queue Connected";
+                            } else {
+                                phoneHtml = '<i class="fa fa-headphones text-success"></i>'
+                                phoneStyle;
+                                phoneState = "On Direct";
+								textHTML = "Direct Connected";
+                            }
+                        } else if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_OUTBOUND) == CallOrigin.LINECALLORIGIN_OUTBOUND) {
+                            phoneHtml = '<i class="fa fa-headphones text-success"></i>'
+                            phoneStyle;
+                            phoneState = "On Outbound";
+							textHTML = "Outbound Connected";
+                        } else {
+                            phoneHtml = '<i class="fa fa-headphones text-success"></i>'
+                            phoneStyle;
+                            phoneState = "On Direct";
+							textHTML = "Direct Connected";
+                        }
+                        break;
+                    case CallStates.LINECALLSTATE_ONHOLD:
+                        phoneHtml = '<i class="fa fa-phone text-info"></i>'
+                        phoneState = "Hold";
+							textHTML = "Hold";
+                        break;
+                    case CallStates.LINECALLSTATE_DISCONNECTED:
+                        phoneHtml = '<i class="fa fa-phone text-danger"></i>'
+                        phoneState = "Disconnected";
+						textHTML = "Disconnected";
+                        break;
+                    default:
+						textHTML = "";
+                        break;
+                }
+				divImg = '<div style="display:inline-block"><img style="vertical-align:middle" src="Icons/';
+				divImgSuffix = '.png" height=' + imageSizeY + " width=" + imageSizeX + "></div>";
+				var smsHtml = "";
+				var smsCalls = "";
+				var smsTime = "";
+				if (value.SmsCalls > 1)
+					smsCalls = value.SmsCalls;					
+				switch (value.SmsState) {
+					case CallStates.LINECALLSTATE_OFFERING:
+						smsHtml = '<i class="fa fa-mobile-alt text-info"></i>'
+						smsTime = getTimeValue(value.SmsTime);
+						break;
+					case CallStates.LINECALLSTATE_DIALTONE:
+					case CallStates.LINECALLSTATE_CONNECTED:
+						smsHtml = '<i class="fa fa-mobile text-info"></i>'
+						smsTime = getTimeValue(value.SmsTime);
+						break;
+                    default:
+						smsCalls = "";
+						smsTime = "";
+                        break;
+				}				
+				var chatHtml = "";
+				var chatCalls = "";
+				var chatTime = "";
+				if (value.ChatCalls > 1)
+					chatCalls = value.ChatCalls;					
+				switch (value.ChatState) {
+					case CallStates.LINECALLSTATE_OFFERING:
+						chatHtml = '<i class="fa fa-comments text-info"></i>'
+						chatTime = getTimeValue(value.ChatTime);
+						break;
+					case CallStates.LINECALLSTATE_DIALTONE:
+					case CallStates.LINECALLSTATE_CONNECTED:
+						chatHtml = '<i class="fa fa-comments text-info"></i>'
+						chatTime = getTimeValue(value.ChatTime);
+						break;
+                    default:
+						chatCalls = "";
+						chatTime = "";
+                        break;
+				}				
+				var emailHtml = "";
+				var emailCalls = "";
+				var emailTime = "";
+				if (value.EmailCalls > 1)
+					emailCalls = value.EmailCalls;					
+				switch (value.EmailState) {
+					case CallStates.LINECALLSTATE_OFFERING:
+						emailHtml = '<i class="fa fa-envelope text-info"></i>'
+						emailTime = getTimeValue(value.EmailTime);
+						break;
+					case CallStates.LINECALLSTATE_DIALTONE:
+					case CallStates.LINECALLSTATE_CONNECTED:
+						emailHtml = '<i class="fa fa-envelope text-info"></i>'
+						emailTime = getTimeValue(value.EmailTime);
+						break;
+                    default:
+						emailCalls = "";
+						emailTime = "";
+                        break;
+				}				
+				var faxHtml = "";
+				var faxCalls = "";
+				var faxTime = "";
+				if (value.FaxCalls > 1)
+					faxCalls = value.FaxCalls;					
+				switch (value.FaxState) {
+					case CallStates.LINECALLSTATE_OFFERING:
+						faxHtml = divImg + "fax_offering" + divImgSuffix;
+						faxTime = getTimeValue(value.FaxTime);
+						break;
+					case CallStates.LINECALLSTATE_DIALTONE:
+					case CallStates.LINECALLSTATE_CONNECTED:
+						faxHtml = divImg + "fax" + divImgSuffix;
+						faxTime = getTimeValue(value.FaxTime);
+						break;
+                    default:
+						faxCalls = "";
+						faxTime = "";
+                        break;
+				}				
+				var dataHtml = "";
+				var dataCalls = "";
+				var dataTime = "";
+				if (value.DataCalls > 1)
+					dataCalls = value.DataCalls;					
+				switch (value.DataState) {
+					case CallStates.LINECALLSTATE_OFFERING:
+						dataHtml = divImg + "taskq_offering" + divImgSuffix;
+						dataTime = getTimeValue(value.DataTime);
+						break;
+					case CallStates.LINECALLSTATE_DIALTONE:
+					case CallStates.LINECALLSTATE_CONNECTED:
+						dataHtml = divImg + "taskq" + divImgSuffix;
+						dataTime = getTimeValue(value.DataTime);
+						break;
+                    default:
+						dataCalls = "";
+						dataTime = "";
+                        break;
+				}				
+				
+                // Available calculation
+                if (agentState != "Break" && agentState != "Work Time Manual" && agentState != "") {
+                    alertStates.push("Available");
+                }
+
+                if (phoneState != "" && agentState == "Idle") {
+                    agentState = "";
+                }
+
+                if (agentState != "") {
+                    alertStates.push(agentState);
+                }
+
+                if (phoneState != "") {
+                    alertStates.push(phoneState);
+                }
+
+                var alertBackground = "background-color:rgb(255,255,255);"
+
+                if (agentTile.Alerts) {
+                    var j;
+                    for (j = 0; j < agentTile.Alerts.length; j++) {
+                        if (alertStates.contains(agentTile.Alerts[j].Key)) {
+                            if (parseInt(agentTile.Alerts[j].Value.Value) != NaN && parseInt(value.CurrentStateTime) != NaN) {
+                                if (agentTile.Alerts[j].Value.Comparator == "<") {
+                                    if (parseInt(value.CurrentStateTime) < parseInt(agentTile.Alerts[j].Value.Value)) {
+										if (agentAlertToggle)
+											alertBackground = "background-color:rgb(" + agentTile.Alerts[j].Value.AlertRed + "," + agentTile.Alerts[j].Value.AlertGreen + "," + agentTile.Alerts[j].Value.AlertBlue + ");"
+										alert = true;
+                                        break;
+                                    }
+                                } else if (agentTile.Alerts[j].Value.Comparator == ">") {
+                                    if (parseInt(value.CurrentStateTime) > parseInt(agentTile.Alerts[j].Value.Value)) {
+										if (agentAlertToggle)
+											alertBackground = "background-color:rgb(" + agentTile.Alerts[j].Value.AlertRed + "," + agentTile.Alerts[j].Value.AlertGreen + "," + agentTile.Alerts[j].Value.AlertBlue + ");"
+										alert = true;
+                                        break;
+                                    }
+                                } else if (agentTile.Alerts[j].Value.Comparator == "=") {
+                                    if (parseInt(value.CurrentStateTime) = parseInt(agentTile.Alerts[j].Value.Value)) {
+										if (agentAlertToggle)
+											alertBackground = "background-color:rgb(" + agentTile.Alerts[j].Value.AlertRed + "," + agentTile.Alerts[j].Value.AlertGreen + "," + agentTile.Alerts[j].Value.AlertBlue + ");"
+										alert = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                // AGENT TABLE
+                var trAgent = document.createElement('tr');
+                trAgent.width = "100%";
+                var tdAgent = document.createElement('td');
+                tdAgent.innerHTML = value.AgentName;
+				tdAgent.setAttribute("nowrap", "");
+                tdAgent.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;" + alertBackground);
+                trAgent.appendChild(tdAgent);
+                var tdState = document.createElement('td');
+                tdState.innerHTML = statusHtml;
+                tdState.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:center;");
+                trAgent.appendChild(tdState);
+                var tdTime = document.createElement('td');
+                tdTime.innerHTML = getTimeValue(value.CurrentStateTime);
+                tdTime.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;");
+                trAgent.appendChild(tdTime);
+                var tdPhone = document.createElement('td');
+                tdPhone.innerHTML = phoneHtml;
+                tdPhone.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:center;" + phoneStyle);
+                trAgent.appendChild(tdPhone);
+				if (enableStateText || agentTile.ShowStateText) {
+					var tdText = document.createElement('td');
+					tdText.innerHTML = textHTML;
+					tdText.setAttribute("nowrap", "");
+					tdText.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;" );
+					trAgent.appendChild(tdText);
+				}
+				var divCalls = '<div style="display:inline-block;margin-right:0.2em;font-size:0.65em;width:0.5em;text-indent:-0.3em;padding-top:0.2em;vertical-align:top">&nbsp';
+				var divTime = '<div style="display:inline-block;line-height:2em;margin-left:0.2em;vertical-align:middle">&nbsp';
+				if (agentShowSms || agentTile.ShowSms) {
+					var tdMedia = document.createElement('td');
+					smsHtml = divCalls + smsCalls + "</div>" + smsHtml;
+					if (agentShowMediaTimer || agentTile.ShowMediaTimer) {
+						smsHtml += divTime + smsTime + "</div>";
+					}
+					else {
+						smsHtml += divTime + "</div>";
+					}
+					tdMedia.innerHTML = smsHtml;
+					
+					tdMedia.setAttribute("nowrap", "");
+					tdMedia.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;" );
+					trAgent.appendChild(tdMedia);
+				}
+				if (agentShowChat || agentTile.ShowChat) {
+					var tdMedia = document.createElement('td');
+					chatHtml = divCalls + chatCalls + "</div>" + chatHtml;
+					if (agentShowMediaTimer || agentTile.ShowMediaTimer) {
+						chatHtml += divTime + chatTime + "</div>";
+					}
+					else {
+						chatHtml += divTime + "</div>";
+					}
+					tdMedia.innerHTML = chatHtml;
+					
+					tdMedia.setAttribute("nowrap", "");
+					tdMedia.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;" );
+					trAgent.appendChild(tdMedia);
+				}
+				if (agentShowEmail || agentTile.ShowEmail) {
+					var tdMedia = document.createElement('td');
+					emailHtml = divCalls + emailCalls + "</div>" + emailHtml;
+					if (agentShowMediaTimer || agentTile.ShowMediaTimer) {
+						emailHtml += divTime + emailTime + "</div>";
+					}
+					else {
+						emailHtml += divTime + "</div>";
+					}
+					tdMedia.innerHTML = emailHtml;
+					
+					tdMedia.setAttribute("nowrap", "");
+					tdMedia.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;" );
+					trAgent.appendChild(tdMedia);
+				}
+				if (agentShowFax || agentTile.ShowFax) {
+					var tdMedia = document.createElement('td');
+					faxHtml = divCalls + faxCalls + "</div>" + faxHtml;
+					if (agentShowMediaTimer || agentTile.ShowMediaTimer) {
+						faxHtml += divTime + faxTime + "</div>";
+					}
+					else {
+						faxHtml += divTime + "</div>";
+					}
+					tdMedia.innerHTML = faxHtml;
+					
+					tdMedia.setAttribute("nowrap", "");
+					tdMedia.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;" );
+					trAgent.appendChild(tdMedia);
+				}
+				if (agentShowData || agentTile.ShowData) {
+					var tdMedia = document.createElement('td');
+					dataHtml = divCalls + dataCalls + "</div>" + dataHtml;
+					if (agentShowMediaTimer || agentTile.ShowMediaTimer) {
+						dataHtml += divTime + dataTime + "</div>";
+					}
+					else {
+						dataHtml += divTime + "</div>";
+					}
+					tdMedia.innerHTML = dataHtml;
+					
+					tdMedia.setAttribute("nowrap", "");
+					tdMedia.setAttribute("style", "padding-left: " + padding + "px;padding-right: " + padding + "px;text-align:left;" );
+					trAgent.appendChild(tdMedia);
+				}
+				
+                table.appendChild(trAgent);
+            }
+
+
+            function stopDuplicatesAgentQueueTiles(table, agentQueueList, agentTab) {
+            	if (agentQueueList.children.length < 1) {
+            		agentQueueList.appendChild(table);
+            	} else {
+            		$(agentQueueList).html(table);
+            		
+            	}
+            }
+
+            stopDuplicatesAgentQueueTiles(table, agentQueueList, agentTab);
+            agentTab.appendChild(agentQueueList);
+            body.appendChild(agentTab);
+			agentTile.agentAlert = alert;
+        }
+
+		
+        function isAgentAlert(agentTile, agentReturn) {
+			if (!agentTile.Alerts)
+				return false;
+		
+            for (var i = 0; i < agentReturn.length; i++) {
+                var value = agentReturn[i];
+
+				var alertStates = new Array();
+				var agentState = "";
+				var phoneState = "";
+
+				switch (value.AgentStatus.toUpperCase()) {
+                    case "LOGGED_IN":
+                        agentState = "Idle";
+                        break;
+                    case "LOGGED_OUT":
+                        agentState = "";
+                        break;
+                    case "IN_AUTO_WORKTIME":
+                        agentState = "Work Time Auto";
+                        break;
+                    case "IN_MANUAL_WORKTIME":
+                        agentState = "Work Time Manual";
+                        break;
+                    case "IN_BREAKTIME":
+                        agentState = "Break";
+                        break;
+                    case "IN_WRAPUP":
+                        agentState = "Wrapup";
+                        break;
+                    default:
+                        break;
+                }
+				
+           
+                switch (value.PhoneState) {
+                    case CallStates.LINECALLSTATE_IDLE:
+                        break;
+                    case CallStates.LINECALLSTATE_DIALTONE:
+                        if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_INBOUND) == CallOrigin.LINECALLORIGIN_INBOUND) {
+                            if (value.PhoneReason >= CallReasons.LINECALLREASON_QUEUECALL) {
+                                phoneState = "On Queue";
+                            } else {
+                                phoneState = "On Direct";
+                            }
+                        } else if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_OUTBOUND) == CallOrigin.LINECALLORIGIN_OUTBOUND) {
+                            phoneState = "On Outbound";
+                        } else {
+                            phoneState = "On Outbound";
+                        }
+                        break;
+                    case CallStates.LINECALLSTATE_RINGBACK:
+                        if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_INBOUND) == CallOrigin.LINECALLORIGIN_INBOUND) {
+                            if (value.PhoneReason >= CallReasons.LINECALLREASON_QUEUECALL) {
+                                phoneState = "Ringing Queue";
+                            } else {
+                                phoneState = "Ringing Direct";
+                            }
+                        } else if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_OUTBOUND) == CallOrigin.LINECALLORIGIN_OUTBOUND) {
+                            phoneState = "On Outbound";
+                        } else {
+                            phoneState = "Ringing Direct";
+                        }
+                        break;
+                    case CallStates.LINECALLSTATE_OFFERING:
+                        if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_INBOUND) == CallOrigin.LINECALLORIGIN_INBOUND) {
+                            if (value.PhoneReason >= CallReasons.LINECALLREASON_QUEUECALL) {
+                                phoneState = "Ringing Queue";
+                            } else {
+                                phoneState = "Ringing Direct";
+                            }
+                        } else if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_OUTBOUND) == CallOrigin.LINECALLORIGIN_OUTBOUND) {
+                            phoneState = "On Outbound";
+                        } else {
+                            phoneState = "Ringing Queue";
+                        }
+                        break;
+                    case CallStates.LINECALLSTATE_CONNECTED:
+                        if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_INBOUND) == CallOrigin.LINECALLORIGIN_INBOUND) {
+                            if (value.PhoneReason >= CallReasons.LINECALLREASON_QUEUECALL) {
+                                phoneState = "On Queue";
+                            } else {
+                                phoneState = "On Direct";
+                            }
+                        } else if ((value.PhoneOrigin & CallOrigin.LINECALLORIGIN_OUTBOUND) == CallOrigin.LINECALLORIGIN_OUTBOUND) {
+                            phoneState = "On Outbound";
+                        } else {
+                            phoneState = "On Direct";
+                        }
+                        break;
+                    case CallStates.LINECALLSTATE_ONHOLD:
+                        phoneState = "Hold";
+                        break;
+                    case CallStates.LINECALLSTATE_DISCONNECTED:
+                        phoneState = "Disconnected";
+                        break;
+                    default:
+                        break;
+                }
+				
+				
+                // Available calculation
+                if (agentState != "Break" && agentState != "Work Time Manual" && agentState != "") {
+                    alertStates.push("Available");
+                }
+
+                if (phoneState != "" && agentState == "Idle") {
+                    agentState = "";
+                }
+
+                if (agentState != "") {
+                    alertStates.push(agentState);
+                }
+
+                if (phoneState != "") {
+                    alertStates.push(phoneState);
+                }
+
+				var j;
+				for (j = 0; j < agentTile.Alerts.length; j++) {
+					if (alertStates.contains(agentTile.Alerts[j].Key)) {
+						if (parseInt(agentTile.Alerts[j].Value.Value) != NaN && parseInt(value.CurrentStateTime) != NaN) {
+							if (agentTile.Alerts[j].Value.Comparator == "<") {
+								if (parseInt(value.CurrentStateTime) < parseInt(agentTile.Alerts[j].Value.Value)) {
+									return true;
+								}
+							} else if (agentTile.Alerts[j].Value.Comparator == ">") {
+								if (parseInt(value.CurrentStateTime) > parseInt(agentTile.Alerts[j].Value.Value)) {
+									return true;
+								}
+							} else if (agentTile.Alerts[j].Value.Comparator == "=") {
+								if (parseInt(value.CurrentStateTime) = parseInt(agentTile.Alerts[j].Value.Value)) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+			return false;
+        }
+		
+        function compare(a, b) {
+            var nameA = a.AgentName.toLowerCase(), nameB = b.AgentName.toLowerCase()
+
+            if (nameA < nameB)
+                return -1;
+            if (nameA > nameB)
+                return 1;
+            return 0;
+        }
+
+        function alertTick() {
+			if (!bIsHidden) {
+				var i = 0;
+				for (i = 0; i < alertQueueList.length; i++) {
+					if (alertQueueList[i] != undefined) {
+						var settings = queueSettings[alertQueueList[i].index];
+						var canvas = canvasQueueList[alertQueueList[i].index];
+						var height = settings.HeightPercentage * viewportheight;
+						var width = settings.WidthPercentage * viewportwidth;
+						if (alertQueueList[i].isOnAlertColour) {
+							changeValue(canvas, settings.BackgroundRed, settings.BackgroundGreen, settings.BackgroundBlue, height, width, settings.Title, settings.TitleOnly, alertQueueList[i].value, alertQueueList[i].alertText, settings.FontRed, settings.FontGreen, settings.FontBlue);
+						} else {
+							changeValue(canvas, alertQueueList[i].r, alertQueueList[i].g, alertQueueList[i].b, height, width, settings.Title, settings.TitleOnly, alertQueueList[i].value, alertQueueList[i].alertText, settings.FontRed, settings.FontGreen, settings.FontBlue);
+						}
+						alertQueueList[i].isOnAlertColour = !alertQueueList[i].isOnAlertColour;
+					}
+				}
+
+				i = 0;
+
+				for (i = 0; i < alertDbList.length; i++) {
+					if (alertDbList[i] != undefined) {
+						var settings = dbSettings[alertDbList[i].index];
+						var canvas = canvasDbList[alertDbList[i].index];
+						var height = settings.HeightPercentage * viewportheight;
+						var width = settings.WidthPercentage * viewportwidth;
+						if (alertDbList[i].isOnAlertColour) {
+							changeValue(canvas, settings.BackgroundRed, settings.BackgroundGreen, settings.BackgroundBlue, height, width, settings.Title, settings.TitleOnly, alertDbList[i].value, alertDbList[i].alertText, settings.FontRed, settings.FontGreen, settings.FontBlue);
+						} else {
+							changeValue(canvas, alertDbList[i].r, alertDbList[i].g, alertDbList[i].b, height, width, settings.Title, settings.TitleOnly, alertDbList[i].value, alertDbList[i].alertText, settings.FontRed, settings.FontGreen, settings.FontBlue);
+						}
+						alertDbList[i].isOnAlertColour = !alertDbList[i].isOnAlertColour;
+					}
+				}
+
+				i = 0;
+
+				agentAlertToggle = !agentAlertToggle;
+
+				for (i = 0; i < alertAgentList.length; i++) {
+					if (alertAgentList[i] != undefined && alertAgentList[i].value != undefined) {
+						var settings = agentSettings[alertAgentList[i].index];
+						var canvas = divAgentList[alertAgentList[i].index];
+						var height = settings.HeightPercentage * viewportheight;
+						var width = settings.WidthPercentage * viewportwidth;
+
+						var alert = isAgentAlert(settings, alertAgentList[i].value);
+						if ((settings.agentAlert || false) != alert || alert) {
+							updateAgentCanvas(canvas, settings, alertAgentList[i].value);
+						}
+					}
+				}
+			}
+        }
+
+        function isOnAlert(alerts, index, value, statistic) {
+            var found = false;
+            var alertInfo  = new AlertObj(false, 0, 0, 0, "", index, value);
+            if (alerts == null) {
+                return alertInfo;
+            }
+            var i = 0;
+            for (i = 0; i < alerts.length; i++) {
+
+                var intValue = parseInt(alerts[i].Value);
+                if (intValue != NaN) {
+                    if (alerts[i].Comparator == "=") {
+                        if (value == intValue) {
+                            alertInfo.isOn = true;
+                            alertInfo.r = alerts[i].AlertRed;
+                            alertInfo.g = alerts[i].AlertGreen;
+                            alertInfo.b = alerts[i].AlertBlue;
+                            alertInfo.alertText =  "[Equal to " + alerts[i].Value + "]";
+                            found = true;
+                        }
+                    } else if (alerts[i].Comparator == "<") {
+                        if (value < intValue) {
+							if (statistic != "Service Level" || (statistic == "Service Level" && value > 0)) {
+								alertInfo.isOn = true;
+								alertInfo.r = alerts[i].AlertRed;
+								alertInfo.g = alerts[i].AlertGreen;
+								alertInfo.b = alerts[i].AlertBlue;
+								alertInfo.alertText =  "[Below " + alerts[i].Value + "]";
+								found = true;
+							}
+                        }
+                    } else if (alerts[i].Comparator == ">") {
+                        if (value > intValue) {
+                            alertInfo.isOn = true;
+                            alertInfo.r = alerts[i].AlertRed;
+                            alertInfo.g = alerts[i].AlertGreen;
+                            alertInfo.b = alerts[i].AlertBlue;
+                            alertInfo.alertText =  "[Above " + alerts[i].Value + "]";
+                            found = true;
+                        }
+                    }
+                }
+            }
+
+            return alertInfo;
+        }
+
+        function getTimeValue(value) {
+            var iValue = parseInt(value);
+            var hours = Math.floor(iValue / 3600)
+            iValue = iValue % 3600;
+            var minutes = Math.floor(iValue / 60);
+            var seconds = iValue % 60;
+
+            var strHours = hours + "";
+            var strMinutes = minutes + "";
+            var strSeconds = seconds + "";
+
+            if (strHours.length == 1) {
+                strHours = "0" + strHours;
+            }
+
+            if (strMinutes.length == 1) {
+                strMinutes = "0" + strMinutes;
+            }
+
+            if (strSeconds.length == 1) {
+                strSeconds = "0" + strSeconds;
+            }
+
+            var returnValue = "";
+            if (hours > 0) {
+                returnValue = strHours + ":" + strMinutes + ":" + strSeconds;
+            } else {
+                returnValue = strMinutes + ":" + strSeconds;
+            }
+
+            return returnValue;
+        }
+
+        function refreshStatsTick() {
+			if (!bIsHidden) {
+	            callWebService("GetLiveQueueStatsForTemplateJS", "?token=" + token + "&template=" + template, queueSettingsUpdate);
+
+	            GetDatabaseRequests();
+	            callWebService("GetLiveDBStatsJS", "?sqlStrings=" + JSON.stringify(dbReturnArray), dbTilesUpdate);
+
+	            if (agentIds.length > 0) {
+	                callWebService("GetLiveAgentStatsJS", "?token=" + token + "&agents=" + JSON.stringify(agentIds), agentCustomUpdate);
+	            }
+
+	            if (agentClassIds.length > 0) {
+	                callWebService("GetLiveAgentClassesJS", "?token=" + token + "&classIds=" + JSON.stringify(agentClassIds), agentClassUpdate);
+	            }
+
+	            if (agentReportGroupIds.length > 0) {
+	                callWebService("GetLiveAgentReportGroupsJS", "?token=" + token + "&reportGroupIds=" + JSON.stringify(agentReportGroupIds), agentReportGroupUpdate);
+	            }
+
+	            if (agentStateIds.length > 0) {
+	                callWebService("GetAgentsInStatesJS", "?token=" + token + "&states=" + JSON.stringify(agentStateIds), agentStatesUpdate);
+	            }
+			}
+        }
+
+        function checkTemplate() {
+			if (!bIsHidden) {
+				var urlParams = getUrlVars();
+				callWebService("CheckForUpdatesJS", "?filename=" + urlParams["template"] + "&loadTime=" + JSON.stringify(templateLoadTime), checkTemplateUpdate);
+			}
+        }
+
+        function checkTemplateUpdate(data) {
+            var value = eval('(' + data + ')');
+            if (value == "true") {
+                var urlParams = getUrlVars();
+                if (urlParams["template"] != null) {
+                    template = urlParams["template"];
+                    drawLoadScreen();
+					lastLoadConfigTime = new Date();
+                    callWebService("LoadConfigurationJS", "?filename=" + urlParams["template"], loadTemplateComplete);
+                }
+            }
+        }
+
+        function GetDatabaseRequests() {
+            dbReturnArray = new Array();
+
+            var i = 0;
+            var j = 0;
+            for (i = 0; i < dbSettings.length; i++) {
+                for (j = 0; j < databaseConnections.length; j++) {
+                    if (databaseConnections[j].Name == dbSettings[i].Connection) {
+                        dbReturnArray[dbReturnArray.length++] = new DBLiveReturn(dbSettings[i].SQL, databaseConnections[j].Connection, databaseConnections[j].ProviderName, dbSettings[i].RefreshTime);
+                    }
+                }
+            }
+        }
+
+        function dbTilesUpdate(data) {
+            var tiles = eval('(' + data + ')');
+            var i = 0;
+            for (i = 0; i < tiles.length; i++) {
+                var sql = tiles[i].SQL;
+                var connection = tiles[i].Connection;
+
+                var canvas;
+                var window;
+                var j = 0;
+                for (j = 0; j < dbSettings.length; j++) {
+                    canvas = canvasDbList[j];
+                    window = dbSettings[j];
+
+                    var k = 0;
+                    for (k = 0; k < databaseConnections.length; k++) {
+                        if (databaseConnections[k].Connection == connection) {
+                            if (canvas != null && sql == window.SQL) {
+                                updateDbCanvas(canvas, tiles[i], window, j);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Array.prototype.contains = function (obj) {
+            var i = this.length;
+            while (i--) {
+                if (this[i] === obj) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function agentCustomUpdate(data) {
+            var agentStatsReturn = eval('(' + data + ')');
+            var i = 0;
+            for (i = 0; i < agentSettings.length; i++) {
+                if (agentSettings[i].AgentTileType == "" || agentSettings[i].AgentTileType == "0" || agentSettings[i].AgentTileType == "2") {
+
+                    var relevantAgents = new Array();
+                    var j = 0;
+                    for (j = 0; j < agentStatsReturn.length; j++) {
+                        if (agentSettings[i].AgentIds.contains("a" + agentStatsReturn[j].AgentId.toString())) {
+                            relevantAgents.push(agentStatsReturn[j]);
+                        }
+                    }
+
+                    alertAgentList[i] = new AgentAlertObj(i, relevantAgents);
+                    updateAgentCanvas(divAgentList[i], agentSettings[i], relevantAgents);
+                }
+            }
+        }
+
+        function agentClassUpdate(data) {
+            var agentStatsReturn = eval('(' + data + ')');
+            var i = 0;
+            for (i = 0; i < agentSettings.length; i++) {
+                if (agentSettings[i].AgentTileType == "1") {
+
+                    var relevantAgents = new Array();
+                    var j = 0;
+                    for (j = 0; j < agentStatsReturn.length; j++) {
+                        if (agentSettings[i].AgentIds.contains("c" + agentStatsReturn[j].ClassId.toString())) {
+                            var k;
+                            for (k = 0; k < agentStatsReturn[j].Agents.length; k++) {
+                                relevantAgents.push(agentStatsReturn[j].Agents[k]);
+                            }
+                        }
+                    }
+
+                    alertAgentList[i] = new AgentAlertObj(i, relevantAgents);
+                    updateAgentCanvas(divAgentList[i], agentSettings[i], relevantAgents);
+                }
+            }
+        }
+
+        function agentReportGroupUpdate(data) {
+            var agentStatsReturn = eval('(' + data + ')');
+            var i = 0;
+            for (i = 0; i < agentSettings.length; i++) {
+                if (agentSettings[i].AgentTileType == "3") {
+
+                    var relevantAgents = new Array();
+                    var j = 0;
+                    for (j = 0; j < agentStatsReturn.length; j++) {
+                        if (agentSettings[i].AgentIds.contains("g" + agentStatsReturn[j].ReportGroupId.toString())) {
+                            var k;
+                            for (k = 0; k < agentStatsReturn[j].Agents.length; k++) {
+                                relevantAgents.push(agentStatsReturn[j].Agents[k]);
+                            }
+                        }
+                    }
+
+                    alertAgentList[i] = new AgentAlertObj(i, relevantAgents);
+                    updateAgentCanvas(divAgentList[i], agentSettings[i], relevantAgents);
+                }
+            }
+        }
+
+        function agentStatesUpdate(data) {
+            var agentStatsReturn = eval('(' + data + ')');
+            var i = 0;
+            for (i = 0; i < agentSettings.length; i++) {
+                if (agentSettings[i].AgentTileType == "4") {
+
+                    var relevantAgents = new Array();
+                    var j = 0;
+                    for (j = 0; j < agentSettings[i].AgentIds.length; j++) {
+
+                        var k = 0;
+                        for (k = 0; k < agentStatsReturn.length; k++) {
+                            if ("s" + agentStatsReturn[k].StateId == agentSettings[i].AgentIds[j].toString()) {
+                                var tempAgents = new Array();
+                                var l = 0;
+                                for (l = 0; l < agentStatsReturn[k].Agents.length; l++) {
+                                    tempAgents.push(agentStatsReturn[k].Agents[l]);
+                                }
+
+                                tempAgents.sort(compare);
+                                relevantAgents = relevantAgents.concat(tempAgents);
+                            }
+                        }
+                    }
+
+                    alertAgentList[i] = new AgentAlertObj(i, relevantAgents);
+                    updateAgentCanvas(divAgentList[i], agentSettings[i], relevantAgents);
+                } else if (agentSettings[i].AgentTileType == "5") {
+
+                    var relevantAgents = new Array();
+                    var j = 0;
+					var k = 0;
+                    for (k = 0; k < agentStatsReturn.length; k++) {
+						if(agentSettings[i].AgentIds.contains("s" + agentStatsReturn[k].StateId)) {
+                            var tempAgents = new Array();
+							for (j = 0; j < agentStatsReturn[k].Agents.length; j++) {
+								if(agentSettings[i].AgentIds.contains("c" + agentStatsReturn[k].Agents[j].LoginClass)) {
+									tempAgents.push(agentStatsReturn[k].Agents[j]);
+								}
+							}
+							tempAgents.sort(compare);
+                            relevantAgents = relevantAgents.concat(tempAgents);
+						}
+                    }
+
+                    alertAgentList[i] = new AgentAlertObj(i, relevantAgents);
+                    updateAgentCanvas(divAgentList[i], agentSettings[i], relevantAgents);
+                }
+            }
+        }
+
+        function DBLiveReturn(sql, connection, providerName, refreshTime) {
+            this.Sql = sql;
+            this.Connection = connection;
+            this.ProviderName = providerName;
+            this.RefreshTime = parseInt(refreshTime);
+        }
+
+        function displayTiles(template) {
+            if (body.hasChildNodes())
+            {
+                while (body.childNodes.length >= 1)
+                {
+                    body.removeChild(body.firstChild);       
+                } 
+            }
+            var i;
+            if (template.QueueSettings != null) {
+                for (i = 0; i < template.QueueSettings.length; i++) {
+                    var height = template.QueueSettings[i].HeightPercentage * viewportheight;
+                    var width = template.QueueSettings[i].WidthPercentage * viewportwidth;
+                    var x = template.QueueSettings[i].XPercentage * viewportwidth;
+                    var y = template.QueueSettings[i].YPercentage * viewportheight;
+
+                    var canvas = drawTile(x, y, height, width, template.QueueSettings[i].BackgroundRed, template.QueueSettings[i].BackgroundGreen, template.QueueSettings[i].BackgroundBlue, template.QueueSettings[i].Title, template.QueueSettings[i].TitleOnly, template.QueueSettings[i].FontRed, template.QueueSettings[i].FontGreen, template.QueueSettings[i].FontBlue);
+                    canvasQueueList.push(canvas);
+                    queueSettings.push(template.QueueSettings[i]);
+                    queueCurrentText.push("");
+
+                    if (template.QueueSettings[i].ScrollText) {
+                        scrollTileCanvases.push(canvas);
+                        scrollTitleTiles.push(template.QueueSettings[i]);
+                    }
+                }
+            }
+			
+			if (template.GraphSettings != null) {
+                for (i = 0; i < template.GraphSettings.length; i++) {
+                    var height = template.GraphSettings[i].HeightPercentage * viewportheight;
+                    var width = template.GraphSettings[i].WidthPercentage * viewportwidth;
+                    var x = template.GraphSettings[i].XPercentage * viewportwidth;
+                    var y = template.GraphSettings[i].YPercentage * viewportheight;
+					
+                    drawGraphTile(x, y, height, width, template.GraphSettings[i].BackgroundRed, template.GraphSettings[i].BackgroundGreen, template.GraphSettings[i].BackgroundBlue, template.GraphSettings[i].FontRed, template.GraphSettings[i].FontGreen, template.GraphSettings[i].FontBlue, template.GraphSettings[i].LineRed, template.GraphSettings[i].LineGreen, template.GraphSettings[i].LineBlue, template.GraphSettings[i].Title, template.GraphSettings[i].Threshold, template.GraphSettings[i].TimeInterval, template.GraphSettings[i].XAxisTitle, template.GraphSettings[i].YAxisTitle, i);
+					graphSettings.push(template.GraphSettings[i]);
+				}
+            }
+
+            if (template.DBSettings != null) {
+                for (i = 0; i < template.DBSettings.length; i++) {
+                    var height = template.DBSettings[i].HeightPercentage * viewportheight;
+                    var width = template.DBSettings[i].WidthPercentage * viewportwidth;
+                    var x = template.DBSettings[i].XPercentage * viewportwidth;
+                    var y = template.DBSettings[i].YPercentage * viewportheight;
+                    var canvas = drawTile(x, y, height, width, template.DBSettings[i].BackgroundRed, template.DBSettings[i].BackgroundGreen, template.DBSettings[i].BackgroundBlue, template.DBSettings[i].Title, template.DBSettings[i].TitleOnly, template.DBSettings[i].FontRed, template.DBSettings[i].FontGreen, template.DBSettings[i].FontBlue);
+                    canvasDbList.push(canvas);
+                    dbSettings.push(template.DBSettings[i]);
+                }
+            }
+
+            if (template.AgentSettings != null) {
+                for (i = 0; i < template.AgentSettings.length; i++) {
+                    var height = template.AgentSettings[i].HeightPercentage * viewportheight;
+                    var width = template.AgentSettings[i].WidthPercentage * viewportwidth;
+                    var x = template.AgentSettings[i].XPercentage * viewportwidth;
+                    var y = template.AgentSettings[i].YPercentage * viewportheight;
+                    var div = drawAgentTile(x, y, height, width, template.AgentSettings[i].BackgroundRed, template.AgentSettings[i].BackgroundGreen, template.AgentSettings[i].BackgroundBlue);
+                    divAgentList.push(div);
+
+                    var agentSetting = template.AgentSettings[i];
+
+                    agentSettings.push(agentSetting);
+					
+					for (j = 0; j < agentSetting.AgentIds.length; j++) {
+					
+						switch (agentSetting.AgentIds[j].substring(0,1))
+							{
+							case "a":
+								if ($.inArray(agentSetting.AgentIds[j].substring(1), agentIds) < 0) {
+									agentIds.push(agentSetting.AgentIds[j].substring(1));
+								}
+								break;
+							case "c":
+								if ($.inArray(agentSetting.AgentIds[j].substring(1), agentClassIds) < 0) {
+									agentClassIds.push(agentSetting.AgentIds[j].substring(1));
+								}
+								break;
+							case "s":
+								if ($.inArray(agentSetting.AgentIds[j].substring(1), agentStateIds) < 0) {
+									agentStateIds.push(agentSetting.AgentIds[j].substring(1));
+								}
+								break;
+							case "g":
+								if ($.inArray(agentSetting.AgentIds[j].substring(1), agentReportGroupIds) < 0) {
+									agentReportGroupIds.push(agentSetting.AgentIds[j].substring(1));
+								}
+								break;
+							}
+					}
+                }
+            }
+
+            if (template.DatabaseConnections != null) {
+                for (i = 0; i < template.DatabaseConnections.length; i++) {
+                    databaseConnections.push(template.DatabaseConnections[i]);
+                }
+            }
+
+            if (scrollTitleTiles.length > 0 && scrollIntervalId == null) {
+                scrollIntervalId = setInterval(drawScrollingTiles, 27);
+            }
+
+            if (template.EnableLiveUpdate && checkTemplateId == null) {
+                checkTemplateId = setInterval("checkTemplate()", 4900);
+            }
+								
+			if (debugString != "")
+			{
+				debugHeight = viewportheight * 0.1;
+				debugWidth = viewportwidth * 0.6;
+				
+				debugTile = drawTile(viewportwidth * 0.2, viewportheight * 0.05, debugHeight, debugWidth, 255, 0, 0, debugString, true, 0, 0, 0);				
+			}
+        }
+		var debugHeight = 0;
+		var debugWidth = 0;
+		
+		function updateDebug()
+		{
+		    if (debugTile == null || debugString == "")
+				return;				
+							
+			var height = debugHeight;
+			var width  = debugWidth;
+			
+			if (isSmallScreen)
+			{
+				height *= 2;
+				width *= 2;
+			}
+
+			var context = debugTile.getContext("2d");
+            context.clearRect(0, 0, width, height);
+            var gradient = context.createLinearGradient(0, 0, width, 0);
+            getGradient(gradient, 255, 0, 0);
+
+            context.fillStyle = gradient;
+            context.tileRect(width, height, viewportradius);
+            context.textAlign = "center";
+            context.fillStyle = "rgb(0, 0, 0)";
+
+			context.textBaseline = "middle";
+			getTitleWidth(context, debugString, width, height * fontHeightTitleOnly);
+			context.fillText(debugString, width / 2, height / 2);			
+		}
+
+        function drawScrollingTiles() {
+			if (!bIsHidden) {
+				for (i = 0; i < scrollTitleTiles.length; i++) {
+
+					var height = scrollTitleTiles[i].HeightPercentage * viewportheight;
+					var width = scrollTitleTiles[i].WidthPercentage * viewportwidth;
+					
+					if (isSmallScreen)
+					{
+						height *= 2;
+						width *= 2;
+					}
+					
+					var red = scrollTitleTiles[i].BackgroundRed;
+					var green = scrollTitleTiles[i].BackgroundGreen;
+					var blue = scrollTitleTiles[i].BackgroundBlue;
+
+					var title = scrollTitleTiles[i].Title;
+
+					var fRed = scrollTitleTiles[i].FontRed;
+					var fGreen = scrollTitleTiles[i].FontGreen;
+					var fBlue = scrollTitleTiles[i].FontBlue;
+
+					var canvas = scrollTileCanvases[i];
+					
+					var context = canvas.getContext("2d");
+					var gradient = context.createLinearGradient(0, 0, width, 0);
+					getGradient(gradient, red, green, blue);
+
+					context.fillStyle = gradient;
+					context.tileRect(width, height, viewportradius * (isSmallScreen ? 2 : 1));
+					context.fillStyle = "rgb(" + fRed + "," + fGreen + "," + fBlue + ")";
+					context.textAlign = "center";
+
+					context.font = "bold " + roundFontSize(height * fontHeightTitleOnly) + "px arial";
+					context.textBaseline = "middle";
+
+					var x = scrollTileXPositions[i];
+					var textWidth = context.measureText(title).width;
+					if (isFirstScrollDraw) {
+						scrollTileXPositions[i] = width + textWidth / 2;
+						x = scrollTileXPositions[i];
+						scrollTileStartTime[i] = new Date().getTime();
+					} else {
+						if (scrollTileXPositions[i] + textWidth / 2 < 0) {
+							scrollTileXPositions[i] = width + textWidth / 2;
+							scrollTileStartTime[i] = new Date().getTime();
+						} else {
+							var diff = (new Date().getTime()) - scrollTileStartTime[i];
+							scrollTileXPositions[i] = width + textWidth / 2 - viewportwidth  * (isSmallScreen ? 2.0 : 1.0) * diff / 15000.0;
+						}
+					}
+					context.fillText(title, x, height / 2);
+				}
+				isFirstScrollDraw = false;
+			}
+        }
+        
+        function roundFontSize(fontSize)
+        {
+            return Math.round(fontSize);
+        }
+
+        CanvasRenderingContext2D.prototype.tileRect = function (width, height, radius) {
+            this.beginPath();
+            this.moveTo(0, 0);
+            this.lineTo(width - radius, 0);
+            this.arc(width - radius, radius, radius, 1.5 * Math.PI, 2 * Math.PI, false);
+            this.lineTo(width, height);
+            this.lineTo(radius, height);
+            this.arc(radius, height - radius, radius, Math.PI / 2, Math.PI, false);
+            this.lineTo(0, 0);
+            this.closePath();
+            this.fill();
+        } 
+
+// QueueTiles
+        var body = document.getElementById('asdf');
+        var queueTab = document.createElement('div');
+        queueTab.id = "queueTiles";
+        queueTab.setAttribute("role", "tabpanel");
+        queueTab.className = "tab-pane fade";
+        var queueList = document.createElement('ul');
+        queueList.id = "queueList";
+        queueList.className = "list-group";
+
+        function drawTile(x, y, height, width, red, green, blue, title, titleOnly, fRed, fGreen, fBlue) {
+    
+            var canvas = document.createElement('li');  
+            canvas.id = title.replace(/\ /g, '_');  
+            canvas.className = "list-group-item d-flex justify-content-between align-items-center";    
+            var label = title.toString();
+            var queueVal = "_";
+            var context = label.toString() + ": " + "<span class='badge badge-primary col-3'>" + queueVal.toString() + "</span>";
+            canvas.innerHTML = context;
+            // div.appendChild(canvas);
+            // divUl.appendChild(div);
+            function stopDuplicatesQueueTiles(canvas, queueList, queueTab) {
+            	if (queueList.children.length < 12) {
+            		queueList.appendChild(canvas);
+            	} else {
+            		queueList.removeChild(queueList.childNodes[0]);
+            		queueList.appendChild(canvas);
+            	}
+            }
+            stopDuplicatesQueueTiles(canvas, queueList, queueTab);
+            queueTab.appendChild(queueList);
+            body.appendChild(queueTab);
+            return canvas;
+        }
+        
+        function changeValue(canvas, red, green, blue, height, width, title, titleOnly, value, alertText, fRed, fGreen, fBlue) {
+        	var label = title.toString();
+            var queueVal = "_";
+
+            if (titleOnly) {
+                label = title.toString();
+                queueVal = "_";
+            } else {
+                label = title.toString();
+                queueVal = value.toString();
+            }
+            var context = label.toString() + ": " + "<span class='badge badge-primary col-3'>" + queueVal.toString() + "</span>";
+            canvas.innerHTML = context.toString();
+            if (title == "SC - PreApproval SL") {
+            	$('#scPA').text(queueVal);
+            } else if (title == "SC - Questions SL") {
+            	$('#scQ').text(queueVal);
+            } else if (title == "Dashboard Wait") {
+            	$('#scDashboard').text(queueVal);
+            } else if (title == "Service Wait") {
+            	$('#scService').text(queueVal);
+            } else if (title == "SC - PreApproval") {
+            	$('#scPA-qty').text(queueVal);
+            } else if (title == "SC - Questions") {
+            	$('#scQ-qty').text(queueVal);
+            } else if (title == "Dashboard Emails") {
+            	$('#scDashboard-qty').text(queueVal);
+            } else if (title == "Service Emails") {
+            	$('#scService-qty').text(queueVal);
+            }
+        }
+
+        function drawAgentTile(x, y, height, width, red, green, blue) {
+            var div = document.createElement('div');
+
+
+
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext("2d");            
+
+            
+            var gradient = context.createLinearGradient(0, 0, width, 0);
+            getGradient(gradient, red, green, blue);
+            
+            canvas.style.borderBottomLeftRadius="" + viewportradius + "px";
+            canvas.style.borderTopRightRadius="" + viewportradius + "px";            
+
+            context.fillStyle = gradient;
+            context.tileRect(width, height, viewportradius);
+
+            div.appendChild(canvas);
+
+            var margin = 0;
+
+            if (height * 0.05 > width * 0.05) {
+                margin = width * 0.05;
+            } else {
+                margin = height * 0.05;
+            }
+
+            var div2 = document.createElement('div');
+
+
+            // body.appendChild(div);
+            // body.appendChild(div2);
+            return div2;
+        }
+
+		function drawGraphTile(x, y, height, width, red, green, blue, fRed, fGreen, fBlue, lRed, lGreen, lBlue, title, threshold, timeInterval, xAxisTitle, yAxisTitle, index) {
+            var div = document.createElement('div');
+
+
+    
+            var canvas = document.createElement('canvas');            
+            var context = canvas.getContext("2d");
+            if (window.devicePixelRatio) {
+                $(canvas).attr('width', width * window.devicePixelRatio * (isSmallScreen ? 2 : 1));
+                $(canvas).attr('height', height * window.devicePixelRatio * (isSmallScreen ? 2 : 1));
+                $(canvas).css('width', width);
+                $(canvas).css('height', height);
+                context.scale(window.devicePixelRatio, window.devicePixelRatio);     
+                if (isSmallScreen)
+                {
+                    width *= 2;
+                    height *= 2;
+                }
+            }
+
+            var gradient = context.createLinearGradient(0, 0, width, 0);
+            getGradient(gradient, red, green, blue);
+            
+            canvas.style.borderBottomLeftRadius="" + viewportradius + "px";
+            canvas.style.borderTopRightRadius="" + viewportradius + "px";            
+
+            context.fillStyle = gradient;
+            context.tileRect(width, height, viewportradius * (isSmallScreen ? 2 : 1));
+            context.fillStyle = "rgb(" + fRed + "," + fGreen + "," + fBlue + ")";
+			div.appendChild(canvas);
+			
+			var margin = 0;
+
+            if (height * 0.04 > width * 0.04) {
+                margin = width * 0.04;
+            } else {
+                margin = height * 0.04;
+            }
+			
+			var div2 = document.createElement('div');
+
+			
+            body.appendChild(div);
+			body.appendChild(div2);
+			divGraphList.push(div2);
+			
+			var opacity = 100;
+			
+			if (threshold == 0) {
+				opacity = 0;
+			}
+			
+			$(div2).kendoChart({
+				transitions: false,
+				theme: $(document).data("kendoSkin") || "default",
+				title: {
+					text: title,
+					color: "rgb(" + fRed + "," + fGreen + "," + fBlue + ")"
+				},
+				legend: {
+					visible: false
+				},
+				seriesDefaults: {
+					type: "line",
+					width: 2
+				},
+				series: [{
+					data: statsData[index],
+					markers: {
+						visible: false
+					},
+					color: "rgb(" + lRed + "," + lGreen + "," + lBlue + ")"
+				}, {
+					data: thresholdData[index],
+					markers: {
+						visible: false
+					},
+					color: "rgb(255,0,0)",
+					opacity: opacity
+				}],
+				valueAxis: {
+					title: {
+						text: yAxisTitle,
+						color: "rgb(" + fRed + "," + fGreen + "," + fBlue + ")"
+					},
+					majorGridLines: {
+						dashType: "dash"
+					},
+					line: {
+						color: "rgb(" + fRed + "," + fGreen + "," + fBlue + ")"
+					},
+					labels: {
+						color: "rgb(" + fRed + "," + fGreen + "," + fBlue + ")"
+					}
+				},
+				categoryAxis: {
+					data: timeData[index],
+					title: {
+						text: xAxisTitle,
+						color: "rgb(" + fRed + "," + fGreen + "," + fBlue + ")"
+					},
+					justified: true,
+					majorGridLines: {
+						visible: false
+					},
+					majorTicks: {
+						visible: false
+					},
+					labels: {
+						visible: false
+					},
+					line: {
+						color: "rgb(" + fRed + "," + fGreen + "," + fBlue + ")"
+					}
+				},
+			});
+        }
+		
+        function drawLoadScreen() {
+            var body = document.getElementById('asdf');
+            var div = document.createElement('div');
+
+
+            div.innerHTML = "Loading...";
+
+            body.appendChild(div);
+        }
+
+        function drawUnlicensedScreen() {
+            var body = document.getElementById('asdf');
+            if (body.hasChildNodes()) {
+                while (body.childNodes.length >= 1) {
+                    body.removeChild(body.firstChild);
+                }
+            }
+            var div = document.createElement('div');
+
+            div.style.fontFamily = "Arial";
+            div.style.fontSize = "xx-large";
+            div.style.color = "rgb(0,169,220)";
+
+            div.innerHTML = "Not licensed for Snapshot, please load up the required licenses or add licenses if you haven't got enough and try again.";
+
+            body.appendChild(div);
+        }
+
+        function drawInfoScreen() {
+            var body = document.getElementById('asdf');
+            var div = document.createElement('div');
+
+            div.style.fontFamily = "Arial";
+            div.style.fontSize = "xx-large";
+            div.style.color = "rgb(0,169,220)";
+
+            div.innerHTML = "Please use the iPhone/iPad or Android app to view this page. You can also specify the template by putting ?template=name.xml at the end of the URL for testing.";
+
+            body.appendChild(div);
+        }
+        
+        function getTitleWidth(context, text, canvasWidth, fontSize) {
+            context.font = "bold " + roundFontSize(fontSize) + "px arial";
+            
+            var metrics = context.measureText(text);
+            var width = metrics.width;
+            var lastWidth = 0;
+			var count = 0;
+
+            while (width > canvasWidth && fontSize > 1.5 && (lastWidth != width || count < 10)) {
+                fontSize = fontSize - 1.0;
+                context.font = "bold " + roundFontSize(fontSize) + "px arial";
+                metrics = context.measureText(text);				
+                lastWidth = width;
+                width = metrics.width;
+				if (lastWidth == width)
+				    ++count;
+				else
+					count = 0;
+            }
+
+            return roundFontSize(fontSize);
+        }
+
+        function getGradient(gradient, red, green, blue) {
+            var gradientDifference = 0.4;
+            var r = 255;
+            var g = 255;
+            var b = 255;
+
+            if (((255 - red) * gradientDifference + red) < 255) {
+                r = parseInt((255 - red) * gradientDifference + red);
+
+                if (r < 50) {
+                    r = 50;
+                }
+            }
+            else {
+                r = 255;
+            }
+
+            if (((255 - green) * gradientDifference + green) < 255) {
+                g = parseInt(((255 - green) * gradientDifference + green));
+
+                if (g < 50) {
+                    g = 50;
+                }
+            }
+            else {
+                g = 255;
+            }
+
+            if (((255 - blue) * gradientDifference + blue) < 255) {
+                b = parseInt(((255 - blue) * gradientDifference + blue));
+
+                if (b < 50) {
+                    b = 50;
+                }
+            }
+            else {
+                b = 255;
+            }
+            gradient.addColorStop(0, "rgb(" + r + "," + g + "," + b + ")");
+            gradient.addColorStop(1, "rgb(" + red + "," + green + "," + blue + ")");
+        }
+//asdfasdfsadfadsfasd
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        function callWebService(name, dataValue, successFunction) {
+            
+            $.ajax({
+                url: webServiceUrl + name,
+                data: dataValue,
+                type: "POST",
+                beforeSend: function (x) {
+                    if (x) {
+                        x.overrideMimeType('text/html;charset=utf-8');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown)
+                },
+
+                success: successFunction
+            });
+
+        }
+
+        function AlertObj(isOn, r, g, b, alertText, index, value) {
+            this.isOn = isOn;
+            this.r = r;
+            this.g = g;
+            this.b = b;
+            this.alertText = alertText;
+            this.index = index;
+            this.value = value;
+            this.onAlertColour = false;
+        }
+
+        function AgentAlertObj(index, value) {
+            this.index = index;
+            this.value = value;
+        }
+        
+    </script>
+    <style type="text/css">
+
+
+#customers {
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	box-shadow: 0 0 5px #999;
+
+}
+
+
+.tr_holder {
+    border-bottom:solid 0px #fff;
+}
+
+.totals_holder {
+    border-bottom:solid 4px #fff;
+}
+
+.totals_holder b {
+    color:#fff;
+    line-height:20px;
+}
+
+th {
+    text-align:left;
+    background-color:#EEE;
+}
+
+td {
+    text-align:left;
+    background-color:#FFF;
+}
+
+#tl {
+    
+text-align:left;
+    letter-spacing:1px;
+    font-size:12px;
+    color:#000;
+}
+
+#tlHead {
+    text-align:left;
+    letter-spacing:1px;
+    font-size:20px;
+    color:#fff;
+}
+
+.dp { text-align: "."; }
+
+
+
+  </style>
+
+<% end %>
+
 <%= javascript_include_tag "validator.js" %>
