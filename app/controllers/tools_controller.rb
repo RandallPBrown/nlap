@@ -1,5 +1,6 @@
 class ToolsController < ApplicationController
  layout "scaffold"
+ skip_before_action :verify_authenticity_token
  force_ssl except: :validator
 
   before_action :set_tool, only: [:show, :edit, :update, :destroy]
