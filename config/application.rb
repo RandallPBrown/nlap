@@ -12,7 +12,7 @@ module Ops
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
     config.active_support.escape_html_entities_in_json = false
-    config.middleware.use Rack::SslEnforcer, :except_environments => 'development', :except => 'tools/validator', :mixed => true
+    config.middleware.use Rack::SslEnforcer, :except_hosts => /[phonesrv-v]\.newleafsc\.net$/, :except_environments => 'development'
 #     LetterOpener.configure do |config|
 #   # To overrider the location for message storage.
 #   # Default value is <tt>tmp/letter_opener</tt>
