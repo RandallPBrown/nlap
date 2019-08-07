@@ -22,7 +22,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Last attempt at getting agent stats in portal for awhile
-gem 'rack-ssl-enforcer'
+# gem 'rack-ssl-enforcer'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
