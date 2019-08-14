@@ -15,7 +15,9 @@ module Ops
 
     # TWEAK MORE TO MAKE HTTP WORK FOR STATS
     # config.middleware.insert_before  ActionDispatch::Cookies, Rack::SslEnforcer
-    # config.middleware.use Rack::SslEnforcer, :except_hosts => 'phonesrv-v.newleafsc.net', :except_environments => 'development'
+    config.middleware.use Rack::SslEnforcer, :except => '/tools/validator', :except_environments => 'development', strict: true
+    # config.middleware.use Rack::SslEnforcer, :except_environments => 'development'
+
 
 #     LetterOpener.configure do |config|
 #   # To overrider the location for message storage.

@@ -1155,7 +1155,7 @@ Thank you,
 	<!-- /WARRANTY EXTENSIONS MODAL EMAILS -->
 
 <!-- /MODALS -->
-<% if current_user.department.name == "Pre-Approvals" %>
+<% if current_user.department.name == "Pre-Approvals" || current_user.department.name == "Executive" %>
     <%= javascript_include_tag('Config.js') %>
     <%= javascript_include_tag('kendo.dataviz.min.js') %>
     <%= javascript_include_tag('https://kit.fontawesome.com/7932b0d104.js') %>
