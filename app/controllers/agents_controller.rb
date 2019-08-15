@@ -28,7 +28,7 @@ class AgentsController < ApplicationController
        if agent.user.deleted_at.nil? && agent.user.has_role?(:agent) || agent.user.has_role?(:lead) || agent.user.has_role?(:reporting) 
         agent_array << {
           'Full Name': agent.user.full_name, 
-          'Email': agent.user.email, 
+          'Email': agent.user.email.truncate(15), 
           'Department': agent.department.name, 
           'TAO': if agent.entries.map {|a| a.total_effective_occurrence.to_f}.first.to_f > 2.5 
                 agent.entries.map {|a| a.total_effective_occurrence.to_f}.first
