@@ -1,20 +1,4 @@
-<script>
-$(document).ready(
-  function(){
-    $("#addEntry").click(function() {
-      var x = document.getElementById("formBlock");
-      if (x.style.display === "none") {
-        x.style.display = "block";
-        $('#dynamic').empty();
-      } else {
-        x.style.display = "none";
-        // document.location.reload();
-        // $('#modal-window').modal('show');
-        $('#dynamic').html("<%= j (render partial: 'dynamic') %> ");
-      }
-    });
-  });
-</script>
+
 
 <div id="modal-window" class="card-body">
     <div class="modal hide" id="myModal" tabindex="-1" role="dialog"

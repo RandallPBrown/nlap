@@ -192,11 +192,7 @@ end
   def calendar
     if current_user.has_role?(:reporting) || current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       @entry = Entry.new
-      if params[:search].present?
-        @entries = Entry.perform_search(params[:search]).order(edate: :desc).paginate(page: params[:page], :per_page => 5)
-      else
-        @entries = Entry.all
-      end
+      @entries = Entry.joins(:occurrence).where("occurrences.name = ?", "Vacation")
     else
       redirect_to entries_path, notice: 'Unauthorized'
     end
