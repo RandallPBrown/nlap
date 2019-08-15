@@ -15,24 +15,16 @@ $(document).ready(
     });
   });
 </script>
-<style>
-#addEntry {
-  position: absolute !important;
-  top: 30px !important;
-  left: 30px !important;
-}
-</style>
-<%#= stylesheet_link_tag "pagination.css" %>
+
 <div id="modal-window" class="card-body">
     <div class="modal hide" id="myModal" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel" style="display: block;">
       <div class="modal-dialog" style="width: 90%; max-width: 1200px;">
         <div class="modal-content">
-          <div class="modal-header"><button type="button" class="btn btn-primary btn-large" id="addEntry"><i class="fa fa-plus"></i> Add Entry</button> 
+          <div class="modal-header">
             <button class="btn btn-primary btn-large" type="button" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> CLOSE</button>
           </div>
               <div class="modal-body" id="modalCalendar">
-<div id="formBlock" class="card border-dark p-2" style="display: none;"><%= render partial: 'form' %></div>
 <div id="dynamic" class="card border-dark p-2"><%= render partial: 'dynamic' %></div>
 
               </div>

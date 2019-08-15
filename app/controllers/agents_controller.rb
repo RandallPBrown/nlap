@@ -51,9 +51,9 @@ class AgentsController < ApplicationController
                    agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first
                  end, 
             'AR': if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 || agent.entries.map {|a| a.total_effective_occurrence}.first.to_f > 2.5 && agent.user.daps.map.count {|m| m.total_active_writeup} == 0 || agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 
-                  "<i class='fa fa-times-circle text-danger'></i>"
+                  "<i class='fa fa-times-circle text-danger'><span hidden>Y</span></i>"
                  else 
-                  "<i class='fa fa-check-circle text-success'></i>"
+                  "<i class='fa fa-check-circle text-success'><span hidden>N</span></i>"
                  end, 
             '': ("<div class='btn-group'> " + helpers.link_to(helpers.theme_icon_tag('eye'), agent_path(agent.id), 'data-toggle': 'tooltip', title: 'Show', class: 'btn btn-link') + helpers.link_to(helpers.theme_icon_tag('pencil-alt'), edit_user_path(agent.user.id), 'data-toggle': 'tooltip', title: 'Edit', class: 'btn btn-link') + helpers.link_to(helpers.theme_icon_tag('trash'), user_path(agent.user.id), confirm: 'Are you sure?', method: :delete, data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link') + "</div>")
         }
