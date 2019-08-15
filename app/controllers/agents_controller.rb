@@ -29,7 +29,7 @@ class AgentsController < ApplicationController
         agent_array << {
           'Full Name': agent.user.full_name, 
           'Email': agent.user.email, 
-          'Department': agent.department.name.truncate(15), 
+          'Department': agent.department.name, 
           'TAO': if agent.entries.map {|a| a.total_effective_occurrence.to_f}.first.to_f > 2.5 
                 agent.entries.map {|a| a.total_effective_occurrence.to_f}.first
                else 
