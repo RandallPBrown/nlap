@@ -35,7 +35,7 @@ class UsersController < ApplicationController
 
   # GET /agents/new
   def new
-    if current_user.has_role?(:trainer) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) ||  current_user.has_role?(:trainer) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       @user = User.new
     else
       redirect_to agents_path, notice: 'Unauthorized'
