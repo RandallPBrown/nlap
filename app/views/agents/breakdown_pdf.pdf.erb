@@ -2,26 +2,26 @@
 <div class="container">
   <div class="card">
     <div class="row">
-      <div class="col-6">
+      <div class="col-12">
         <div class="card p-2">
           <h1 class="text-monospace text-uppercase font-weight-bold">AGENT INFORMATION</h1>
           <div class="form-row p-2">
-            <div class="form-group col-md-6">
+            <div class="form-group col-6">
               <label class="font-weight-bold text-uppercase text-monospace">Agent: </label>
               <input class="form-control form-control-sm" type="text" value="<%= @agent.user.full_name %>">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-6">
               <label class="font-weight-bold text-uppercase text-monospace">Department: </label>
               <input class="form-control form-control-sm" type="text" value="<%= @agent.department.name %>">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-6">
               <label class="font-weight-bold text-uppercase text-monospace">Active Occurrences: </label>
               <input class="form-control form-control-sm" type="text" value="<%= @occurrences.values.first %>">
             </div>
           </div>
         </div>
       </div>
-      <div class="col-6 d-flex align-items-stretch">
+      <div class="col-12 d-flex align-items-stretch">
         <div class="card p-2">
           <h1 class="text-monospace text-uppercase font-weight-bold">MONTHLY BREAKDOWN</h1>
           <% @data.map { |g| g[1] }.zip(@data.map { |g| g[0] }) do |a,c| %>
@@ -33,10 +33,11 @@
     <br>
     <hr>
     <br>
-    <h1 class="font-weight-bold text-uppercase text-monospace">Occurrences:</h1>
+    
     <div class="row">
       <div class="col-12">
         <div class="table-responsive">
+          <h1 class="font-weight-bold text-uppercase text-monospace">Occurrences:</h1>
           <table class="table table-striped">
             <thead>
               <tr>
@@ -67,10 +68,11 @@
     <br>
     <hr>
     <br>
-    <h1 class="font-weight-bold text-uppercase text-monospace">Progressive Actions:</h1>
+    
     <div class="row">
       <div class="col-12">
         <div class="table-responsive">
+          <h1 class="font-weight-bold text-uppercase text-monospace">Progressive Actions:</h1>
           <table class="table table-striped">
             <thead>
               <tr>
