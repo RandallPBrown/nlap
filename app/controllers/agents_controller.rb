@@ -1,7 +1,7 @@
 class AgentsController < ApplicationController
   layout "scaffold"
   before_action :authorize_admin, except: [:show]
-  before_action :set_agent, only: [:show, :edit, :update, :destroy]
+  before_action :set_agent, only: [:show, :edit, :update, :destroy, :breakdown_pdf]
 
 
   # GET /agents
@@ -27,7 +27,7 @@ class AgentsController < ApplicationController
     @agents.each do |agent| 
        if agent.user.deleted_at.nil? && agent.user.has_role?(:agent) || agent.user.has_role?(:lead) || agent.user.has_role?(:reporting) 
         agent_array << {
-          'Full Name': agent.user.full_name, 
+          'Full Name':  helpers.link_to(agent.user.full_name, agents_breakdown_pdf_path(:id => agent.id, format: :pdf), target: :_blank), 
           'Email': agent.user.email.truncate(15), 
           'Department': agent.department.name, 
           'TAO': if agent.entries.map {|a| a.total_effective_occurrence.to_f}.first.to_f > 2.5 
@@ -97,6 +97,28 @@ class AgentsController < ApplicationController
       redirect_to users_dashboard_path, notice: 'Unauthorized'
     end
   end
+
+  def breakdown_pdf
+    @entries = Entry.effective.joins(:user).where("entries.agent_id = ?", @agent.id)
+    @occurrences = Entry.effective.joins(:occurrence).where("entries.agent_id = ?", @agent.id).group(:agent_id).sum(:ovalue)
+    @start = Occurrence.joins(:entries).where("entries.agent_id = ?", @agent.id).where('entries.edate' => 180.days.ago...Date.today.beginning_of_day).select(:'entries.edate', :ovalue).group_by { |b| b.edate.strftime("%B") }
+    @data = @start.each do |f|
+      f[1][0]
+    end
+    layer = []
+    @labels = @data.map { |f| f[0]}.each do |d| 
+      layer.push(d)
+    end
+
+    @daps = Dap.written.joins(:user).where("daps.user_id = ?", @agent.user.id)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf: "Breakdown-#{current_user.full_name}-#{Date.today}"
+      end
+    end
+  end
+
 
   # GET /agents/new
   def new

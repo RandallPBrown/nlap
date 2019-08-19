@@ -1,0 +1,102 @@
+
+<div class="container">
+  <div class="card">
+    <div class="row">
+      <div class="col-6">
+        <div class="card p-2">
+          <h1 class="text-monospace text-uppercase font-weight-bold">AGENT INFORMATION</h1>
+          <div class="form-row p-2">
+            <div class="form-group col-md-6">
+              <label class="font-weight-bold text-uppercase text-monospace">Agent: </label>
+              <input class="form-control form-control-sm" type="text" value="<%= @agent.user.full_name %>">
+            </div>
+            <div class="form-group col-md-6">
+              <label class="font-weight-bold text-uppercase text-monospace">Department: </label>
+              <input class="form-control form-control-sm" type="text" value="<%= @agent.department.name %>">
+            </div>
+            <div class="form-group col-md-6">
+              <label class="font-weight-bold text-uppercase text-monospace">Active Occurrences: </label>
+              <input class="form-control form-control-sm" type="text" value="<%= @occurrences.values.first %>">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 d-flex align-items-stretch">
+        <div class="card p-2">
+          <h1 class="text-monospace text-uppercase font-weight-bold">MONTHLY BREAKDOWN</h1>
+          <% @data.map { |g| g[1] }.zip(@data.map { |g| g[0] }) do |a,c| %>
+            <span class="text-uppercase text-monospace font-weight-bold"><%= c %>: </span><span class="text-uppercase text-monospace"><%= a.map {|b| b.ovalue }.sum.to_f %></span><br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <h1 class="font-weight-bold text-uppercase text-monospace">Occurrences:</h1>
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>AGENT</th>
+                <th>OCCURRENCE</th>
+                <th>VALUE</th>
+                <th>DATE</th>
+                <th>EXP</th>
+                <th>DESC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @entries.each do |entry| %>
+              <tr>
+                <td><%= entry.user.full_name %></td>
+                <td><%= entry.occurrence.name %></td>
+                <td><%= entry.occurrence.ovalue %></td>
+                <td><%= entry.edate %></td>
+                <td><%= entry.edate + 180.days %></td>
+                <td><%= entry.edesc %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <h1 class="font-weight-bold text-uppercase text-monospace">Progressive Actions:</h1>
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>AGENT</th>
+                <th>TYPE</th>
+                <th>DATE</th>
+                <th>EXPIRES</th>
+                <th>NATURE OF INCIDENT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @daps.each do |dap| %>
+              <tr>
+                <td><%= dap.user.full_name %></td>
+                <td><%= dap.writeup.name %></td>
+                <td><%= dap.ddate %></td>
+                <td><%= dap.ddate + 90.days %></td>
+                <td><%= dap.wunature.description %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

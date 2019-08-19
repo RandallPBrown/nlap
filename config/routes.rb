@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   get 'agents/new_entry'
   get 'agents/new_writeup'
   get 'agents/agent_breakdown' 
+  get 'agents/breakdown_pdf', defaults: { format: 'pdf'} 
   get 'entries/new'
   get 'entries/form2'
   get 'tools/speed_test'
