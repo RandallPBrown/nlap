@@ -15,12 +15,21 @@ var t = $('#dapsTable').DataTable({
               { data: 'Nature of Incident'}, 
               { data: 'Date' }, 
               { data: 'Agent' },
+              { data: 'Department' },
               { data: 'Type' },
               { data: 'OSD' },
               { data: '' } 
             ]
           });
   t.order( [ 1, 'desc' ] ).draw();
+  var buttons = new $.fn.dataTable.Buttons(t, {
+     buttons: [
+       'copyHtml5',
+       'selectNone',
+       'selectAll',
+       'csvHtml5'
+    ]
+}).container().appendTo($('#buttons'));
 
     // Enable pusher logging - don't include this in production
 
@@ -34,10 +43,20 @@ var t = $('#dapsTable').DataTable({
       t.rows.add([{'Nature of Incident': data.noi, 'Date': data.date, 'Agent': data.agent, 'Type': data.wuname, 'OSD': data.osd, '': 'JUST ADDED'}]).draw();
     });
 
-t.rows.add([<% @daps.each do |dap| %><% if dap.user.deleted_at.blank? %>{'Nature of Incident': '<%= dap.wunature.description %>', 'Date': '<%= dap.ddate %>', 'Agent': '<%= dap.user.full_name %>', 'Type': '<%= dap.writeup.name %>', 'OSD': '<%= dap.occurrence_since_dap %>', '': '<div class="btn-group"><%= link_to theme_icon_tag("eye"), dap, "data-toggle": "tooltip", title: "Show", class: "btn btn-link" %><%= link_to theme_icon_tag("pencil-alt"), edit_dap_path(dap), "data-toggle": "tooltip", title: "Edit", class: "btn btn-link" %><%= link_to theme_icon_tag("trash"), dap, "data-toggle": "tooltip", title: "Delete", data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %></div>'},<% else %><% end %><% else %><% end %>]
+t.rows.add([<% @daps.each do |dap| %><% if dap.user.deleted_at.blank? %>{'Nature of Incident': '<%= dap.wunature.description %>', 'Date': '<%= dap.ddate %>', 'Agent': '<%= dap.user.full_name %>', 'Department': '<%= dap.user.department.name %>', 'Type': '<%= dap.writeup.name %>', 'OSD': '<%= dap.occurrence_since_dap %>', '': '<div class="btn-group"><%= link_to theme_icon_tag("eye"), dap, "data-toggle": "tooltip", title: "Show", class: "btn btn-link" %><%= link_to theme_icon_tag("pencil-alt"), edit_dap_path(dap), "data-toggle": "tooltip", title: "Edit", class: "btn btn-link" %><%= link_to theme_icon_tag("trash"), dap, "data-toggle": "tooltip", title: "Delete", data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %></div>'},<% else %><% end %><% else %><% end %>]
   ).draw();
 t.buttons().container()
     .appendTo( $('.col-sm-6:eq(0)', t.table().container() ) );
+$('#dtDepartmentSearch').on( 'change', function () {
+  t.columns( 3 )
+    .search( this.value )
+    .draw();
+  });
+$('#dtTypeSearch').on( 'change', function () {
+  t.columns( 4 )
+    .search( this.value )
+    .draw();
+  });    
 });
   </script>
 
@@ -55,7 +74,7 @@ t.buttons().container()
 
       <div class="container">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-10">
             <div class="card card-sheet sheet-condensed">
               <div class="mx-auto">
               </div>
@@ -66,6 +85,7 @@ t.buttons().container()
                         <th>Nature of Incident</th>
                         <th>Date</th>
                         <th>Agent</th>
+                        <th>Department</th>
                         <th>Type</th>
                         <th>OSD</th>
                       <th></th>
@@ -78,6 +98,25 @@ t.buttons().container()
             </div>
           </div>
         </div>
+        <div class="col-md-2">
+            <ul class="nav nav-stacked nav-caret-left card small pb-2  ">
+              <li>
+                <h6 class="mt-3 ml-3">Additional Actions</h6>
+              </li>
+              <li class="nav-item p-1">
+                <label class="font-weight-bold">Department:</label>
+                <%= select_tag('Department Filter', options_from_collection_for_select(Department.all, 'name', 'name'), prompt: "All", class: 'form-control form-control-sm custom-select text-dark', id: 'dtDepartmentSearch') %>
+              </li>
+              <li class="nav-item p-1">
+                <label class="font-weight-bold">Type:</label>
+                <%= select_tag('Department Filter', options_from_collection_for_select(Writeup.all, 'name', 'name'), prompt: "All", class: 'form-control form-control-sm custom-select text-dark', id: 'dtTypeSearch') %>
+                <%#= select_tag('AR Filter', options_from_collection_for_select('<i class="fa fa-check-circle text-success"></i>', '<i class="fa fa-times-circle text-danger"></i>'), prompt: "All", class: 'form-control form-control-sm custom-select text-dark', id: 'dtArSearch') %>
+              </li>
+              <li class="nav-item p-1" id="buttons">
+
+              </li>
+            </ul>
+          </div>
       </div>
     </div>
 <%= javascript_include_tag("https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js") %>
