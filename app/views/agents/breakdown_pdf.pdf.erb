@@ -1,14 +1,26 @@
 
 <%= wicked_pdf_image_tag 'logo.png', class: 'pb-2' %>
+<style>
+thead {
+  display: table-header-group;
+}
 
+tfoot {
+  display: table-row-group;
+}
+
+tr {
+  page-break-inside: avoid;
+}
+</style>
 <div class="container p-2">
   <div class="card" style="border-width: 5px !important">
     <div class="row">
       <div class="col-12">
         <div class="card p-2">
-          <center><h1 class="text-monospace text-uppercase font-weight-bold">AGENT INFORMATION</h1></center>
+          <center><h1 class="text-monospace text-uppercase font-weight-bold"><u>AGENT INFORMATION</u></h1></center>
           <div class="row">
-            <div class="col-3">
+            <div class="col-6">
               <label class="font-weight-bold text-uppercase text-monospace">Agent: </label>
               <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @agent.user.full_name %>">
 
@@ -26,7 +38,7 @@
       </div>
       <div class="col-12 d-flex align-items-stretch">
         <div class="card p-2">
-          <center><h1 class="text-monospace text-uppercase font-weight-bold">MONTHLY BREAKDOWN</h1></center>
+          <center><h1 class="text-monospace text-uppercase font-weight-bold"><u>MONTHLY BREAKDOWN</u></h1></center>
           <div class="p-2">
             <% @data.map { |g| g[1] }.zip(@data.map { |g| g[0] }) do |a,c| %>
               <span class="text-uppercase text-monospace font-weight-bold"><%= c %>: </span><span class="text-uppercase text-monospace"><%= a.map {|b| b.ovalue }.sum.to_f %></span><br>
@@ -42,7 +54,7 @@
     <div class="row">
       <div class="col-12">
         <div class="table-responsive">
-          <center><h1 class="font-weight-bold text-uppercase text-monospace">Occurrences</h1></center>
+          <center><h1 class="font-weight-bold text-uppercase text-monospace"><u>Occurrences</u></h1></center>
           <table class="table table-striped text-uppercase text-monospace">
             <thead>
               <tr>
@@ -77,7 +89,7 @@
     <div class="row">
       <div class="col-12">
         <div class="table-responsive">
-          <center><h1 class="font-weight-bold text-uppercase text-monospace">Progressive Actions</h1></center>
+          <center><h1 class="font-weight-bold text-uppercase text-monospace"><u>Progressive Actions</u></h1></center>
           <table class="table table-striped text-uppercase text-monospace">
             <thead>
               <tr>
