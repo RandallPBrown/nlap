@@ -4,6 +4,10 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   helper_method :is_admin?
 
+  def index
+    @users = User.includes(:daps, agent: :entries).joins(agent: :entries).order('users.first_name asc')
+  end
+
   def dashboard          
     # @body_class = "with-sidebar show-sidebar"
     # @current_user = current_user
@@ -96,9 +100,7 @@ def destroy
   end
 end
 
-  def index
-    @users = User.all.includes(:daps, agent: :entries).joins(agent: :entries).order('users.first_name asc')
-  end
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.
