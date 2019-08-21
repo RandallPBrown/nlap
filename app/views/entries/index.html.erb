@@ -25,7 +25,7 @@ body::-webkit-scrollbar {
   
 <script>
 
-$(document).ready(function(t){
+$(document).on('turbolinks:load', function(t) {
 
 var t = $('#entryTable').DataTable({ 
         "pageLength": 10,
