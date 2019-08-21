@@ -30,6 +30,10 @@ $(document).ready(function(t){
 var t = $('#entryTable').DataTable({ 
         "pageLength": 10,
         select: true,
+        ajax: {
+        url: 'entries/entry_breakdown',
+        dataSrc: ''
+        },
         columns: [ 
               { data: 'Agent'}, 
               { data: 'Department' }, 
@@ -57,9 +61,6 @@ var t = $('#entryTable').DataTable({
     // });
 
 
-t.rows.add(
-  [<% @entries.each do |entry| -%><% if entry.user.deleted_at.nil? %>{'Agent': '<%= entry.user.full_name %>', 'Department': '<%= entry.department.name.truncate(15) %>', 'Occurrence': '<%= entry.occurrence.name.truncate(12) %>', 'Value': '<%= entry.occurrence.ovalue %>', 'Date': '<%= entry.edate %>', 'Expiration': '<%= entry.edate + 180.days %>', 'Description': '<%= entry.edesc.gsub(/\R+/, " ").truncate(10) %>', '':'<%= link_to theme_icon_tag("eye"), entry, "data-toggle": "tooltip", title: "Show", class: "btn btn-link p-1"%> <%= link_to theme_icon_tag("pencil-alt"), edit_entry_path(entry), "data-toggle": "tooltip", title: "Edit", class: "btn btn-link p-1" %> <%= link_to theme_icon_tag("trash"), entry, "data-toggle": "tooltip", title: "Delete", data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link p-1" %>'},<% else %><% end %><% end -%>]
-  ).draw();
 var buttons = new $.fn.dataTable.Buttons(t, {
      buttons: [
        'copyHtml5',

@@ -150,6 +150,28 @@ end
     end
   end
 
+  def entry_breakdown
+    @entries = Entry.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).order('edate desc').includes(:user, :department, :occurrence)
+    entry_array = Array.new
+    @entries.each do |entry| 
+      if entry.user.deleted_at.nil? 
+        entry_array << {'Agent': entry.user.full_name, 
+         'Department': entry.department.name.truncate(15), 
+         'Occurrence': entry.occurrence.name.truncate(12), 
+         'Value': entry.occurrence.ovalue, 
+         'Date': entry.edate, 
+         'Expiration': entry.edate + 180.days, 
+         'Description': entry.edesc.truncate(10), 
+         '': (helpers.link_to(helpers.theme_icon_tag('eye'), entry, 'data-toggle': 'tooltip', title: 'Show', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('pencil-alt'), edit_entry_path(entry), 'data-toggle': 'tooltip', title: 'Edit', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('trash'), entry, 'data-toggle': 'tooltip', title: 'Delete', method: :delete, class: 'btn btn-link p-1'))}
+       else 
+      end  
+    end 
+    respond_to do |format|
+      format.html
+      format.json {render :json => entry_array}
+    end
+  end
+
 
   # GET /entries/1
   def show

@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   get 'entries/dashboard'
   get 'agent_department/index'
   get 'entry/dashboard'
+  get 'entries/entry_breakdown'
   get 'entries/calendar'
   get 'entries/agent_list'
   get 'buying_groups/edit'
