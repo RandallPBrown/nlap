@@ -88,7 +88,8 @@ $('#dtAgentSearch').on( 'change', function () {
     .draw();
   });
 });
-
+$(document).on('turbolinks:load', function(t) {
+if ($('#dtDateStart').val()) {
 $.fn.dataTableExt.afnFiltering.push(
     function( oSettings, aData, iDataIndex ) {
             if ($('#dtDateStart').val() == "") {
@@ -131,7 +132,8 @@ $.fn.dataTableExt.afnFiltering.push(
         
     }
 );
-
+}
+});
   </script>
 <!-- <script src="https://js.pusher.com/4.4/pusher.min.js"></script> -->
 <div id="modal-calendar">
