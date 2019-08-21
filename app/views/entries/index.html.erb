@@ -32,6 +32,7 @@ var t = $('#entryTable').DataTable({
         select: true,
         ajax: {
         url: 'entries/entry_breakdown',
+        "processing": true,
         dataSrc: ''
         },
         columns: [ 
