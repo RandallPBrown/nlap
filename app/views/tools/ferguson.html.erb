@@ -1,0 +1,229 @@
+
+
+<div class="container-fluid">
+	<div class="row">
+		<!-- FERVER FORM -->
+		<div class="col-9">
+			<div class="card p-2">
+				<form id="form-ferVer">
+					<h5 class="font-weight-bold"><%= fa_icon_tag("user") %> . CUSTOMER</h5>
+					<div class="row">
+						<div class="col-6">
+							<label class="font-weight-bold">SO Number: </label>
+							<input type="text" id="ferVer-SO" class="text-dark form-control form-control-sm">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6">
+							<label class="font-weight-bold">Caller Name: </label>
+							<input type="text" id="ferVer-Name" class="text-dark form-control form-control-sm">
+						</div>
+						<div class="col-6">
+							<label class="font-weight-bold">District: </label>
+							<select class="text-dark form-control form-control-sm" id="ferVer-District">
+								<option></option>
+								<option value="no">1</option>
+								<option value="yes">2</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<label class="font-weight-bold">Address: </label>
+							<input type="text" id="ferVer-Address" class="text-dark form-control form-control-sm">
+						</div>
+					</div>
+					<hr>
+					<h5 class="font-weight-bold"><%= fa_icon_tag("barcode") %> . PRODUCT</h5>
+					<div class="row">
+						<div class="col-6">
+							<label class="font-weight-bold">Date of Purchase: </label>
+							<input type="date" id="ferVer-DOP" class="text-dark form-control form-control-sm">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6">
+							<label class="font-weight-bold">Product: </label>
+							<input type="text" id="ferVer-Product" class="text-dark form-control form-control-sm">
+						</div>
+						<div class="col-6">
+							<label class="font-weight-bold">Manufacturer: </label>
+							<input type="text" id="ferVer-Manufacturer" class="text-dark form-control form-control-sm">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6">
+							<label class="font-weight-bold">Model: </label>
+							<input type="text" id="ferVer-Model" class="text-dark form-control form-control-sm">
+						</div>
+						<div class="col-6">
+							<label class="font-weight-bold">Serial: </label>
+							<input type="text" id="ferVer-Serial" class="text-dark form-control form-control-sm">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<label class="font-weight-bold">Failure Description: </label>
+							<textarea class="form-control form-control-sm" id="ferVer-Failure"></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-3">
+							<label class="font-weight-bold">Leaking: </label>
+							<select class="text-dark form-control form-control-sm" id="ferVer-Leaking">
+								<option></option>
+								<option value="No">No</option>
+								<option value="Yes">Yes</option>
+							</select>
+						</div>
+						<div class="col-3">
+							<label class="font-weight-bold">Business: </label>
+							<select class="text-dark form-control form-control-sm" id="ferVer-Business">
+								<option></option>
+								<option value="No">No</option>
+								<option value="Yes">Yes</option>
+							</select>
+						</div>
+						<div class="col-3">
+							<label class="font-weight-bold">MFG Covered: </label>
+							<select class="text-dark form-control form-control-sm" id="ferVer-MFG">
+								<option></option>
+								<option value="No">No</option>
+								<option value="Yes">Yes</option>
+							</select>
+						</div>
+						<div class="col-3">
+							<label class="font-weight-bold">COD Call: </label>
+							<select class="text-dark form-control form-control-sm" id="ferVer-COD">
+								<option></option>
+								<option value="No">No</option>
+								<option value="Yes">Yes</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- /FERVER FORM -->
+		<!-- INFO WINDOW -->
+		<div class="col-3 align-items-stretch d-flex">
+			<div class="card">
+				<div class="card-header p-2">
+					<h5 class="font-weight-bold m-auto">INFORMATION</h5>
+					<button class="btn btn-primary pull-right" type="button" data-toggle="modal" data-target="#infoModal"><%= fa_icon_tag("arrows-alt") %></button>
+				</div>
+				<div class="card-body p-2">
+					asdlfkas
+				</div>
+			</div>
+		</div>
+		<!-- /INFO WINDOW -->
+	</div>
+	<div class="row">
+		<!-- BUTTON BAR -->
+		<div class="col-4 m-auto">
+			<div class="card p-2">
+				<center><button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#submitModal" onclick="submitFormReceipt()">SUBMIT</button></center>
+			</div>
+		</div>
+		<!-- /BUTTON BAR -->
+	</div>
+</div>
+<!-- MODALS -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content bg-light">
+			<div class="modal-header">
+				<h5 class="modal-title m-auto" id="infoModalLabel">INFORMATION</h5><button type="button" class="btn btn-link pull-right" data-dismiss="modal" aria-label="Close"><%= fa_icon_tag("times") %></button>
+			</div>
+			<div class="modal-body">
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="submitModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content bg-light">
+			<div class="modal-header">
+				<h5 class="modal-title m-auto" id="submitModalLabel">SHORTKEY</h5>
+			</div>
+			<div class="modal-body">
+				<textarea rows="15" class="form-control form-control-sm text-dark" id="ferVer-Receipt"></textarea>
+				<div class="pt-2" id="leakEmail" hidden>
+					<label class="font-weight-bold">Subject: </label><input type="text" id="ferVer-LeakSubject">
+					<label class="font-weight-bold">Body: </label>
+					<textarea rows="8" class="form-control form-control-sm text-dark" id="ferVer-LeakEmail"></textarea>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" data-dismiss="modal" class="btn btn-primary">CANCEL</button>
+				<button type="button" onclick="submitFormReset();" data-dismiss="modal" class="btn btn-primary">SAVE</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /MODALS -->
+<script>
+$("#form-ferVer").submit(function(e){ 
+        e.preventDefault();
+    });
+
+function submitFormReceipt(){
+	var sonumber = $('#ferVer-SO').val(),
+		callername = $('#ferVer-Name').val(),
+		district = $('#ferVer-District').val(),
+		address = $('#ferVer-Address').val(),
+		dop = $('#ferVer-DOP').val(),
+		product = $('#ferVer-Product').val(),
+		manufacturer = $('#ferVer-Manufacturer').val(),
+		model = $('#ferVer-Model').val(),
+		serial = $('#ferVer-Serial').val(),
+		failure = $('#ferVer-Failure').val(),
+		leaking = $('#ferVer-Leaking').val(),
+		business = $('#ferVer-Business').val(),
+		cod = $('#ferVer-COD').val(),
+		mfg = $('#ferVer-MFG').val();
+	if (leaking == "Yes") {
+		var leakingConfirmed = ("**EMAIL TRUEBLUESUPERVISOR@NEWLEAFSC.NET**"
+			+'\n**Subject Line: Leaking Damage - ' + sonumber
+			+'\n**Body: **'
+			+'\nCustomer: ' + callername
+			+'\nAddress: ' + address
+			+'\nBusiness: ' + business
+			+'\nDOP: ' + dop
+			+'\nProduct: ' + product
+			+'\nManufacturer: ' + manufacturer
+			+'\nModel: ' + model
+			+'\nSerial: ' + serial
+			+'\nFailure: ' + failure);
+		$('#ferVer-LeakEmail').val(leakingConfirmed);
+		$('#ferVer-LeakEmail').prop('hidden', false);
+	} else {
+		var leakingConfirmed = ("");
+		$('#ferVer-LeakEmail').prop('hidden', true);
+	}
+	if (mfg == "No" || cod == "Yes") {
+		var mfgConfirmed = "***PLEASE BILL CUSTOMER DIRECTLY***";
+	} else {
+		var mfgConfirmed = "";
+	}
+	$('#ferVer-Receipt').val(new Date().toLocaleDateString() + ' @ ' + new Date().toLocaleTimeString()
+		+'\n '
+		+'\nService Order: ' + sonumber
+		+'\nCaller Name: ' + callername
+		+'\nDistrict: ' + district
+		+'\nAddress: ' + address
+		+'\nDate of Purchase: ' + dop
+		+'\nProduct: ' + product
+		+'\nManufacturer: ' + manufacturer
+		+'\nModel: ' + model + ' Serial: ' + serial
+		+'\nFailure: ' + failure
+		+'\nLeaking: ' + leaking + ' | Business: ' + business + ' | MFG Covered: ' + mfg
+		+'\n' + mfgConfirmed);
+}
+
+function submitFormReset(){
+	$('#form-ferVer').trigger('reset');
+}
+</script>

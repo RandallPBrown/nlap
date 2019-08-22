@@ -25,7 +25,7 @@ body::-webkit-scrollbar {
   
 <script>
 
-$(document).on('turbolinks:load', function(t) {
+$(document).on('turbolinks:load', function() {
 
 var t = $('#entryTable').DataTable({ 
         "pageLength": 10,
@@ -69,8 +69,7 @@ var buttons = new $.fn.dataTable.Buttons(t, {
        'csvHtml5'
     ]
 }).container().appendTo($('#buttons'));
-t.buttons().container()
-    .appendTo( $('.col-sm-6:eq(0)', t.table().container() ) );
+
 $('#dtDateStart').change( function() { t.draw(); } );
 $('#dtDateEnd').change( function() { t.draw(); } );
 
@@ -84,14 +83,21 @@ $('#dtOccurrenceSearch').on( 'change', function () {
     .search( this.value )
     .draw();
 });
+// $('#dtCsvExport').on('click', function() {
+//   t.buttons.exportData({
+//     modifier: {
+//         selected: true
+//     }
+//   });
+// });
 $('#dtAgentSearch').on( 'change', function () {
   t.columns( 0 )
     .search( this.value )
     .draw();
   });
 });
-$(document).on('turbolinks:load', function(t) {
-if ($('#dtDateStart').val()) {
+$(document).on('turbolinks:load', function() {
+if ($('#dtDateStart').length > 0) {
 $.fn.dataTableExt.afnFiltering.push(
     function( oSettings, aData, iDataIndex ) {
             if ($('#dtDateStart').val() == "") {
@@ -205,14 +211,5 @@ $.fn.dataTableExt.afnFiltering.push(
           </div>
         </div>
       </div>
-      <script>
-        var t = document.getElementById('entryTable');
-        $('#dtCsvExport').on('click', function() {
-          t.buttons.exportData({
-            modifier: {
-                selected: true
-            }
-          });
-        });
-      </script>
+
 <%= javascript_include_tag("https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js") %>
