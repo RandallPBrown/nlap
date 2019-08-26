@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :districts
   resources :pcmi_contacts
   resources :pcmi_imports
   resources :mfg_parts
@@ -52,6 +53,7 @@ Rails.application.routes.draw do
   resources :tools do
       collection do
         get 'get_dealer'
+        get 'get_district'
       end
     end
   resources :parts

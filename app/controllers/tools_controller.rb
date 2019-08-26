@@ -61,6 +61,21 @@ class ToolsController < ApplicationController
     end
   end
 
+  def get_district
+    submitted_code = params[:submitted_code]
+    
+    # do something with submitted_code and return the results
+    if params[:submitted_code].present?
+      @district_code = District.all.find_by(name: submitted_code)
+    else
+      @district_code = " "
+    end
+    respond_to do |format|
+      format.html
+      format.json {render :json => @district_code.to_json}
+    end
+  end
+
   def validator_email
   	@tool = Tool.new(validator_params)
   	# @tool.receipt = :receipt

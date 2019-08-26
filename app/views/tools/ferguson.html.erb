@@ -1,4 +1,9 @@
-
+<script>
+$(function() {
+	$(".datepicker").datepicker( "option", "dateFormat", "yyyy-mm-dd" );
+    // $('.datepicker').datepicker({format: 'yyyy-mm-dd', altFormat: 'mm/dd/yyyy'});
+});
+</script>	
 
 <div class="container-fluid">
 	<div class="row">
@@ -9,8 +14,7 @@
 					<h5 class="font-weight-bold"><%= fa_icon_tag("user") %> . CUSTOMER</h5>
 					<div class="row">
 						<div class="col-6">
-							<label class="font-weight-bold">SO Number: </label>
-							<input type="text" id="ferVer-SO" class="text-dark form-control form-control-sm">
+							
 						</div>
 					</div>
 					<div class="row">
@@ -20,11 +24,7 @@
 						</div>
 						<div class="col-6">
 							<label class="font-weight-bold">District: </label>
-							<select class="text-dark form-control form-control-sm" id="ferVer-District">
-								<option></option>
-								<option value="no">1</option>
-								<option value="yes">2</option>
-							</select>
+							<%= select_tag('district', options_from_collection_for_select(District.order(:name), 'name', 'name'), prompt: "Select District...", class: 'form-control form-control-sm text-dark', id: 'ferVer-District') %>
 						</div>
 					</div>
 					<div class="row">
@@ -38,17 +38,23 @@
 					<div class="row">
 						<div class="col-6">
 							<label class="font-weight-bold">Date of Purchase: </label>
-							<input type="date" id="ferVer-DOP" class="text-dark form-control form-control-sm">
+							<input type="text" id="ferVer-DOP" class="text-dark form-control form-control-sm datepicker" data-provide='datepicker'>
+						</div>
+						<div class="col-6">
+							<label class="font-weight-bold">Probability of MFG Coverage: </label>
+							<div class="progress" style="height: 30px;">
+							  <div class="progress-bar progress-bar-striped progress-bar-animated text-dark font-weight-bold" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-6">
 							<label class="font-weight-bold">Product: </label>
-							<input type="text" id="ferVer-Product" class="text-dark form-control form-control-sm">
+							<%= select_tag('Product', options_from_collection_for_select(Product.order(:pname), 'pname', 'pname'), prompt: "Select Product...", class: 'form-control form-control-sm text-dark', id: 'ferVer-Product') %>
 						</div>
 						<div class="col-6">
 							<label class="font-weight-bold">Manufacturer: </label>
-							<input type="text" id="ferVer-Manufacturer" class="text-dark form-control form-control-sm">
+							<%= select_tag('Manufacturer', options_from_collection_for_select(Manufacturer.order(:name), 'name', 'name'), prompt: "Select Manufacturer...", class: 'form-control form-control-sm text-dark', id: 'ferVer-Manufacturer') %>
 						</div>
 					</div>
 					<div class="row">
@@ -64,7 +70,7 @@
 					<div class="row">
 						<div class="col-12">
 							<label class="font-weight-bold">Failure Description: </label>
-							<textarea class="form-control form-control-sm" id="ferVer-Failure"></textarea>
+							<textarea class="form-control form-control-sm text-dark" id="ferVer-Failure"></textarea>
 						</div>
 					</div>
 					<div class="row">
@@ -113,7 +119,10 @@
 					<button class="btn btn-primary pull-right" type="button" data-toggle="modal" data-target="#infoModal"><%= fa_icon_tag("arrows-alt") %></button>
 				</div>
 				<div class="card-body p-2">
-					asdlfkas
+					<label class="font-weight-bold">District: </label>
+					<input type="text" class="form-control form-control-sm text-dark" id="ferVer-District-Name">
+					<label class="font-weight-bold">Instructions: </label>
+					<textarea class="form-control form-control-sm text-dark" id="ferVer-District-Instructions"></textarea>
 				</div>
 			</div>
 		</div>
@@ -146,14 +155,87 @@
 	<div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content bg-light">
 			<div class="modal-header">
-				<h5 class="modal-title m-auto" id="submitModalLabel">SHORTKEY</h5>
+				<h5 class="modal-title m-auto" id="submitModalLabel">WRAPUP</h5>
 			</div>
 			<div class="modal-body">
-				<textarea rows="15" class="form-control form-control-sm text-dark" id="ferVer-Receipt"></textarea>
-				<div class="pt-2" id="leakEmail" hidden>
-					<label class="font-weight-bold">Subject: </label><input type="text" id="ferVer-LeakSubject">
-					<label class="font-weight-bold">Body: </label>
-					<textarea rows="8" class="form-control form-control-sm text-dark" id="ferVer-LeakEmail"></textarea>
+				<div class="accordion" id="submitAccordion">
+				  <div class="card m-0">
+				    <div class="card-header p-0 m-0 bg-info" id="headingOne">
+				      <h2 class="mb-0">
+				        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseInstructions" aria-expanded="true" aria-controls="collapseInstructions">
+				          INSTRUCTIONS
+				        </button>
+				      </h2>
+				    </div>
+
+				    <div id="collapseInstructions" class="collapse show" aria-labelledby="headingOne" data-parent="#submitAccordion">
+				      <div class="card-body">
+				      	<div id="ferVer-CODInstructions" hidden>
+				      		<label class="font-weight-bold">1. Please Inform Customer: </label>
+				      		<blockquote class="blockquote border-0">"As a reminder, your product is outside of manufacturer coverage and you will be responsible for any service call fees incurred."</blockquote>
+				      		<label class="font-weight-bold">2. Place in External Notes: </label>
+				      		<textarea class="form-control form-control-sm text-dark" readonly>***CUSTOMER HAS BEEN INFORMED THEY WILL BE RESPONSIBLE FOR SERVICE FEES***</textarea>
+				      	</div>
+				      	<div id="ferVer-MFGInstructions" hidden>
+				      		<label class="font-weight-bold">1. Please Inform Customer: </label>
+				      		<blockquote class="blockquote border-0">"As a reminder, all warranty claims are subject to the manufacturer's warranty bond. The warranty bond is located in the user manual of your product. Alternatively, it can be located on the manufacturer's website."</blockquote>
+				      		<label class="font-weight-bold">2. Place in External Notes: </label>
+				      		<textarea class="form-control form-control-sm text-dark" readonly>***CUSTOMER HAS BEEN INFORMED OF MFG'S WARRANTY TERMS***</textarea>
+				      	</div>
+				        <form id="form-ferVerFinal">
+				        	<p>Once you have saved the service order, please complete the following before continuing:</p>
+					        <div class="row pt-3">
+					        	<div class="col-6">
+						        	<label class="font-weight-bold">3. SO Number: </label>
+									<input type="text" id="ferVer-SO" class="text-dark form-control form-control-sm">
+					        	</div>
+					        	<div class="col-6">
+						        	<label class="font-weight-bold">4. Service Provider: </label>
+									<input type="text" id="ferVer-SP" class="text-dark form-control form-control-sm">
+					        	</div>
+					        	<button class="btn btn-primary btn-block ml-3 mr-3 mt-1" type="button" onclick="submitFormReceipt();">ADD</button>
+					        </div>
+				        </form>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="card m-0">
+				    <div class="card-header p-0 m-0 bg-info" id="headingTwo">
+				      <h2 class="mb-0">
+				        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseShortkeys" aria-expanded="false" aria-controls="collapseShortkeys">
+				          SHORTKEYS
+				        </button>
+				      </h2>
+				    </div>
+				    <div id="collapseShortkeys" class="collapse" aria-labelledby="headingTwo" data-parent="#submitAccordion">
+				      <div class="card-body">
+				      	<label class="font-weight-bold">5. Place in External Notes: </label>
+				        <textarea rows="15" class="form-control form-control-sm text-dark" id="ferVer-Receipt"></textarea>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="card m-0">
+				    <div class="card-header p-0 m-0 bg-info" id="leakEmail">
+				      <h2 class="mb-0">
+				        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEmails" aria-expanded="false" aria-controls="collapseEmails">
+				          SUPERVISOR EMAIL
+				        </button>
+				      </h2>
+				    </div>
+				    <div id="collapseEmails" class="collapse" aria-labelledby="headingThree" data-parent="#submitAccordion">
+				      	<div class="card-body">
+				        	<div class="pt-2">
+				        		<p>Because you have selected that the product is leaking, please forward the following email.</p>
+								<label class="font-weight-bold">6. Email: </label>
+								<input type="text" class="form-control form-control-sm text-dark" value="truebluesupervisor@newleafsc.net">
+								<label class="font-weight-bold">7. Subject: </label>
+								<input type="text" class="form-control form-control-sm text-dark" id="ferVer-LeakSubject">
+								<label class="font-weight-bold">8. Body: </label>
+								<textarea rows="8" class="form-control form-control-sm text-dark" id="ferVer-LeakEmail"></textarea>
+				        	</div>
+				      	</div>
+				    </div>
+				  </div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -168,6 +250,42 @@
 $("#form-ferVer").submit(function(e){ 
         e.preventDefault();
     });
+
+$('#ferVer-DOP').on('blur', function(){
+	var date1 = $('#ferVer-DOP').val();
+	var date2 = "<%= 1.year.ago(Date.today).strftime("%Y-%m-%d").to_s %>";
+	var date3 = "<%= 2.year.ago(Date.today).strftime("%Y-%m-%d").to_s %>";
+	var date1Updated = new Date(date1.replace(/-/g,'/')); 
+	var date2Updated = new Date(date2.replace(/-/g,'/'));
+	var date3Updated = new Date(date3.replace(/-/g,'/'));
+	if (date1Updated >= date2Updated) {
+		$('.progress-bar').css('width', '100%').attr('aria-valuenow', 100).removeClass("bg-info").removeClass("bg-warning").addClass("bg-danger").text("HIGH"); 
+	} else if (date1Updated >= date3Updated) {
+		$('.progress-bar').css('width', '50%').attr('aria-valuenow', 50).removeClass("bg-danger").removeClass("bg-info").addClass("bg-warning").text("MEDIUM"); 
+	} else {
+		$('.progress-bar').css('width', '10%').attr('aria-valuenow', 10).removeClass("bg-danger").removeClass("bg-warning").addClass("bg-info").text("LOW"); 
+	}
+})
+
+// District instruction lookup - TO BE CONTINUED
+$('#ferVer-District').on('change', function(){
+	$.ajax({
+	  type:"GET",
+	  url:"get_district",
+	  dataType:"json",
+	  data: {submitted_code: $('#ferVer-District').val()},
+	  success:function(result){
+	  	var fieldValue = $('#ferVer-District').val();
+	  	if (fieldValue.length == 0) {
+
+	  	} else {
+	  		console.log(result)
+			$('#ferVer-District-Name').val(result.name);
+			$('#ferVer-District-Instructions').val(result.instructions);
+	  	}
+	  }
+	});
+});
 
 function submitFormReceipt(){
 	var sonumber = $('#ferVer-SO').val(),
@@ -185,9 +303,8 @@ function submitFormReceipt(){
 		cod = $('#ferVer-COD').val(),
 		mfg = $('#ferVer-MFG').val();
 	if (leaking == "Yes") {
-		var leakingConfirmed = ("**EMAIL TRUEBLUESUPERVISOR@NEWLEAFSC.NET**"
-			+'\n**Subject Line: Leaking Damage - ' + sonumber
-			+'\n**Body: **'
+		var leakingSubject = ("Leaking Damage - " + sonumber);
+		var leakingBody = ('Submitted By: ' + "<%= current_user.full_name.to_s %>"
 			+'\nCustomer: ' + callername
 			+'\nAddress: ' + address
 			+'\nBusiness: ' + business
@@ -197,16 +314,22 @@ function submitFormReceipt(){
 			+'\nModel: ' + model
 			+'\nSerial: ' + serial
 			+'\nFailure: ' + failure);
-		$('#ferVer-LeakEmail').val(leakingConfirmed);
-		$('#ferVer-LeakEmail').prop('hidden', false);
+		$('#ferVer-LeakEmail').val(leakingBody);
+		$('#ferVer-LeakSubject').val(leakingSubject);
+		$('#leakEmail').prop('hidden', false);
 	} else {
-		var leakingConfirmed = ("");
-		$('#ferVer-LeakEmail').prop('hidden', true);
+		var leakingSubject = ("");
+		var leakingBody = ("");
+		$('#leakEmail').prop('hidden', true);
 	}
 	if (mfg == "No" || cod == "Yes") {
 		var mfgConfirmed = "***PLEASE BILL CUSTOMER DIRECTLY***";
+		$('#ferVer-CODInstructions').prop('hidden', false);
+		$('#ferVer-MFGInstructions').prop('hidden', true);
 	} else {
 		var mfgConfirmed = "";
+		$('#ferVer-CODInstructions').prop('hidden', true);
+		$('#ferVer-MFGInstructions').prop('hidden', false);
 	}
 	$('#ferVer-Receipt').val(new Date().toLocaleDateString() + ' @ ' + new Date().toLocaleTimeString()
 		+'\n '
@@ -220,10 +343,13 @@ function submitFormReceipt(){
 		+'\nModel: ' + model + ' Serial: ' + serial
 		+'\nFailure: ' + failure
 		+'\nLeaking: ' + leaking + ' | Business: ' + business + ' | MFG Covered: ' + mfg
-		+'\n' + mfgConfirmed);
+		+'\n' + mfgConfirmed
+	);
 }
 
 function submitFormReset(){
 	$('#form-ferVer').trigger('reset');
+	$('#form-ferVerFinal').trigger('reset');
+	$('.progress-bar').css('width', '0%').attr('aria-valuenow', 0).removeClass("bg-danger").removeClass("bg-warning").removeClass("bg-info").text(""); 
 }
 </script>
