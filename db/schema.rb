@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190826175454) do
+ActiveRecord::Schema.define(version: 20190827132738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,6 +208,27 @@ ActiveRecord::Schema.define(version: 20190826175454) do
     t.integer "errvalue"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "fergusons", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "district_id"
+    t.string "so_number"
+    t.string "customer_name"
+    t.string "sp_name"
+    t.string "address"
+    t.string "manufacturer"
+    t.string "product"
+    t.string "model"
+    t.boolean "escalated"
+    t.boolean "leaking"
+    t.boolean "customer_fo"
+    t.boolean "servicer_fo"
+    t.boolean "dealer_fo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_fergusons_on_district_id"
+    t.index ["user_id"], name: "index_fergusons_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -474,6 +495,8 @@ ActiveRecord::Schema.define(version: 20190826175454) do
   add_foreign_key "err_logs", "err_names"
   add_foreign_key "err_logs", "err_statuses"
   add_foreign_key "err_logs", "users"
+  add_foreign_key "fergusons", "districts"
+  add_foreign_key "fergusons", "users"
   add_foreign_key "messages", "chatrooms"
   add_foreign_key "messages", "users"
   add_foreign_key "mfg_parts", "manufacturers"

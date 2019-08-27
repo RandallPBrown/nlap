@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :fergusons
   resources :districts
   resources :pcmi_contacts
   resources :pcmi_imports
@@ -54,6 +55,7 @@ Rails.application.routes.draw do
       collection do
         get 'get_dealer'
         get 'get_district'
+        put 'create_ferguson'
       end
     end
   resources :parts

@@ -61,10 +61,23 @@ class ToolsController < ApplicationController
     end
   end
 
+  def ferguson
+    @fergusons = Ferguson.all.where("user_id = ?", current_user.id)
+  end
+
+  def create_ferguson
+    @ferguson = Ferguson.new(ferguson_params)
+
+    # if @ferguson.save
+    #   redirect_to @ferguson, notice: 'Ferguson was successfully created.'
+    # else
+    #   render :new
+    # end
+  end
+
   def get_district
     submitted_code = params[:submitted_code]
     
-    # do something with submitted_code and return the results
     if params[:submitted_code].present?
       @district_code = District.all.find_by(name: submitted_code)
     else
@@ -127,6 +140,10 @@ class ToolsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def tool_params
       params.require(:tool).permit(:receipt)
+    end
+
+    def ferguson_params
+      params.permit(:user_id, :district_id, :so_number, :customer_name, :sp_name, :address, :manufacturer, :product, :model, :escalated, :leaking, :customer_fo, :servicer_fo, :dealer_fo)
     end
 
     def validator_params

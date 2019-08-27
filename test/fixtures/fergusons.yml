@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  district: one
+  so_number: MyString
+  customer_name: MyString
+  sp_name: MyString
+  address: MyString
+  manufacturer: MyString
+  product: MyString
+  model: MyString
+  escalated: false
+  leaking: false
+  customer_fo: false
+  servicer_fo: false
+  dealer_fo: false
+
+two:
+  user: two
+  district: two
+  so_number: MyString
+  customer_name: MyString
+  sp_name: MyString
+  address: MyString
+  manufacturer: MyString
+  product: MyString
+  model: MyString
+  escalated: false
+  leaking: false
+  customer_fo: false
+  servicer_fo: false
+  dealer_fo: false
