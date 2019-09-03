@@ -1,6 +1,7 @@
   <script>
 
-$(document).ready(function(t){
+$(document).on('turbolinks:load', function() {
+$('table').DataTable().clear().destroy();
 var t = $('#agentTable').DataTable({ 
         "pageLength": 10,
         ajax: {
@@ -22,17 +23,19 @@ var t = $('#agentTable').DataTable({
             ]
           });
   t.draw();
-var buttons = new $.fn.dataTable.Buttons(t, {
-     buttons: [
-       'copyHtml5',
-       'selectNone',
-       'selectAll',
-       'csvHtml5'
-    ]
-}).container().appendTo($('#buttons'));
+if ($('#buttons').children().length == 0) {  
+  var buttons = new $.fn.dataTable.Buttons(t, {
+       buttons: [
+         'copyHtml5',
+         'selectNone',
+         'selectAll',
+         'csvHtml5'
+      ]
+  }).container().appendTo($('#buttons'));
+} else {
+  
+}
 
-t.buttons().container()
-    .appendTo( $('.col-sm-6:eq(0)', t.table().container() ) );
 
 
 $('#dtDepartmentSearch').on( 'change', function () {

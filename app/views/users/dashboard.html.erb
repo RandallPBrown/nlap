@@ -19,7 +19,7 @@ var t = $('#userEntryTable').DataTable({
 
 
 t.rows.add(
-  [<% @user_entry.each do |entry| %>{'Name': '<%= entry.agent.user.full_name %>', 'Type': '<%= entry.occurrence.name.truncate(15) %>', 'Date':'<%= entry.edate %>', 'Expires':'<%= entry.edate + 180.days %>', 'Description':'<%= entry.edesc.truncate(15) %>', '':''},<% else %><% end %>]
+  [<% @user_entry.each do |entry| %>{'Name': '<%= entry.agent.user.full_name %>', 'Type': '<%= entry.occurrence.name.truncate(15) %>', 'Date':'<%= entry.edate %>', 'Expires':'<%= entry.edate + 90.days %>', 'Description':'<%= entry.edesc.truncate(15) %>', '':''},<% else %><% end %>]
   ).draw();
 
 // DAPS TABLE

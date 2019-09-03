@@ -56,7 +56,7 @@ class User < ApplicationRecord
     where("daps.ddate > ?", Time.now-90.days)
   }
   scope :effective,  -> {
-    where("entries.edate > ?", Time.now-180.days)
+    where("entries.edate > ?", Time.now-90.days)
   }
   scope :today, -> {
     where(edate: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
