@@ -1,6 +1,6 @@
 class FergusonsController < ApplicationController
   layout "scaffold"
-
+  respond_to :html, :json
   before_action :set_ferguson, only: [:show, :edit, :update, :destroy]
 
   # GET /fergusons
@@ -34,10 +34,14 @@ class FergusonsController < ApplicationController
 
   # PATCH/PUT /fergusons/1
   def update
-    if @ferguson.update(ferguson_params)
-      redirect_to @ferguson, notice: 'Ferguson was successfully updated.'
-    else
-      render :edit
+    respond_to do |format|
+      if @ferguson.update_attributes(ferguson_params)
+        format.html { redirect_to(@ferguson, :notice => 'User was successfully updated.') }
+        format.json { respond_with_bip(@ferguson) }
+      else
+        format.html { render :action => "edit" }
+        format.json { respond_with_bip(@ferguson) }
+      end
     end
   end
 

@@ -102,7 +102,7 @@ class AgentsController < ApplicationController
     @entries = Entry.effective.joins(:user).where("entries.agent_id = ?", @agent.id)
     @occurrences = Entry.effective.joins(:occurrence).where("entries.agent_id = ?", @agent.id).group(:agent_id).sum(:ovalue)
     @daps = Dap.written.where("daps.user_id = ?", @agent.user.id)
-    @start = Occurrence.joins(:entries).where("entries.agent_id = ?", @agent.id).where('entries.edate' => 180.days.ago...Date.today.beginning_of_day).order('entries.edate DESC').select(:'entries.edate', :ovalue).group_by { |b| b.edate.strftime("%B") }
+    @start = Occurrence.joins(:entries).where("entries.agent_id = ?", @agent.id).where('entries.edate' => 90.days.ago...Date.today.beginning_of_day).order('entries.edate DESC').select(:'entries.edate', :ovalue).group_by { |b| b.edate.strftime("%B") }
     @data = @start.each do |f|
       f[1][0]
     end

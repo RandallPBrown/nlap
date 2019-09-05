@@ -63,17 +63,31 @@ class ToolsController < ApplicationController
 
   def ferguson
     @fergusons = Ferguson.all.where("user_id = ?", current_user.id)
+    ferguson_array = Array.new
+    @fergusons.each do |ferg|
+      ferguson_array << {
+          'District': ferg.district.name,
+          'Service Order': ferg.so_number,
+          'Customer': ferg.customer_name,
+          'Provider': ferg.sp_name.truncate(15),
+          'Address': ferg.address,
+          'Manufacturer': ferg.manufacturer,
+          'Product': ferg.product,
+          'Escalated': helpers.best_in_place(ferg, :escalated, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light'),
+          'Leaking': helpers.best_in_place(ferg, :leaking, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light'),
+          'FO - C': helpers.best_in_place(ferg, :customer_fo, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light'),
+          'FO - SP': helpers.best_in_place(ferg, :servicer_fo, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light'),
+          'FO - D': helpers.best_in_place(ferg, :dealer_fo, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light')
+        }
+      else
+    end
+    respond_to do |format|
+      format.html
+      format.json {render :json => ferguson_array}
+    end
   end
 
-  def create_ferguson
-    @ferguson = Ferguson.new(ferguson_params)
 
-    # if @ferguson.save
-    #   redirect_to @ferguson, notice: 'Ferguson was successfully created.'
-    # else
-    #   render :new
-    # end
-  end
 
   def get_district
     submitted_code = params[:submitted_code]

@@ -1,6 +1,7 @@
   <script>
 
 $(document).on('turbolinks:load', function() {
+$('table').DataTable().buttons().destroy();
 $('table').DataTable().clear().destroy();
 var t = $('#agentTable').DataTable({ 
         "pageLength": 10,
@@ -10,6 +11,12 @@ var t = $('#agentTable').DataTable({
         },
         "processing": true,
         select: true,
+        buttons: [
+         'copyHtml5',
+         'selectNone',
+         'selectAll',
+         'csvHtml5'
+        ],
         columns: [ 
               { data: 'Full Name' }, 
               { data: 'Email' },
@@ -23,18 +30,11 @@ var t = $('#agentTable').DataTable({
             ]
           });
   t.draw();
-if ($('#buttons').children().length == 0) {  
+
   var buttons = new $.fn.dataTable.Buttons(t, {
-       buttons: [
-         'copyHtml5',
-         'selectNone',
-         'selectAll',
-         'csvHtml5'
-      ]
+       
   }).container().appendTo($('#buttons'));
-} else {
-  
-}
+
 
 
 
@@ -53,6 +53,10 @@ $('#dtArSearch').on( 'change', function () {
   </script>
 
 <% @title = "Listing Agents" %>
+
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
 
     <% content_for :actions do %>
     <%= link_to new_user_path, class: 'btn btn-primary btn-large pull-right' do %>

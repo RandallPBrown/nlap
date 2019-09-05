@@ -18,33 +18,38 @@ Rails.application.routes.draw do
   resources :network_maps
   resources :messages
   resources :chatrooms
-  get 'tools/snapshot'
+
   get 'network_map/index'
   get 'messages/message'
-  get 'users/dashboard'
-  get 'users/index'
-  get 'tools/validator'
-  get 'tools/ferguson'
-  get 'tools/val'
-  get 'tools/pendingreview'
-  get 'parts/dashboard'
-  get 'err_logs/dashboard'
-  get 'entries/dashboard'
-  get 'agent_department/index'
+  get 'entries/new'
+  get 'entries/form2'
   get 'entry/dashboard'
-  get 'entries/entry_breakdown'
+  get 'entries/entry_breakdown', defaults: { format: 'json'} 
   get 'entries/calendar'
   get 'entries/agent_list'
+  get 'entries/dashboard'
+  get 'entries/agentview', to: 'entries#agentview'
+  get 'users/dashboard'
+  get 'users/index'
+  get 'parts/dashboard'
+  get 'err_logs/dashboard'
+
+  get 'agent_department/index'
+
   get 'buying_groups/edit'
   get 'agents/new_entry'
   get 'agents/new_writeup'
   get 'agents/agent_breakdown' 
   get 'agents/breakdown_pdf', defaults: { format: 'pdf'} 
-  get 'entries/new'
-  get 'entries/form2'
+
   get 'tools/speed_test'
   get 'tools/procedure_view'
-  get 'entries/agentview', to: 'entries#agentview'
+  get 'tools/snapshot'
+  get 'tools/validator'
+  get 'tools/ferguson'
+  get 'tools/val'
+  get 'tools/pendingreview'
+
   get 'daps/form2'  
   get 'home/dashboard'
   get 'myresults', to: 'entries#my_results', defaults: { format: 'csv'}  

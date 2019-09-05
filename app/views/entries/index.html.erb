@@ -21,13 +21,15 @@ body::-webkit-scrollbar {
 }
 
 </style>
-
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
   
 <script>
 $(document).on('turbolinks:load', function() {
-
+$('table').DataTable().buttons().destroy();
 $('table').DataTable().clear().destroy();
-var t = $('#entryTable').DataTable({ 
+var entryTable = $('#entryTable').DataTable({ 
         "pageLength": 10,
         select: true,
         ajax: {
@@ -46,7 +48,7 @@ var t = $('#entryTable').DataTable({
               { data: '' } 
             ]
           });
-  t.order( [ 4, 'desc' ] ).draw();
+  entryTable.order( [ 4, 'desc' ] ).draw();
 
     // Enable pusher logging - don't include this in production
     // Pusher.logToConsole = true;
@@ -61,29 +63,26 @@ var t = $('#entryTable').DataTable({
     //   t.rows.add([{'Agent': data.agent, 'Department': data.department, 'Occurrence': data.occurrence, 'Value': data.ovalue, 'Date': data.date, 'Expiration': data.exp, 'Description': data.description, '': 'JUST ADDED'}]).draw();
     // });
 
-if ($('#buttons').children().length == 0) {
-  var buttons = new $.fn.dataTable.Buttons(t, {
-     buttons: [
-       'copyHtml5',
-       'selectAll',
-       'csvHtml5'
+var buttons = new $.fn.DataTable.Buttons(entryTable, {
+    buttons: [
+      'copyHtml5',
+      'selectAll',
+      'csvHtml5'
     ]
 }).container().appendTo($('#buttons'));
-} else {
-
-}
 
 
-$('#dtDateStart').change( function() { t.draw(); } );
-$('#dtDateEnd').change( function() { t.draw(); } );
+
+$('#dtDateStart').change( function() { entryTable.draw(); } );
+$('#dtDateEnd').change( function() { entryTable.draw(); } );
 
 $('#dtDepartmentSearch').on( 'change', function () {
-  t.columns( 1 )
+  entryTable.columns( 1 )
     .search( this.value )
     .draw();
   });
 $('#dtOccurrenceSearch').on( 'change', function () {
-  t.columns( 2 )
+  entryTable.columns( 2 )
     .search( this.value )
     .draw();
 });
@@ -95,7 +94,7 @@ $('#dtOccurrenceSearch').on( 'change', function () {
 //   });
 // });
 $('#dtAgentSearch').on( 'change', function () {
-  t.columns( 0 )
+  entryTable.columns( 0 )
     .search( this.value )
     .draw();
   });

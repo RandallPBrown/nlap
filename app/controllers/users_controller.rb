@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   helper_method :is_admin?
 
   def index
-    @users = User.includes(:daps, agent: :entries).joins(agent: :entries).order('users.first_name asc')
+    @users = User.all.order('users.first_name asc')
   end
 
   def dashboard          
