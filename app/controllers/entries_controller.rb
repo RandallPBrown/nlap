@@ -266,7 +266,7 @@ end
             occurrence: @entry.occurrence.name,
             ovalue: @entry.occurrence.ovalue,
             date: @entry.edate,
-            exp: @entry.edate + 180.days,
+            exp: @entry.edate + 90.days,
             description: @entry.edesc,
             id: @entry.user.id
         })

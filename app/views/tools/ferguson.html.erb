@@ -9,7 +9,7 @@ $(function() {
     // $('.datepicker').datepicker({format: 'yyyy-mm-dd', altFormat: 'mm/dd/yyyy'});
 });
 $(document).on('turbolinks:load', function() {
-var t = $('table').DataTable({ 
+var t = $('#fergTable').DataTable({ 
         "pageLength": 10,
         ajax: {
             url: 'ferguson',
@@ -39,7 +39,20 @@ var t = $('table').DataTable({
             ]
           });
   t.draw();
+
+      var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>', {
+      cluster: '<%= ENV["PUSHER_CLUSTER"] %>',
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe('ferg');
+    channel.bind('new-ferg', function(data) {
+      t.rows.add([{'District': data.district_id, 'Service Order': data.so_number, 'Customer': data.customer_name, 'Provider': data.sp_name, 'Address': data.address, 'Manufacturer': data.manufacturer, 'Product': data.product, 'Escalated': data.escalated, 'Leaking': data.leaking, 'FO - C': data.customer_fo, 'FO - SP': data.servicer_fo, 'FO - D': data.dealer_fo}]).draw();
+    });
 });
+
+
+
 </script>	
 <div class="row">
 	<ul class="nav nav-pills m-auto" id="pills-tab" role="tablist">
@@ -208,7 +221,7 @@ var t = $('table').DataTable({
 			                                          <th>FO - D</th>
 			                  </tr>
 			                </thead>
-			                <tbody>
+			                <tbody class="text-center">
 
 			                </tbody>
 			            </table>
@@ -454,6 +467,7 @@ function submitFormReceipt(){
 }
 
 function setFerguson() {
+	var t = $('#fergTable').DataTable();
     $.ajax({
       url: '/fergusons',
       type: 'post',
@@ -473,7 +487,8 @@ function setFerguson() {
         dealer_fo: false,
         servicer_fo: false }
       }
-    })
+    });
+
 }
 
 
