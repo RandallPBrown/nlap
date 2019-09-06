@@ -54,9 +54,8 @@ class AgentsController < ApplicationController
                   "<i class='fa fa-times-circle text-danger'><span hidden>Y</span></i>"
                  else 
                   "<i class='fa fa-check-circle text-success'><span hidden>N</span></i>"
-                 end, 
-            '': ("<div class='btn-group'> " + helpers.link_to(helpers.theme_icon_tag('eye'), agent_path(agent.id), 'data-toggle': 'tooltip', title: 'Show', class: 'btn btn-link') + helpers.link_to(helpers.theme_icon_tag('pencil-alt'), edit_user_path(agent.user.id), 'data-toggle': 'tooltip', title: 'Edit', class: 'btn btn-link') + helpers.link_to(helpers.theme_icon_tag('trash'), user_path(agent.user.id), confirm: 'Are you sure?', method: :delete, data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link') + "</div>")
-        }
+                 end
+            }
          else 
        end 
      end 
