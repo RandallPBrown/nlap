@@ -25,7 +25,7 @@ class AgentsController < ApplicationController
     @agents = Agent.index_controller
     agent_array = Array.new
     @agents.each do |agent| 
-       if agent.user.deleted_at.nil? && agent.user.has_role?(:agent) || agent.user.has_role?(:lead) || agent.user.has_role?(:reporting) 
+       if agent.user.deleted_at.nil? && (agent.user.has_role?(:agent) || agent.user.has_role?(:lead) || agent.user.has_role?(:reporting))
         agent_array << {
           'Full Name':  helpers.link_to(agent.user.full_name, agents_breakdown_pdf_path(:id => agent.id, format: :pdf), target: :_blank), 
           'Email': agent.user.email.truncate(15), 
