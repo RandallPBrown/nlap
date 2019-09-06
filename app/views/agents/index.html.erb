@@ -1,8 +1,7 @@
   <script>
 
 $(document).on('turbolinks:load', function() {
-$('table').DataTable().buttons().destroy();
-$('table').DataTable().clear().destroy();
+
 var t = $('#agentTable').DataTable({ 
         "pageLength": 10,
         ajax: {
@@ -11,12 +10,6 @@ var t = $('#agentTable').DataTable({
         },
         "processing": true,
         select: true,
-        buttons: [
-         'copyHtml5',
-         'selectNone',
-         'selectAll',
-         'csvHtml5'
-        ],
         columns: [ 
               { data: 'Full Name' }, 
               { data: 'Email' },
@@ -32,7 +25,12 @@ var t = $('#agentTable').DataTable({
   t.draw();
 
   var buttons = new $.fn.dataTable.Buttons(t, {
-       
+        buttons: [
+         'copyHtml5',
+         'selectNone',
+         'selectAll',
+         'csvHtml5'
+        ]
   }).container().appendTo($('#buttons'));
 
 
