@@ -68,16 +68,16 @@ class ToolsController < ApplicationController
       ferguson_array << {
           'District': ferg.district.name,
           'Service Order': ferg.so_number,
-          'Customer': ferg.customer_name,
+          'Customer': ferg.customer_name.truncate(15),
           'Provider': ferg.sp_name.truncate(15),
-          'Address': ferg.address,
-          'Manufacturer': ferg.manufacturer,
+          'Address': ferg.address.truncate(15),
+          'Manufacturer': ferg.manufacturer.truncate(15),
           'Product': ferg.product,
-          'Escalated': helpers.best_in_place(ferg, :escalated, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light'),
-          'Leaking': helpers.best_in_place(ferg, :leaking, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light'),
-          'FO - C': helpers.best_in_place(ferg, :customer_fo, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light'),
-          'FO - SP': helpers.best_in_place(ferg, :servicer_fo, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light'),
-          'FO - D': helpers.best_in_place(ferg, :dealer_fo, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light')
+          'Escalated': helpers.best_in_place(ferg, :escalated, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light', :confirm => 'Has the customer escalated?'),
+          'Leaking': helpers.best_in_place(ferg, :leaking, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light', :confirm => 'Has the unit started leaking?'),
+          'FO - C': helpers.best_in_place(ferg, :customer_fo, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light', :confirm => 'Have you contacted the customer?'),
+          'FO - SP': helpers.best_in_place(ferg, :servicer_fo, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light', :confirm => 'Confirmed dispatch with Service Provider?'),
+          'FO - D': helpers.best_in_place(ferg, :dealer_fo, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light', :confirm => 'Informed Ferguson location of dispatch?')
         }
       else
     end
