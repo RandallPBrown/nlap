@@ -6,7 +6,7 @@ class AgentsController < ApplicationController
 
   # GET /agents
   def index
-    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+    if current_user.has_role?(:lead) || current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
     # @agent = Agent.all
     # @agent = Agent.all
     # @users = User.with_role(:agent).all

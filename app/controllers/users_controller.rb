@@ -5,7 +5,11 @@ class UsersController < ApplicationController
   helper_method :is_admin?
 
   def index
-    @users = User.joins(agent: :department).order('users.first_name asc')
+    if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @users = User.joins(agent: :department).order('users.first_name asc')
+    else
+      redirect_to users_dashboard_path, notice: 'Unauthorized'
+    end
   end
 
   def dashboard          
