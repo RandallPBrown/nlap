@@ -6,13 +6,13 @@ class Agent < ApplicationRecord
   has_many :daps
 	has_many :entries
   has_many :occurrences, :through => :entries
-    accepts_nested_attributes_for :department
-    accepts_nested_attributes_for :daps
-    accepts_nested_attributes_for :entries
-    accepts_nested_attributes_for :occurrences
-    accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :department
+  accepts_nested_attributes_for :daps
+  accepts_nested_attributes_for :entries
+  accepts_nested_attributes_for :occurrences
+  accepts_nested_attributes_for :user
 
- scope :effective,  -> {
+  scope :effective,  -> {
     where("entries.edate > ?", Time.now-90.days)
   }
 	scope :occurrence_user, -> {
@@ -25,6 +25,12 @@ class Agent < ApplicationRecord
 
 	def user_full_name
     	self.user.full_name
+  end  
+
+  def select_user_full_name
+    if user.deleted_at.nil?
+      self.user.full_name
+    end
   end  
 
     pg_search_scope :search,

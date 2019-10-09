@@ -10,7 +10,7 @@ class AgentsController < ApplicationController
     # @agent = Agent.all
     # @agent = Agent.all
     # @users = User.with_role(:agent).all
-      @agents = Agent.index_controller
+      # @agents = Agent.index_controller
     else
       redirect_to users_dashboard_path, notice: 'Unauthorized'
     end
