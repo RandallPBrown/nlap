@@ -1,0 +1,147 @@
+<% @title = "Listing shortkeys" %>
+
+<% content_for :description do %>
+  <p>Edit this template in <code>app/views/Shortkeys/index.html.erb</code>.</p>
+  <% end %>
+
+  <% content_for :actions do %>
+    <%= link_to new_shortkey_path, class: 'btn btn-primary btn-large pull-right' do %>
+      <%= fa_icon_tag "plus" %> Add Shortkey
+      <% end %>
+      <% end %>
+
+
+<div class="container">
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item active"><a class="nav-link active" role="tab" href="#contact_1" data-toggle="tab" data-asdf="1">MAIN</a>
+    </li>
+    <li class="nav-item"><a href="#" class="nav-link add-contact">+ ADD</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="contact_1">
+      <div class="row">
+        <div class="col-3 d-flex align-items-stretch pl-0 ml-0">
+          <div class="card p-1">
+            <h4 class="font-weight-bold text-dark text-center">MENU</h4>
+            Departmental:
+            <select class="form-control form-control-sm" id="shortkeySelectDepartmental_MAIN" multiple>
+              <% @shortkeys.each do |f| %>
+                <% if f.department_id == current_user.department.id %>
+                <option name="<%= f.id %>"><%= f.name %></option>
+                <% end %>
+              <% end %>
+            </select><br>
+            All:
+            <select class="form-control form-control-sm" id="shortkeySelect_MAIN" multiple>
+              <% @shortkeys.each do |f| %>
+                <option name="<%= f.id %>"><%= f.name %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class="col-9 pr-0 mr-0">
+          <div class="card p-1" style="height: 500px">
+            <div class="container">
+              <h4 class="font-weight-bold text-dark text-center">SHORTKEY</h4>
+              <div contenteditable="true" id="shortkeyValues_MAIN" class="form-control form-control-sm" style="height: 85% !important"></div>
+              <a id="shortkeyValues_1" href="#" name="copy_pre" class="btn btn-primary btn-block btn-sm font-weight-bold">COPY TO CLIPBOARD</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script >
+  var current_tab = "MAIN";
+$(".nav-tabs").on("click", "a", function (e) {
+        e.preventDefault();
+        if (!$(this).hasClass('add-contact')) {
+            $(this).tab('show');
+            current_tab = $(this).text();
+        console.log("The current tab is:" + current_tab)
+        }
+        
+    })
+    .on("click", "span", function () {
+        var anchor = $(this).parents('a');
+        $(anchor.attr('href')).remove();
+        $(this).parents('li').remove();
+        $(".nav-tabs li").children('a').first().click();
+    })
+var indexID;
+var tabId;
+$('.add-contact').click(function (e) {
+    e.preventDefault();
+    var indexID = $(".nav-tabs").children().length; //think about it ;)
+    var tabId = "TAB_" + indexID;
+    $(this).closest('li').before('<li class="nav-item"><a class="nav-link" role="tab" href="#contact_' + tabId + '" data-asdf="' + indexID+ '">TAB_'+ indexID + ' <span><i class="fa fa-times "></i></span></a></li>');
+    $('.tab-content').append('<div class="tab-pane" id="contact_' + tabId + '" >' + '<div class="row"><div class="col-3 d-flex align-items-stretch pl-0 ml-0"><div class="card p-1"><h4 class="font-weight-bold text-dark text-center">MENU</h4>Departmental:<select class="form-control form-control-sm" id="shortkeySelectDepartmental_' + tabId + '" multiple><% @shortkeys.each do |f| %><% if f.department_id == current_user.department.id %><option name="<%= f.id %>"><%= f.name %></option><% end %><% end %></select><br>All:<select class="form-control form-control-sm" id="shortkeySelect_' + tabId + '" multiple><% @shortkeys.each do |f| %><option name="<%= f.id %>"><%= f.name %></option><% end %></select></div></div><div class="col-9 pr-0 mr-0"><div class="card p-1" style="height: 500px"><div class="container"><h4 class="font-weight-bold text-dark text-center">SHORTKEY</h4><div contenteditable="true" id="shortkeyValues_' + tabId + '" class="form-control form-control-sm" style="height: 85% !important"></div><a id="shortkeyValues_' + tabId + '" href="#" name="copy_pre" class="btn btn-primary btn-block btn-sm font-weight-bold"COPY TO CLIPBOARD</a></div></div></div></div>' + indexID + '</div>');
+   $('.nav-tabs li:nth-child(' + indexID + ') a').click();
+$("#shortkeySelectDepartmental_"+ current_tab +" option").on("click", function() {
+
+  $.get({
+    url: "shortkeys/" + $(this).attr('name'),
+    dataType: "json",
+    success: function(data) {
+        $('#shortkeyValues_' + current_tab).html(data.body)
+    }
+  })
+  
+});
+
+$("#shortkeySelect_"+ current_tab +" option").on("click", function() {
+
+  $.get({
+    url: "shortkeys/" + $(this).attr('name'),
+    dataType: "json",
+    success: function(data) {
+        $('#shortkeyValues_' + current_tab).html(data.body)
+    }
+  })
+  
+});
+});
+
+$("#shortkeySelectDepartmental_"+ current_tab +" option").on("click", function() {
+
+  $.get({
+    url: "shortkeys/" + $(this).attr('name'),
+    dataType: "json",
+    success: function(data) {
+        $('#shortkeyValues_' + current_tab).html(data.body)
+    }
+  })
+  
+});
+
+$("#shortkeySelect_"+ current_tab +" option").on("click", function() {
+
+  $.get({
+    url: "shortkeys/" + $(this).attr('name'),
+    dataType: "json",
+    success: function(data) {
+        $('#shortkeyValues_' + current_tab).html(data.body)
+    }
+  })
+  
+});
+
+
+$(document).ready(function(){
+  $("a[name=copy_pre]").click(function() {
+    var id = $(this).attr('id');
+    var el = document.getElementById(id);
+    var range = document.createRange();
+    range.selectNodeContents(el);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.execCommand('copy');
+    alert("Contents copied to clipboard.");
+    return false;
+  });
+});
+</script>
+

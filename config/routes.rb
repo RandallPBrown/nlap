@@ -1,24 +1,11 @@
 Rails.application.routes.draw do
-  resources :fergusons
-  resources :districts
-  resources :pcmi_contacts
-  resources :pcmi_imports
-  resources :mfg_parts
-  resources :manufacturers
-  resources :groups
-  resources :teams
-  resources :sections
-  resources :procedures
-  resources :contacts
-  resources :dealers
+
+
+
   put 'agent_stats/all_stats' => 'agent_stats#all_stats'
   put 'agent_stats/csv_upload' => 'agent_stats#csv_upload'
-  resources :agent_stats 
-  resources :recipients
-  resources :network_maps
-  resources :messages
-  resources :chatrooms
 
+  get 'shortkeys/data', defaults: { format: 'json'} 
   get 'network_map/index'
   get 'messages/message'
   get 'entries/new'
@@ -63,6 +50,18 @@ Rails.application.routes.draw do
         put 'create_ferguson'
       end
     end
+  resources :fergusons
+  resources :districts
+  resources :pcmi_contacts
+  resources :pcmi_imports
+  resources :mfg_parts
+  resources :manufacturers
+  resources :groups
+  resources :teams
+  resources :sections
+  resources :procedures
+  resources :contacts
+  resources :dealers
   resources :parts
   resources :products
   resources :buying_groups
@@ -80,6 +79,12 @@ Rails.application.routes.draw do
   resources :err_logs
   resources :err_names
   resources :err_statuses
+  resources :agent_stats 
+  resources :recipients
+  resources :network_maps
+  resources :messages
+  resources :chatrooms
+  resources :shortkeys
   devise_for :users, :skip => [:registrations], controllers: {
         sessions: 'users/sessions'
         # registrations: 'users/registrations'
