@@ -6,7 +6,7 @@ class ShortkeysController < ApplicationController
   # GET /shortkeys
   def index
     @shortkeys = Shortkey.all
-
+    @departments = Department.all.order(:name)
   end
 
   def data
