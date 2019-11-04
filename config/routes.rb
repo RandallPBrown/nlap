@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get 'entries/agentview', to: 'entries#agentview'
   get 'users/dashboard'
   get 'users/index'
+  get 'users/password_reset'
   get 'parts/dashboard'
   get 'err_logs/dashboard'
 

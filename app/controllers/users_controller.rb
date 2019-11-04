@@ -55,6 +55,13 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def password_reset
+    @user_update = User.find(params[:id])
+    @user_update.password = "123456"
+    @user_update.save
+    redirect_to users_dashboard_path, notice: 'User was successfully updated.'
+  end
+
   # POST /agents
   def create
       @user = User.new(user_params)
