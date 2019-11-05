@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191023214634) do
+ActiveRecord::Schema.define(version: 20191105152511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -235,6 +235,18 @@ ActiveRecord::Schema.define(version: 20191023214634) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "incentives", force: :cascade do |t|
+    t.bigint "user_id"
+    t.float "uph"
+    t.float "quality"
+    t.float "occupancy"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "date"
+    t.integer "improvement_opp"
+    t.index ["user_id"], name: "index_incentives_on_user_id"
   end
 
   create_table "languages", force: :cascade do |t|
@@ -507,6 +519,7 @@ ActiveRecord::Schema.define(version: 20191023214634) do
   add_foreign_key "err_logs", "users"
   add_foreign_key "fergusons", "districts"
   add_foreign_key "fergusons", "users"
+  add_foreign_key "incentives", "users"
   add_foreign_key "messages", "chatrooms"
   add_foreign_key "messages", "users"
   add_foreign_key "mfg_parts", "manufacturers"

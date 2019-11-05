@@ -67,6 +67,7 @@ gem 'bullet', group: 'development'
 gem 'rolify'
 # Edit forms in line
 gem 'best_in_place', '~> 3.0.1'
+gem 'smarter_csv'
 
 
 source "https://gems.rapidrailsthemes.com/gems" do

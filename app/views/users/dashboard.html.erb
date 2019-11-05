@@ -324,7 +324,7 @@ $(document).ready(function() {
 </div>
             <script>
             var chart_labels = <%= raw @agent_chart_labels_effective %>;
-            var chart_data = <%= raw @agent_chart_data_effective %>;
+            var chart_data = <%= @agent_chart_data_effective %>;
             var dataset_label = "Effective";
             var chart_type = 'bar';
             var ctx = document.getElementById("statChart").getContext('2d');
@@ -353,7 +353,7 @@ $(document).ready(function() {
             var stat_chart = new Chart(ctx, config);
             $("#userChartEffective").click(function() {
                 var chart_labels = <%= raw @agent_chart_labels_effective %>;
-                var chart_data = <%= raw @agent_chart_data_effective %>;
+                var chart_data = <%= @agent_chart_data_effective %>;
                 var dataset_label = "Effective";
                 var data = stat_chart.config.data;
                 data.datasets[0].data = chart_data;
