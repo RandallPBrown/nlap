@@ -110,9 +110,7 @@
                     </div>
                   </div>
                 <% end %><br>
-                <% if current_user.admin? %>
-                 <%= link_to "SET PASS TO DEFAULT", users_password_reset_path(id: @user.id), class: 'btn btn-block btn-sm btn-primary font-weight-bold' %>
-                <% end %>
+                
                 <div class="row d-flex align-items-center mt-5">
                   <%= link_to "Cancel my account", user_path, confirm: "Are you sure?", method: :delete, class: "mr-auto text-danger" %>
                   <div>
@@ -122,7 +120,9 @@
                 </div>
               <% end %>
               <%= link_to "Back", agents_path, class: "btn btn-outline-defualt" %>
-
+              <% if current_user.admin? %>
+                 <%= link_to "SET PASS TO DEFAULT", users_password_reset_path(id: @user.id), class: 'btn btn-block btn-sm btn-primary font-weight-bold' %>
+                <% end %>
             </div>
           </div>
         </div>

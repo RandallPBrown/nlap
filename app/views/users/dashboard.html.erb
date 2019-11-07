@@ -79,7 +79,7 @@ $(document).ready(function() {
 </script>
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-    <div class="modal-content bg-primary rounded p-1">
+    <div class="modal-content bg-success rounded p-1">
       <div class="rounded border-light" style="height:100%;width:100%;border-radius: 5px;border-style: solid;">
         <span class="font-weight-bold text-light text-uppercase morning-message"><center>WELCOME, <%= current_user.first_name %>!</center></span><br>
         <div class="row justify-content-center p-3">
@@ -324,52 +324,77 @@ $(document).ready(function() {
 </div>
             <script>
             var chart_labels = <%= raw @agent_chart_labels_effective %>;
-            var chart_data = <%= @agent_chart_data_effective %>;
-            var dataset_label = "Effective";
-            var chart_type = 'bar';
+            var uph_data = <%= @agent_chart_data_effective %>;
+            var occ_data = <%= @agent_chart_data_effective_occupancy %>;
+            var dataset_label = "UPH";
+            var chart_type = 'line';
             var ctx = document.getElementById("statChart").getContext('2d');
             var config = {
                 type: 'bar',
                 data: {
                     labels: chart_labels,
                     datasets: [{
-                        label: dataset_label,
-                        data: chart_data,
-                        backgroundColor: '#8e8e8e',
+                        label: "UPH",
+                        yAxisID: 'B',
+                        data: uph_data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(255, 159, 64, 0.5)'
+                        ],
                         borderColor: '#373737',
-                        borderWidth: 1
+                        borderWidth: 1,
+                        order: 2
+                    },{
+                        label: 'OCC',
+                        yAxisID: 'A',
+                        data: occ_data,
+                        backgroundColor: 'rgb(152,251,152,0.3)',
+                        borderColor: '#373737',
+                        borderWidth: 1,
+                        type: 'line',
+                        order: 1
                     }]
                 },
                 options: {
                     scales: {
                         yAxes: [{
-                            ticks: {
-                                stepSize: 1
-                            }
+                          id: 'A',
+                          type: 'linear',
+                          position: 'right',
+                          ticks: {
+                              min: 50,
+                              max: 150,
+                              callback: function(value, index, values) {
+                                  return value + '%';
+                              }
+                          }
+                        }, {
+                          id: 'B',
+                          type: 'linear',
+                          position: 'left',
+                          ticks: {
+                              min: 0,
+                              max: 20
+                          }
                         }]
                     }
                 }
             };
             var stat_chart = new Chart(ctx, config);
-            $("#userChartEffective").click(function() {
-                var chart_labels = <%= raw @agent_chart_labels_effective %>;
-                var chart_data = <%= @agent_chart_data_effective %>;
-                var dataset_label = "Effective";
-                var data = stat_chart.config.data;
-                data.datasets[0].data = chart_data;
-                data.labels = chart_labels;
-                data.datasets[0].label = dataset_label;
-                stat_chart.update();
-            });
-            $("#userChartTotal").click(function() {
-                var chart_labels = <%= raw @agent_chart_labels_total %>;
-                var chart_data = <%= raw @agent_chart_data_total %>;
-                var dataset_label = "Total";
-                var data = stat_chart.config.data;
-                data.datasets[0].data = chart_data;
-                data.labels = chart_labels;
-                data.datasets[0].label = dataset_label;
-                stat_chart.update();
-            });
+            // $("#userChartEffective").click(function() {
+            //     var chart_labels = <%= raw @agent_chart_labels_effective %>;
+            //     var uph_data = <%= @agent_chart_data_effective %>;
+            //     var dataset_label = "Effective";
+            //     var data = stat_chart.config.data;
+            //     data.datasets[0].data = uph_data;
+            //     data.labels = chart_labels;
+            //     data.datasets[0].label = dataset_label;
+            //     stat_chart.update();
+            // });
+
             </script>
 </body>

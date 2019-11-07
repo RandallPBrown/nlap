@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   get 'agents/new_entry'
   get 'agents/new_writeup'
   get 'agents/agent_breakdown' 
-  get 'agents/breakdown_pdf', defaults: { format: 'pdf'} 
+  get 'agents/breakdown_pdf'
 
   get 'tools/speed_test'
   get 'tools/procedure_view'
@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   get 'tools/ferguson'
   get 'tools/val'
   get 'tools/pendingreview'
+  get 'tools/pcmi'
 
   get 'daps/form2'  
   get 'home/dashboard'
