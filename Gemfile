@@ -39,6 +39,7 @@ gem 'geocoder'
 # gem 'capistrano-rails', group: :development
 gem 'httparty'
 gem 'ruby_kml'
+gem 'rack-cors'
 
 gem 'devise'
 # gem "paranoia", "~> 2.2"

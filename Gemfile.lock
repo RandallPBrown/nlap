@@ -169,6 +169,7 @@ GEM
       pusher-signature (~> 0.1.8)
     pusher-signature (0.1.8)
     rack (2.0.6)
+    rack-cors (1.0.3)
     rack-ssl-enforcer (0.2.9)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -323,6 +324,7 @@ DEPENDENCIES
   popper_js
   puma (~> 3.7)
   pusher
+  rack-cors
   rack-ssl-enforcer
   rails (~> 5.1.4)
   redis (~> 3.0)

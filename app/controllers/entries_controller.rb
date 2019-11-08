@@ -166,7 +166,7 @@ end
     end 
     respond_to do |format|
       format.html
-      format.json {render :json => entry_array}
+      format.json {render :json => entry_array, public: true}
     end
   end
 

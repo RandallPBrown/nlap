@@ -38,7 +38,6 @@ Rails.application.routes.draw do
   get 'tools/ferguson'
   get 'tools/val'
   get 'tools/pendingreview'
-  get 'tools/pcmi'
 
   get 'daps/form2'  
   get 'home/dashboard'

@@ -17,7 +17,12 @@ module Ops
     # config.middleware.insert_before  ActionDispatch::Cookies, Rack::SslEnforcer
     config.middleware.use Rack::SslEnforcer, :except => '/tools/validator', :except_environments => 'development', strict: true
     # config.middleware.use Rack::SslEnforcer, :except_environments => 'development'
-
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+         origins '*'
+         resource '*', :headers => :any, :methods => [:get, :post, :options]
+       end
+    end
 
 #     LetterOpener.configure do |config|
 #   # To overrider the location for message storage.
