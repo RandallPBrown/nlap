@@ -77,16 +77,7 @@ $('#rspCheckCalls').on('click', function(){
 	calculateLiabilities();
 })
 
-$('#alertVerifiedCalls').on('click',function(){
-    if ($('.collapse').hasClass('show')) {
-    	alert('Please acknowledge all alerts first');
-    } else {
-	   	$('#alertModalCalls').modal('hide');
-	    formReceiptTemplate();
-	    otlVal();
-	    $('#completionModalCalls').modal('show');
-    };
-});
+
 
 $('#extCheckCalls').on('click',function(){
     if ($('#extCheckCalls').prop('checked') == true) {
@@ -367,9 +358,36 @@ function alertVal() {
 	} else {
 		formReceiptTemplate();
 		otlVal();
+    addMfgWarranty();
 		$('#completionModalCalls').modal('show');
 	}
 }
+
+$('#alertVerifiedCalls').on('click',function(){
+    if ($('.collapse').hasClass('show')) {
+      alert('Please acknowledge all alerts first');
+    } else {
+      $('#alertModalCalls').modal('hide');
+      formReceiptTemplate();
+      otlVal();
+      addMfgWarranty();
+      $('#completionModalCalls').modal('show');
+    };
+});
+
+// Add MFG Warranty log items
+function addMfgWarranty(){
+    $.ajax({
+    url: '../mfg_warranties',
+    type: 'post',
+    data: { mfg_warranty: { 
+      dop: $('#dopCalls').val(),
+      model_number: $('#modelNumberCalls').val(),
+      warranty_link: $('#warrantyLinkCalls').val(),
+      manufacturer: $('#manufacturerCalls').val()
+    } }
+  })
+};
 
 // Completion receipts for modals
 function formReceiptTemplate() {
@@ -532,16 +550,7 @@ $('#rspCheckEmails').on('click', function(){
 	calculateLiabilities2();
 })
 
-$('#alertVerifiedEmails').on('click',function(){
-    if ($('.collapse').hasClass('show')) {
-    	alert('Please acknowledge all alerts first');
-    } else {
-	   	$('#alertModalEmails').modal('hide');
-	    formReceiptTemplate2();
-	    otlVal2();
-	    $('#completionModalEmails').modal('show');
-    };
-});
+
 
 $('#extCheckEmails').on('click',function(){
     if ($('#extCheckEmails').prop('checked') == true) {
@@ -814,9 +823,36 @@ function alertVal2() {
 	} else {
 		formReceiptTemplate2();
 		otlVal2();
+    addMfgWarrantyEmails();
 		$('#completionModalEmails').modal('show');
 	}
 }
+
+$('#alertVerifiedEmails').on('click',function(){
+    if ($('.collapse').hasClass('show')) {
+      alert('Please acknowledge all alerts first');
+    } else {
+      $('#alertModalEmails').modal('hide');
+      formReceiptTemplate2();
+      otlVal2();
+      addMfgWarrantyEmails();
+      $('#completionModalEmails').modal('show');
+    };
+});
+
+// Add MFG Warranty log items
+function addMfgWarrantyEmails(){
+    $.ajax({
+    url: '../mfg_warranties',
+    type: 'post',
+    data: { mfg_warranty: { 
+      dop: $('#dopEmails').val(),
+      model_number: $('#modelNumberEmails').val(),
+      warranty_link: $('#warrantyLinkEmails').val(),
+      manufacturer: $('#manufacturerEmails').val()
+    } }
+  })
+};
 
 // Completion receipts for modals
 function formReceiptTemplate2() {

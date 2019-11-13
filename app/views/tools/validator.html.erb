@@ -6,7 +6,11 @@ $(document).ready(function(){
 	if (window.location.search == "") {
 		setTimeout((window.location.href = "?template=Peyton.xml"),10000);
 	}
+	$(function() {
+	    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+	});
 })
+
 
 </script>
 
@@ -132,6 +136,24 @@ $(document).ready(function(){
 								<div class="col-6">
 									<div class="input-group input-group-sm">
 										<div class="input-group-prepend">
+											<span class="input-group-text bg-light" data-toggle="tooltip" title="Date of purchase text-black">DOP</span>
+										</div>
+										<input type="text" class="form-control form-control-val text-muted datepicker" id="dopCalls" data-provide="datepicker" placeholder="YYYY-MM-DD">
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="input-group input-group-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text bg-light text-black">Manufacturer</span>
+										</div>
+										<input type="text" class="form-control form-control-val text-muted" id="manufacturerCalls">
+									</div>
+								</div>
+							</div>
+							<div class="row mb-1">
+								<div class="col-6">
+									<div class="input-group input-group-sm">
+										<div class="input-group-prepend">
 											<span class="input-group-text bg-light" data-toggle="tooltip" title="Verified by tech">Model</span>
 										</div>
 										<input type="text" class="form-control form-control-val text-muted" id="modelNumberCalls">
@@ -146,6 +168,7 @@ $(document).ready(function(){
 									</div>
 								</div>
 							</div>
+							
 							<div class="row mb-3">
 								<div class="col-12">
 									<div class="input-group input-group-sm">
@@ -180,7 +203,7 @@ $(document).ready(function(){
 					<div class="row">
 						<div class="col-10">
 							<div class="row mb-1">
-								<div class="col-6">
+								<div class="col-4">
 									<div class="input-group input-group-sm">
 										<div class="input-group-prepend">
 											<span class="input-group-text bg-light" data-toggle="tooltip" title="URL to Manual">Warranty</span>
@@ -188,7 +211,7 @@ $(document).ready(function(){
 										<input type="text" class="form-control form-control-val text-muted" id="warrantyLinkCalls">
 									</div>
 								</div>
-								<div class="col-6">
+								<div class="col-4">
 									<div class="input-group input-group-sm">
 										<div class="input-group-prepend">
 											<span class="input-group-text bg-light" data-toggle="tooltip" title="ex. APP5U500">Plan SKU</span>
@@ -424,6 +447,24 @@ $(document).ready(function(){
                 <div class="col-6">
                   <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
+                      <span class="input-group-text bg-light text-black" data-toggle="tooltip" title="Date of purchase">DOP</span>
+                    </div>
+                    <input type="text" class="form-control form-control-val text-black datepicker" id="dopEmails" data-provide="datepicker" placeholder="YYYY-MM-DD">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-light">Manufacturer</span>
+                    </div>
+                    <input type="text" class="form-control form-control-val text-muted" id="manufacturerEmails">
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-6">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
                       <span class="input-group-text bg-light" data-toggle="tooltip" title="Verified by tech">Model</span>
                     </div>
                     <input type="text" class="form-control form-control-val text-muted" id="modelNumberEmails">
@@ -438,6 +479,7 @@ $(document).ready(function(){
                   </div>
                 </div>
               </div>
+              
               <div class="row mb-3">
                 <div class="col-12">
                   <div class="input-group input-group-sm">

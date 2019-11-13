@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dop: 2019-11-13
+  model_number: MyString
+  warranty_link: MyText
+
+two:
+  dop: 2019-11-13
+  model_number: MyString
+  warranty_link: MyText

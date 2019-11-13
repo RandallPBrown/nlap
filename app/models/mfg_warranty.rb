@@ -1,0 +1,2 @@
+class MfgWarranty < ApplicationRecord
+end
