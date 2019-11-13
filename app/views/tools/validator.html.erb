@@ -7,7 +7,8 @@ $(document).ready(function(){
 		setTimeout((window.location.href = "?template=Peyton.xml"),10000);
 	}
 	$(function() {
-	    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+		$(".datepicker").datepicker( "option", "dateFormat", "yyyy-mm-dd" );
+	    // $('.datepicker').datepicker({format: 'yyyy-mm-dd', altFormat: 'mm/dd/yyyy'});
 	});
 })
 
@@ -138,7 +139,7 @@ $(document).ready(function(){
 										<div class="input-group-prepend">
 											<span class="input-group-text bg-light" data-toggle="tooltip" title="Date of purchase text-black">DOP</span>
 										</div>
-										<input type="text" class="form-control form-control-val text-muted datepicker" id="dopCalls" data-provide="datepicker" placeholder="YYYY-MM-DD">
+										<input type="text" class="form-control form-control-val text-muted datepicker" id="dopCalls" data-provide="datepicker">
 									</div>
 								</div>
 								<div class="col-6">
@@ -449,7 +450,7 @@ $(document).ready(function(){
                     <div class="input-group-prepend">
                       <span class="input-group-text bg-light text-black" data-toggle="tooltip" title="Date of purchase">DOP</span>
                     </div>
-                    <input type="text" class="form-control form-control-val text-black datepicker" id="dopEmails" data-provide="datepicker" placeholder="YYYY-MM-DD">
+                    <input type="text" class="form-control form-control-val text-black datepicker" id="dopEmails" data-provide="datepicker">
                   </div>
                 </div>
                 <div class="col-6">
