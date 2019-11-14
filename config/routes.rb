@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get 'users/dashboard'
   get 'users/index'
   get 'users/password_reset'
+  get 'users/user_breakdown'
   get 'parts/dashboard'
   get 'err_logs/dashboard'
 

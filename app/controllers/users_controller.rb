@@ -12,6 +12,33 @@ class UsersController < ApplicationController
     end
   end
 
+  def user_breakdown
+    @users = User.all.joins(:department, :agent).order(params[:sort]).includes(:department)
+    user_array = Array.new
+    @users.each do |user| 
+        user_array << {'ID': user.id, 
+          'Agent': user.full_name, 
+         'Department': user.department.name.truncate(15), 
+         'Email': user.email.truncate(12), 
+         'Role': user.roles.map {|r| r.name.capitalize }.first, 
+         'Admin': if user.admin == true
+                    'Y'
+                  else
+                    'N'
+                  end, 
+         'Deleted': if user.deleted_at.nil?
+                    'N'
+                  else
+                    'Y'
+                  end,
+         '': (helpers.link_to(helpers.theme_icon_tag('eye'), user, 'data-toggle': 'tooltip', title: 'Show', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('pencil-alt'), edit_user_path(user), 'data-toggle': 'tooltip', title: 'Edit', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('trash'), user, 'data-toggle': 'tooltip', title: 'Delete', method: :delete, class: 'btn btn-link p-1'))}
+    end 
+    respond_to do |format|
+      format.html
+      format.json {render :json => user_array, public: true}
+    end
+  end
+
   def dashboard          
     # @body_class = "with-sidebar show-sidebar"
     # @current_user = current_user
@@ -42,7 +69,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    redirect_to agent_path(@user.agent.id)
+    redirect_to users_path(@user.agent.id)
   end
 
   # GET /agents/new
@@ -50,7 +77,7 @@ class UsersController < ApplicationController
     if current_user.has_role?(:supervisor) || current_user.has_role?(:manager) ||  current_user.has_role?(:trainer) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       @user = User.new
     else
-      redirect_to agents_path, notice: 'Unauthorized'
+      redirect_to users_path, notice: 'Unauthorized'
     end
   #  @departments = Department.new
   end
@@ -72,7 +99,7 @@ class UsersController < ApplicationController
       if @user.save
         @user.add_role params[:user][:role]
         # UserMailer.welcome_email(@user).deliver_now
-        redirect_to agents_path, notice: 'User was successfully created.'
+        redirect_to users_path, notice: 'User was successfully created.'
         Agent.create({:department_id => @user.department_id, :user_id => @user.id})
       else
         render :new
@@ -109,9 +136,9 @@ def destroy
     # respond_with_navigational(@user){ redirect_to agents_path(@user.id) }
 
   # @user.destroy!
-  redirect_to agents_path, notice: 'User was successfully destroyed.'
+  redirect_to users_path, notice: 'User was successfully destroyed.'
   else
-    redirect_to agents_path, notice: 'Unauthorized'
+    redirect_to users_path, notice: 'Unauthorized'
   end
 end
 
