@@ -1,10 +1,12 @@
+
+
 <%= stylesheet_link_tag "pagination.css" %>
 <% @title = "All Entries" %>
 
 <% content_for :description do %>
   <% end %>
   <% content_for :actions do %>
-    <%= link_to new_entry_path, class: 'btn btn-primary btn-large pull-right' do %>
+  <%= link_to new_entry_path, class: 'btn btn-primary btn-large pull-right', "data-toggle" => "modal", "data-target" => "#modal-entry" do %>
       <%= fa_icon_tag "plus" %> Add Entry
     <% end %>
   <% end %>
@@ -26,6 +28,7 @@ body::-webkit-scrollbar {
 <% end %>
   
 <script>
+  
 $(document).on('turbolinks:load', function() {
 $('table').DataTable().buttons().destroy();
 $('table').DataTable().clear().destroy();
@@ -149,6 +152,22 @@ $.fn.dataTableExt.afnFiltering.push(
 </div>
 <div id="modal-agent_list">
 </div>
+<div class="modal fade" id="modal-entry" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h3 class="modal-title text-white font-weight-bold m-auto" id="exampleModalLabel">NEW ENTRY</h3>
+      </div>
+      <div class="modal-body">
+        <%= render 'form' %>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+
     <!-- <i class="fa fa-calendar"></i> Calendar -->
       <div class="container">
         <div class="row">

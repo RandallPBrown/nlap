@@ -9,7 +9,8 @@ class DapsController < ApplicationController
   def index
     # @daps = Dap.all.paginate(page: params[:page], :per_page => 5)
     require 'will_paginate/array'
-      @daps = Dap.all.includes(:wunature, :user, :writeup)
+    @daps = Dap.all.includes(:wunature, :user, :writeup)
+    @dap = Dap.new
     respond_to do |format|
       format.html
       format.json {render :json => @daps}
@@ -72,7 +73,7 @@ class DapsController < ApplicationController
             osd: @dap.occurrence_since_dap,
             id: @dap.user.id
         })
-        redirect_to @dap, notice: 'Dap was successfully created.'
+        redirect_to daps_path, notice: 'Dap was successfully created.'
       else
         render :new
       end

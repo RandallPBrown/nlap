@@ -36,34 +36,34 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-3">
         <li class="nav-item">
-          <a class="nav-link text-white font-weight-bold" href="/"> <%= fa_icon_tag("home") %></a>
+          <a class="nav-link text-white font-weight-bold" href="/" data-turbolinks="false"> <%= fa_icon_tag("home") %></a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">  <%= fa_icon_tag("wrench") %></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="downdown-item nav-link text-dark font-weight-bold" href="../tools/validator?template=Peyton.xml">Validator</a>
-            <a class="downdown-item nav-link text-dark font-weight-bold" href="../parts">Part Verification</a>
-            <a class="downdown-item nav-link text-dark font-weight-bold" href="../tools/pendingreview">Pending Review</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../tools/validator?template=Peyton.xml" data-turbolinks="false">Validator</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../parts" data-turbolinks="false">Part Verification</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../tools/pendingreview" data-turbolinks="false">Pending Review</a>
           </div>  
         </li>
         <% if current_user.admin? && current_user.has_role?(:reporting) %>
         <li class="nav-item">
-          <a class="nav-link text-white font-weight-bold" href="../entries/dashboard"> <%= fa_icon_tag("pie-chart") %></a>
+          <a class="nav-link text-white font-weight-bold" href="../entries/dashboard" data-turbolinks="false"> <%= fa_icon_tag("pie-chart") %></a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"> <%= fa_icon_tag("list") %></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="downdown-item nav-link text-dark font-weight-bold" href="../entries">Occurrence Log</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../entries" data-turbolinks="false">Occurrence Log</a>
         <% elsif current_user.admin? && (current_user.has_role?(:lead) || current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive)) %>
         <li class="nav-item">
-          <a class="nav-link text-white font-weight-bold" href="../entries/dashboard"> <%= fa_icon_tag("pie-chart") %></a>
+          <a class="nav-link text-white font-weight-bold" href="../entries/dashboard" data-turbolinks="false"> <%= fa_icon_tag("pie-chart") %></a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"> <%= fa_icon_tag("list") %></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="downdown-item nav-link text-dark font-weight-bold" href="../entries">Occurrence Log</a>    
-            <a class="downdown-item nav-link text-dark font-weight-bold" href="../daps">Prog Action Log</a>
-            <a class="downdown-item nav-link text-dark font-weight-bold" href="../agents">Agents List</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../entries" data-turbolinks="false">Occurrence Log</a>    
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../daps" data-turbolinks="false">Prog Action Log</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../agents" data-turbolinks="false">Agents List</a>
           </div>  
         </li>
 
