@@ -81,7 +81,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /agents/1
   def update
-    if (current_user.admin) then
+    if (current_user.admin) && @user.id != current_user.id
       if @user.update_without_password(user_params)
         @user.roles = []
         @user.add_role params[:user][:role]
@@ -91,7 +91,7 @@ class UsersController < ApplicationController
         render :edit
       end
     else
-      if @user.update(user_params)
+      if @user.update_with_password(user_params)
         redirect_to users_dashboard_path, notice: 'User was successfully updated.'
       else
         render :edit
@@ -125,6 +125,6 @@ end
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:extension, :id, :first_name, :last_name, :email, :department_id, :password, :password_confirmation, :department, :agent_id, :role, :admin)
+      params.require(:user).permit(:extension, :id, :first_name, :last_name, :email, :department_id, :password, :password_confirmation, :department, :agent_id, :role, :admin, :current_password)
     end
 end

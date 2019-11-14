@@ -17,6 +17,7 @@ class User < ApplicationRecord
   before_validation :allow_department
   has_one :agent, dependent: :destroy
   accepts_nested_attributes_for :roles
+  attr_accessor :current_password
   # after_create :assign_default_role
 
   # def assign_default_role
