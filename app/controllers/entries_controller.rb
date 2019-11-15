@@ -25,10 +25,10 @@ class EntriesController < ApplicationController
            @chart_data_dept_effective = Entry.effective.grouped_dept.order('departments.name asc').sum(:ovalue).values
            @chart_labels_dept_effective = Entry.effective.grouped_dept.order('departments.name asc').pluck('departments.name').to_s  
            @agent_occurrence_values = Entry.effective.joins(:occurrence, agent: :user).where('users.deleted_at IS NULL').group('users.id', 'users.first_name', 'users.last_name').sum(:ovalue)
-           @chart_data_agent_today = Entry.today.grouped_user.order('users.email asc').sum(:ovalue).values
-           @chart_labels_agent_today = Entry.today.grouped_user.order('users.email asc').pluck('users.email').to_s  
-           @chart_data_agent_effective = Entry.effective.grouped_user.order('users.email asc').sum(:ovalue).values
-           @chart_labels_agent_effective = Entry.effective.grouped_user.order('users.email asc').pluck('users.email').to_s  
+           @chart_data_agent_today = Entry.today.grouped_user.order('users.first_name asc').sum(:ovalue).values
+           @chart_labels_agent_today = Entry.today.grouped_user.order('users.first_name asc').pluck('users.first_name', 'users.last_name').to_s  
+           @chart_data_agent_effective = Entry.effective.grouped_user.order('users.first_name asc').sum(:ovalue).values
+           @chart_labels_agent_effective = Entry.effective.grouped_user.order('users.first_name asc').pluck('users.first_name', 'users.last_name').to_s  
     when 'director'
         #Aubrey
         if @current_department.eql? "Contact Center"
@@ -40,10 +40,10 @@ class EntriesController < ApplicationController
            @chart_data_dept_effective = Entry.effective.grouped_dept.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').sum(:ovalue).values
            @chart_labels_dept_effective = Entry.effective.grouped_dept.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('departments.name asc').pluck('departments.name').to_s  
            @agent_occurrence_values = Entry.effective.joins(:occurrence, agent: [:user, :department]).where('users.deleted_at IS NULL').group('users.id', 'users.first_name', 'users.last_name').where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order("users.first_name, users.last_name").sum(:ovalue)
-           @chart_data_agent_today = Entry.today.grouped_user.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('users.email asc').sum(:ovalue).values
-           @chart_labels_agent_today = Entry.today.grouped_user.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('users.email asc').pluck('users.email').to_s  
-           @chart_data_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('users.email asc').sum(:ovalue).values
-           @chart_labels_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('users.email asc').pluck('users.email').to_s  
+           @chart_data_agent_today = Entry.today.grouped_user.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('users.first_name asc').sum(:ovalue).values
+           @chart_labels_agent_today = Entry.today.grouped_user.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('users.first_name asc').pluck('users.first_name', 'users.last_name').to_s  
+           @chart_data_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('users.first_name asc').sum(:ovalue).values
+           @chart_labels_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ? OR departments.name = ? OR departments.name = ?', 'Claims', 'Service-Network', 'Pre-Approvals', 'Pending-Review').order('users.first_name asc').pluck('users.first_name', 'users.last_name').to_s  
         end
     when 'manager'
       #missy
@@ -82,10 +82,10 @@ class EntriesController < ApplicationController
         @chart_data_dept_effective = Entry.effective.grouped_dept.where('departments.name = ? OR departments.name = ?', param1, param2).order('departments.name asc').sum(:ovalue).values
         @chart_labels_dept_effective = Entry.effective.grouped_dept.where('departments.name = ? OR departments.name = ?', param1, param2).order('departments.name asc').pluck('departments.name').to_s  
         @agent_occurrence_values = Entry.effective.joins(:occurrence, agent: [:user, :department]).where('users.deleted_at IS NULL').group('users.id', 'users.first_name', 'users.last_name').where('departments.name = ? OR departments.name = ?', 'Ferguson', 'Service-Contract').order("users.first_name, users.last_name").sum(:ovalue)
-        @chart_data_agent_today = Entry.today.grouped_user.where('departments.name = ? OR departments.name = ?', param1, param2).order('users.email asc').sum(:ovalue).values
-        @chart_labels_agent_today = Entry.today.grouped_user.where('departments.name = ? OR departments.name = ?', param1, param2).order('users.email asc').pluck('users.email').to_s  
-        @chart_data_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ?', param1, param2).order('users.email asc').sum(:ovalue).values
-        @chart_labels_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ?', param1, param2).order('users.email asc').pluck('users.email').to_s  
+        @chart_data_agent_today = Entry.today.grouped_user.where('departments.name = ? OR departments.name = ?', param1, param2).order('users.first_name asc').sum(:ovalue).values
+        @chart_labels_agent_today = Entry.today.grouped_user.where('departments.name = ? OR departments.name = ?', param1, param2).order('users.first_name asc').pluck('users.first_name', 'users.last_name').to_s  
+        @chart_data_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ?', param1, param2).order('users.first_name asc').sum(:ovalue).values
+        @chart_labels_agent_effective = Entry.effective.grouped_user.where('departments.name = ? OR departments.name = ?', param1, param2).order('users.first_name asc').pluck('users.first_name', 'users.last_name').to_s  
 
         return @chart_data_dept_today, @chart_labels_dept_today, @chart_data_dept_effective, @chart_labels_dept_effective, @agent_occurrence_values, @chart_data_agent_today, @chart_labels_agent_today, @chart_data_agent_effective, @chart_labels_agent_effective
     end

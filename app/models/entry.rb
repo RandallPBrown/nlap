@@ -53,7 +53,7 @@ class Entry < ApplicationRecord
   }
 
   scope :grouped_user, -> {
-    joins(:occurrence, agent: [:user, :department]).group('users.email')
+    joins(:occurrence, agent: [:user, :department]).group('users.first_name', 'users.last_name')
   }
 
   scope :occurrence_user, -> {
