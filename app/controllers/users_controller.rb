@@ -1,3 +1,6 @@
+# I don't get paid enough for this shit - Peyton
+# Jeffrey Epstein didn't kill himself - Scooter
+
 class UsersController < ApplicationController
   layout 'scaffold'
   before_action :authorize_admin, except: [:show, :dashboard, :edit, :update]
