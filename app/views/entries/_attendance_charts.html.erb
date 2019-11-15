@@ -37,19 +37,20 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-badgeledby="salesAndRefundButton" id="chart-selector">
               <button class="dropdown-item" id="chartDeptToday">Department Today</button>
-              <button class="dropdown-item" id="chartDeptEffective">Department 180 Days</button>
+              <button class="dropdown-item" id="chartDeptEffective">Department 90 Days</button>
               <button class="dropdown-item" id="chartAgentToday">Agent Today</button>
-              <button class="dropdown-item" id="chartAgentEffective">Agent 180 Days</button>
+              <button class="dropdown-item" id="chartAgentEffective">Agent 90 Days</button>
               <button class="dropdown-item" id="chartToday">Company Today</button>
-              <button class="dropdown-item" id="chartEffective">Company 180 Days</button>
+              <button class="dropdown-item" id="chartEffective">Company 90 Days</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="card-body position-relative" style="overflow-y: scroll !important;">
+      <div class="card-body position-relative"  style="position: relative; height:40vh; width:70vw">
         <!-- <canvas id="myChart" width="400" height="200"></canvas> -->
 <canvas id="occurrenceChart" width="300" height="150"></canvas>
 <script>
+Chart.defaults.global.responsive = true;
 var chart_labels = <%= raw @chart_labels_dept_today %>;
 var chart_data = <%= raw @chart_data_dept_today %>;
 var dataset_label = "Today";
@@ -102,7 +103,7 @@ $("#chartDeptToday").click(function() {
 $("#chartDeptEffective").click(function() {
     var chart_labels = <%= raw @chart_labels_dept_effective %>;
     var chart_data = <%= raw @chart_data_dept_effective %>;
-    var dataset_label = "180 Days";
+    var dataset_label = "90 Days";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;
@@ -122,7 +123,7 @@ $("#chartAgentToday").click(function() {
 $("#chartAgentEffective").click(function() {
     var chart_labels = <%= raw @chart_labels_agent_effective %>;
     var chart_data = <%= raw @chart_data_agent_effective %>;
-    var dataset_label = "Agent 180 Days";
+    var dataset_label = "Agent 90 Days";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;
@@ -142,7 +143,7 @@ $("#chartToday").click(function() {
 $("#chartEffective").click(function() {
     var chart_labels = <%= raw @chart_labels_effective %>;
     var chart_data = <%= raw @chart_data_effective %>;
-    var dataset_label = "180 Days";
+    var dataset_label = "90 Days";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;
