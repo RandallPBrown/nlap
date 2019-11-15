@@ -50,13 +50,13 @@
         <!-- <canvas id="myChart" width="400" height="200"></canvas> -->
 <canvas id="occurrenceChart" width="300" height="150"></canvas>
 <script>
-Chart.defaults.global.responsive = true;
 var chart_labels = <%= raw @chart_labels_dept_today %>;
 var chart_data = <%= raw @chart_data_dept_today %>;
 var dataset_label = "Today";
 var chart_type = 'horizontalBar';
 var ctx = document.getElementById("occurrenceChart").getContext('2d');
 var config = {
+    responsive: true,
     type: 'horizontalBar',
     data: {
         labels: chart_labels,
