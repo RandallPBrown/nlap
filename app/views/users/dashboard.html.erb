@@ -1,4 +1,15 @@
   <script>
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("pointer").style.top = "0";
+  } else {
+    document.getElementById("pointer").style.top = "-50px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+
 
 $(document).ready(function(t){
 // ENTRIES TABLE
@@ -65,6 +76,27 @@ t.rows.add(
 table tbody tr:hover {
   color:black;
 }
+
+    .box {
+        animation-duration: 2s;
+        animation-iteration-count: 10;
+        height: 200px;
+        margin: 0 auto 0 auto;
+        transform-origin: bottom;
+        width: 200px;
+    }
+
+    .bounce-4 {
+        animation-name: bounce-4;
+        animation-timing-function: ease;
+    }
+    @keyframes bounce-4 {
+        0%   { transform: scale(1,1)    translateY(0); }
+        10%  { transform: scale(1.1,.9) translateY(0); }
+        30%  { transform: scale(.9,1.1) translateY(40px); }
+        50%  { transform: scale(1,1)    translateY(0); }
+        100% { transform: scale(1,1)    translateY(0); }
+    }
 </style>
 
 <body>
@@ -79,7 +111,7 @@ $(document).ready(function() {
 </script>
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-    <div class="modal-content bg-success rounded p-1">
+    <div class="modal-content rounded p-1" style="background-color: #4caf50 !important;opacity:0.8">
       <div class="rounded border-light" style="height:100%;width:100%;border-radius: 5px;border-style: solid;">
         <span class="font-weight-bold text-light text-uppercase morning-message"><center>WELCOME, <%= current_user.first_name %>!</center></span><br>
         <div class="row justify-content-center p-3">
@@ -119,7 +151,7 @@ $(document).ready(function() {
   <div class="container-fluid">
     <div class="row equal-cols">
 
-<div class="col-12 col-md-3 d-flex flex-column justify-items-between animate-fade-in-1000">
+<div class="col-12 col-md-3 d-flex flex-column justify-items-between">
 
         <div class="card card-mini card-mini-solid-icon">
           <div class="card-body">
@@ -221,12 +253,12 @@ $(document).ready(function() {
       </div>
           <div class="card-body" style="height: 475px">
             <canvas id="statChart" width="200" height="100"></canvas>
-
+            <center><i class="fa fa-chevron-down box bounce-4" style="font-size: 10em" id="pointer"></i></center>
           </div>
         </div>
       </div>
 
-    <div class="col-3 hidepane">
+    <div class="col-3 ">
       <!-- RECENT ACTIVITY TABLE -->
       <div class="card inspectable">
         <!-- component-title: Timeline Card -->
@@ -261,30 +293,28 @@ $(document).ready(function() {
   </div>
 </section>
 
-<div class="align-items-center">
-<ul class="nav nav-pills mb-3 ml-3" id="pills-tab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active font-weight-bold" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa fa-calendar-times-o "></i></a>
-  </li>
-  <li class="nav-item font-weight-bold">
-    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa fa-wpforms "></i></a>
-  </li>
-  <li class="nav-item font-weight-bold">
-    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"><i class="fa fa-line-chart "></i>
-</a>
+<div class="btn-group align-items-center" role="group">
+<ul class="nav nav-pills mb-3 ml-4" id="pills-tab" role="tablist">
+  <li class="nav-item active font-weight-bold">
+
+    <button class="btn btn-primary active font-weight-bold" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" type="button"><i class="fa fa-calendar-times-o "></i></button>
+
+    <button class="btn btn-primary" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" type="button"><i class="fa fa-wpforms "></i></button>
+    <button class="btn btn-primary" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false" type="button"><i class="fa fa-line-chart "></i>
+</button>
   </li>
 </ul>
 </div>
 
-<div class="container-fluid" style="height: 450px">
+<div class="container-fluid p-4" style="height: 450px;background-color: #eeeeee !important;">
   <div class="row">
-    <div class="col-12 hidepane">
+    <div class="col-12 ">
       <div class="row">
         <div class="col-12">
           <!-- OCCURRENCE TABLE -->
           <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-              <div class="card inspectable">
+              <div class="card card-sheet sheet-condensed inspectable">
                 <div class="card-header d-flex align-items-center">
                   <h6>List of Occurrences</h6>   
                 </div>
