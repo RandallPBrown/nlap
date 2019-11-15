@@ -45,6 +45,17 @@ class UsersController < ApplicationController
   def dashboard          
     # @body_class = "with-sidebar show-sidebar"
     # @current_user = current_user
+    @uph = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:uph).nil?
+      "0"
+    else
+      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:uph)
+    end
+    @occ = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:occupancy).nil?
+      "0"
+    else
+      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:occupancy)
+    end
+    @err_logs = ErrLog.where("user_id = ?", current_user.id).where(:errdate => 1.month.ago.beginning_of_day..Date.today.end_of_day).count(:id)
     @user_entry = Entry.occurrence_user.where("users.id = ?", current_user.id).group('agents.id', 'occurrences.id', 'departments.id', 'users.id').includes(:occurrence, agent: [:department, :user]).ue
     @user_entry_today = Entry.today.occurrence_user.where("users.id = ?", current_user.id).ue
     @user_entry_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).ue

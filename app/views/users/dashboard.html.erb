@@ -130,39 +130,7 @@ $(document).ready(function() {
               </div>
               <div class="d-flex align-self-center text-primary ml-3">
                 <span>
-                  <i class="fa fa-hashtag "></i>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card card-mini card-mini-solid-icon">
-          <div class="card-body">
-            <div class="media">
-              <div class="media-body text-left">
-                <h6 class="m-0 text-muted"><u>Total Active Tardies</u></h6>
-                <h4 class="m-0"><%= @user_entry_tardy_effective %></h4>
-              </div>
-              <div class="d-flex align-self-center text-primary ml-3">
-                <span>
-                  <i class="fa fa-clock-o "></i>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card card-mini card-mini-solid-icon">
-          <div class="card-body">
-            <div class="media">
-              <div class="media-body text-left">
-                <h6 class="m-0 text-muted"><u>Total Active Absences</u></h6>
-                <h4 class="m-0"><%= @user_entry_absent_effective %></h4>
-              </div>
-              <div class="d-flex align-self-center text-primary ml-3">
-                <span>
-                  <i class="fa fa-table "></i>
+                  <i class="fa fa-calendar-times-o "></i>
                 </span>
               </div>
             </div>
@@ -178,7 +146,55 @@ $(document).ready(function() {
               </div>
               <div class="d-flex align-self-center text-primary ml-3">
                 <span>
-                  <i class="material-icons ">receipt</i>
+                  <i class="fa fa-wpforms "></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-mini card-mini-solid-icon">
+          <div class="card-body">
+            <div class="media">
+              <div class="media-body text-left">
+                <h6 class="m-0 text-muted"><u>Average UPH</u></h6>
+                <h4 class="m-0"><%= number_with_precision(@uph, :precision => 1) %></h4>
+              </div>
+              <div class="d-flex align-self-center text-primary ml-3">
+                <span>
+                  <i class="fa fa-hashtag "></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-mini card-mini-solid-icon">
+          <div class="card-body">
+            <div class="media">
+              <div class="media-body text-left">
+                <h6 class="m-0 text-muted"><u>Average Occupancy</u></h6>
+                <h4 class="m-0"><%= number_with_precision(@occ, :precision => 1) %>%</h4>
+              </div>
+              <div class="d-flex align-self-center text-primary ml-3">
+                <span>
+                  <i class="fa fa-clock-o "></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-mini card-mini-solid-icon">
+          <div class="card-body">
+            <div class="media">
+              <div class="media-body text-left">
+                <h6 class="m-0 text-muted"><u>Improvement Opps</u></h6>
+                <h4 class="m-0"><%= @err_logs %></h4>
+              </div>
+              <div class="d-flex align-self-center text-primary ml-3">
+                <span>
+                  <i class="fa fa-exclamation-triangle "></i>
                 </span>
               </div>
             </div>
@@ -187,7 +203,7 @@ $(document).ready(function() {
 
       </div>
 
-      <div class="col-12 col-md-9">
+      <div class="col-12 col-md-6">
         <div class="card" style="background-color: #ffffff !important">
                 <div class="card-header d-flex align-items-center">
         <h6 class="mr-auto">Agent Stats</h6>
@@ -203,94 +219,13 @@ $(document).ready(function() {
           </div>
         </div>
       </div>
-          <div class="card-body">
+          <div class="card-body" style="height: 475px">
             <canvas id="statChart" width="200" height="100"></canvas>
 
           </div>
         </div>
       </div>
 
-      <div class="col-12 col-md-3">
-<!--         <h4 class="leading-normal m-0 p-0">Hello, <%= current_user.first_name %></h4>
-        <p class="leading-normal small">Important information regarding the occurrence system:</p>
-        <ul class="m-0 p-0 mb-5 small">
-          <li>If your total occurrences meet the following guidelines within 180 days:</li>
-            <ul><br />
-              <li><b>Verbal Warning</b> - If employee gets <u>3.0 or more</u> occurrences will receive verbal warning. The warning will remain in effect for <u>90 days</u>. If employee receives <u>1.0 or more</u> occurrences during this period, progress to next.</li>
-              <li><b>Written Warning</b> - Issued for receiving <u>1.0 or more</u> occurrences during verbal warning and last for <u>90 days</u>. If agent receives an additional <u>1.0 or more</u> occurrences, progress to next.</li>
-              <li><b>Final Written Warning</b> - Received for <u>1.0 or more</u> occurrences during <u>90 day written warning</u>. If agent receives <u>1.0 or more</u> occurrences during this <u>90 day period</u> their employment <u>will be terminated</u>.</li>
-            </ul>  
-        </ul> -->
-      </div>
-
-      
-    </div>
-  </div>
-</section>
-
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-9 hidepane">
-      <div class="row">
-        <div class="col-12">
-          <!-- OCCURRENCE TABLE -->
-          <div class="card inspectable">
-            <div class="card-header d-flex align-items-center">
-              <h6>List of Occurrences</h6>   
-            </div>
-            <div class="table-responsive" >
-              <table class="table table-hover table-striped" id="userEntryTable">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                    <th>Expires</th>
-                    <th>Description</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <!-- /OCCURRENCE TABLE -->
-        </div>
-      </div>
-
-      
-      <div class="row">
-        <div class="col-12">
-          <!-- DAP TABLE -->
-          <div class="card inspectable">      
-            <div class="card-header d-flex align-items-center">
-              <h6>List of Progressive Actions</h6>   
-            </div>
-            <div class="table-responsive">
-              <table class="table table-hover table-striped" id="userDapTable">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                    <th>Expires</th>
-                    <th>Description</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-              </table>
-              
-            </div>
-          </div>
-          <!-- /DAP TABLE -->
-        </div>
-      </div>
-    </div>
     <div class="col-3 hidepane">
       <!-- RECENT ACTIVITY TABLE -->
       <div class="card inspectable">
@@ -298,8 +233,8 @@ $(document).ready(function() {
         <div class="card-header">
           <h6>RECENT ACTIVITY</h6>
         </div>
-        <div class="card-body">
-          <div class="timeline" style="height: 450px">
+        <div class="card-body" style="height: 475px">
+          <div class="timeline">
             <ul class="left-timeline">
               <% @user_entry.each do |entry| %>
                 <li class="timeline-item">
@@ -320,6 +255,93 @@ $(document).ready(function() {
       </div>
       <!-- /RECENT ACTIVITY TABLE-->
     </div>
+
+      
+    </div>
+  </div>
+</section>
+
+<div class="align-items-center">
+<ul class="nav nav-pills mb-3 ml-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active font-weight-bold" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa fa-calendar-times-o "></i></a>
+  </li>
+  <li class="nav-item font-weight-bold">
+    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa fa-wpforms "></i></a>
+  </li>
+  <li class="nav-item font-weight-bold">
+    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"><i class="fa fa-line-chart "></i>
+</a>
+  </li>
+</ul>
+</div>
+
+<div class="container-fluid" style="height: 450px">
+  <div class="row">
+    <div class="col-12 hidepane">
+      <div class="row">
+        <div class="col-12">
+          <!-- OCCURRENCE TABLE -->
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+              <div class="card inspectable">
+                <div class="card-header d-flex align-items-center">
+                  <h6>List of Occurrences</h6>   
+                </div>
+                <div class="table-responsive" >
+                  <table class="table table-hover table-striped" id="userEntryTable">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Expires</th>
+                        <th>Description</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+              <div class="card inspectable">      
+                <div class="card-header d-flex align-items-center">
+                  <h6>List of Progressive Actions</h6>   
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-hover table-striped" id="userDapTable">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Expires</th>
+                        <th>Description</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>              
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+              <center><H1>COMING SOON</H1></center>
+            </div>
+          </div>
+
+          <!-- /OCCURRENCE TABLE -->
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </div>
             <script>
@@ -337,14 +359,7 @@ $(document).ready(function() {
                         label: "UPH",
                         yAxisID: 'B',
                         data: uph_data,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 206, 86, 0.5)',
-                            'rgba(75, 192, 192, 0.5)',
-                            'rgba(153, 102, 255, 0.5)',
-                            'rgba(255, 159, 64, 0.5)'
-                        ],
+                        backgroundColor: 'rgb(0,100,0, 0.7)',
                         borderColor: '#373737',
                         borderWidth: 1,
                         order: 2
@@ -352,7 +367,7 @@ $(document).ready(function() {
                         label: 'OCC',
                         yAxisID: 'A',
                         data: occ_data,
-                        backgroundColor: 'rgb(152,251,152,0.3)',
+                        backgroundColor: 'rgb(152,251,152,0.4)',
                         borderColor: '#373737',
                         borderWidth: 1,
                         type: 'line',
