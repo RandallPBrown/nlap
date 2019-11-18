@@ -75,6 +75,14 @@ class EntriesController < ApplicationController
 
 
 
+
+
+    @chart_data_effective = Entry.effective.grouped_dept.order('departments.name asc').sum(:ovalue).values
+    @chart_labels_effective = Entry.effective.grouped_dept.order('departments.name asc').pluck('departments.name')
+    @chart_data_today = Entry.today.grouped_dept.order('departments.name asc').sum(:ovalue).values
+    @chart_labels_today = Entry.today.grouped_dept.order('departments.name asc').pluck('departments.name').to_s  
+  end
+
     def query1 (param1, param2)
         #dry
         @chart_data_dept_today = Entry.today.grouped_dept.where('departments.name = ? OR departments.name = ?', param1, param2).order('departments.name asc').sum(:ovalue).values
@@ -89,12 +97,6 @@ class EntriesController < ApplicationController
 
         return @chart_data_dept_today, @chart_labels_dept_today, @chart_data_dept_effective, @chart_labels_dept_effective, @agent_occurrence_values, @chart_data_agent_today, @chart_labels_agent_today, @chart_data_agent_effective, @chart_labels_agent_effective
     end
-
-    @chart_data_effective = Entry.effective.grouped_dept.order('departments.name asc').sum(:ovalue).values
-    @chart_labels_effective = Entry.effective.grouped_dept.order('departments.name asc').pluck('departments.name')
-    @chart_data_today = Entry.today.grouped_dept.order('departments.name asc').sum(:ovalue).values
-    @chart_labels_today = Entry.today.grouped_dept.order('departments.name asc').pluck('departments.name').to_s  
-  end
 
   def _most_active_users
     @entries = Entry.all.paginate(page: params[:page], :per_page => 5)
