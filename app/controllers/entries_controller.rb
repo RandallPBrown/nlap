@@ -55,8 +55,8 @@ class EntriesController < ApplicationController
       end
     when 'supervisor'
       #Juan
-      if @current_department.eql? "Ferguson"
-        query1 'Ferguson', 'Service-Contract'
+      if @current_department.eql? 'Ferguson'
+        query1  'Ferguson', 'Service-Contract'
       elsif @current_department.eql? "Approvals"
         query1  'Pre-Approvals', 'Pending-Review'  
       end
