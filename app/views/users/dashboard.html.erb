@@ -1,14 +1,5 @@
   <script>
-var prevScrollpos = window.pageYOffset;
-window.onscroll = function() {
-  var currentScrollPos = window.pageYOffset;
-  if (prevScrollpos > currentScrollPos) {
-    document.getElementById("pointer").style.top = "0";
-  } else {
-    document.getElementById("pointer").style.top = "-50px";
-  }
-  prevScrollpos = currentScrollPos;
-}
+
 
 
 $(document).ready(function(t){
@@ -76,6 +67,7 @@ t.rows.add(
 table tbody tr:hover {
   color:black;
 }
+
 
     .box {
         animation-duration: 2s;
@@ -162,7 +154,7 @@ $(document).ready(function() {
               </div>
               <div class="d-flex align-self-center text-primary ml-3">
                 <span>
-                  <i class="fa fa-calendar-times-o "></i>
+                  <i class="fa fa-calendar-times-o"></i>
                 </span>
               </div>
             </div>
@@ -254,7 +246,9 @@ $(document).ready(function() {
           <div class="card-body" style="height: 475px">
             <canvas id="statChart" width="200" height="100"></canvas>
             <center>
-              <i class="fa fa-chevron-down box bounce-4" style="font-size: 10em" id="pointer"></i>
+              <div id="pointer">
+              <i class="fa fa-chevron-down box bounce-4" style="font-size: 10em"></i>
+              </div>
             </center>
           </div>
         </div>
@@ -303,8 +297,11 @@ $(document).ready(function() {
       <button class="btn btn-primary" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false" type="button"><i class="fa fa-line-chart "></i></button>
     </li>
   </ul>
+  
 </div>
-
+<div class="pull-right pr-4">
+    <h3 class="font-weight-bold" id="table-title">INDIVIDUAL BREAKDOWN</h3>
+  </div>
 <div class="container-fluid p-4" style="height: 450px;background-color: #eeeeee !important;">
   <div class="row">
     <div class="col-12 ">
@@ -374,6 +371,10 @@ $(document).ready(function() {
   </div>
 </div>
             <script>
+              $(window).scroll(function(){
+                $('#pointer').css('opacity', 1 - $(window).scrollTop() / 250);
+                $('#table-title').css('opacity', 0 + $(window).scrollTop() / 250);
+              });
             var chart_labels = <%= raw @agent_chart_labels_effective %>;
             var uph_data = <%= @agent_chart_data_effective %>;
             var occ_data = <%= @agent_chart_data_effective_occupancy %>;

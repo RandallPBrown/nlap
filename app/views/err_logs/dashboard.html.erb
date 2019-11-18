@@ -17,7 +17,7 @@
               <div class="card-header bg-primary text-white">
                 <h5 class="text-uppercase m-auto font-weight-bold">PENDING APPROVAL ERRORS</h5>
               </div>
-              <div class="card-body">
+              <div class="card-body" style="height:300px;overflow-y: scroll;">
                 <div class="table-responsive">
                   <table class="table table-striped table-hover table-sm-responsive display border rounded" id="parts_index_pending">
                     <thead>
@@ -119,9 +119,6 @@
                   </div>
                 </div>
               </div>
-
-                                  <%# Remove the trailing if condition if you're using pagination. %>
-                  <%= will_paginate @err_logs %>
                 
                               </div>
             </div>
@@ -170,9 +167,6 @@
                     </table>
                   </div>
                 </div>
-
-                                  <%# Remove the trailing if condition if you're using pagination. %>
-                  <%= will_paginate @err_logs if @err_logs.respond_to?(:total_pages) %>
                 
                               </div>
             </div>

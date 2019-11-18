@@ -11,10 +11,9 @@ class ErrLogsController < ApplicationController
   end
 
   def dashboard
-    require 'will_paginate/array'
     # @part = Part.find(params[:id])
     @approved_by = User.order(:id).where('users.admin = ?', true)
-    @err_logs = ErrLog.includes(:err_status).joins(:err_status).where('statusname = ?', 'Pending').order(created_at: :desc, updated_at: :desc).paginate(page: params[:page], :per_page => 5)
+    @err_logs = ErrLog.includes(:err_status).joins(:err_status).where('statusname = ? OR statusname = ?', 'Pending', 'Dispute').order(created_at: :desc, updated_at: :desc)
     @allerrors = ErrLog.all
     @approvedby = User.all.where('users.admin = ?', true).pluck(:first_name, :last_name)
   end
