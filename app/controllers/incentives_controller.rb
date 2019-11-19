@@ -14,9 +14,8 @@ class IncentivesController < ApplicationController
       incentives = Incentive.create(user_id: row[0], uph: row[1], quality: row[2], improvement_opp: row[3], occupancy: row[4], date: row[5])
       incentives.save
     end
- redirect_to incentives_path, notice: "Que added"
-
-end
+    redirect_to incentives_path, notice: "Que added"
+  end
 
   # GET /incentives/1
   def show

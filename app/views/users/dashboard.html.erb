@@ -63,6 +63,10 @@ t.rows.add(
     opacity: 1 !important;
 }
 
+.modal-content:hover {
+  opacity: 1 !important;
+}
+
 .float:hover {
   box-shadow: 3px 3px 3px 3px lightgrey;
 }
@@ -73,6 +77,10 @@ t.rows.add(
 
 table tbody tr:hover {
   color:black;
+}
+
+.even-space {
+  width: 20%;
 }
 
 .box {
@@ -95,6 +103,36 @@ table tbody tr:hover {
     50%  { transform: scale(1,1)    translateY(0); }
     100% { transform: scale(1,1)    translateY(0); }
 }
+
+
+.fancy-fade td {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in both;
+}
+
+.fancy-fade td:nth-child(2) {
+  animation-delay: 0.5s;
+}
+.fancy-fade td:nth-child(3) {
+  animation-delay: 1s;
+}
+.fancy-fade td:nth-child(4) {
+  animation-delay: 1.5s;
+}
+.fancy-fade td:nth-child(5) {
+  animation-delay: 2s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
 </style>
 
 <body>
@@ -107,35 +145,46 @@ $(document).ready(function() {
     }
     // highlight entry card
     if (<%= @user_entry_total_effective %> == 0.5) {
-      $('#occurrence-card').addClass('bg-warning text-white')
+      $('#occurrence-card').addClass('bg-warning text-white');
+      $('#occurrence-modal').addClass('bg-warning text-white');
     } else if (<%= @user_entry_total_effective %> > 0.5) {
-      $('#occurrence-card').removeClass('float').addClass('muted')
+      $('#occurrence-card').removeClass('float').addClass('muted');
+      $('#occurrence-modal').addClass('bg-danger text-white')
     } else {
       $('#occurrence-card').removeClass('bg-warning text-white')
+      $('#occurrence-modal').addClass('bg-success');
     }
     // highlight wu card
     if (<%= @user_writeup_written %> > 0) {
-      $('#wu-card').removeClass('float').addClass('muted')
+      $('#wu-card').removeClass('float').addClass('muted');
+      $('#wu-modal').addClass('bg-danger text-white');
     } else {
       $('#wu-card').removeClass('bg-warning text-white')
+      $('#wu-modal').addClass('bg-success');
     }
     // highlight uph card
     if (<%= number_with_precision(@uph, :precision => 1) %> < 6.5) {
-      $('#uph-card').addClass('bg-warning text-white')
+      $('#uph-card').addClass('bg-warning text-white');
+      $('#uph-modal').addClass('bg-warning text-white');
     } else {
-      $('#uph-card').removeClass('bg-warning text-white')
+      $('#uph-card').removeClass('bg-warning text-white');
+      $('#uph-modal').addClass('bg-success');
     }
     // highlight occ card
     if (<%= number_with_precision(@occ, :precision => 1) %> < 98) {
-      $('#occupancy-card').addClass('bg-warning text-white')
+      $('#occupancy-card').addClass('bg-warning text-white');
+      $('#occupancy-modal').addClass('bg-warning text-white');
     } else {
-      $('#occupancy-card').removeClass('bg-warning text-white')
+      $('#occupancy-card').removeClass('bg-warning text-white');
+      $('#occupancy-modal').addClass('bg-success');
     }
     // highlight err card
     if (<%= @err_logs %> > 0) {
-      $('#error-card').removeClass('float').addClass('muted')
+      $('#error-card').removeClass('float').addClass('muted');
+      $('#error-modal').addClass('bg-danger text-white');
     } else {
-      $('#error-card').removeClass('bg-warning text-white')
+      $('#error-card').removeClass('bg-warning text-white');
+      $('#error-modal').addClass('bg-success');
     }   
 });
 
@@ -143,11 +192,11 @@ $(document).ready(function() {
 </script>
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-    <div class="modal-content rounded p-1" style="background-color: #4caf50 !important;opacity:0.8">
+    <div class="modal-content rounded p-1" style="background-color: #ffffff !important;opacity:0.8">
       <div class="rounded border-light" style="height:100%;width:100%;border-radius: 5px;border-style: solid;">
-        <span class="font-weight-bold text-light text-uppercase morning-message"><center>WELCOME, <%= current_user.first_name %>!</center></span><br>
-        <div class="row justify-content-center p-3">
-          <table class="table table-hover bg-transparent text-white font-weight-bold">
+        <span class="font-weight-bold text-dark text-uppercase morning-message"><center><%= current_user.first_name %>'S INCENTIVE</center></span><br>
+        <div class="row">
+<!--           <table class="table table-hover bg-transparent text-white font-weight-bold">
             <thead>
               <tr>
                 <th></th>
@@ -159,24 +208,47 @@ $(document).ready(function() {
             <tbody>
               <tr>
                 <td>Occurrences</td>
-                <td><center><%= @user_entry_total_effective %></center></td>
-                <td><center><% if @user_entry_total_effective > 0 %><%= (@user_entry.reverse.first.edate + 180.days) %><% else %>NONE<% end %></center></td>
-                <td><center><% if @user_entry_total_effective > 0 %><%= @user_entry.reverse.first.occurrence.ovalue %><% else %>NONE<% end %></center></td>
+                <td><center><%#= @user_entry_total_effective %></center></td>
+                <td><center><#% if @user_entry_total_effective > 0 %><%#= (@user_entry.reverse.first.edate + 180.days) %><#% else %>NONE<#% end %></center></td>
+                <td><center><#% if @user_entry_total_effective > 0 %><%#= @user_entry.reverse.first.occurrence.ovalue %><#% else %>NONE<#% end %></center></td>
               </tr>
               <tr>
                 <td>Progressive Actions</td>
-                <td><center><%= @user_writeup_written %></center></td>
-                <td><center><% if @user_writeup_written > 0 %><% if @user_writeup_written == 1 %><%= (@user_dap_written.map {|d| d.ddate + 90.days}.first) %><% else %><%= (@user_dap_written.reverse.first.ddate + 90.days) %><% end %><% else %>NONE<% end %></center></td>
+                <td><center><%#= @user_writeup_written %></center></td>
+                <td><center><#% if @user_writeup_written > 0 %><#% if @user_writeup_written == 1 %><%#= (@user_dap_written.map {|d| d.ddate + 90.days}.first) %><#% else %><%#= (@user_dap_written.reverse.first.ddate + 90.days) %><#% end %><#% else %>NONE<#% end %></center></td>
                 <td><center></center></td>
               </tr>
             </tbody>
+          </table> -->
+          <H1 class="font-weight-bold text-danger">COMING SOON!</H1>
+          <table class="table table-sm table-borderless m-3 align-items-center text-center bg-transparent">
+            <thead class="text-dark font-weight-bold">
+              <tr>
+                <th scope="col">OCCURRENCE</th>
+                <th scope="col">PROG ACTIONS</th>
+                <th scope="col">UPH</th>
+                <th scope="col">OCCUPANCY</th>
+                <th scope="col">IMPROVEMENT OPPS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="fancy-fade">
+                <td class="even-space"><center><div id="occurrence-modal" class="font-weight-bold bg-light rounded" style="height:75px;width: 75px;box-shadow: 1px 1px 1px 1px grey"><i style="font-size: 25px" class="m-auto pt-4 fa fa-calendar-times-o"></i></div></center></td>
+                <td class="even-space"><center><div id="wu-modal" class="font-weight-bold bg-light rounded" style="height:75px;width: 75px;box-shadow: 1px 1px 1px 1px grey"><i style="font-size: 25px" class="m-auto pt-4 fa fa-wpforms "></i></div></center></td>
+                <td class="even-space"><center><div id="uph-modal" class="font-weight-bold bg-light rounded" style="height:75px;width: 75px;box-shadow: 1px 1px 1px 1px grey"><i style="font-size: 25px" class="m-auto pt-4 fa fa-hashtag "></i></div></center></td>
+                <td class="even-space"><center><div id="occupancy-modal" class="font-weight-bold bg-light rounded" style="height:75px;width: 75px;box-shadow: 1px 1px 1px 1px grey"><i style="font-size: 25px" class="m-auto pt-4 fa fa-clock-o "></i></div></center></td>
+                <td class="even-space"><center><div id="error-modal" class="font-weight-bold bg-light rounded" style="height:75px;width: 75px;box-shadow: 1px 1px 1px 1px grey"><i style="font-size: 25px" class="m-auto pt-4 fa fa-exclamation-triangle "></i></div></center></td>
+              </tr>
+            </tbody>
           </table>
+          <p class="font-weight-bold p-5 ml-5 mr-5 text-center">As a reminder, all data is subject to final checks before the incentive is tendered. This portal is to be used as a reference guide and not as a definitive source for eligibility.</p>
         </div>
         <button class="btn btn-light font-weight-bold text-primary" style="position:absolute;top:5px !important;right:5px !important" data-dismiss="modal"><%= fa_icon_tag("times") %></button>
-        <span class="font-weight-bold text-white" style="position:absolute;bottom:0px !important;right:5px !important"><%= Time.now %></span>
+        <span class="font-weight-bold text-dark" style="position:absolute;bottom:0px !important;right:5px !important"><%= Time.now %></span>
+      </div>
     </div>
   </div>
-</div></div>
+</div>
 <!-- /END OF COOKIE MODAL -->
 
 <section class="px-3 pt-5 pb-3 mb-3 d-flex flex-column" style="background-color: #eeeeee !important">
@@ -337,8 +409,8 @@ $(document).ready(function() {
   
 </div>
 <div class="pull-right pr-4">
-    <h3 class="font-weight-bold" id="table-title" style="opacity:0"><span class="text-uppercase" id="table-title-current">OCCURRENCE</span> BREAKDOWN</h3>
-  </div>
+  <h3 class="font-weight-bold" id="table-title" style="opacity:0"><span class="text-uppercase" id="table-title-current">OCCURRENCE</span> BREAKDOWN</h3>
+</div>
 <div class="container-fluid p-4" style="height: 450px;background-color: #eeeeee !important;">
   <div class="row">
     <div class="col-12 ">
