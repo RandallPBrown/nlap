@@ -8,7 +8,9 @@
     $('#error_index_all').DataTable();
   });
 </script>
+<style>
 
+</style>
 
       <div class="container">
         <div class="row">
@@ -17,7 +19,7 @@
               <div class="card-header bg-primary text-white">
                 <h5 class="text-uppercase m-auto font-weight-bold">PENDING APPROVAL ERRORS</h5>
               </div>
-              <div class="card-body" style="height:300px;overflow-y: scroll;">
+              <div class="card-body" style="height:400px;overflow-y: scroll;">
                 <div class="table-responsive">
                   <table class="table table-striped table-hover table-sm-responsive display border rounded" id="parts_index_pending">
                     <thead>
@@ -34,7 +36,7 @@
                     </thead>
                     <tbody>
                     <% @err_logs.each do |err_log| %>
-                      <tr data-toggle="collapse" data-target="#accordion<%= err_log.id %>" class="accordion-toggle">
+                      <tr data-toggle="collapse" data-target="#accordion<%= err_log.id %>" class="accordion-toggle" data-href="#accordion<%= err_log.id %>">
                                             <td><%= err_log.user.full_name %></td>
                                             <td><%= err_log.department.name %></td>
                                             <td><%= err_log.errdate %></td>
@@ -119,9 +121,8 @@
                   </div>
                 </div>
               </div>
-                
-                              </div>
             </div>
+          </div>
 
         <div class="row">
           <div class="col-md-12">
@@ -167,7 +168,6 @@
                     </table>
                   </div>
                 </div>
-                
-                              </div>
+              </div>
             </div>
           </div>

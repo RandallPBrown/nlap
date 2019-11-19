@@ -6,6 +6,19 @@
 	border-radius: 5px 0px 0px 5px !important;
 }
 
+::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: white;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: grey;
+  outline: 1px solid white;
+}
+
 .hiddenrow {
 	padding: 0 !important;
 }
