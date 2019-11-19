@@ -50,8 +50,6 @@ t.rows.add(
 
 
 
-
-<%= stylesheet_link_tag "pagination.css" %>
 <% content_for :no_page_header, true %>
 <% content_for :js_libs, "modernizr gmaps flot chartjs demo-dashboard demo-chartjs demo-sparklines" %>
 
@@ -63,6 +61,14 @@ t.rows.add(
 .modal-backdrop
 {
     opacity: 1 !important;
+}
+
+.float:hover {
+  box-shadow: 3px 3px 3px 3px lightgrey;
+}
+
+.muted {
+  opacity: 0.5;
 }
 
 table tbody tr:hover {
@@ -99,7 +105,41 @@ $(document).ready(function() {
         Cookies.set('morning_modal', 'yes', { expires: 1, path: '/' });
         $('#morningModal').modal('show');
     }
+    // highlight entry card
+    if (<%= @user_entry_total_effective %> == 0.5) {
+      $('#occurrence-card').addClass('bg-warning text-white')
+    } else if (<%= @user_entry_total_effective %> > 0.5) {
+      $('#occurrence-card').removeClass('float').addClass('muted')
+    } else {
+      $('#occurrence-card').removeClass('bg-warning text-white')
+    }
+    // highlight wu card
+    if (<%= @user_writeup_written %> > 0) {
+      $('#wu-card').removeClass('float').addClass('muted')
+    } else {
+      $('#wu-card').removeClass('bg-warning text-white')
+    }
+    // highlight uph card
+    if (<%= number_with_precision(@uph, :precision => 1) %> < 6.5) {
+      $('#uph-card').addClass('bg-warning text-white')
+    } else {
+      $('#uph-card').removeClass('bg-warning text-white')
+    }
+    // highlight occ card
+    if (<%= number_with_precision(@occ, :precision => 1) %> < 98) {
+      $('#occupancy-card').addClass('bg-warning text-white')
+    } else {
+      $('#occupancy-card').removeClass('bg-warning text-white')
+    }
+    // highlight err card
+    if (<%= @err_logs %> > 0) {
+      $('#error-card').removeClass('float').addClass('muted')
+    } else {
+      $('#error-card').removeClass('bg-warning text-white')
+    }   
 });
+
+
 </script>
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -142,17 +182,15 @@ $(document).ready(function() {
 <section class="px-3 pt-5 pb-3 mb-3 d-flex flex-column" style="background-color: #eeeeee !important">
   <div class="container-fluid">
     <div class="row equal-cols">
-
-<div class="col-12 col-md-3 d-flex flex-column justify-items-between">
-
-        <div class="card card-mini card-mini-solid-icon">
+      <div class="col-12 col-md-3 d-flex flex-column justify-items-between">
+        <div class="card card-mini card-mini-solid-icon float" id="occurrence-card">
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0 text-muted"><u>Active Occurrences</u></h6>
+                <h6 class="m-0"><u>Active Occurrences</u></h6>
                 <h4 class="m-0 entry-count"><%= @user_entry_total_effective %></h4>
               </div>
-              <div class="d-flex align-self-center text-primary ml-3">
+              <div class="d-flex align-self-center ml-3">
                 <span>
                   <i class="fa fa-calendar-times-o"></i>
                 </span>
@@ -160,15 +198,14 @@ $(document).ready(function() {
             </div>
           </div>
         </div>
-
-        <div class="card card-mini card-mini-solid-icon">
+        <div class="card card-mini card-mini-solid-icon float" id="wu-card">
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0 text-muted"><u>Active Prog Actions</u></h6>
+                <h6 class="m-0"><u>Active Prog Actions</u></h6>
                 <h4 class="m-0 dap-count"><%= @user_writeup_written %></h4>
               </div>
-              <div class="d-flex align-self-center text-primary ml-3">
+              <div class="d-flex align-self-center ml-3">
                 <span>
                   <i class="fa fa-wpforms "></i>
                 </span>
@@ -177,14 +214,14 @@ $(document).ready(function() {
           </div>
         </div>
 
-        <div class="card card-mini card-mini-solid-icon">
+        <div class="card card-mini card-mini-solid-icon float" id="uph-card">
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0 text-muted"><u>Average UPH</u></h6>
+                <h6 class="m-0"><u>Average UPH</u></h6>
                 <h4 class="m-0"><%= number_with_precision(@uph, :precision => 1) %></h4>
               </div>
-              <div class="d-flex align-self-center text-primary ml-3">
+              <div class="d-flex align-self-center ml-3">
                 <span>
                   <i class="fa fa-hashtag "></i>
                 </span>
@@ -193,14 +230,14 @@ $(document).ready(function() {
           </div>
         </div>
 
-        <div class="card card-mini card-mini-solid-icon">
+        <div class="card card-mini card-mini-solid-icon float" id="occupancy-card">
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0 text-muted"><u>Average Occupancy</u></h6>
+                <h6 class="m-0"><u>Average Occupancy</u></h6>
                 <h4 class="m-0"><%= number_with_precision(@occ, :precision => 1) %>%</h4>
               </div>
-              <div class="d-flex align-self-center text-primary ml-3">
+              <div class="d-flex align-self-center ml-3">
                 <span>
                   <i class="fa fa-clock-o "></i>
                 </span>
@@ -209,14 +246,14 @@ $(document).ready(function() {
           </div>
         </div>
 
-        <div class="card card-mini card-mini-solid-icon">
+        <div class="card card-mini card-mini-solid-icon float" id="error-card">
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0 text-muted"><u>Improvement Opps</u></h6>
+                <h6 class="m-0"><u>Improvement Opps</u></h6>
                 <h4 class="m-0"><%= @err_logs %></h4>
               </div>
-              <div class="d-flex align-self-center text-primary ml-3">
+              <div class="d-flex align-self-center ml-3">
                 <span>
                   <i class="fa fa-exclamation-triangle "></i>
                 </span>
@@ -228,7 +265,7 @@ $(document).ready(function() {
       </div>
 
       <div class="col-12 col-md-6">
-        <div class="card" style="background-color: #ffffff !important">
+        <div class="card float" style="background-color: #ffffff !important">
                 <div class="card-header d-flex align-items-center">
         <h6 class="mr-auto">Agent Stats</h6>
         <div class="d-flex">
@@ -256,7 +293,7 @@ $(document).ready(function() {
 
     <div class="col-3 ">
       <!-- RECENT ACTIVITY TABLE -->
-      <div class="card inspectable">
+      <div class="card inspectable float">
         <!-- component-title: Timeline Card -->
         <div class="card-header">
           <h6>RECENT ACTIVITY</h6>
@@ -268,12 +305,12 @@ $(document).ready(function() {
                 <li class="timeline-item">
                   <time class=''>
                     <strong>
-                      <%= entry.occurrence.name %>
+                      <%= entry.occurrence.name %> - <%= entry.occurrence.ovalue %>
                     </strong>
                   </time>
                   <div class="activity-text">
-                    <strong><%= entry.edate %></strong>
-                    <small class="text-muted"><%= entry.agent.department.name %></small>
+                    <strong><%= entry.edate.strftime("%m/%d/%Y") %></strong>
+                    <small class="text-muted">EXPIRES: <%= (entry.edate + 90.days).strftime("%m/%d/%Y") %></small>
                   </div>
                 </li>
               <% end %>
@@ -310,7 +347,7 @@ $(document).ready(function() {
           <!-- OCCURRENCE TABLE -->
           <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-              <div class="card card-sheet sheet-condensed inspectable">
+              <div class="card card-sheet sheet-condensed inspectable float">
                 <div class="table-responsive" >
                   <table class="table table-hover table-striped" id="userEntryTable">
                     <thead>
@@ -331,7 +368,7 @@ $(document).ready(function() {
               </div>
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-              <div class="card inspectable">      
+              <div class="card inspectable float">      
                 <div class="table-responsive">
                   <table class="table table-hover table-striped" id="userDapTable">
                     <thead>
