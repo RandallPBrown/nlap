@@ -6,12 +6,15 @@ class IncentivesController < ApplicationController
   # GET /incentives
   def index
     @incentives = Incentive.all.joins(:user)
+
   end
 
   def import
+    @errors = ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', current_user.id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').where(errdate: Date.current.beginning_of_month...Date.today).count
       csv_file = params[:file].read
       CSV.parse(csv_file) do |row|
       incentives = Incentive.create(user_id: row[0], uph: row[1], quality: row[2], improvement_opp: row[3], occupancy: row[4], date: row[5])
+      incentives.improvement_opp = ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('err_logs.user_id = ?', incentives.user_id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').where('errdate = ?', incentives.date).count
       incentives.save
     end
     redirect_to incentives_path, notice: "Que added"

@@ -54,6 +54,10 @@ t.rows.add(
 <% content_for :js_libs, "modernizr gmaps flot chartjs demo-dashboard demo-chartjs demo-sparklines" %>
 
 <style>
+html {
+  scroll-behavior: smooth;
+}
+
 .morning-message {
   font-size: 5em;
 }
@@ -105,6 +109,7 @@ table tbody tr:hover {
 }
 
 
+
 .fancy-fade td {
   opacity: 0;
   animation: fadeIn 0.5s ease-in both;
@@ -133,6 +138,7 @@ table tbody tr:hover {
     transform: translate3d(0, 0, 0);
   }
 }
+
 </style>
 
 <body>
@@ -333,7 +339,6 @@ $(document).ready(function() {
             </div>
           </div>
         </div>
-
       </div>
 
       <div class="col-12 col-md-6">
@@ -405,11 +410,11 @@ $(document).ready(function() {
       <button class="btn btn-primary table-select" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" type="button" name="progressive action"><i class="fa fa-wpforms "></i></button>
       <button class="btn btn-primary table-select" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false" type="button" name="statistics"><i class="fa fa-line-chart "></i></button>
     </li>
-  </ul>
-  
+  </ul>  
 </div>
+
 <div class="pull-right pr-4">
-  <h3 class="font-weight-bold" id="table-title" style="opacity:0"><span class="text-uppercase" id="table-title-current">OCCURRENCE</span> BREAKDOWN</h3>
+  <h3 class="font-weight-bold" id="table-title" style="opacity:0"><span class="text-uppercase" name="table-title-current-anchor" id="table-title-current">OCCURRENCE</span> BREAKDOWN</h3>
 </div>
 <div class="container-fluid p-4" style="height: 450px;background-color: #eeeeee !important;">
   <div class="row">
