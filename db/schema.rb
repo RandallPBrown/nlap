@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191113164354) do
+ActiveRecord::Schema.define(version: 20191121174903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -191,6 +191,7 @@ ActiveRecord::Schema.define(version: 20191113164354) do
     t.text "err_notes"
     t.float "err_cost"
     t.string "serviceorder"
+    t.text "dispute"
     t.index ["department_id"], name: "index_err_logs_on_department_id"
     t.index ["err_name_id"], name: "index_err_logs_on_err_name_id"
     t.index ["err_status_id"], name: "index_err_logs_on_err_status_id"
@@ -240,12 +241,10 @@ ActiveRecord::Schema.define(version: 20191113164354) do
   create_table "incentives", force: :cascade do |t|
     t.bigint "user_id"
     t.float "uph"
-    t.float "quality"
     t.float "occupancy"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "date"
-    t.integer "improvement_opp"
     t.index ["user_id"], name: "index_incentives_on_user_id"
   end
 

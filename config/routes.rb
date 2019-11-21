@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   get 'users/user_breakdown'
   get 'parts/dashboard'
   get 'err_logs/dashboard'
+  get 'err_logs/form_dispute'
+  get 'users/modal', defaults: { format: 'js'} 
 
   get 'agent_department/index'
 

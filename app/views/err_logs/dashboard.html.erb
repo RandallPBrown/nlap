@@ -28,7 +28,6 @@
                                             <th>Department</th>
                                             <th>Date</th>
                                             <th>Type</th>
-                                            <th>Description</th>
                                             <th>Status</th>
                                             <th>Submitted</th>
                                           <th></th>
@@ -41,7 +40,6 @@
                                             <td><%= err_log.department.name %></td>
                                             <td><%= err_log.errdate %></td>
                                             <td><%= err_log.err_name.errname %></td>
-                                            <td><%= err_log.errdesc %></td>
                                             <td><%= err_log.err_status.statusname %></td>
                                             <td><%= err_log.errsubmitby %></td>
                                           <td class="actions text-right">
@@ -99,6 +97,15 @@
                                         <%= f.text_area :err_notes, class: "form-control form-control-sm" %>
                                         <%= f.error_messages %>
                                       </div>
+                                    <% end %>
+                                    <% if err_log.dispute.present? %>
+                                    <%= f.form_group :dispute, class: 'row' do |f| %>
+                                      <%= f.label 'Dispute Notes', class: 'control-label col-md-3' %>
+                                      <div class='col-12 col-md-9'>
+                                        <%= f.text_area :dispute, class: "form-control form-control-sm" %>
+                                        <%= f.error_messages %>
+                                      </div>
+                                    <% end %>
                                     <% end %>
                                   </div>
 

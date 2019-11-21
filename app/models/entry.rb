@@ -33,6 +33,10 @@ class Entry < ApplicationRecord
   scope :uete, -> {
     sum(:ovalue)
   }
+  
+  scope :uete_monthly, -> {
+    where(edate: Date.today.beginning_of_month...Date.today.end_of_month).sum(:ovalue)
+  }
 
   scope :ue, -> {
     group(:id).order("entries.edate DESC")

@@ -10,8 +10,13 @@ class ErrLogsController < ApplicationController
     @err_log = ErrLog.new
   end
 
+  def modal
+
+  end
+
   def dashboard
     # @part = Part.find(params[:id])
+    @err_log = ErrLog.all
     @approved_by = User.order(:id).where('users.admin = ?', true)
     @err_logs = ErrLog.includes(:err_status).joins(:err_status).where('statusname = ? OR statusname = ?', 'Pending', 'Dispute').order(created_at: :desc, updated_at: :desc)
     @allerrors = ErrLog.all
@@ -65,6 +70,6 @@ class ErrLogsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def err_log_params
-      params.require(:err_log).permit(:serviceorder, :approved_by, :err_notes, :err_cost, :user_id, :department_id, :errdate, :err_name_id, :errdesc, :err_status_id, :errsubmitby)
+      params.require(:err_log).permit(:serviceorder, :approved_by, :err_notes, :err_cost, :user_id, :department_id, :errdate, :err_name_id, :errdesc, :err_status_id, :errsubmitby, :dispute)
     end
 end

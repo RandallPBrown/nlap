@@ -24,6 +24,28 @@ t.rows.add(
   [<% @user_entry.each do |entry| %>{'Name': '<%= entry.agent.user.full_name %>', 'Type': '<%= entry.occurrence.name.truncate(15) %>', 'Date':'<%= entry.edate %>', 'Expires':'<%= entry.edate + 90.days %>', 'Description':'<%= entry.edesc.truncate(15) %>', '':''},<% else %><% end %>]
   ).draw();
 
+// ERROR TABLE
+var t = $('#userErrorTable').DataTable({ 
+        "pageLength": 5,
+        select: true,
+        columns: [ 
+              { data: 'Date' }, 
+              { data: 'SO' },
+              { data: 'Cost' }, 
+              { data: 'Type' },
+              { data: 'Description' },
+              { data: 'Status' },
+              { data: '' }
+            ]
+          });
+  t.draw();
+
+
+
+t.rows.add(
+  [<% @err_logs.each do |err_log| %>{'Date': '<%= err_log.errdate %>', 'SO': '<%= err_log.serviceorder %>', 'Cost': '<%= err_log.err_cost %>', 'Type': '<%= err_log.err_name.errname %>', 'Description': '<%= err_log.errdesc.truncate(15) %>', 'Status': '<%= err_log.err_status.statusname %>', '': '<%= link_to "click", users_modal_path(err_log.id),  {:remote => true, "data-toggle" => "modal", "data-target" => "#modal-error", class: "btn btn-primary btn-lg"}%>' },<% else %><% end %>]
+  ).draw();
+
 // DAPS TABLE
 var t = $('#userDapTable').DataTable({ 
         "pageLength": 5,
@@ -150,10 +172,10 @@ $(document).ready(function() {
         $('#morningModal').modal('show');
     }
     // highlight entry card
-    if (<%= @user_entry_total_effective %> == 0.5) {
+    if (<%= @user_entry_total_effective_monthly %> == 0.5) {
       $('#occurrence-card').addClass('bg-warning text-white');
       $('#occurrence-modal').addClass('bg-warning text-white');
-    } else if (<%= @user_entry_total_effective %> > 0.5) {
+    } else if (<%= @user_entry_total_effective_monthly %> > 0.5) {
       $('#occurrence-card').removeClass('float').addClass('muted');
       $('#occurrence-modal').addClass('bg-danger text-white')
     } else {
@@ -185,7 +207,7 @@ $(document).ready(function() {
       $('#occupancy-modal').addClass('bg-success');
     }
     // highlight err card
-    if (<%= @err_logs %> > 0) {
+    if (<%= @err_logs_count %> > 0) {
       $('#error-card').removeClass('float').addClass('muted');
       $('#error-modal').addClass('bg-danger text-white');
     } else {
@@ -226,7 +248,6 @@ $(document).ready(function() {
               </tr>
             </tbody>
           </table> -->
-          <H1 class="font-weight-bold text-danger">COMING SOON!</H1>
           <table class="table table-sm table-borderless m-3 align-items-center text-center bg-transparent">
             <thead class="text-dark font-weight-bold">
               <tr>
@@ -257,6 +278,16 @@ $(document).ready(function() {
 </div>
 <!-- /END OF COOKIE MODAL -->
 
+<!-- Start dispute modal -->
+<div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" id="modal-dialog">
+
+    </div>
+  </div>
+</div>
+
+
 <section class="px-3 pt-5 pb-3 mb-3 d-flex flex-column" style="background-color: #eeeeee !important">
   <div class="container-fluid">
     <div class="row equal-cols">
@@ -265,8 +296,8 @@ $(document).ready(function() {
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0"><u>Active Occurrences</u></h6>
-                <h4 class="m-0 entry-count"><%= @user_entry_total_effective %></h4>
+                <h6 class="m-0"><u>Monthly Occurrences</u></h6>
+                <h4 class="m-0 entry-count"><%= @user_entry_total_effective_monthly %> <small>(<%= @user_entry_total_effective %> active)</small></h4>
               </div>
               <div class="d-flex align-self-center ml-3">
                 <span>
@@ -281,7 +312,7 @@ $(document).ready(function() {
             <div class="media">
               <div class="media-body text-left">
                 <h6 class="m-0"><u>Active Prog Actions</u></h6>
-                <h4 class="m-0 dap-count"><%= @user_writeup_written %></h4>
+                <h4 class="m-0 dap-count"><%= @user_writeup_written %> <small>active</small></h4>
               </div>
               <div class="d-flex align-self-center ml-3">
                 <span>
@@ -329,7 +360,7 @@ $(document).ready(function() {
             <div class="media">
               <div class="media-body text-left">
                 <h6 class="m-0"><u>Improvement Opps</u></h6>
-                <h4 class="m-0"><%= @err_logs %></h4>
+                <h4 class="m-0"><%= @err_logs_count %> <small>(<%= @err_logs_dispute %> disputed/<%= @err_logs_pending %> pending)</small></h4> 
               </div>
               <div class="d-flex align-self-center ml-3">
                 <span>
@@ -408,7 +439,7 @@ $(document).ready(function() {
     <li class="nav-item active font-weight-bold">
       <button class="btn btn-primary active font-weight-bold table-select" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" type="button" name="occurrence"><i class="fa fa-calendar-times-o "></i></button>
       <button class="btn btn-primary table-select" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" type="button" name="progressive action"><i class="fa fa-wpforms "></i></button>
-      <button class="btn btn-primary table-select" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false" type="button" name="statistics"><i class="fa fa-line-chart "></i></button>
+      <button class="btn btn-primary table-select" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false" type="button" name="improvement Opportunities"><i class="fa fa-exclamation-triangle "></i></button>
     </li>
   </ul>  
 </div>
@@ -466,11 +497,29 @@ $(document).ready(function() {
               </div>              
             </div>
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-              <center><H1>COMING SOON</H1></center>
+              <div class="card inspectable float">      
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover table-sm-responsive" id="userErrorTable">
+                  <thead>
+                    <tr>
+                                            <th>Date</th>
+                                            <th>SO</th>
+                                            <th>Cost</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
+        </div>
 
-          <!-- /OCCURRENCE TABLE -->
         </div>
       </div>
 

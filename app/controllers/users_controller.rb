@@ -42,6 +42,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def modal
+    @err_log = ErrLog.find(params[:format])
+
+  end
+
   def dashboard          
     # @body_class = "with-sidebar show-sidebar"
     # @current_user = current_user
@@ -55,11 +60,16 @@ class UsersController < ApplicationController
     else
       Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:occupancy)
     end
-    @err_logs = ErrLog.where("user_id = ?", current_user.id).where(:errdate => 1.month.ago.beginning_of_day..Date.today.end_of_day).count(:id)
+    @err_logs = ErrLog.all.where('user_id = ?', current_user.id)
+    @err_logs_count = ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where("user_id = ?", current_user.id).where(:errdate => Date.today.beginning_of_month..Date.today.end_of_month).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').select(:err_statuses).where('err_statuses.statusname = ?', 'Approved').count(:id)
+    @err_logs_dispute = ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where("user_id = ?", current_user.id).where(:errdate => Date.today.beginning_of_month..Date.today.end_of_month).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').select(:err_statuses).where('err_statuses.statusname = ?', 'Dispute').count(:id)
+    @err_logs_pending = ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where("user_id = ?", current_user.id).where(:errdate => Date.today.beginning_of_month..Date.today.end_of_month).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').select(:err_statuses).where('err_statuses.statusname = ?', 'Pending').count(:id)
+
     @user_entry = Entry.occurrence_user.where("users.id = ?", current_user.id).group('agents.id', 'occurrences.id', 'departments.id', 'users.id').includes(:occurrence, agent: [:department, :user]).ue
     @user_entry_today = Entry.today.occurrence_user.where("users.id = ?", current_user.id).ue
     @user_entry_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).ue
     @user_entry_total_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).uete
+    @user_entry_total_effective_monthly = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).uete_monthly
     @user_entry_tardy_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).uete2
     @user_entry_absent_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).ueae
   	
@@ -78,7 +88,9 @@ class UsersController < ApplicationController
     @calls = AgentStat.all.group(:id).where("user_id = ?", current_user.id).where(:date => 2.months.ago.to_date..Date.today.to_date.end_of_day).group(:date)
     respond_to do |format|
       format.html
+      format.js
       format.json {render :json => @user_entry}
+
     end
   end
 
