@@ -43,7 +43,7 @@ var t = $('#userErrorTable').DataTable({
 
 
 t.rows.add(
-  [<% @err_logs.each do |err_log| %>{'Date': '<%= err_log.errdate %>', 'SO': '<%= err_log.serviceorder %>', 'Cost': '<%= err_log.err_cost %>', 'Type': '<%= err_log.err_name.errname %>', 'Description': '<%= err_log.errdesc.truncate(15) %>', 'Status': '<%= err_log.err_status.statusname %>', '': '<%= link_to "click", users_modal_path(err_log.id),  {:remote => true, "data-toggle" => "modal", "data-target" => "#modal-error", class: "btn btn-primary btn-lg"}%>' },<% else %><% end %>]
+  [<% @err_logs.each do |err_log| %>{'Date': '<%= err_log.errdate %>', 'SO': '<%= err_log.serviceorder %>', 'Cost': '<%= err_log.err_cost %>', 'Type': '<%= err_log.err_name.errname %>', 'Description': '<%= err_log.errdesc.truncate(15) %>', 'Status': '<%= err_log.err_status.statusname %>', '': '<%= link_to "DISPUTE", users_modal_path(err_log.id),  {:remote => true, "data-toggle" => "modal", "data-target" => "#modal-error", class: "btn btn-primary btn-lg"}%>' },<% else %><% end %>]
   ).draw();
 
 // DAPS TABLE
