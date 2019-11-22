@@ -14,23 +14,19 @@
 
       <div class="container">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-9">
             <div class="card">
-              <div class="card-header bg-primary text-white">
-                <h5 class="text-uppercase m-auto font-weight-bold">PENDING APPROVAL ERRORS</h5>
-              </div>
+                
               <div class="card-body" style="height:400px;overflow-y: scroll;">
+                <h5 class="text-uppercase m-auto font-weight-bold">PENDING APPROVAL ERRORS</h5>
                 <div class="table-responsive">
-                  <table class="table table-striped table-hover table-sm-responsive display border rounded" id="parts_index_pending">
+                  <table class="table table-striped table-hover display border rounded" id="parts_index_pending">
                     <thead>
                     <tr>
-                                            <th>User</th>
+                                            <th>Agent</th>
                                             <th>Department</th>
                                             <th>Date</th>
-                                            <th>Type</th>
                                             <th>Status</th>
-                                            <th>Submitted</th>
-                                          <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -39,16 +35,7 @@
                                             <td><%= err_log.user.full_name %></td>
                                             <td><%= err_log.department.name %></td>
                                             <td><%= err_log.errdate %></td>
-                                            <td><%= err_log.err_name.errname %></td>
                                             <td><%= err_log.err_status.statusname %></td>
-                                            <td><%= err_log.errsubmitby %></td>
-                                          <td class="actions text-right">
-                        <div class="btn-group">
-                          <%= link_to theme_icon_tag("eye"), err_log, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                          <%= link_to theme_icon_tag("pencil-alt"), edit_err_log_path(err_log), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
-                          <%= link_to theme_icon_tag("trash"), err_log, 'data-toggle': 'tooltip', title: 'Delete',
-                          data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
-                        </div>
                         </td>
                         </tr>
                         <tr>
@@ -62,18 +49,12 @@
                                     <%= f.form_group :err_name_id, class: 'row' do |f| %>
                                       <%= f.label 'Error Type', class: 'control-label col-md-3' %>
                                       <div class='col-12 col-md-9'>
-                                        <%= f.collection_select :err_name_id, ErrName.order(:id), :id, :errname, class: 'form-control form-control-sm' %>
+                                        <%= f.collection_select :err_name_id, ErrName.order(errname: :desc), :id, :errname, class: 'form-control form-control-sm' %>
                                         <%= f.error_messages %>
                                       </div>
                                     <% end %>
 
-                                    <%= f.form_group :err_status_id, class: 'row' do |f| %>
-                                      <%= f.label 'Disposition', class: 'control-label col-md-3' %>
-                                      <div class='col-12 col-md-9'>
-                                        <%= f.collection_select :err_status_id, ErrStatus.order(:id), :id, :statusname, class: 'form-control form-control-sm' %>
-                                        <%= f.error_messages %>
-                                      </div>
-                                    <% end %>
+                                    <%= f.hidden_field :err_status_id, value: '3' %>
 
                                     <%= f.form_group :err_cost, class: 'row' do |f| %>
                                       <%= f.label 'Error Cost', class: 'control-label col-md-3' %>
@@ -86,7 +67,7 @@
                                     <%= f.form_group :approved_by, class: 'row' do |f| %>
                                       <%= f.label 'Trainer', class: 'control-label col-md-3' %>
                                       <div class='col-12 col-md-9'>
-                                        <%= f.collection_select :approved_by, @approved_by, :last_name, :full_name, class: "form-control form-control-sm" %>
+                                        <%= f.collection_select :approved_by, @approved_by, :full_name, :full_name, class: "form-control form-control-sm" %>
                                         <%= f.error_messages %>
                                       </div>
                                     <% end %>
@@ -98,14 +79,15 @@
                                         <%= f.error_messages %>
                                       </div>
                                     <% end %>
+
                                     <% if err_log.dispute.present? %>
-                                    <%= f.form_group :dispute, class: 'row' do |f| %>
-                                      <%= f.label 'Dispute Notes', class: 'control-label col-md-3' %>
-                                      <div class='col-12 col-md-9'>
-                                        <%= f.text_area :dispute, class: "form-control form-control-sm" %>
-                                        <%= f.error_messages %>
-                                      </div>
-                                    <% end %>
+                                      <%= f.form_group :dispute, class: 'row' do |f| %>
+                                        <%= f.label 'Dispute Notes', class: 'control-label col-md-3' %>
+                                        <div class='col-12 col-md-9'>
+                                          <%= f.text_area :dispute, class: "form-control form-control-sm" %>
+                                          <%= f.error_messages %>
+                                        </div>
+                                      <% end %>
                                     <% end %>
                                   </div>
 
@@ -127,6 +109,11 @@
                       </table>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="col-3 d-flex align-items-stretch">
+              <div class="card">
+                asdfasdfsadfs
               </div>
             </div>
           </div>

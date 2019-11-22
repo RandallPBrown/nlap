@@ -11,7 +11,7 @@ class ErrLogsController < ApplicationController
   end
 
   def modal
-
+    @err_logs_cost_departmental = ErrLog.all.where("department_id = ?", current_user.department_id).where(errdate: Date.today.beginning_of_month...Date.today.end_of_month).sum(:err_cost)
   end
 
   def dashboard
@@ -50,7 +50,7 @@ class ErrLogsController < ApplicationController
   # PATCH/PUT /err_logs/1
   def update
     if @err_log.update(err_log_params)
-      redirect_to err_logs_dashboard_path, notice: 'Err log was successfully updated.'
+      redirect_back(fallback_location: root_path)
     else
       render :edit
     end
