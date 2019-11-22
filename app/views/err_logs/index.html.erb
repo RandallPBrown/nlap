@@ -26,10 +26,15 @@ $(document).ready( function () {
   </div>
 </div>
 
-  <% content_for :actions do %>
-    <%= link_to new_err_log_path, class: 'btn btn-primary btn-large pull-right', "data-toggle" => "modal", "data-target" => "#modal-error" do %>
-      <%= fa_icon_tag "plus" %> ERROR
-      <% end %>
+      <% content_for :actions do %>
+        <%= link_to new_err_log_path, class: 'btn btn-primary btn-large pull-right', "data-toggle" => "modal", "data-target" => "#modal-error" do %>
+          <%= fa_icon_tag "plus" %> ERROR
+        <% end %>
+        <% if current_user.department.name == "Training and Deveopment" || current_user.department.name == "Executive" %>
+          <%= link_to err_logs_dashboard_path, class: 'btn btn-primary btn-large pull-right mr-1' do %>
+            DASHBOARD
+          <% end %>
+        <% end %>
       <% end %>
 
       <div class="container">
@@ -45,7 +50,7 @@ $(document).ready( function () {
                                             <th>Cost</th>
                                             <th>User</th>
                                             <th>Department</th>
-                                            <th>Type</th>
+                                            <th>Level</th>
                                             <th>Description</th>
                                             <th>Status</th>
                                             <th>Submitted</th>
@@ -60,8 +65,8 @@ $(document).ready( function () {
                                             <td><%= err_log.err_cost %></td>
                                             <td><%= err_log.user.full_name %></td>
                                             <td><%= err_log.department.name %></td>
-                                            <td><%= err_log.err_name.errname %></td>
-                                            <td><%= err_log.errdesc %></td>
+                                            <td><%= err_log.err_name.errname.truncate(15) %></td>
+                                            <td><%= err_log.errdesc.truncate(15) %></td>
                                             <td><%= err_log.err_status.statusname %></td>
                                             <td><%= err_log.errsubmitby %></td>
                                           <td class="actions text-right">

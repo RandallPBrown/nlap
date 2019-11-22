@@ -72,6 +72,14 @@
                                       </div>
                                     <% end %>
 
+                                    <%= f.form_group :err_type_id, class: 'row' do |f| %>
+                                      <%= f.label 'Type', class: 'control-label col-md-3' %>
+                                      <div class='col-12 col-md-9'>
+                                        <%= f.collection_select :err_type_id, ErrType.order(:description), :id, :description, class: "form-control form-control-sm" %>
+                                        <%= f.error_messages %>
+                                      </div>
+                                    <% end %>
+
                                     <%= f.form_group :err_notes, class: 'row' do |f| %>
                                       <%= f.label 'Notes', class: 'control-label col-md-3' %>
                                       <div class='col-12 col-md-9'>
@@ -113,7 +121,7 @@
             </div>
             <div class="col-3 d-flex align-items-stretch">
               <div class="card">
-                asdfasdfsadfs
+                Filters coming soon!
               </div>
             </div>
           </div>

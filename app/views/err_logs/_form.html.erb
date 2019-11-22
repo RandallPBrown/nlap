@@ -77,6 +77,14 @@ $(function() {
       </div>
     <% end %>
 
+    <%= f.form_group :err_type_id, class: 'row' do |f| %>
+      <%= f.label 'Type', class: 'control-label col-md-3' %>
+      <div class='col-12 col-md-9'>
+        <%= f.collection_select :err_type_id, ErrType.order(:description), :id, :description, class: "form-control form-control-sm" %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
 <%= f.hidden_field :err_name_id, value: '3' %>
 <%= f.hidden_field :err_status_id, value: '1' %>
 

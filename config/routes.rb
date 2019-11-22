@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :err_types
   put 'agent_stats/all_stats' => 'agent_stats#all_stats'
   put 'agent_stats/csv_upload' => 'agent_stats#csv_upload'
 

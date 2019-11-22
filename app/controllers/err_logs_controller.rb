@@ -70,6 +70,6 @@ class ErrLogsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def err_log_params
-      params.require(:err_log).permit(:serviceorder, :approved_by, :err_notes, :err_cost, :user_id, :department_id, :errdate, :err_name_id, :errdesc, :err_status_id, :errsubmitby, :dispute)
+      params.require(:err_log).permit(:serviceorder, :approved_by, :err_notes, :err_cost, :user_id, :department_id, :errdate, :err_name_id, :errdesc, :err_status_id, :errsubmitby, :dispute, :err_type_id)
     end
 end
