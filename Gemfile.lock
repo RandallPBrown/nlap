@@ -55,6 +55,7 @@ GEM
       sassc-rails (>= 2.0.0)
     bootstrap-datepicker-rails (1.8.0.1)
       railties (>= 3.0)
+    bootstrap-select-rails (1.13.8)
     builder (3.2.3)
     bullet (5.9.0)
       activesupport (>= 3.0.0)
@@ -304,6 +305,7 @@ DEPENDENCIES
   best_in_place (~> 3.0.1)
   bootstrap
   bootstrap-datepicker-rails
+  bootstrap-select-rails
   bullet
   byebug
   capybara (~> 2.13)

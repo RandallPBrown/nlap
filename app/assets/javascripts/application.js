@@ -17,6 +17,7 @@
 //= require turbolinks
 // require bootstrap
 //= require bootstrap-datepicker
+//= require bootstrap-select
 //= require rrt
 //= require validator
 //= require best_in_place

@@ -46,63 +46,93 @@
                                   <%= f.error_notification %>
 
                                   <div class="form-inputs">
-                                    <%= f.form_group :err_name_id, class: 'row' do |f| %>
-                                      <%= f.label 'Error Type', class: 'control-label col-md-3' %>
-                                      <div class='col-12 col-md-9'>
-                                        <%= f.collection_select :err_name_id, ErrName.order(errname: :desc), :id, :errname, class: 'form-control form-control-sm' %>
-                                        <%= f.error_messages %>
-                                      </div>
-                                    <% end %>
-
-                                    <%= f.hidden_field :err_status_id, value: '3' %>
-
-                                    <%= f.form_group :err_cost, class: 'row' do |f| %>
-                                      <%= f.label 'Error Cost', class: 'control-label col-md-3' %>
-                                      <div class='col-12 col-md-9'>
-                                        <%= f.number_field :err_cost, class: 'form-control form-control-sm' %>
-                                        <%= f.error_messages %>
-                                      </div>
-                                    <% end %>
-
-                                    <%= f.form_group :approved_by, class: 'row' do |f| %>
-                                      <%= f.label 'Trainer', class: 'control-label col-md-3' %>
-                                      <div class='col-12 col-md-9'>
-                                        <%= f.collection_select :approved_by, @approved_by, :full_name, :full_name, class: "form-control form-control-sm" %>
-                                        <%= f.error_messages %>
-                                      </div>
-                                    <% end %>
-
-                                    <%= f.form_group :err_type_id, class: 'row' do |f| %>
-                                      <%= f.label 'Type', class: 'control-label col-md-3' %>
-                                      <div class='col-12 col-md-9'>
-                                        <%= f.collection_select :err_type_id, ErrType.order(:description), :id, :description, class: "form-control form-control-sm" %>
-                                        <%= f.error_messages %>
-                                      </div>
-                                    <% end %>
-
-                                    <%= f.form_group :err_notes, class: 'row' do |f| %>
-                                      <%= f.label 'Notes', class: 'control-label col-md-3' %>
-                                      <div class='col-12 col-md-9'>
-                                        <%= f.text_area :err_notes, class: "form-control form-control-sm" %>
-                                        <%= f.error_messages %>
-                                      </div>
-                                    <% end %>
-
-                                    <% if err_log.dispute.present? %>
-                                      <%= f.form_group :dispute, class: 'row' do |f| %>
-                                        <%= f.label 'Dispute Notes', class: 'control-label col-md-3' %>
-                                        <div class='col-12 col-md-9'>
-                                          <%= f.text_area :dispute, class: "form-control form-control-sm" %>
-                                          <%= f.error_messages %>
+                                  <div class="row">  
+                                    <div class="col-6">
+                                      <div class="row p-1">
+                                        <div class="col-3">
+                                          <label>Error Type:</label>
                                         </div>
+                                        <div class="col-9">
+                                          <%= f.collection_select :err_name_id, ErrName.order(errname: :desc), :id, :errname, {}, {:class=>'form-control form-control-sm text-dark'} %>
+                                        </div>
+                                      </div>
+                                      <div class="row p-1">
+                                        <div class="col-3">
+                                          <label>Error Cost</label>
+                                        </div>
+                                        <div class="col-9">  
+                                          <%= f.number_field :err_cost, class: 'form-control form-control-sm text-dark' %>
+                                        </div>
+                                      </div>
+                                      <div class="row p-1">
+                                        <div class="col-3">
+                                          <label>Trainer:</label>
+                                        </div>
+                                        <div class="col-9">
+                                          <%= f.collection_select :approved_by, @approved_by, :full_name, :full_name, {}, {:class=>'form-control form-control-sm text-dark'} %>
+                                        </div>
+                                      </div>
+                                      <div class="row p-1">
+                                        <div class="col-3">
+                                          <label>Type:</label>
+                                        </div>
+                                        <div class="col-9">  
+                                          <%= f.collection_select :err_type_id, ErrType.order(:description), :id, :description, {}, {:class=>'form-control form-control-sm text-dark'} %>
+                                        </div>
+                                      </div>
+                                      <div class="row p-1">
+                                        <div class="col-3">
+                                          <label>Notes:</label>
+                                        </div>
+                                        <div class="col-9">  
+                                          <%= f.text_area :err_notes, class: "form-control form-control-sm text-dark" %>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-6" style="overflow-y: scroll">
+                                      <% if err_log.errdesc.present? %>
+                                      <div class="row p-1">
+                                        <div class="col-12">
+                                          <label>Incident Notes:</label>
+                                        </div>
+                                      </div>
+                                      <div class="row p-1">
+                                        <div class="col-12">
+                                          <%= err_log.errdesc %>
+                                        </div>
+                                      </div>
+                                      <% else %>
+                                      <div class="row p-1">
+                                        <div class="col-12">
+                                          <label>Incident Notes:</label>
+                                        </div>
+                                      </div>
+                                      <div class="row p-1">
+                                        <div class="col-12">
+                                          <span class="text-monospace">NO ERROR INFORMATION SUBMITTED</span>
+                                        </div>
+                                      </div>
                                       <% end %>
-                                    <% end %>
+                                      <% if err_log.dispute.present? %>
+                                      <hr>
+                                      <div class="row p-1">
+                                        <div class="col-12">
+                                          <label>Dispute Notes:</label>
+                                        </div>
+                                      </div>
+                                      <div class="row p-1">
+                                        <div class="col-12">
+                                          <%= err_log.dispute %>
+                                        </div>
+                                      </div>
+                                      <% end %>
+                                    </div>
+                                  </div>
+                                  <%= f.hidden_field :err_status_id, value: '3' %>
                                   </div>
 
-                                  <div class="d-flex">
-                                    <div class="ml-auto">
-                                      <%= f.submit 'UPDATE', class: 'btn btn-primary' %>
-                                    </div>
+                                  <div class="d-flex pt-3">
+                                      <%= f.submit 'UPDATE', class: 'btn btn-block btn-primary' %>
                                   </div>
                                 <% end %>
                               </div>
