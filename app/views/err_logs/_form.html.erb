@@ -55,8 +55,7 @@ $(function() {
     <%= f.form_group :errdate, class: 'row' do |f| %>
       <%= f.label 'Error Date', class: 'control-label col-md-3' %>
       <div class='col-12 col-md-9'>
-        <%= f.text_field :errdate, class: 'datepicker', 'data-provide': 'datepicker', 'placeholder': 
-        'YYYY-MM-DD' %>
+        <%= f.date_field :errdate, class: 'form-control form-control-sm' %>
         <%= f.error_messages %>
       </div>
     <% end %>
