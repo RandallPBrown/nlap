@@ -20,6 +20,7 @@
 //= require bootstrap-select
 //= require rrt
 //= require validator
+//= require toastr
 //= require best_in_place
 //= require best_in_place.jquery-ui
 //= require datatables.min

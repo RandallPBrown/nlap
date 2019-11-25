@@ -16,6 +16,7 @@
  *= require simple_calendar
  *= require overrides
  *= require validator
+ *= require toastr
  *= require datatables
  *= require bootstrap-datepicker
  *= require bootstrap-select

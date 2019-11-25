@@ -29,7 +29,7 @@
 <%= stylesheet_link_tag "pagination.css" %>
 <%= render :layout => "layouts/base" do %>
   <nav class="navbar navbar-expand-lg" style="background-color: #4caf50 !important">
-    <a href="javascript:" class="navbar-brand mr-auto p-0"><%= image_tag 'service_roots.png', size: "30x35"%> </a>
+    <a href="javascript:" class="navbar-brand mr-auto p-0"><%= image_tag 'newleaf logo leaf.png', size: "35x35", class: 'bg-white rounded' %> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -82,7 +82,7 @@
         <% end %>
       </ul>
       <ul class="nav navbar-nav ml-auto">
-        <% if (current_user.department.name === 'Pre-Approvals') || (current_user.department.name === 'Back Office') || (current_user.department.name === 'Executive') then %>
+<!--         <% if (current_user.department.name === 'Pre-Approvals') || (current_user.department.name === 'Back Office') || (current_user.department.name === 'Executive') then %>
           <% if current_user.admin? %>
           <li class="nav-item font-weight-bold text-white">
             <% if pending_count > 0 %>
@@ -100,7 +100,7 @@
             <% end %>
           </li>
           <% else %>
-        <% end %>
+        <% end %> -->
         <li class="nav-item dropdown user-nav rounded">
           <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <%= fa_icon_tag("user") %>
@@ -109,13 +109,9 @@
           <ul class="dropdown-menu dropdown-menu-right" role="menu">
             <li class="dropdown-item text-center">
               <div class="card">
-                <div class="card-header pb-2 m-auto bg-white">
-                  <div class="row justify-content-center m-auto">
-                    <h3 class="m-auto text-uppercase font-weight-bold m-auto"><%= current_user.full_name %></h3>
-                  </div>
-                </div>
-                <div class="card-body bg-light">
-                  <div class="row p-1">
+                <div class="card-body bg-white">
+                  <h4 class="m-auto font-weight-bold"><%= current_user.full_name %></h4>
+                  <div class="row p-1 mt-2">
                     <div class="col-5">
                       <span class="pull-left"><strong>Email:</strong></span>
                     </div>
@@ -150,11 +146,11 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-white">
                   <div>
-                    <%= link_to "Change your password", edit_user_path(current_user.id), :class => 'btn  text-dark' %>
+                    <%= link_to "EDIT USER", edit_user_path(current_user.id), :class => 'btn btn-primary text-white font-weight-bold mr-1' %>
                   </div>
                   <div>
                     <% if user_signed_in? %>
-                      <%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => 'btn  text-dark' %>
+                      <%= link_to "LOGOUT", destroy_user_session_path, :method => :delete, :class => 'btn btn-primary text-white font-weight-bold ml-1' %>
                     <% else %>
                     <% end %>
                   </div>

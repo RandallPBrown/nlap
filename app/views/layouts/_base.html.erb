@@ -22,6 +22,7 @@
     <%= render 'layouts/external_js_libs' %>
     <%= yield :external_js_libs %>
     <%= javascript_include_tag "application", 'data-turbolinks-track': 'reload' %>
+    
 
     <%= yield :javascript %>
     <% if content_for?(:head) %>

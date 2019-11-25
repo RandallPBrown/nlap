@@ -1,6 +1,7 @@
 class ErrLogsController < ApplicationController
   layout "scaffold"
   before_action :authenticate_user!
+  before_action :authorize_admin
   # before_action :authorize_admin, only: [:dashboard]
   before_action :set_err_log, only: [:show, :edit, :update, :destroy]
 
@@ -11,7 +12,7 @@ class ErrLogsController < ApplicationController
   end
 
   def modal
-    @err_logs_cost_departmental = ErrLog.all.where("department_id = ?", current_user.department_id).where(errdate: Date.today.beginning_of_month...Date.today.end_of_month).sum(:err_cost)
+    @err_logs_cost_departmental = ErrLog.all.where("department_id = ?", current_user.department.id).where(errdate: Date.today.beginning_of_month...Date.today.end_of_month).sum(:err_cost)
   end
 
   def dashboard

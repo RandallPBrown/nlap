@@ -1,13 +1,7 @@
 <% if alert %>
-  <div class="alert alert-error">
-    <a class="close" data-dismiss="alert">&times;</a>
-    <%= fa_icon_tag "remove" %> <%= alert %>
-  </div>
+  <%= custom_bootstrap_flash %>
 <% end %>
 
 <% if notice %>
-  <div class="alert alert-warning">
-    <a class="close" data-dismiss="alert">&times;</a>
-    <%= fa_icon_tag "info-sign" %> <%= notice %>
-  </div>
+  <%= custom_bootstrap_flash %>
 <% end %>
