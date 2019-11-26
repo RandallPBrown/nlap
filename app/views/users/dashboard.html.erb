@@ -292,22 +292,50 @@ $(document).ready(function() {
   <div class="container-fluid">
     <div class="row equal-cols">
       <div class="col-12 col-md-3 d-flex flex-column justify-items-between">
-        <div class="card card-mini card-mini-solid-icon float" id="occurrence-card">
+
+        <div class="card card-mini card-mini-solid-icon float" id="occurrence-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>0.5 or less</span>">
           <div class="card-body">
-            <div class="media">
-              <div class="media-body text-left">
-                <h6 class="m-0"><u>Monthly Occurrences</u></h6>
-                <h4 class="m-0 entry-count"><%= @user_entry_total_effective_monthly %> <small>(<%= @user_entry_total_effective %> active)</small></h4>
+            <div class="row">
+              <div class="col-8">
+                <h6 class="m-0"><u>Occurrences</u></h6>
               </div>
-              <div class="d-flex align-self-center ml-3">
-                <span>
-                  <i class="fa fa-calendar-times-o"></i>
-                </span>
+              <div class="col-4">
+                <ul class="nav nav-pills pull-right justify-items-between" id="pills-tab" role="tablist">
+                  <li class="nav-item mr-1">
+                    <a class="p-0" id="pills-occurrence-monthly-tab" data-toggle="pill" href="#pills-occurrence-monthly" role="tab" aria-controls="pills-occurrence-monthly" aria-selected="true"><h6><i class="fa fa-chevron-left "></i></h6></a>
+                  </li>
+                  <li class="nav-item ml-1">
+                    <a class="p-0" id="pills-occurrence-total-tab" data-toggle="pill" href="#pills-occurrence-total" role="tab" aria-controls="pills-occurrence-total" aria-selected="false"><h6><i class="fa fa-chevron-right "></i></h6></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-occurrence-monthly" role="tabpanel" aria-labelledby="pills-occurrence-monthly-tab">
+                <div class="row">
+                  <div class="col-8">
+                    <h4 class="m-0 entry-count"><%= @user_entry_total_effective_monthly %> <small>monthly</small></h4>
+                  </div>
+                  <div class="col-4">
+                    <i class="fa fa-calendar-times-o pull-right pt-2"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="pills-occurrence-total" role="tabpanel" aria-labelledby="pills-occurrence-total-tab">
+                <div class="row">
+                  <div class="col-8">
+                    <h4 class="m-0 entry-count"><%= @user_entry_total_effective %> <small>total</small></h4>
+                  </div>
+                  <div class="col-4">
+                    <i class="fa fa-calendar-times-o pull-right pt-2"></i>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="card card-mini card-mini-solid-icon float" id="wu-card">
+
+        <div class="card card-mini card-mini-solid-icon float" id="wu-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>0 active prog actions</span>">
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
@@ -323,7 +351,7 @@ $(document).ready(function() {
           </div>
         </div>
 
-        <div class="card card-mini card-mini-solid-icon float" id="uph-card">
+        <div class="card card-mini card-mini-solid-icon float" id="uph-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>7.5 or greater</span>">
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
@@ -339,7 +367,7 @@ $(document).ready(function() {
           </div>
         </div>
 
-        <div class="card card-mini card-mini-solid-icon float" id="occupancy-card">
+        <div class="card card-mini card-mini-solid-icon float" id="occupancy-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>90%-100%</span>">
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
@@ -355,21 +383,89 @@ $(document).ready(function() {
           </div>
         </div>
 
-        <div class="card card-mini card-mini-solid-icon float" id="error-card">
+        <div class="card card-mini card-mini-solid-icon float" id="error-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>2 or less, under $250.00 total</span>">
           <div class="card-body">
-            <div class="media">
-              <div class="media-body text-left">
+            <div class="row">
+              <div class="col-8">
                 <h6 class="m-0"><u>Improvement Opps</u></h6>
-                <h4 class="m-0"><%= @err_logs_count %> <small>(<%= @err_logs_dispute %> disputed/<%= @err_logs_pending %> pending)</small></h4> 
               </div>
-              <div class="d-flex align-self-center ml-3">
-                <span>
-                  <i class="fa fa-exclamation-triangle "></i>
-                </span>
+              <div class="col-4">
+                <ul class="nav nav-pills pull-right justify-items-between" id="arrow-tab" role="tablist">
+                  <li class="nav-item mr-1">
+                    <button class="btn btn-link btn-style left m-0 p-0" type="button"><i class="fa fa-chevron-left "></i></button>
+                  </li>
+                  <li class="nav-item ml-1">
+                    <button class="btn btn-link btn-style right m-0 p-0" type="button"><i class='fa fa-chevron-right'></i></button>
+                  </li>
+                </ul>
+                <div hidden>
+                  <ul class="nav nav-pills pull-right justify-items-between" id="pills-tab" role="tablist">
+                    <li class="nav-item active mr-1">
+                      <a class="p-0" id="pills-error-monthly-tab" data-toggle="pill" href="#pills-error-monthly" role="tab" aria-controls="pills-error-monthly" aria-selected="true"><h6></h6></a>
+                    </li>
+                    <li class="nav-item ml-1">
+                      <a class="p-0" id="pills-error-disputed-tab" data-toggle="pill" href="#pills-error-disputed" role="tab" aria-controls="pills-error-disputed" aria-selected="false"><h6><i class="fa fa-chevron-right "></i></h6></a>
+                    </li>
+                    <li class="nav-item ml-1">
+                      <a class="p-0" id="pills-error-pending-tab" data-toggle="pill" href="#pills-error-pending" role="tab" aria-controls="pills-error-pending" aria-selected="false"><h6><i class="fa fa-chevron-right "></i></h6></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-error-monthly" role="tabpanel" aria-labelledby="pills-error-monthly-tab">
+                <div class="row">
+                  <div class="col-8">
+                    <h4 class="m-0 entry-count"><%= @err_logs_count %> <small>active</small></h4>
+                  </div>
+                  <div class="col-4">
+                    <i class="fa fa-calendar-times-o pull-right pt-2"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="pills-error-disputed" role="tabpanel" aria-labelledby="pills-error-disputed-tab">
+                <div class="row">
+                  <div class="col-8">
+                    <h4 class="m-0 entry-count"><%= @err_logs_dispute %> <small>disputed</small></h4>
+                  </div>
+                  <div class="col-4">
+                    <i class="fa fa-calendar-times-o pull-right pt-2"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="pills-error-pending" role="tabpanel" aria-labelledby="pills-error-pending-tab">
+                <div class="row">
+                  <div class="col-8">
+                    <h4 class="m-0 entry-count"><%= @err_logs_pending %> <small>pending</small></h4>
+                  </div>
+                  <div class="col-4">
+                    <i class="fa fa-calendar-times-o pull-right pt-2"></i>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+<script>
+
+$(".btn-style").click(function () {
+    var target = $("#pills-tab li.active");
+    var sibbling;
+    if ($(this).hasClass('right')) {
+        sibbling = target.next();
+    } else {
+        sibbling = target.prev();
+    }
+    if (sibbling.is("li")) {
+        target.removeClass("active")
+        sibbling.addClass("active").children("a").tab("show");
+    }
+});
+
+</script>
+
       </div>
 
       <div class="col-12 col-md-6">
