@@ -40,7 +40,7 @@ class ErrLogsController < ApplicationController
   # POST /err_logs
   def create
     @err_log = ErrLog.new(err_log_params)
-
+    @err_log.department_id = @err_log.user.department_id
     if @err_log.save
       redirect_to err_logs_path, notice: 'Err log was successfully created.'
     else
@@ -71,6 +71,6 @@ class ErrLogsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def err_log_params
-      params.require(:err_log).permit(:serviceorder, :approved_by, :err_notes, :err_cost, :user_id, :department_id, :errdate, :err_name_id, :errdesc, :err_status_id, :errsubmitby, :dispute, :err_type_id)
+      params.require(:err_log).permit(:dispute_response, :serviceorder, :approved_by, :err_notes, :err_cost, :user_id, :department_id, :errdate, :err_name_id, :errdesc, :err_status_id, :errsubmitby, :dispute, :err_type_id)
     end
 end

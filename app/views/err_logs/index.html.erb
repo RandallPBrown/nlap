@@ -1,4 +1,4 @@
-<% @title = "Error Log" %>
+<% @title = "Improvement Log" %>
 
 <%= stylesheet_link_tag('datatables.min.css') %>
 <%= javascript_include_tag('datatables.min.js') %>
@@ -6,6 +6,7 @@
 <script>
 $(document).ready( function () {
     $('#table_id').DataTable();
+    $('#modal-error').modal('show')
 } );
 
 
@@ -14,8 +15,8 @@ $(document).ready( function () {
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <h3 class="modal-title text-white font-weight-bold m-auto" id="exampleModalLabel">NEW ERROR</h3>
+      <div class="modal-header">
+        <h3 class="modal-title font-weight-bold m-auto" id="exampleModalLabel">NEW IMPROVEMENT LOG</h3>
       </div>
       <div class="modal-body">
         <%= render 'form' %>

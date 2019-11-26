@@ -1,50 +1,67 @@
-<script>
-  jQuery(function() {
-  var users;
+<!-- <script>
+//  jQuery(function() {
+//   var users;
+//   users = $('#err_log_user_id').html();
+//   console.log(users);
+//   return $('#err_log_department_id').change(function() {
+//     var department, options;
+//     department = $('#err_log_department_id :selected').text();
+//     options = $(users).filter("optgroup[label=" + department + "]").html();
+//     console.log(options);
+//     if (options) {
+//       return $('#err_log_user_id').html(options);
+//     } else {
+//       return $('#err_log_user_id').empty();
+//     }
+//   });
+// });
+
+jQuery(function() {
+  var users_text;
   users = $('#err_log_user_id').html();
-  console.log(users);
-  return $('#err_log_department_id').change(function() {
+  users_text = $('#err_log_user_id :selected').text();
+  console.log(users_text);
+  return $('#err_log_user_id').change(function() {
     var department, options;
-    department = $('#err_log_department_id :selected').text();
-    options = $(users).filter("optgroup[label=" + department + "]").html();
+    department = $('#err_log_department_id').text();
+    options = $(department).filter("optgroup[label=" + users_text + "]").html();
     console.log(options);
     if (options) {
-      return $('#err_log_user_id').html(options);
+      return $('#err_log_department_id').html(options);
     } else {
-      return $('#err_log_user_id').empty();
+      return $('#err_log_department_id').empty();
     }
   });
 });
+</script> -->
+<style>
+.span-wide {
+  width: 100% !important;
+}
+</style>
 
-
-</script>
 
 
 <%= form_for(@err_log, html: { class: 'form-horizontal' }) do |f| %>
   <%= f.error_notification %>
 
-    <%= f.form_group :department_id, class: 'row' do |f| %>
-      <%= f.label 'Department', class: 'control-label col-md-3' %>
-      <div class='col-12 col-md-9'>
-        <%= f.collection_select :department_id, Department.order(:id), :id, :name, class: 'form-control form-control-sm' %>
-        <%= f.error_messages %>
-      </div>
-    <% end %>
+    
 
     <%= f.form_group :user_id, class: 'row' do |f| %>
       <%= f.label 'Agent', class: 'control-label col-md-3' %>
       <div class='col-12 col-md-9'>
-        <%= f.grouped_collection_select :user_id, Department.order(:id), :users, :name, :id, :full_name, class: 'form-control' %>
+        <%= f.grouped_collection_select :user_id, Department.order(:id), :users, :name, :id, :full_name, {}, {'data-live-search': true, :class=>'selectpicker text-dark'}  %>
         <%= f.error_messages %>
       </div>
     <% end %>
 
+    <%= f.hidden_field :department_id, value: params[:user_id] %>
 
   <div class="form-inputs">
     <%= f.form_group :serviceorder, class: 'row' do |f| %>
       <%= f.label 'Service Order', class: 'control-label col-md-3' %>
       <div class='col-12 col-md-9'>
-        <%= f.text_field :serviceorder, class: 'form-control form-control-sm'%>
+        <%= f.text_field :serviceorder, class: 'form-control form-control-sm text-dark'%>
         <%= f.error_messages %>
       </div>
     <% end %>
@@ -52,7 +69,7 @@
     <%= f.form_group :errdate, class: 'row' do |f| %>
       <%= f.label 'Error Date', class: 'control-label col-md-3' %>
       <div class='col-12 col-md-9'>
-        <%= f.date_field :errdate, class: 'form-control form-control-sm' %>
+        <%= f.date_field :errdate, class: 'form-control form-control-sm text-dark' %>
         <%= f.error_messages %>
       </div>
     <% end %>
@@ -60,7 +77,7 @@
     <%= f.form_group :errdesc, class: 'row' do |f| %>
       <%= f.label 'Description', class: 'control-label col-md-3' %>
       <div class='col-12 col-md-9'>
-        <%= f.text_area :errdesc, class: 'form-control form-control-sm' %>
+        <%= f.text_area :errdesc, class: 'form-control form-control-sm text-dark' %>
         <%= f.error_messages %>
       </div>
     <% end %>
@@ -68,7 +85,7 @@
     <%= f.form_group :err_cost, class: 'row' do |f| %>
       <%= f.label 'Error Cost', class: 'control-label col-md-3' %>
       <div class='col-12 col-md-9'>
-        <%= f.number_field :err_cost, class: 'form-control form-control-sm', 'value': '0.00' %>
+        <%= f.number_field :err_cost, class: 'form-control form-control-sm text-dark', 'value': '0.00' %>
         <%= f.error_messages %>
       </div>
     <% end %>
@@ -76,7 +93,7 @@
     <%= f.form_group :err_type_id, class: 'row' do |f| %>
       <%= f.label 'Type', class: 'control-label col-md-3' %>
       <div class='col-12 col-md-9'>
-        <%= f.collection_select :err_type_id, ErrType.order(:description), :id, :description, class: "form-control form-control-sm" %>
+        <%= f.collection_select :err_type_id, ErrType.order(:description), :id, :description, {}, {:class=>'form-control form-control-sm text-dark'}  %>
         <%= f.error_messages %>
       </div>
     <% end %>

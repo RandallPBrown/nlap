@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191122174733) do
+ActiveRecord::Schema.define(version: 20191126175322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 20191122174733) do
     t.string "serviceorder"
     t.text "dispute"
     t.bigint "err_type_id"
+    t.text "dispute_response"
     t.index ["department_id"], name: "index_err_logs_on_department_id"
     t.index ["err_name_id"], name: "index_err_logs_on_err_name_id"
     t.index ["err_status_id"], name: "index_err_logs_on_err_status_id"

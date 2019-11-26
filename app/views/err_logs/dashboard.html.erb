@@ -81,12 +81,21 @@
                                         </div>
                                       </div>
                                       <div class="row p-1">
-                                        <div class="col-3">
-                                          <label>Notes:</label>
-                                        </div>
-                                        <div class="col-9">  
-                                          <%= f.text_area :err_notes, class: "form-control form-control-sm text-dark" %>
-                                        </div>
+                                        <% if err_log.dispute.present? %>
+                                          <div class="col-3">
+                                            <label>Trainer Response:</label>
+                                          </div>
+                                          <div class="col-9">  
+                                            <%= f.text_area :dispute_response, class: "form-control form-control-sm text-dark" %>
+                                          </div>
+                                        <% else %>
+                                          <div class="col-3">
+                                            <label>Notes:</label>
+                                          </div>
+                                          <div class="col-9">  
+                                            <%= f.text_area :err_notes, class: "form-control form-control-sm text-dark" %>
+                                          </div>
+                                        <% end %>
                                       </div>
                                     </div>
                                     <div class="col-6" style="overflow-y: scroll">
