@@ -1,11 +1,8 @@
-<div class="modal-header">
-	<button type="button" data-toggle="modal" data-target="#modal-error"><i class="fa fa-times "></i></button>
+<div class="modal-header pb-2">
+	<h3 class="font-weight-bold m-auto"><%= @err_log.err_name.errname %></h3><button class="btn btn-link font-weight-bold pull-right" data-dismiss="modal"><i class="fa fa-times "></i></button>
 </div>
 <div class="modal-body" id="modal-dispute">
 	<div class="container">
-		<div class="row pb-2">
-			<h3 class="font-weight-bold m-auto"><%= @err_log.err_name.errname %></h3>
-		</div>
 		<div class="row">
 			<div class="col-6" style="overflow-y: scroll">
 				<label>Incident Notes:</label><br>

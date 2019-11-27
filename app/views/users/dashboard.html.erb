@@ -167,10 +167,10 @@ table tbody tr:hover {
 <!-- COOKIE MODAL BELOW (FUNCTIONING). CAN BE USED FOR INSTRUCTIONS OR TO GIVE A WEEKLY BREAKDOWN -->
 <script>
 $(document).ready(function() {
-    // if (Cookies.get('morning_modal') == null) {
-    //     Cookies.set('morning_modal', 'yes', { expires: 1, path: '/' });
+    if (Cookies.get('morning_modal') == null) {
+        Cookies.set('morning_modal', 'yes', { expires: 1, path: '/' });
         $('#morningModal').modal('show');
-    // }
+    }
     // highlight entry card
     if (<%= @user_entry_total_effective_monthly %> == 0.5) {
       $('#occurrence-card').addClass('bg-warning text-white');
@@ -221,60 +221,62 @@ $(document).ready(function() {
 </script>
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-    <div class="modal-content rounded p-1 bg-light">
-      <div class="row pl-4 pr-4 pb-1 pt-4">
-        <div class="col d-flex align-items-stretch">
-          <div class="card fancy-fade" style="width: 12rem;">
-            <div class="card-header m-auto" id="occurrence-modal">
-              <i style="font-size: 6rem;" class="m-auto pt-4 fa fa-calendar-times-o"></i>
-            </div>
-            <div class="card-body">
-              <center><h6 class="font-weight-bold text-dark text-uppercase">Occurrences</h6></center>
-              <p class="card-text"><%if @user_entry_total_effective_monthly == 0.5 %>You are at capacity for occurrences this month with <u><%= @user_entry_total_effective_monthly %></u>. Watch your attendance for the remainder of the month!<% elsif @user_entry_total_effective_monthly > 0.5 %>Unfortunately, you have missed the mark on your attendance this month. Please be sure to work on that for the next month!<% else %>Fantastic job!<% end %></p>
-            </div>
-          </div>
-        </div>
-        <div class="col d-flex align-items-stretch">
-          <div class="card fancy-fade-1" style="width: 12rem;">
-            <div class="card-header m-auto" id="wu-modal">
-              <i style="font-size: 6rem;" class="m-auto pt-4 fa fa-wpforms "></i>
-            </div>
-            <div class="card-body">
-              <center><h6 class="font-weight-bold text-dark text-uppercase">PROGRESSIVE LOGS</h6></center>
-              <p class="card-text"><% if @user_writeup_written >= 1 %>Unfortunately your progressive action is still active this month. Your last progressive action is due to drop off on <%= (@user_dap.map {|d| d.ddate }.first + 90.days).strftime('%m/%d/%Y') %>.<% else %>Great Job!<% end %></p>
+    <div class="modal-content rounded p-1">
+      <div class="bg-light m-2">
+        <div class="row pl-3 pr-3 pb-1 pt-3">
+          <div class="col d-flex align-items-stretch">
+            <div class="card fancy-fade" style="width: 12rem;">
+              <div class="card-header m-auto" id="occurrence-modal">
+                <i style="font-size: 6rem;" class="m-auto pt-4 fa fa-calendar-times-o"></i>
+              </div>
+              <div class="card-body">
+                <center><h6 class="font-weight-bold text-dark text-uppercase">Occurrences</h6></center>
+                <p class="card-text text-center"><%if @user_entry_total_effective_monthly == 0.5 %>You are at capacity for occurrences this month with <u><%= @user_entry_total_effective_monthly %></u>. Watch your attendance for the remainder of the month!<% elsif @user_entry_total_effective_monthly > 0.5 %>Unfortunately, you have missed the mark on your attendance this month. Please be sure to work on that for the next month!<% else %>Fantastic job!<% end %></p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col d-flex align-items-stretch">
-          <div class="card fancy-fade-2" style="width: 12rem;">
-            <div class="card-header m-auto" id="uph-modal">
-              <i style="font-size: 6rem" class="m-auto pt-4 fa fa-hashtag "></i>
-            </div>
-            <div class="card-body">
-              <center><h6 class="font-weight-bold text-dark text-uppercase">UPH</h6></center>
-              <p class="card-text"><% if @uph.to_f < 7.5 %>Looks like your UPH needs work to reach the goal of 7.5 units/hour. Work on reducing your handle time.<% else %>Keep it up!<% end %></p>
-            </div>
-          </div>
-        </div>
-        <div class="col d-flex align-items-stretch">
-          <div class="card fancy-fade-3" style="width: 12rem;">
-            <div class="card-header m-auto" id="occupancy-modal">
-              <i style="font-size: 6rem" class="m-auto pt-4 fa fa-clock-o "></i>
-            </div>
-            <div class="card-body">
-              <center><h6 class="font-weight-bold text-dark text-uppercase">Occupancy</h6></center>
-              <p class="card-text"><% if @occ.to_f >= 100 %> Great work, just be sure you do not exceed the 100% threshold by only working on one item at a time. <% elsif @occ.to_f < 90 %>Need to keep working on this. Speak to a lead or manager to see how.<% else %>Great, keep it between 90%-100%!<% end %></p>
+          <div class="col d-flex align-items-stretch">
+            <div class="card fancy-fade-1" style="width: 12rem;">
+              <div class="card-header m-auto" id="wu-modal">
+                <i style="font-size: 6rem;" class="m-auto pt-4 fa fa-wpforms "></i>
+              </div>
+              <div class="card-body">
+                <center><h6 class="font-weight-bold text-dark text-uppercase">PROGRESSIVE LOGS</h6></center>
+                <p class="card-text text-center"><% if @user_writeup_written >= 1 %>Unfortunately your progressive action is still active this month. Your last progressive action is due to drop off on <%= (@user_dap.map {|d| d.ddate }.first + 90.days).strftime('%m/%d/%Y') %>.<% else %>Great Job!<% end %></p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col d-flex align-items-stretch">
-          <div class="card fancy-fade-4" style="width: 12rem;">
-            <div class="card-header m-auto" id="error-modal">
-              <i style="font-size: 6rem" class="m-auto pt-4 fa fa-exclamation-triangle "></i>
+          <div class="col d-flex align-items-stretch">
+            <div class="card fancy-fade-2" style="width: 12rem;">
+              <div class="card-header m-auto" id="uph-modal">
+                <i style="font-size: 6rem" class="m-auto pt-4 fa fa-hashtag "></i>
+              </div>
+              <div class="card-body">
+                <center><h6 class="font-weight-bold text-dark text-uppercase">UPH</h6></center>
+                <p class="card-text text-center"><% if @uph.to_f < 7.5 %>Looks like your UPH needs work to reach the goal of 7.5 units/hour. Work on reducing your handle time.<% else %>Keep it up!<% end %></p>
+              </div>
             </div>
-            <div class="card-body">
-              <center><h6 class="font-weight-bold text-dark text-uppercase">IMPROVEMENT LOGS</h6></center>
-              <p class="card-text"><% if @err_logs_count > 2 %>Unfortunately, your errors are a bit too much this month. Work on accuracy for next month!<% else %>Don't lose momentum!<% end %></p>
+          </div>
+          <div class="col d-flex align-items-stretch">
+            <div class="card fancy-fade-3" style="width: 12rem;">
+              <div class="card-header m-auto" id="occupancy-modal">
+                <i style="font-size: 6rem" class="m-auto pt-4 fa fa-clock-o "></i>
+              </div>
+              <div class="card-body">
+                <center><h6 class="font-weight-bold text-dark text-uppercase">Occupancy</h6></center>
+                <p class="card-text text-center"><% if @occ.to_f >= 100 %> Great work, just be sure you do not exceed the 100% threshold by only working on one item at a time. <% elsif @occ.to_f < 90 %>Need to keep working on this. Speak to a lead or manager to see how.<% else %>Great, keep it between 90%-100%!<% end %></p>
+              </div>
+            </div>
+          </div>
+          <div class="col d-flex align-items-stretch">
+            <div class="card fancy-fade-4" style="width: 12rem;">
+              <div class="card-header m-auto" id="error-modal">
+                <i style="font-size: 6rem" class="m-auto pt-4 fa fa-exclamation-triangle "></i>
+              </div>
+              <div class="card-body">
+                <center><h6 class="font-weight-bold text-dark text-uppercase">IMPROVEMENT LOGS</h6></center>
+                <p class="card-text text-center"><% if @err_logs_count > 2 %>Unfortunately, your errors are a bit too much this month. Work on accuracy for next month!<% else %>Don't lose momentum!<% end %></p>
+              </div>
             </div>
           </div>
         </div>
@@ -282,7 +284,7 @@ $(document).ready(function() {
       <div class="row">
         <p class="font-weight-bold ml-5 mr-5 mb-3 text-center">As a reminder, all data is subject to final checks before the incentive is tendered. This portal is to be used as a reference guide and not as a definitive source for eligibility.</p>
       </div>
-      <div class="m-auto pb-4"><button class="btn btn-sm btn-primary font-weight-bold text-white" data-dismiss="modal">ENTER</button></div>
+      <div class="m-auto pb-4"><button class="btn btn-primary font-weight-bold text-white" data-dismiss="modal">AGREE & ENTER</button></div>
       <span class="font-weight-bold text-muted pr-1 pb-1" style="position:absolute;bottom:0px !important;left:5px !important;font-size: 10px"><%= current_user.full_name %></span>
       <span class="font-weight-bold text-muted pr-1 pb-1" style="position:absolute;bottom:0px !important;right:5px !important;font-size: 10px"><%= Time.now %></span>
     </div>
@@ -483,17 +485,6 @@ $(".btn-style").click(function () {
         <div class="card float" style="background-color: #ffffff !important">
                 <div class="card-header d-flex align-items-center">
         <h6 class="mr-auto">Agent Stats</h6>
-        <div class="d-flex">
-          <div class="dropdown">
-            <button class="nav-link btn btn-icon " type="button" id="salesAndRefundButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= theme_icon_tag "more" %>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-badgeledby="salesAndRefundButton" id="chart-selector">
-              <button class="dropdown-item" id="userChartEffective">Occurrences Active</button>
-              <button class="dropdown-item" id="userChartTotal">Occurrences All Time</button>
-            </div>
-          </div>
-        </div>
       </div>
           <div class="card-body" style="height: 475px">
             <canvas id="statChart" width="200" height="100"></canvas>
