@@ -80,15 +80,6 @@ html {
   scroll-behavior: smooth;
 }
 
-.morning-message {
-  font-size: 5em;
-}
-
-.modal-backdrop
-{
-    opacity: 1 !important;
-}
-
 .modal-content:hover {
   opacity: 1 !important;
 }
@@ -109,6 +100,7 @@ table tbody tr:hover {
   width: 20%;
 }
 
+/* bouncing arrow effec */
 .box {
     animation-duration: 2s;
     animation-iteration-count: 10;
@@ -131,22 +123,30 @@ table tbody tr:hover {
 }
 
 
-
-.fancy-fade td {
+/* fade in effect on incentive tracker modal */
+.fancy-fade {
   opacity: 0;
   animation: fadeIn 0.5s ease-in both;
 }
 
-.fancy-fade td:nth-child(2) {
+.fancy-fade-1 {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in both;
   animation-delay: 0.5s;
 }
-.fancy-fade td:nth-child(3) {
+.fancy-fade-2 {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in both;
   animation-delay: 1s;
 }
-.fancy-fade td:nth-child(4) {
+.fancy-fade-3 {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in both;
   animation-delay: 1.5s;
 }
-.fancy-fade td:nth-child(5) {
+.fancy-fade-4 {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in both;
   animation-delay: 2s;
 }
 
@@ -167,20 +167,21 @@ table tbody tr:hover {
 <!-- COOKIE MODAL BELOW (FUNCTIONING). CAN BE USED FOR INSTRUCTIONS OR TO GIVE A WEEKLY BREAKDOWN -->
 <script>
 $(document).ready(function() {
-    if (Cookies.get('morning_modal') == null) {
-        Cookies.set('morning_modal', 'yes', { expires: 1, path: '/' });
+    // if (Cookies.get('morning_modal') == null) {
+    //     Cookies.set('morning_modal', 'yes', { expires: 1, path: '/' });
         $('#morningModal').modal('show');
-    }
+    // }
     // highlight entry card
     if (<%= @user_entry_total_effective_monthly %> == 0.5) {
       $('#occurrence-card').addClass('bg-warning text-white');
+      $('.occurrence-card').addClass('bg-warning text-white');
       $('#occurrence-modal').addClass('bg-warning text-white');
     } else if (<%= @user_entry_total_effective_monthly %> > 0.5) {
       $('#occurrence-card').removeClass('float').addClass('muted');
       $('#occurrence-modal').addClass('bg-danger text-white')
     } else {
       $('#occurrence-card').removeClass('bg-warning text-white')
-      $('#occurrence-modal').addClass('bg-success');
+      $('#occurrence-modal').addClass('bg-success text-white');
     }
     // highlight wu card
     if (<%= @user_writeup_written %> > 0) {
@@ -188,7 +189,7 @@ $(document).ready(function() {
       $('#wu-modal').addClass('bg-danger text-white');
     } else {
       $('#wu-card').removeClass('bg-warning text-white')
-      $('#wu-modal').addClass('bg-success');
+      $('#wu-modal').addClass('bg-success text-white');
     }
     // highlight uph card
     if (<%= number_with_precision(@uph, :precision => 1) %> < 6.5) {
@@ -196,15 +197,15 @@ $(document).ready(function() {
       $('#uph-modal').addClass('bg-warning text-white');
     } else {
       $('#uph-card').removeClass('bg-warning text-white');
-      $('#uph-modal').addClass('bg-success');
+      $('#uph-modal').addClass('bg-success text-white');
     }
     // highlight occ card
-    if (<%= number_with_precision(@occ, :precision => 1) %> < 98) {
+    if (<%= number_with_precision(@occ, :precision => 1) %> < 90) {
       $('#occupancy-card').addClass('bg-warning text-white');
       $('#occupancy-modal').addClass('bg-warning text-white');
     } else {
       $('#occupancy-card').removeClass('bg-warning text-white');
-      $('#occupancy-modal').addClass('bg-success');
+      $('#occupancy-modal').addClass('bg-success text-white');
     }
     // highlight err card
     if (<%= @err_logs_count %> > 0) {
@@ -212,7 +213,7 @@ $(document).ready(function() {
       $('#error-modal').addClass('bg-danger text-white');
     } else {
       $('#error-card').removeClass('bg-warning text-white');
-      $('#error-modal').addClass('bg-success');
+      $('#error-modal').addClass('bg-success text-white');
     }   
 });
 
@@ -220,59 +221,70 @@ $(document).ready(function() {
 </script>
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-    <div class="modal-content rounded p-1" style="background-color: #ffffff !important;opacity:0.8">
-      <div class="rounded border-light" style="height:100%;width:100%;border-radius: 5px;border-style: solid;">
-        <span class="font-weight-bold text-dark text-uppercase morning-message"><center><%= current_user.first_name %>'S INCENTIVE</center></span><br>
-        <div class="row">
-<!--           <table class="table table-hover bg-transparent text-white font-weight-bold">
-            <thead>
-              <tr>
-                <th></th>
-                <th><center>QUANTITY</center></th>
-                <th><center>NEXT EXPIRATION</center></th>
-                <th><center>DROPOFF VALUE</center></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Occurrences</td>
-                <td><center><%#= @user_entry_total_effective %></center></td>
-                <td><center><#% if @user_entry_total_effective > 0 %><%#= (@user_entry.reverse.first.edate + 180.days) %><#% else %>NONE<#% end %></center></td>
-                <td><center><#% if @user_entry_total_effective > 0 %><%#= @user_entry.reverse.first.occurrence.ovalue %><#% else %>NONE<#% end %></center></td>
-              </tr>
-              <tr>
-                <td>Progressive Actions</td>
-                <td><center><%#= @user_writeup_written %></center></td>
-                <td><center><#% if @user_writeup_written > 0 %><#% if @user_writeup_written == 1 %><%#= (@user_dap_written.map {|d| d.ddate + 90.days}.first) %><#% else %><%#= (@user_dap_written.reverse.first.ddate + 90.days) %><#% end %><#% else %>NONE<#% end %></center></td>
-                <td><center></center></td>
-              </tr>
-            </tbody>
-          </table> -->
-          <table class="table table-sm table-borderless m-3 align-items-center text-center bg-transparent">
-            <thead class="text-dark font-weight-bold">
-              <tr>
-                <th scope="col">OCCURRENCE</th>
-                <th scope="col">PROG ACTIONS</th>
-                <th scope="col">UPH</th>
-                <th scope="col">OCCUPANCY</th>
-                <th scope="col">IMPROVEMENT OPPS</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="fancy-fade">
-                <td class="even-space"><center><div id="occurrence-modal" class="font-weight-bold bg-light rounded" style="height:75px;width: 75px;box-shadow: 1px 1px 1px 1px grey"><i style="font-size: 25px" class="m-auto pt-4 fa fa-calendar-times-o"></i></div></center></td>
-                <td class="even-space"><center><div id="wu-modal" class="font-weight-bold bg-light rounded" style="height:75px;width: 75px;box-shadow: 1px 1px 1px 1px grey"><i style="font-size: 25px" class="m-auto pt-4 fa fa-wpforms "></i></div></center></td>
-                <td class="even-space"><center><div id="uph-modal" class="font-weight-bold bg-light rounded" style="height:75px;width: 75px;box-shadow: 1px 1px 1px 1px grey"><i style="font-size: 25px" class="m-auto pt-4 fa fa-hashtag "></i></div></center></td>
-                <td class="even-space"><center><div id="occupancy-modal" class="font-weight-bold bg-light rounded" style="height:75px;width: 75px;box-shadow: 1px 1px 1px 1px grey"><i style="font-size: 25px" class="m-auto pt-4 fa fa-clock-o "></i></div></center></td>
-                <td class="even-space"><center><div id="error-modal" class="font-weight-bold bg-light rounded" style="height:75px;width: 75px;box-shadow: 1px 1px 1px 1px grey"><i style="font-size: 25px" class="m-auto pt-4 fa fa-exclamation-triangle "></i></div></center></td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="font-weight-bold p-5 ml-5 mr-5 text-center">As a reminder, all data is subject to final checks before the incentive is tendered. This portal is to be used as a reference guide and not as a definitive source for eligibility.</p>
+    <div class="modal-content rounded p-1 bg-light">
+      <div class="row pl-4 pr-4 pb-1 pt-4">
+        <div class="col d-flex align-items-stretch">
+          <div class="card fancy-fade" style="width: 12rem;">
+            <div class="card-header m-auto" id="occurrence-modal">
+              <i style="font-size: 6rem;" class="m-auto pt-4 fa fa-calendar-times-o"></i>
+            </div>
+            <div class="card-body">
+              <center><h6 class="font-weight-bold text-dark text-uppercase">Occurrences</h6></center>
+              <p class="card-text"><%if @user_entry_total_effective_monthly == 0.5 %>You are at capacity for occurrences this month with <u><%= @user_entry_total_effective_monthly %></u>. Watch your attendance for the remainder of the month!<% elsif @user_entry_total_effective_monthly > 0.5 %>Unfortunately, you have missed the mark on your attendance this month. Please be sure to work on that for the next month!<% else %>Fantastic job!<% end %></p>
+            </div>
+          </div>
         </div>
-        <button class="btn btn-light font-weight-bold text-primary" style="position:absolute;top:5px !important;right:5px !important" data-dismiss="modal"><%= fa_icon_tag("times") %></button>
-        <span class="font-weight-bold text-dark" style="position:absolute;bottom:0px !important;right:5px !important"><%= Time.now %></span>
+        <div class="col d-flex align-items-stretch">
+          <div class="card fancy-fade-1" style="width: 12rem;">
+            <div class="card-header m-auto" id="wu-modal">
+              <i style="font-size: 6rem;" class="m-auto pt-4 fa fa-wpforms "></i>
+            </div>
+            <div class="card-body">
+              <center><h6 class="font-weight-bold text-dark text-uppercase">PROGRESSIVE LOGS</h6></center>
+              <p class="card-text"><% if @user_writeup_written >= 1 %>Unfortunately your progressive action is still active this month. Your last progressive action is due to drop off on <%= (@user_dap.map {|d| d.ddate }.first + 90.days).strftime('%m/%d/%Y') %>.<% else %>Great Job!<% end %></p>
+            </div>
+          </div>
+        </div>
+        <div class="col d-flex align-items-stretch">
+          <div class="card fancy-fade-2" style="width: 12rem;">
+            <div class="card-header m-auto" id="uph-modal">
+              <i style="font-size: 6rem" class="m-auto pt-4 fa fa-hashtag "></i>
+            </div>
+            <div class="card-body">
+              <center><h6 class="font-weight-bold text-dark text-uppercase">UPH</h6></center>
+              <p class="card-text"><% if @uph  < 7.5 %>Looks like your UPH needs work to reach the goal of 7.5 units/hour. Work on reducing your handle time.<% else %>Keep it up!<% end %></p>
+            </div>
+          </div>
+        </div>
+        <div class="col d-flex align-items-stretch">
+          <div class="card fancy-fade-3" style="width: 12rem;">
+            <div class="card-header m-auto" id="occupancy-modal">
+              <i style="font-size: 6rem" class="m-auto pt-4 fa fa-clock-o "></i>
+            </div>
+            <div class="card-body">
+              <center><h6 class="font-weight-bold text-dark text-uppercase">Occupancy</h6></center>
+              <p class="card-text"><% if @occ >= 100 %> Great work, just be sure you do not exceed the 100% threshold by only working on one item at a time. <% elsif @occ < 90 %>Need to keep working on this. Speak to a lead or manager to see how.<% else %>Great, keep it between 90%-100%!<% end %></p>
+            </div>
+          </div>
+        </div>
+        <div class="col d-flex align-items-stretch">
+          <div class="card fancy-fade-4" style="width: 12rem;">
+            <div class="card-header m-auto" id="error-modal">
+              <i style="font-size: 6rem" class="m-auto pt-4 fa fa-exclamation-triangle "></i>
+            </div>
+            <div class="card-body">
+              <center><h6 class="font-weight-bold text-dark text-uppercase">IMPROVEMENT LOGS</h6></center>
+              <p class="card-text"><% if @err_logs_count > 2 %>Unfortunately, your errors are a bit too much this month. Work on accuracy for next month!<% else %>Don't lose momentum!<% end %></p>
+            </div>
+          </div>
+        </div>
       </div>
+      <div class="row">
+        <p class="font-weight-bold ml-5 mr-5 mb-3 text-center">As a reminder, all data is subject to final checks before the incentive is tendered. This portal is to be used as a reference guide and not as a definitive source for eligibility.</p>
+      </div>
+      <div class="m-auto pb-4"><button class="btn btn-sm btn-primary font-weight-bold text-white" data-dismiss="modal">ENTER</button></div>
+      <span class="font-weight-bold text-muted pr-1 pb-1" style="position:absolute;bottom:0px !important;left:5px !important;font-size: 10px"><%= current_user.full_name %></span>
+      <span class="font-weight-bold text-muted pr-1 pb-1" style="position:absolute;bottom:0px !important;right:5px !important;font-size: 10px"><%= Time.now %></span>
     </div>
   </div>
 </div>
@@ -292,7 +304,6 @@ $(document).ready(function() {
   <div class="container-fluid">
     <div class="row equal-cols">
       <div class="col-12 col-md-3 d-flex flex-column justify-items-between">
-
         <div class="card card-mini card-mini-solid-icon float" id="occurrence-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>0.5 or less</span>">
           <div class="card-body">
             <div class="row">
@@ -300,12 +311,12 @@ $(document).ready(function() {
                 <h6 class="m-0"><u>Occurrences</u></h6>
               </div>
               <div class="col-4">
-                <ul class="nav nav-pills pull-right justify-items-between" id="pills-tab" role="tablist">
+                <ul class="nav nav-pills pull-right justify-items-between" id="arrow-tab-occurrences" role="tablist">
                   <li class="nav-item mr-1">
-                    <a class="p-0" id="pills-occurrence-monthly-tab" data-toggle="pill" href="#pills-occurrence-monthly" role="tab" aria-controls="pills-occurrence-monthly" aria-selected="true"><h6><i class="fa fa-chevron-left "></i></h6></a>
+                    <a class="p-0" id="pills-occurrence-monthly-tab" data-toggle="pill" href="#pills-occurrence-monthly" role="tab" aria-controls="pills-occurrence-monthly" aria-selected="true"><h6><i class="fa fa-chevron-left occurrence-card"></i></h6></a>
                   </li>
                   <li class="nav-item ml-1">
-                    <a class="p-0" id="pills-occurrence-total-tab" data-toggle="pill" href="#pills-occurrence-total" role="tab" aria-controls="pills-occurrence-total" aria-selected="false"><h6><i class="fa fa-chevron-right "></i></h6></a>
+                    <a class="p-0" id="pills-occurrence-total-tab" data-toggle="pill" href="#pills-occurrence-total" role="tab" aria-controls="pills-occurrence-total" aria-selected="false"><h6><i class="fa fa-chevron-right occurrence-card"></i></h6></a>
                   </li>
                 </ul>
               </div>
@@ -339,7 +350,7 @@ $(document).ready(function() {
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0"><u>Active Prog Actions</u></h6>
+                <h6 class="m-0"><u>Progressive Logs</u></h6>
                 <h4 class="m-0 dap-count"><%= @user_writeup_written %> <small>active</small></h4>
               </div>
               <div class="d-flex align-self-center ml-3">
@@ -355,8 +366,8 @@ $(document).ready(function() {
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0"><u>Average UPH</u></h6>
-                <h4 class="m-0"><%= number_with_precision(@uph, :precision => 1) %></h4>
+                <h6 class="m-0"><u>UPH</u></h6>
+                <h4 class="m-0"><%= number_with_precision(@uph, :precision => 1) %> <small>monthly average</small></h4>
               </div>
               <div class="d-flex align-self-center ml-3">
                 <span>
@@ -371,8 +382,8 @@ $(document).ready(function() {
           <div class="card-body">
             <div class="media">
               <div class="media-body text-left">
-                <h6 class="m-0"><u>Average Occupancy</u></h6>
-                <h4 class="m-0"><%= number_with_precision(@occ, :precision => 1) %>%</h4>
+                <h6 class="m-0"><u>Occupancy</u></h6>
+                <h4 class="m-0"><%= number_with_precision(@occ, :precision => 1) %>% <small>monthly average</small></h4>
               </div>
               <div class="d-flex align-self-center ml-3">
                 <span>
@@ -392,10 +403,10 @@ $(document).ready(function() {
               <div class="col-4">
                 <ul class="nav nav-pills pull-right justify-items-between" id="arrow-tab" role="tablist">
                   <li class="nav-item mr-1">
-                    <button class="btn btn-link btn-style left m-0 p-0" type="button"><i class="fa fa-chevron-left  text-dark"></i></button>
+                    <button class="btn btn-link btn-style left m-0 p-0" type="button"><i class="fa fa-chevron-left error-card"></i></button>
                   </li>
                   <li class="nav-item ml-1">
-                    <button class="btn btn-link btn-style right m-0 p-0" type="button"><i class='fa fa-chevron-right text-dark'></i></button>
+                    <button class="btn btn-link btn-style right m-0 p-0" type="button"><i class='fa fa-chevron-right error-card'></i></button>
                   </li>
                 </ul>
                 <div hidden>
