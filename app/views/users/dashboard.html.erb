@@ -252,7 +252,7 @@ $(document).ready(function() {
             </div>
             <div class="card-body">
               <center><h6 class="font-weight-bold text-dark text-uppercase">UPH</h6></center>
-              <p class="card-text"><% if @uph  < 7.5 %>Looks like your UPH needs work to reach the goal of 7.5 units/hour. Work on reducing your handle time.<% else %>Keep it up!<% end %></p>
+              <p class="card-text"><% if @uph.to_f < 7.5 %>Looks like your UPH needs work to reach the goal of 7.5 units/hour. Work on reducing your handle time.<% else %>Keep it up!<% end %></p>
             </div>
           </div>
         </div>
