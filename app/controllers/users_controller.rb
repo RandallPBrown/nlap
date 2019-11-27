@@ -73,9 +73,9 @@ class UsersController < ApplicationController
     @user_entry_tardy_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).uete2
     @user_entry_absent_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).ueae
   	
-    @agent_chart_labels_effective = Incentive.all.where(:date => 2.months.ago.to_date..Date.today.to_date.end_of_day).where("user_id = ?", helpers.current_user.id).map { |l| l.date.strftime("%Y-%m-%d") }.to_a;
-  	@agent_chart_data_effective = Incentive.all.where(:date => 2.months.ago.to_date..Date.today.to_date.end_of_day).where("user_id = ?", helpers.current_user.id).map { |l| l.uph }.to_a;
-    @agent_chart_data_effective_occupancy = Incentive.all.where(:date => 2.months.ago.to_date..Date.today.to_date.end_of_day).where("user_id = ?", helpers.current_user.id).map { |l| l.occupancy }.to_a;
+    @agent_chart_labels_effective = Incentive.all.where(:date => 7.days.ago.to_date..Date.today.to_date.end_of_day).where("user_id = ?", helpers.current_user.id).map { |l| l.date.strftime("%m/%d/%Y") }.to_a;
+  	@agent_chart_data_effective = Incentive.all.where(:date => 7.days.ago.to_date..Date.today.to_date.end_of_day).where("user_id = ?", helpers.current_user.id).map { |l| l.uph }.to_a;
+    @agent_chart_data_effective_occupancy = Incentive.all.where(:date => 7.days.ago.to_date..Date.today.to_date.end_of_day).where("user_id = ?", helpers.current_user.id).map { |l| l.occupancy }.to_a;
     
 
     @agent_chart_labels_total = Entry.all.occurrence_user.where("users.id = ?", current_user.id).acl
