@@ -263,7 +263,7 @@ $(document).ready(function() {
             </div>
             <div class="card-body">
               <center><h6 class="font-weight-bold text-dark text-uppercase">Occupancy</h6></center>
-              <p class="card-text"><% if @occ >= 100 %> Great work, just be sure you do not exceed the 100% threshold by only working on one item at a time. <% elsif @occ < 90 %>Need to keep working on this. Speak to a lead or manager to see how.<% else %>Great, keep it between 90%-100%!<% end %></p>
+              <p class="card-text"><% if @occ.to_f >= 100 %> Great work, just be sure you do not exceed the 100% threshold by only working on one item at a time. <% elsif @occ < 90 %>Need to keep working on this. Speak to a lead or manager to see how.<% else %>Great, keep it between 90%-100%!<% end %></p>
             </div>
           </div>
         </div>
