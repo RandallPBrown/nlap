@@ -192,7 +192,7 @@ $(document).ready(function() {
       $('#wu-modal').addClass('bg-success text-white');
     }
     // highlight uph card
-    if (<%= number_with_precision(@uph, :precision => 1) %> < 6.5) {
+    if (<%= number_with_precision(@uph, :precision => 1) %> < 7.5) {
       $('#uph-card').addClass('bg-warning text-white');
       $('#uph-modal').addClass('bg-warning text-white');
     } else {
