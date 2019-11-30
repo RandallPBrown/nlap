@@ -85,7 +85,7 @@ html {
 }
 
 .float:hover {
-  box-shadow: 3px 3px 3px 3px lightgrey;
+  box-shadow: 5px 5px 5px 5px lightgrey;
 }
 
 .float-active {
@@ -179,10 +179,12 @@ $(document).ready(function() {
     // highlight entry card
     if (<%= @user_entry_total_effective_monthly %> == 0.5) {
       $('#occurrence-modal').addClass('bg-warning text-white');
-      $('#occurrence-card-body').addClass('border-warning')
+      $('#occurrence-card-body').addClass('border-warning');
+      $('#occurrence-card').addClass('float-active');
     } else if (<%= @user_entry_total_effective_monthly %> > 0.5) {
       $('#occurrence-modal').addClass('bg-danger text-white');
-      $('#occurrence-card-body').addClass('border-danger')
+      $('#occurrence-card-body').addClass('border-danger');
+      $('#occurrence-card').addClass('float-active');
     } else {
       $('#occurrence-modal').addClass('bg-success text-white');
       $('#occurrence-card-body').addClass('border-success')
@@ -191,6 +193,7 @@ $(document).ready(function() {
     if (<%= @user_writeup_written %> > 0) {
       $('#wu-modal').addClass('bg-danger text-white');
       $('#wu-card-body').addClass('border-danger');
+      $('#wu-card').addClass('float-active');
     } else {
       $('#wu-modal').addClass('bg-success text-white');
       $('#wu-card-body').addClass('border-success');
@@ -199,6 +202,7 @@ $(document).ready(function() {
     if (<%= number_with_precision(@uph, :precision => 1) %> < 7.5) {
       $('#uph-modal').addClass('bg-warning text-white');
       $('#uph-card-body').addClass('border-warning');
+      $('#uph-card').addClass('float-active');
     } else {
       $('#uph-modal').addClass('bg-success text-white');
       $('#uph-card-body').addClass('border-success');
@@ -207,6 +211,7 @@ $(document).ready(function() {
     if (<%= number_with_precision(@occ, :precision => 1) %> < 90) {
       $('#occupancy-modal').addClass('bg-warning text-white');
       $('#occupancy-card-body').addClass('border-warning');
+      $('#occupancy-card').addClass('float-active');
     } else {
       $('#occupancy-modal').addClass('bg-success text-white');
       $('#occupancy-card-body').addClass('border-success');
@@ -215,6 +220,7 @@ $(document).ready(function() {
     if (<%= @err_logs_count %> > 0) {
       $('#error-modal').addClass('bg-danger text-white');
       $('#error-card-body').addClass('border-danger');
+      $('#error-card').addClass('float-active');
     } else {
       $('#error-modal').addClass('bg-success text-white');
       $('#error-card-body').addClass('border-success');
@@ -225,7 +231,7 @@ $(document).ready(function() {
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
     <div class="modal-content rounded">
-      <div class="bg-light m-2 rounded">
+      <div class="bg-light m-3 rounded">
         <div class="row pl-3 pr-3 pb-1 pt-3">
           <div class="col d-flex align-items-stretch">
             <div class="card fancy-fade" style="width: 12rem;">
