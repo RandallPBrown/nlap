@@ -28,14 +28,6 @@
     <% if content_for?(:head) %>
       <%= yield(:head) %>
     <% end %>
-    <script>
-var clearCacheOnce = function() {
-  Turbolinks.clearCache()
-  document.removeEventListener("turbolinks:load", clearCacheOnce)
-}
-
-document.addEventListener("turbolinks:load", clearCacheOnce)
-    </script>
   </head>
   <body class='<%= @body_class %>' data-js-libs='bootstrap fitie metis forms sidenav prism clipboard bs-switch <%= yield :js_libs %>'>
 

@@ -1,15 +1,15 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/4.4.0/pusher.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/4.4.0/pusher.min.js"></script> -->
 <!-- <script>
     // Enable pusher logging - don't include this in production
-    var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>', {
-      cluster: '<%= ENV["PUSHER_CLUSTER"] %>',
+    var pusher = new Pusher('<%#= ENV["PUSHER_KEY"] %>', {
+      cluster: '<%#= ENV["PUSHER_CLUSTER"] %>',
       forceTLS: true
     });
 
     var ind_entry_count_channel = pusher.subscribe('entry');
     ind_entry_count_channel.bind('new-entry', function(data) {
       var indEntryCount = $('.entry-count').first().text();
-      if (<%= current_user.id %> == data.id) {
+      if (<%#= current_user.id %> == data.id) {
           $('.entry-count').html(parseFloat(indEntryCount) + parseFloat(data.ovalue))
       }
     });
@@ -17,13 +17,11 @@
     var ind_dap_count_channel = pusher.subscribe('dap');
     ind_dap_count_channel.bind('new-dap', function(data) {
       var indDapCount = $('.dap-count').first().text();
-      if (<%= current_user.id %> == data.id) {
+      if (<%#= current_user.id %> == data.id) {
           $('.dap-count').html(parseFloat(indDapCount) + 1)
       }
     });
 </script> -->
-
-
 
 
 <%= stylesheet_link_tag "pagination.css" %>
@@ -85,28 +83,9 @@
         <% end %>
       </ul>
       <ul class="nav navbar-nav ml-auto">
-<!--         <% if (current_user.department.name === 'Pre-Approvals') || (current_user.department.name === 'Back Office') || (current_user.department.name === 'Executive') then %>
-          <% if current_user.admin? %>
-          <li class="nav-item font-weight-bold text-white">
-            <% if pending_count > 0 %>
-              <a href="../parts/dashboard" class="nav-link"><span class="text-danger"><%= fa_icon_tag("hourglass") %></span> <span class="notification font-w"> <%= pending_count %></a>
-            <% else %>
-              <a href="../parts/dashboard" class="nav-link"><span><%= fa_icon_tag("hourglass") %></span> <span class="notification"> 0</a>
-            <% end %>    
-          </li>
-          <% end %>
-          <li class="nav-item font-weight-bold text-white">
-            <% if new_parts > 0 %>
-              <a href="../parts" class="nav-link"><span class="text-danger"><%= fa_icon_tag("envelope") %></span> <span class="notification"> <%= new_parts %></span></a>
-            <% else %>
-              <a href="../parts" class="nav-link"><%= fa_icon_tag("envelope") %> <span class="notification"> 0</span></a>
-            <% end %>
-          </li>
-          <% else %>
-        <% end %> -->
         <li class="nav-item dropdown user-nav rounded">
           <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <%= fa_icon_tag("user") %>
+            <%= fa_icon_tag("user") %>
             <span class="caret caret-light"></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-right" role="menu">

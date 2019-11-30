@@ -88,6 +88,10 @@ html {
   box-shadow: 3px 3px 3px 3px lightgrey;
 }
 
+.float-active {
+  box-shadow: 3px 3px 3px 3px lightgrey;
+}
+
 .muted {
   opacity: 0.5;
 }
@@ -161,68 +165,67 @@ table tbody tr:hover {
   }
 }
 
+
 </style>
 
 <body>
 <!-- COOKIE MODAL BELOW (FUNCTIONING). CAN BE USED FOR INSTRUCTIONS OR TO GIVE A WEEKLY BREAKDOWN -->
 <script>
 $(document).ready(function() {
-    if (Cookies.get('morning_modal') == null) {
-        Cookies.set('morning_modal', 'yes', { expires: 1, path: '/' });
+    // if (Cookies.get('morning_modal') == null) {
+    //     Cookies.set('morning_modal', 'yes', { expires: 1, path: '/' });
         $('#morningModal').modal('show');
-    }
+    // }
     // highlight entry card
     if (<%= @user_entry_total_effective_monthly %> == 0.5) {
-      $('#occurrence-card').addClass('bg-warning text-white');
-      $('.occurrence-card').addClass('bg-warning text-white');
       $('#occurrence-modal').addClass('bg-warning text-white');
+      $('#occurrence-card-body').addClass('border-warning')
     } else if (<%= @user_entry_total_effective_monthly %> > 0.5) {
-      $('#occurrence-card').removeClass('float').addClass('muted');
-      $('#occurrence-modal').addClass('bg-danger text-white')
+      $('#occurrence-modal').addClass('bg-danger text-white');
+      $('#occurrence-card-body').addClass('border-danger')
     } else {
-      $('#occurrence-card').removeClass('bg-warning text-white')
       $('#occurrence-modal').addClass('bg-success text-white');
+      $('#occurrence-card-body').addClass('border-success')
     }
     // highlight wu card
     if (<%= @user_writeup_written %> > 0) {
-      $('#wu-card').removeClass('float').addClass('muted');
       $('#wu-modal').addClass('bg-danger text-white');
+      $('#wu-card-body').addClass('border-danger');
     } else {
-      $('#wu-card').removeClass('bg-warning text-white')
       $('#wu-modal').addClass('bg-success text-white');
+      $('#wu-card-body').addClass('border-success');
     }
     // highlight uph card
     if (<%= number_with_precision(@uph, :precision => 1) %> < 7.5) {
-      $('#uph-card').addClass('bg-warning text-white');
       $('#uph-modal').addClass('bg-warning text-white');
+      $('#uph-card-body').addClass('border-warning');
     } else {
-      $('#uph-card').removeClass('bg-warning text-white');
       $('#uph-modal').addClass('bg-success text-white');
+      $('#uph-card-body').addClass('border-success');
     }
     // highlight occ card
     if (<%= number_with_precision(@occ, :precision => 1) %> < 90) {
-      $('#occupancy-card').addClass('bg-warning text-white');
       $('#occupancy-modal').addClass('bg-warning text-white');
+      $('#occupancy-card-body').addClass('border-warning');
     } else {
-      $('#occupancy-card').removeClass('bg-warning text-white');
       $('#occupancy-modal').addClass('bg-success text-white');
+      $('#occupancy-card-body').addClass('border-success');
     }
     // highlight err card
     if (<%= @err_logs_count %> > 0) {
-      $('#error-card').removeClass('float').addClass('muted');
       $('#error-modal').addClass('bg-danger text-white');
+      $('#error-card-body').addClass('border-danger');
     } else {
-      $('#error-card').removeClass('bg-warning text-white');
       $('#error-modal').addClass('bg-success text-white');
+      $('#error-card-body').addClass('border-success');
     }   
 });
-
-
 </script>
+
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-    <div class="modal-content rounded p-1">
-      <div class="bg-light m-2">
+    <div class="modal-content rounded">
+      <div class="bg-light m-2 rounded">
         <div class="row pl-3 pr-3 pb-1 pt-3">
           <div class="col d-flex align-items-stretch">
             <div class="card fancy-fade" style="width: 12rem;">
@@ -285,8 +288,8 @@ $(document).ready(function() {
         <p class="font-weight-bold ml-5 mr-5 mb-3 text-center">As a reminder, all data is subject to final checks before the incentive is tendered. This portal is to be used as a reference guide and not as a definitive source for eligibility.</p>
       </div>
       <div class="m-auto pb-4"><button class="btn btn-primary font-weight-bold text-white" data-dismiss="modal">AGREE & ENTER</button></div>
-      <span class="font-weight-bold text-muted pr-1 pb-1" style="position:absolute;bottom:0px !important;left:5px !important;font-size: 10px"><%= current_user.full_name %></span>
-      <span class="font-weight-bold text-muted pr-1 pb-1" style="position:absolute;bottom:0px !important;right:5px !important;font-size: 10px"><%= Time.now %></span>
+      <span class="font-weight-bold text-light pr-1 pb-1" style="position:absolute;bottom:0px !important;left:5px !important;font-size: 10px"><%= current_user.full_name %></span>
+      <span class="font-weight-bold text-light pr-1 pb-1" style="position:absolute;bottom:0px !important;right:5px !important;font-size: 10px"><%= Time.now %></span>
     </div>
   </div>
 </div>
@@ -305,9 +308,10 @@ $(document).ready(function() {
 <section class="px-3 pt-5 pb-3 mb-3 d-flex flex-column" style="background-color: #eeeeee !important">
   <div class="container-fluid">
     <div class="row equal-cols">
-      <div class="col-12 col-md-3 d-flex flex-column justify-items-between">
+      <div class="col-10 col-md-3 d-flex flex-column justify-items-between">
+
         <div class="card card-mini card-mini-solid-icon float" id="occurrence-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>0.5 or less</span>">
-          <div class="card-body">
+          <div class="card-body border-left" style="border-left-width: 10px !important" id="occurrence-card-body">
             <div class="row">
               <div class="col-8">
                 <h6 class="m-0"><u>Occurrences</u></h6>
@@ -349,7 +353,7 @@ $(document).ready(function() {
         </div>
 
         <div class="card card-mini card-mini-solid-icon float" id="wu-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>0 active prog actions</span>">
-          <div class="card-body">
+          <div class="card-body border-left" style="border-left-width: 10px !important" id="wu-card-body">
             <div class="media">
               <div class="media-body text-left">
                 <h6 class="m-0"><u>Progressive Logs</u></h6>
@@ -365,11 +369,11 @@ $(document).ready(function() {
         </div>
 
         <div class="card card-mini card-mini-solid-icon float" id="uph-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>7.5 or greater</span>">
-          <div class="card-body">
+          <div class="card-body border-left" style="border-left-width: 10px !important" id="uph-card-body">
             <div class="media">
               <div class="media-body text-left">
                 <h6 class="m-0"><u>UPH</u></h6>
-                <h4 class="m-0"><%= number_with_precision(@uph, :precision => 1) %> <small>monthly average</small></h4>
+                <h4 class="m-0"><%= number_with_precision(@uph, :precision => 1) %> <small>monthly avg</small></h4>
               </div>
               <div class="d-flex align-self-center ml-3">
                 <span>
@@ -381,11 +385,11 @@ $(document).ready(function() {
         </div>
 
         <div class="card card-mini card-mini-solid-icon float" id="occupancy-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>90%-100%</span>">
-          <div class="card-body">
+          <div class="card-body border-left" style="border-left-width: 10px !important" id="occupancy-card-body">
             <div class="media">
               <div class="media-body text-left">
                 <h6 class="m-0"><u>Occupancy</u></h6>
-                <h4 class="m-0"><%= number_with_precision(@occ, :precision => 1) %>% <small>monthly average</small></h4>
+                <h4 class="m-0"><%= number_with_precision(@occ, :precision => 1) %>% <small>monthly avg</small></h4>
               </div>
               <div class="d-flex align-self-center ml-3">
                 <span>
@@ -397,10 +401,10 @@ $(document).ready(function() {
         </div>
 
         <div class="card card-mini card-mini-solid-icon float" id="error-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>2 or less, under $250.00 total</span>">
-          <div class="card-body">
+          <div class="card-body border-left" style="border-left-width: 10px !important" id="error-card-body">
             <div class="row">
               <div class="col-8">
-                <h6 class="m-0"><u>Improvement Opps</u></h6>
+                <h6 class="m-0"><u>Improvement Logs</u></h6>
               </div>
               <div class="col-4">
                 <ul class="nav nav-pills pull-right justify-items-between" id="arrow-tab" role="tablist">
@@ -532,19 +536,25 @@ $(".btn-style").click(function () {
   </div>
 </section>
 
-<div class="btn-group align-items-center" role="group">
-  <ul class="nav nav-pills mb-3 ml-4" id="pills-tab" role="tablist">
-    <li class="nav-item active font-weight-bold">
-      <button class="btn btn-primary active font-weight-bold table-select" id="pills-occurrence-tab" data-toggle="pill" href="#pills-occurrence" role="tab" aria-controls="pills-occurrence" aria-selected="true" type="button" name="occurrence"><i class="fa fa-calendar-times-o "></i></button>
-      <button class="btn btn-primary table-select" id="pills-dap-tab" data-toggle="pill" href="#pills-dap" role="tab" aria-controls="pills-dap" aria-selected="false" type="button" name="progressive action"><i class="fa fa-wpforms "></i></button>
-      <button class="btn btn-primary table-select" id="pills-error-tab" data-toggle="pill" href="#pills-error" role="tab" aria-controls="pills-error" aria-selected="false" type="button" name="improvement log"><i class="fa fa-exclamation-triangle "></i></button>
-    </li>
-  </ul>  
-</div>
 
-<div class="pull-right pr-4">
-  <h3 class="font-weight-bold" id="table-title" style="opacity:0"><span class="text-uppercase" name="table-title-current-anchor" id="table-title-current">OCCURRENCE</span> BREAKDOWN</h3>
-</div>
+<nav>
+  <div class="row">
+    <div class="col-6">
+      <div class="nav nav-tabs ml-5" id="nav-pills" role="tablist">
+        <button class="btn btn-primary active font-weight-bold table-select" style="border-radius: calc(0.25rem - 1px) 0 0 calc(0.25rem - 1px);width:175px" id="pills-occurrence-tab" data-toggle="pill" href="#pills-occurrence" role="tab" aria-controls="pills-occurrence" aria-selected="true" type="button" name="occurrence"><i class="fa fa-calendar-times-o "></i> OCCURRENCES</button>
+        <button class="btn btn-primary font-weight-bold table-select" style="border-radius: 0px;width:175px" id="pills-dap-tab" data-toggle="pill" href="#pills-dap" role="tab" aria-controls="pills-dap" aria-selected="false" type="button" name="progressive action"><i class="fa fa-wpforms "></i> PROGRESSIVES</button>
+        <button class="btn btn-primary font-weight-bold table-select" style="border-radius: 0 calc(0.25rem - 1px) calc(0.25rem - 1px) 0;width:175px" id="pills-error-tab" data-toggle="pill" href="#pills-error" role="tab" aria-controls="pills-error" aria-selected="false" type="button" name="improvement log"><i class="fa fa-exclamation-triangle "></i> IMPROVEMENTS</button>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="pull-right pr-5">
+        <h3 class="font-weight-bold" id="table-title" style="opacity:0"><span class="text-uppercase" name="table-title-current-anchor" id="table-title-current">OCCURRENCE</span> BREAKDOWN</h3>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
 <div class="container-fluid p-4" style="height: 450px;background-color: #eeeeee !important;">
   <div class="row">
     <div class="col-12 ">
