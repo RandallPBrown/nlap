@@ -60,6 +60,7 @@ class UsersController < ApplicationController
     else
       Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:occupancy)
     end
+    @incentive_settings = IncentiveSetting.all.where("department_id = ?", current_user.department.id)
     @err_logs = ErrLog.all.where('user_id = ?', current_user.id)
     @err_logs_count = ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where("user_id = ?", current_user.id).where(:errdate => Date.today.beginning_of_month..Date.today.end_of_month).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').select(:err_statuses).where('err_statuses.statusname = ? OR err_statuses.statusname = ?', 'Reviewed', 'Acknowledged').count(:id)
     @err_logs_dispute = ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where("user_id = ?", current_user.id).where(:errdate => Date.today.beginning_of_month..Date.today.end_of_month).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').select(:err_statuses).where('err_statuses.statusname = ?', 'Dispute').count(:id)

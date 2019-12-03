@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191126175322) do
+ActiveRecord::Schema.define(version: 20191203221906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -245,6 +245,21 @@ ActiveRecord::Schema.define(version: 20191126175322) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "incentive_settings", force: :cascade do |t|
+    t.float "occupancy"
+    t.float "uph"
+    t.float "attendance"
+    t.float "quality"
+    t.integer "error"
+    t.float "error_amount"
+    t.float "turntime"
+    t.float "contracts"
+    t.bigint "department_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_incentive_settings_on_department_id"
   end
 
   create_table "incentives", force: :cascade do |t|
@@ -537,6 +552,7 @@ ActiveRecord::Schema.define(version: 20191126175322) do
   add_foreign_key "err_logs", "users"
   add_foreign_key "fergusons", "districts"
   add_foreign_key "fergusons", "users"
+  add_foreign_key "incentive_settings", "departments"
   add_foreign_key "incentives", "users"
   add_foreign_key "messages", "chatrooms"
   add_foreign_key "messages", "users"

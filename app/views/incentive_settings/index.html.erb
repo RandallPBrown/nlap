@@ -1,0 +1,86 @@
+<% @title = "Listing incentive_settings" %>
+
+<% content_for :description do %>
+  <p>Edit this template in <code>app/views/IncentiveSettings/index.html.erb</code>.</p>
+  <% end %>
+
+  <% content_for :actions do %>
+    <%= link_to new_incentive_setting_path, class: 'btn btn-primary btn-large pull-right' do %>
+      <%= fa_icon_tag "plus" %> Add Incentive setting
+      <% end %>
+      <% end %>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="card card-sheet sheet-condensed">
+              <table class="table table-striped table-hover table-sm-responsive">
+                <thead>
+                  <tr>
+                                          <th>Occupancy</th>
+                                          <th>Uph</th>
+                                          <th>Attendance</th>
+                                          <th>Quality</th>
+                                          <th>Error</th>
+                                          <th>Error amount</th>
+                                          <th>Turntime</th>
+                                          <th>Contracts</th>
+                                          <th>Department</th>
+                                        <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% @incentive_settings.each do |incentive_setting| %>
+                  <tr>
+                                          <td><%= incentive_setting.occupancy %></td>
+                                          <td><%= incentive_setting.uph %></td>
+                                          <td><%= incentive_setting.attendance %></td>
+                                          <td><%= incentive_setting.quality %></td>
+                                          <td><%= incentive_setting.error %></td>
+                                          <td><%= incentive_setting.error_amount %></td>
+                                          <td><%= incentive_setting.turntime %></td>
+                                          <td><%= incentive_setting.contracts %></td>
+                                          <td><%= incentive_setting.department %></td>
+                                        <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), incentive_setting, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("pencil-alt"), edit_incentive_setting_path(incentive_setting), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("trash"), incentive_setting, 'data-toggle': 'tooltip', title: 'Delete',
+                        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+                      </div>
+                      </td>
+                    </tr>
+                    <% end %>
+                    <% if @incentive_settings.length == 0 %>
+                    <tr><td colspan=42 class='text-center'>No incentive_settings.</td></tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+
+                                  <%# Remove the trailing if condition if you're using pagination. %>
+                  <%= will_paginate @incentive_settings if @incentive_settings.respond_to?(:total_pages) %>
+                
+                              </div>
+
+
+              <div id="sidebar" class="col-md-3">
+
+                <ul class="nav nav-stacked nav-caret-left bg-gray-200 card small pb-2">
+                  <li><h6 class="mt-3 ml-3">Sub Menu</h6></li>
+                  <li class="nav-item">
+                  <a class="nav-link" href="#">Vacation Days</a>
+                  </li>
+                  <li class="nav-item active">
+                  <a class="nav-link" href="#">Salaries</a>
+                  </li>
+                  <li class="nav-item">
+                  <a class="nav-link" href="#">Disciplinary Items</a>
+                  </li>
+                  <li class="nav-item">
+                  <a class="nav-link" href="#">Firings</a>
+                  </li>
+                </ul>
+              </div> <!-- /#sidebar -->
+            </div>
+          </div>

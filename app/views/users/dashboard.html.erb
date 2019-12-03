@@ -174,6 +174,61 @@ table tbody tr:hover {
   }
 }
 
+#sidebar-wrapper{
+  z-index:1;
+  position: fixed;
+  top:0;
+  width:0;
+  height:100%;
+  overflow-y:hidden;
+  background: #f7f7f8;
+  transition:all .5s;
+  display:flex;
+}
+
+.sidebar-wrapper-open {
+  box-shadow: 3px 3px 15px 10px;
+}
+
+/* Main Content */
+#page-content-wrapper{
+  width: 100%;  
+  position: fixed;
+  padding:15px;
+  transition:all .5s;
+}
+
+#menu-toggle{
+  transition:all .5s;
+  font-size:2em;
+}
+/* Change the width of the sidebar to display it*/
+#wrapper.menuDisplayed #sidebar-wrapper{
+  width:300px ;
+}
+
+#wrapper.menuDisplayed #page-content-wrapper{
+  padding-left:300px  ;
+}
+
+
+
+.slider {
+  z-index: 1;
+  position:fixed;
+  top:45%;
+  left:0;
+  height: 125px;
+  width:25px;
+  transition: left 0.5s;
+  border-radius: 0 calc(0.25rem - 1px) calc(0.25rem - 1px) 0;
+}
+
+.menu-slide {
+  left: 300px  !important;
+  transition: left 0.5s;
+}
+
 
 </style>
 
@@ -181,16 +236,16 @@ table tbody tr:hover {
 <!-- COOKIE MODAL BELOW (FUNCTIONING). CAN BE USED FOR INSTRUCTIONS OR TO GIVE A WEEKLY BREAKDOWN -->
 <script>
 $(document).ready(function() {
-    // if (Cookies.get('morning_modal') == null) {
-    //     Cookies.set('morning_modal', 'yes', { expires: 1, path: '/' });
+    if (Cookies.get('morning_modal') == null) {
+        Cookies.set('morning_modal', 'yes', { expires: 1, path: '/' });
         $('#morningModal').modal('show');
-    // }
+    }
     // highlight entry card
-    if (<%= @user_entry_total_effective_monthly %> == 0.5) {
+    if (<%= @user_entry_total_effective_monthly %> == <%= @incentive_settings.map {|m| m.attendance }.first.to_f %>) {
       $('#occurrence-modal').addClass('bg-warning text-white');
       $('#occurrence-card-body').addClass('border-warning');
       $('#occurrence-card').addClass('float-active');
-    } else if (<%= @user_entry_total_effective_monthly %> > 0.5) {
+    } else if (<%= @user_entry_total_effective_monthly %> > <%= @incentive_settings.map {|m| m.attendance }.first.to_f %>) {
       $('#occurrence-modal').addClass('bg-danger text-white');
       $('#occurrence-card-body').addClass('border-danger');
       $('#occurrence-card').addClass('float-active');
@@ -208,7 +263,7 @@ $(document).ready(function() {
       $('#wu-card-body').addClass('border-success');
     }
     // highlight uph card
-    if (<%= number_with_precision(@uph, :precision => 1) %> < 7.5) {
+    if (<%= number_with_precision(@uph, :precision => 1) %> < <%= @incentive_settings.map {|m| m.uph }.first.to_f %>) {
       $('#uph-modal').addClass('bg-warning text-white');
       $('#uph-card-body').addClass('border-warning');
       $('#uph-card').addClass('float-active');
@@ -217,7 +272,7 @@ $(document).ready(function() {
       $('#uph-card-body').addClass('border-success');
     }
     // highlight occ card
-    if (<%= number_with_precision(@occ, :precision => 1) %> < 90) {
+    if (<%= number_with_precision(@occ, :precision => 1) %> < <%= @incentive_settings.map {|m| m.occupancy }.first.to_f %>) {
       $('#occupancy-modal').addClass('bg-warning text-white');
       $('#occupancy-card-body').addClass('border-warning');
       $('#occupancy-card').addClass('float-active');
@@ -226,7 +281,7 @@ $(document).ready(function() {
       $('#occupancy-card-body').addClass('border-success');
     }
     // highlight err card
-    if (<%= @err_logs_count %> > 0) {
+    if (<%= @err_logs_count %> > <%= @incentive_settings.map {|m| m.error }.first.to_f %>) {
       $('#error-modal').addClass('bg-danger text-white');
       $('#error-card-body').addClass('border-danger');
       $('#error-card').addClass('float-active');
@@ -236,9 +291,35 @@ $(document).ready(function() {
     }   
 });
 
-
+$(document).ready(function(){
+  $("#menu-toggle").click(function(e){
+    e.preventDefault();
+    $("#wrapper").toggleClass("menuDisplayed");
+    $(".slider").toggleClass("menu-slide");
+    $('#sidebar-wrapper').toggleClass('sidebar-wrapper-open')
+  });
+});
 </script>
 
+<% if current_user.admin == true %>
+<!-- Sidebar -->
+<div id="wrapper">
+  
+  <div id="sidebar-wrapper">
+    <h1>COMING SOON</h1>
+<!--     <div class="nav flex-column nav-pills w-100" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      <a style="border-radius: 0 !important;" class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
+      <a style="border-radius: 0 !important;" class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+      <a style="border-radius: 0 !important;" class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+      <a style="border-radius: 0 !important;" class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+    </div> -->
+  </div>
+</div>
+<div class="bg-primary slider" style=""><a href="#" class="font-weight-bold text-white btn btn-link px-auto pl-1" id="menu-toggle" style="writing-mode: vertical-rl;text-orientation: sideways;font-size: 12px"><%= fa_icon_tag("plus") %> QUICK ACTION</a></div>
+<!-- /Sidebar -->
+<% end %>
+
+<!-- INCENTIVES MODAL -->
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
     <div class="modal-content rounded">
@@ -310,9 +391,9 @@ $(document).ready(function() {
     </div>
   </div>
 </div>
-<!-- /END OF COOKIE MODAL -->
+<!-- /END OF INCENTIVES MODAL -->
 
-<!-- Start dispute modal -->
+<!-- Dispute Modal -->
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content" id="modal-dialog">
@@ -320,7 +401,7 @@ $(document).ready(function() {
     </div>
   </div>
 </div>
-
+<!-- /Dispute Modal -->
 
 <section class="px-3 pt-5 pb-3 mb-3 d-flex flex-column float-inset" style="background-color: #eeeeee !important">
   <div class="container-fluid">
@@ -497,7 +578,6 @@ $(".btn-style").click(function () {
         sibbling.addClass("active").children("a").tab("show");
     }
 });
-
 </script>
 
       </div>
