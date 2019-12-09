@@ -44,12 +44,9 @@ jQuery(function() {
 
 <%= form_for(@err_log, html: { class: 'form-horizontal' }) do |f| %>
   <%= f.error_notification %>
-
-    
-
     <%= f.form_group :user_id, class: 'row' do |f| %>
-      <%= f.label 'Agent', class: 'control-label col-md-3' %>
-      <div class='col-12 col-md-9'>
+      <%= f.label 'Agent', class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
         <%= f.grouped_collection_select :user_id, Department.order(:id), :users, :name, :id, :full_name, {}, {'data-live-search': true, :class=>'selectpicker text-dark'}  %>
         <%= f.error_messages %>
       </div>
@@ -59,40 +56,40 @@ jQuery(function() {
 
   <div class="form-inputs">
     <%= f.form_group :serviceorder, class: 'row' do |f| %>
-      <%= f.label 'Service Order', class: 'control-label col-md-3' %>
-      <div class='col-12 col-md-9'>
+      <%= f.label 'Service Order', class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
         <%= f.text_field :serviceorder, class: 'form-control form-control-sm text-dark'%>
         <%= f.error_messages %>
       </div>
     <% end %>
 
     <%= f.form_group :errdate, class: 'row' do |f| %>
-      <%= f.label 'Error Date', class: 'control-label col-md-3' %>
-      <div class='col-12 col-md-9'>
+      <%= f.label 'Error Date', class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
         <%= f.date_field :errdate, class: 'form-control form-control-sm text-dark' %>
         <%= f.error_messages %>
       </div>
     <% end %>
 
     <%= f.form_group :errdesc, class: 'row' do |f| %>
-      <%= f.label 'Description', class: 'control-label col-md-3' %>
-      <div class='col-12 col-md-9'>
+      <%= f.label 'Description', class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
         <%= f.text_area :errdesc, class: 'form-control form-control-sm text-dark' %>
         <%= f.error_messages %>
       </div>
     <% end %>
 
     <%= f.form_group :err_cost, class: 'row' do |f| %>
-      <%= f.label 'Error Cost', class: 'control-label col-md-3' %>
-      <div class='col-12 col-md-9'>
+      <%= f.label 'Error Cost', class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
         <%= f.number_field :err_cost, class: 'form-control form-control-sm text-dark', 'value': '0.00' %>
         <%= f.error_messages %>
       </div>
     <% end %>
 
     <%= f.form_group :err_type_id, class: 'row' do |f| %>
-      <%= f.label 'Type', class: 'control-label col-md-3' %>
-      <div class='col-12 col-md-9'>
+      <%= f.label 'Type', class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
         <%= f.collection_select :err_type_id, ErrType.order(:description), :id, :description, {}, {:class=>'form-control form-control-sm text-dark'}  %>
         <%= f.error_messages %>
       </div>

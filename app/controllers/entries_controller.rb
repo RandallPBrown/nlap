@@ -13,6 +13,9 @@ class EntriesController < ApplicationController
 
   def dashboard
     require 'date'
+    @entry = Entry.new
+    @dap = Dap.new
+    @err_log = ErrLog.new
     @asdf = helpers.current_user.roles.map {|f|f.name}.first
     @body_class = "with-sidebar show-sidebar" #system generated
     @current_department = current_user.department.name # keep for now
@@ -263,7 +266,8 @@ end
             description: @entry.edesc,
             id: @entry.user.id
         })
-        redirect_to '/entries', notice: 'Entry was successfully created.'
+        redirect_back(fallback_location: root_path)
+        flash[:notice] = 'Occurrence has been logged successfully'
       else
         render :new
       end
@@ -272,7 +276,8 @@ end
   # PATCH/PUT /entries/1
   def update
     if @entry.update(entry_params)
-      redirect_to @entry, notice: 'Entry was successfully updated.'
+      redirect_back(fallback_location: root_path)
+      flash[:notice] = 'Occurrence has been updated successfully'
     else
       render :edit
     end

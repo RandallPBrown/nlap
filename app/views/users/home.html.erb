@@ -1,0 +1,9 @@
+<% if current_user.admin == true %>
+	<script type="text/javascript">
+    	window.location.href="/entries/dashboard"  // put your correct path in a string here
+  	</script>
+<% else %>
+  	<script type="text/javascript">
+    	window.location.href="/users/dashboard"  // put your correct path in a string here
+  	</script>
+<% end %>

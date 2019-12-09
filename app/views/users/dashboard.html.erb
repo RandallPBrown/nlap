@@ -211,6 +211,9 @@ table tbody tr:hover {
   padding-left:300px  ;
 }
 
+#wrapper-pills-error-tab.active, #wrapper-pills-entry-tab.active, #wrapper-pills-dap-tab.active {
+  background-color: #707070;
+}
 
 
 .slider {
@@ -304,15 +307,46 @@ $(document).ready(function(){
 <% if current_user.admin == true %>
 <!-- Sidebar -->
 <div id="wrapper">
-  
   <div id="sidebar-wrapper">
-    <h1>COMING SOON</h1>
-<!--     <div class="nav flex-column nav-pills w-100" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      <a style="border-radius: 0 !important;" class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-      <a style="border-radius: 0 !important;" class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-      <a style="border-radius: 0 !important;" class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-      <a style="border-radius: 0 !important;" class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
-    </div> -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <center><%= image_tag("newleaf logo leaf.png") %></center>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-12 p-0">
+          <div class="nav flex-column nav-pills w-100" id="wrapper-pills-tab" role="tablist" aria-orientation="vertical">
+            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link active" id="wrapper-pills-error-tab" data-toggle="pill" href="#wrapper-pills-error" role="tab" aria-controls="wrapper-pills-error" aria-selected="true">IMPROVEMENT LOG</a>
+            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link" id="wrapper-pills-entry-tab" data-toggle="pill" href="#wrapper-pills-entry" role="tab" aria-controls="wrapper-pills-entry" aria-selected="false">OCCURRENCE LOG</a>
+            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link" id="wrapper-pills-dap-tab" data-toggle="pill" href="#wrapper-pills-dap" role="tab" aria-controls="wrapper-pills-dap" aria-selected="false">PROGRESSIVE LOG</a>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row mx-1">
+        <div class="col-12 p-0">
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="wrapper-pills-error" role="tabpanel" aria-labelledby="wrapper-pills-error-tab" style="">
+              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                <%= render "err_logs/form" %>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="wrapper-pills-entry" role="tabpanel" aria-labelledby="wrapper-pills-entry-tab">
+              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                <%= render "entries/form" %>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="wrapper-pills-dap" role="tabpanel" aria-labelledby="wrapper-pills-dap-tab">
+              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                <%= render "daps/form" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="bg-primary slider" style=""><a href="#" class="font-weight-bold text-white btn btn-link px-auto pl-1" id="menu-toggle" style="writing-mode: vertical-rl;text-orientation: sideways;font-size: 12px"><%= fa_icon_tag("plus") %> QUICK ACTION</a></div>

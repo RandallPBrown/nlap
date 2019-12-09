@@ -73,7 +73,8 @@ class DapsController < ApplicationController
             osd: @dap.occurrence_since_dap,
             id: @dap.user.id
         })
-        redirect_to daps_path, notice: 'Dap was successfully created.'
+        redirect_back(fallback_location: root_path)
+        flash[:notice] = 'Progressive Action has been logged successfully'
       else
         render :new
       end
@@ -83,12 +84,14 @@ class DapsController < ApplicationController
   def update
     if current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
       if @dap.update(dap_params)
-        redirect_to @dap, notice: 'Dap was successfully updated.'
+        redirect_back(fallback_location: root_path)
+        flash[:notice] = 'Progressive Action has been updated successfully'
       else
         render :edit
       end
     else 
-      redirect_to daps_path, notice: 'Unauthorized'
+      redirect_back(fallback_location: root_path)
+      flash[:notice] = 'Unauthorized'
     end  
   end
 

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'entries/agent_list'
   get 'entries/dashboard'
   get 'entries/agentview', to: 'entries#agentview'
+  get 'users/home'
   get 'users/dashboard'
   get 'users/index'
   get 'users/password_reset'
@@ -102,5 +103,5 @@ Rails.application.routes.draw do
 
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: "users#dashboard"
+  root to: "users#home"
 end

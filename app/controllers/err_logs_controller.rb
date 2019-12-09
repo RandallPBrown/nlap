@@ -42,7 +42,8 @@ class ErrLogsController < ApplicationController
     @err_log = ErrLog.new(err_log_params)
     @err_log.department_id = @err_log.user.department_id
     if @err_log.save
-      redirect_to err_logs_path, notice: 'Err log was successfully created.'
+      redirect_back(fallback_location: root_path)
+      flash[:notice] = 'Error has been logged successfully'
     else
       render :new
     end
@@ -52,6 +53,7 @@ class ErrLogsController < ApplicationController
   def update
     if @err_log.update(err_log_params)
       redirect_back(fallback_location: root_path)
+      flash[:notice] = 'Error has been updated successfully'
     else
       render :edit
     end

@@ -104,7 +104,70 @@ $("#chartLine").click(function() {
     data.datasets[0].type = chart_type;
     occurrence_chart.update();
 });
+
+
 </script>
+
+<style>
+#sidebar-wrapper{
+  z-index:1;
+  position: fixed;
+  top:0;
+  width:0;
+  height:100%;
+  overflow-y:hidden;
+  background: #f7f7f8;
+  transition:all .5s;
+  display:flex;
+}
+
+.sidebar-wrapper-open {
+  box-shadow: 3px 3px 15px 10px;
+}
+
+/* Main Content */
+#page-content-wrapper{
+  width: 100%;  
+  position: fixed;
+  padding:15px;
+  transition:all .5s;
+}
+
+#menu-toggle{
+  transition:all .5s;
+  font-size:2em;
+}
+/* Change the width of the sidebar to display it*/
+#wrapper.menuDisplayed #sidebar-wrapper{
+  width:300px ;
+}
+
+#wrapper.menuDisplayed #page-content-wrapper{
+  padding-left:300px  ;
+}
+
+#wrapper-pills-error-tab.active, #wrapper-pills-entry-tab.active, #wrapper-pills-dap-tab.active {
+  background-color: #707070;
+}
+
+
+.slider {
+  z-index: 1;
+  position:fixed;
+  top:45%;
+  left:0;
+  height: 125px;
+  width:25px;
+  transition: left 0.5s;
+  border-radius: 0 calc(0.25rem - 1px) calc(0.25rem - 1px) 0;
+}
+
+.menu-slide {
+  left: 300px  !important;
+  transition: left 0.5s;
+}
+
+</style>
 <%= content_for :js_libs, "modernizr gmaps flot chartjs demo-dashboard demo-gmaps" %>
 <%= stylesheet_link_tag "pagination.css" %>
 <div class="container-fluid">
@@ -116,3 +179,62 @@ $("#chartLine").click(function() {
   <%#= render partial: 'entries/server_activity' %>
   <%#= render partial: 'entries/online_users' %>
 </div>
+
+<% if current_user.admin == true %>
+<!-- Sidebar -->
+<div id="wrapper">
+  <div id="sidebar-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <center><%= image_tag("newleaf logo leaf.png") %></center>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-12 p-0">
+          <div class="nav flex-column nav-pills w-100" id="wrapper-pills-tab" role="tablist" aria-orientation="vertical">
+            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link active" id="wrapper-pills-error-tab" data-toggle="pill" href="#wrapper-pills-error" role="tab" aria-controls="wrapper-pills-error" aria-selected="true">IMPROVEMENT LOG</a>
+            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link" id="wrapper-pills-entry-tab" data-toggle="pill" href="#wrapper-pills-entry" role="tab" aria-controls="wrapper-pills-entry" aria-selected="false">OCCURRENCE LOG</a>
+            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link" id="wrapper-pills-dap-tab" data-toggle="pill" href="#wrapper-pills-dap" role="tab" aria-controls="wrapper-pills-dap" aria-selected="false">PROGRESSIVE LOG</a>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row mx-1">
+        <div class="col-12 p-0">
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="wrapper-pills-error" role="tabpanel" aria-labelledby="wrapper-pills-error-tab" style="">
+              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                <%= render "err_logs/form" %>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="wrapper-pills-entry" role="tabpanel" aria-labelledby="wrapper-pills-entry-tab">
+              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                <%= render "entries/form" %>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="wrapper-pills-dap" role="tabpanel" aria-labelledby="wrapper-pills-dap-tab">
+              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                <%= render "daps/form" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bg-primary slider" style=""><a href="#" class="font-weight-bold text-white btn btn-link px-auto pl-1" id="menu-toggle" style="writing-mode: vertical-rl;text-orientation: sideways;font-size: 12px"><%= fa_icon_tag("plus") %> QUICK ACTION</a></div>
+<!-- /Sidebar -->
+<% end %>
+<script>
+$(document).ready(function(){
+  $("#menu-toggle").click(function(e){
+    e.preventDefault();
+    $("#wrapper").toggleClass("menuDisplayed");
+    $(".slider").toggleClass("menu-slide");
+    $('#sidebar-wrapper').toggleClass('sidebar-wrapper-open')
+  });
+});
+</script>

@@ -61,11 +61,13 @@ class UsersController < ApplicationController
       Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:occupancy)
     end
     @incentive_settings = IncentiveSetting.all.where("department_id = ?", current_user.department.id)
+    @err_log = ErrLog.new
     @err_logs = ErrLog.all.where('user_id = ?', current_user.id)
     @err_logs_count = ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where("user_id = ?", current_user.id).where(:errdate => Date.today.beginning_of_month..Date.today.end_of_month).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').select(:err_statuses).where('err_statuses.statusname = ? OR err_statuses.statusname = ?', 'Reviewed', 'Acknowledged').count(:id)
     @err_logs_dispute = ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where("user_id = ?", current_user.id).where(:errdate => Date.today.beginning_of_month..Date.today.end_of_month).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').select(:err_statuses).where('err_statuses.statusname = ?', 'Dispute').count(:id)
     @err_logs_pending = ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where("user_id = ?", current_user.id).where(:errdate => Date.today.beginning_of_month..Date.today.end_of_month).select(:err_names).select(:err_statuses).where('err_statuses.statusname = ?', 'Pending').count(:id)
 
+    @entry = Entry.new
     @user_entry = Entry.occurrence_user.where("users.id = ?", current_user.id).group('agents.id', 'occurrences.id', 'departments.id', 'users.id').includes(:occurrence, agent: [:department, :user]).ue
     @user_entry_today = Entry.today.occurrence_user.where("users.id = ?", current_user.id).ue
     @user_entry_effective = Entry.effective.occurrence_user.where("users.id = ?", current_user.id).ue
@@ -81,6 +83,8 @@ class UsersController < ApplicationController
 
     @agent_chart_labels_total = Entry.all.occurrence_user.where("users.id = ?", current_user.id).acl
     @agent_chart_data_total = Entry.all.occurrence_user.where("users.id = ?", current_user.id).acd
+    
+    @dap = Dap.new
     @user_writeup_written = Dap.written.joins(:writeup, :user).where("users.id = ?", current_user.id).count(:writeup_id)
     @user_dap = Dap.includes(:writeup, :user).joins(:writeup, :user).group('writeups.id', 'users.id').where("users.id = ?", current_user.id).group(:id).order("daps.ddate DESC")
     @user_dap_written = Dap.written.includes(:writeup, :user).joins(:writeup, :user).group('writeups.id', 'users.id').where("users.id = ?", current_user.id).group(:id).order("daps.ddate DESC").paginate(page: params[:page], :per_page => 3)
