@@ -1,5 +1,6 @@
 class IncentivesController < ApplicationController
   layout "scaffold"
+  before_action :authorize_admin
   before_action :authenticate_user!
   before_action :authorize_admin
   before_action :set_incentive, only: [:show, :edit, :update, :destroy]
@@ -66,6 +67,6 @@ class IncentivesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def incentive_params
-      params.require(:incentive).permit(:user_id, :uph, :quality, :improvement_opp, :occupancy)
+      params.require(:incentive).permit(:user_id, :uph, :quality, :improvement_opp, :occupancy, :turntime, :error_amount, :contracts, :aht)
     end
 end

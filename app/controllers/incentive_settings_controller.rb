@@ -1,6 +1,6 @@
 class IncentiveSettingsController < ApplicationController
   layout "scaffold"
-
+  before_action :authorize_admin
   before_action :set_incentive_setting, only: [:show, :edit, :update, :destroy]
 
   # GET /incentive_settings

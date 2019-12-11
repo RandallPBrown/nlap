@@ -60,6 +60,27 @@ class UsersController < ApplicationController
     else
       Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:occupancy)
     end
+    @aht = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:aht).nil?
+      "0"
+    else
+      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:aht)
+    end
+    @turntime = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:turntime).nil?
+      "0"
+    else
+      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:turntime)
+    end
+    @error_amount = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).sum(:error_amount).nil?
+      "0"
+    else
+      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).sum(:error_amount)
+    end
+    @contracts = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).sum(:contracts).nil?
+      "0"
+    else
+      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).sum(:contracts)
+    end
+
     @incentive_settings = IncentiveSetting.all.where("department_id = ?", current_user.department.id)
     @err_log = ErrLog.new
     @err_logs = ErrLog.all.where('user_id = ?', current_user.id)

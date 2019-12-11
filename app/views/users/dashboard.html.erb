@@ -232,6 +232,20 @@ table tbody tr:hover {
   transition: left 0.5s;
 }
 
+.border-left-danger {
+  border-color: #dddddd;
+  border-left-color: #ff5551 !important;
+}
+
+.border-left-warning {
+  border-color: #dddddd;
+  border-left-color: #ffc200 !important;
+}
+
+.border-left-success {
+  border-color: #dddddd;
+  border-left-color: #00c884 !important;
+}
 
 </style>
 
@@ -246,52 +260,70 @@ $(document).ready(function() {
     // highlight entry card
     if (<%= @user_entry_total_effective_monthly %> == <%= @incentive_settings.map {|m| m.attendance }.first.to_f %>) {
       $('#occurrence-modal').addClass('bg-warning text-white');
-      $('#occurrence-card-body').addClass('border-warning');
-      $('#occurrence-card').addClass('float-active');
+      $('#occurrence-card-body').addClass('border-left-warning');
     } else if (<%= @user_entry_total_effective_monthly %> > <%= @incentive_settings.map {|m| m.attendance }.first.to_f %>) {
       $('#occurrence-modal').addClass('bg-danger text-white');
-      $('#occurrence-card-body').addClass('border-danger');
-      $('#occurrence-card').addClass('float-active');
+      $('#occurrence-card-body').addClass('border-left-danger');
     } else {
       $('#occurrence-modal').addClass('bg-success text-white');
-      $('#occurrence-card-body').addClass('border-success')
+      $('#occurrence-card-body').addClass('border-left-success')
     }
     // highlight wu card
     if (<%= @user_writeup_written %> > 0) {
       $('#wu-modal').addClass('bg-danger text-white');
-      $('#wu-card-body').addClass('border-danger');
-      $('#wu-card').addClass('float-active');
+      $('#wu-card-body').addClass('border-left-danger');
     } else {
       $('#wu-modal').addClass('bg-success text-white');
-      $('#wu-card-body').addClass('border-success');
+      $('#wu-card-body').addClass('border-left-success');
     }
     // highlight uph card
     if (<%= number_with_precision(@uph, :precision => 1) %> < <%= @incentive_settings.map {|m| m.uph }.first.to_f %>) {
       $('#uph-modal').addClass('bg-warning text-white');
-      $('#uph-card-body').addClass('border-warning');
-      $('#uph-card').addClass('float-active');
+      $('#uph-card-body').addClass('border-left-warning');
     } else {
       $('#uph-modal').addClass('bg-success text-white');
-      $('#uph-card-body').addClass('border-success');
+      $('#uph-card-body').addClass('border-left-success');
     }
     // highlight occ card
     if (<%= number_with_precision(@occ, :precision => 1) %> < <%= @incentive_settings.map {|m| m.occupancy }.first.to_f %>) {
       $('#occupancy-modal').addClass('bg-warning text-white');
-      $('#occupancy-card-body').addClass('border-warning');
-      $('#occupancy-card').addClass('float-active');
+      $('#occupancy-card-body').addClass('border-left-warning');
     } else {
       $('#occupancy-modal').addClass('bg-success text-white');
-      $('#occupancy-card-body').addClass('border-success');
+      $('#occupancy-card-body').addClass('border-left-success');
     }
     // highlight err card
     if (<%= @err_logs_count %> > <%= @incentive_settings.map {|m| m.error }.first.to_f %>) {
       $('#error-modal').addClass('bg-danger text-white');
-      $('#error-card-body').addClass('border-danger');
-      $('#error-card').addClass('float-active');
+      $('#error-card-body').addClass('border-left-danger');
     } else {
       $('#error-modal').addClass('bg-success text-white');
-      $('#error-card-body').addClass('border-success');
+      $('#error-card-body').addClass('border-left-success');
     }   
+    // highlight error_amount card
+    if (<%= @error_amount %> > <%= @incentive_settings.map {|m| m.error_amount }.first.to_f %>) {
+      $('#error-cost-card-body').addClass('border-left-danger');
+    } else {
+      $('#error-cost-card-body').addClass('border-left-success');
+    }
+    // highlight aht card
+    if (<%= @aht %> > <%= @incentive_settings.map {|m| m.aht }.first.to_f %>) {
+      $('#aht-card-body').addClass('border-left-danger');
+    } else {
+      $('#aht-card-body').addClass('border-left-success');
+    }
+    // highlight turntime card
+    if (<%= @turntime %> > <%= @incentive_settings.map {|m| m.turntime }.first.to_f %>) {
+      $('#turntime-card-body').addClass('border-left-danger');
+    } else {
+      $('#turntime-card-body').addClass('border-left-success');
+    }
+    // highlight contracts card
+    if (<%= @contracts %> > <%= @incentive_settings.map {|m| m.contracts }.first.to_f %>) {
+      $('#contracts-card-body').addClass('border-left-danger');
+    } else {
+      $('#contracts-card-body').addClass('border-left-success');
+    }
 });
 
 $(document).ready(function(){
@@ -440,111 +472,70 @@ $(document).ready(function(){
 <section class="px-3 pt-5 pb-3 mb-3 d-flex flex-column float-inset" style="background-color: #eeeeee !important">
   <div class="container-fluid">
     <div class="row equal-cols">
-      <div class="col-10 col-md-3 d-flex flex-column justify-items-between">
-
-        <div class="card card-mini card-mini-solid-icon float" id="occurrence-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>0.5 or less</span>">
-          <div class="card-body border-left" style="border-left-width: 10px !important" id="occurrence-card-body">
-            <div class="row">
-              <div class="col-8">
-                <h6 class="m-0"><u>Occurrences</u></h6>
-              </div>
-              <div class="col-4">
-                <ul class="nav nav-pills pull-right justify-items-between" id="arrow-tab-occurrences" role="tablist">
+      <div class="col-10 col-md-3">
+        <div class="card float">
+          <div class="card-header">
+            <h6 class="mr-auto">Breakdown</h6>
+          </div>
+          <div class="card-body p-0 m-0" style="height: 500px;overflow-y: scroll">
+            <ul class="list-group">
+              <li class="list-group-item border-left" style="border-left-width: 10px !important;border-radius: 0;"  id="wu-card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <u>Progressive Logs</u>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                    <h4 class="m-0 dap-count"><%= @user_writeup_written %> <small>active</small></h4>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-wpforms pt-3"></i>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-left" style="border-left-width: 10px !important;border-radius: 0;" id="occurrence-card-body">
+                <u>Occurrences</u>
+                <ul class="nav nav-pills pull-right" id="arrow-tab-occurrences" role="tablist">
                   <li class="nav-item mr-1">
-                    <a class="p-0" id="pills-occurrence-monthly-tab" data-toggle="pill" href="#pills-occurrence-monthly" role="tab" aria-controls="pills-occurrence-monthly" aria-selected="true"><h6><i class="fa fa-chevron-left occurrence-card"></i></h6></a>
+                    <a class="p-0" id="pills-occurrence-monthly-tab" data-toggle="pill" href="#pills-occurrence-monthly" role="tab" aria-controls="pills-occurrence-monthly" aria-selected="true"><h6 class=" font-weight-bold text-dark"><i class="fa fa-chevron-left"></i></h6></a>
                   </li>
                   <li class="nav-item ml-1">
-                    <a class="p-0" id="pills-occurrence-total-tab" data-toggle="pill" href="#pills-occurrence-total" role="tab" aria-controls="pills-occurrence-total" aria-selected="false"><h6><i class="fa fa-chevron-right occurrence-card"></i></h6></a>
+                    <a class="p-0" id="pills-occurrence-total-tab" data-toggle="pill" href="#pills-occurrence-total" role="tab" aria-controls="pills-occurrence-total" aria-selected="false"><h6 class=" font-weight-bold text-dark"><i class="fa fa-chevron-right"></i></h6></a>
                   </li>
                 </ul>
-              </div>
-            </div>
-            <div class="tab-content" id="pills-tabContent">
-              <div class="tab-pane fade show active" id="pills-occurrence-monthly" role="tabpanel" aria-labelledby="pills-occurrence-monthly-tab">
-                <div class="row">
-                  <div class="col-8">
-                    <h4 class="m-0 entry-count"><%= @user_entry_total_effective_monthly %> <small>monthly</small></h4>
+                <br>
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-occurrence-monthly" role="tabpanel" aria-labelledby="pills-occurrence-monthly-tab">
+                    <div class="row">
+                      <div class="col-8">
+                        <h4 class="m-0 entry-count"><%= @user_entry_total_effective_monthly %> <small>monthly</small></h4>
+                      </div>
+                      <div class="col-4">
+                        <i class="fa fa-calendar-times-o pull-right pt-3"></i>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-4">
-                    <i class="fa fa-calendar-times-o pull-right pt-2"></i>
+                  <div class="tab-pane" id="pills-occurrence-total" role="tabpanel" aria-labelledby="pills-occurrence-total-tab">
+                    <div class="row">
+                      <div class="col-8">
+                        <h4 class="m-0 entry-count"><%= @user_entry_total_effective %> <small>total</small></h4>
+                      </div>
+                      <div class="col-4">
+                        <i class="fa fa-calendar-times-o pull-right pt-3"></i>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="tab-pane" id="pills-occurrence-total" role="tabpanel" aria-labelledby="pills-occurrence-total-tab">
-                <div class="row">
-                  <div class="col-8">
-                    <h4 class="m-0 entry-count"><%= @user_entry_total_effective %> <small>total</small></h4>
-                  </div>
-                  <div class="col-4">
-                    <i class="fa fa-calendar-times-o pull-right pt-2"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card card-mini card-mini-solid-icon float" id="wu-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>0 active prog actions</span>">
-          <div class="card-body border-left" style="border-left-width: 10px !important" id="wu-card-body">
-            <div class="media">
-              <div class="media-body text-left">
-                <h6 class="m-0"><u>Progressive Logs</u></h6>
-                <h4 class="m-0 dap-count"><%= @user_writeup_written %> <small>active</small></h4>
-              </div>
-              <div class="d-flex align-self-center ml-3">
-                <span>
-                  <i class="fa fa-wpforms "></i>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card card-mini card-mini-solid-icon float" id="uph-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>7.5 or greater</span>">
-          <div class="card-body border-left" style="border-left-width: 10px !important" id="uph-card-body">
-            <div class="media">
-              <div class="media-body text-left">
-                <h6 class="m-0"><u>UPH</u></h6>
-                <h4 class="m-0"><%= number_with_precision(@uph, :precision => 1) %> <small>monthly avg</small></h4>
-              </div>
-              <div class="d-flex align-self-center ml-3">
-                <span>
-                  <i class="fa fa-hashtag "></i>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card card-mini card-mini-solid-icon float" id="occupancy-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>90%-100%</span>">
-          <div class="card-body border-left" style="border-left-width: 10px !important" id="occupancy-card-body">
-            <div class="media">
-              <div class="media-body text-left">
-                <h6 class="m-0"><u>Occupancy</u></h6>
-                <h4 class="m-0"><%= number_with_precision(@occ, :precision => 1) %>% <small>monthly avg</small></h4>
-              </div>
-              <div class="d-flex align-self-center ml-3">
-                <span>
-                  <i class="fa fa-clock-o "></i>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card card-mini card-mini-solid-icon float" id="error-card" data-toggle="tooltip" data-placement="right" data-html="true" title="<span class='p-1 text-uppercase'>2 or less, under $250.00 total</span>">
-          <div class="card-body border-left" style="border-left-width: 10px !important" id="error-card-body">
-            <div class="row">
-              <div class="col-8">
-                <h6 class="m-0"><u>Improvement Logs</u></h6>
-              </div>
-              <div class="col-4">
-                <ul class="nav nav-pills pull-right justify-items-between" id="arrow-tab" role="tablist">
+              </li>
+              <li class="list-group-item border-left" style="border-left-width: 10px !important;border-radius: 0;"  id="error-card-body">
+                <u>Improvement Logs</u>
+                <ul class="nav nav-pills pull-right" id="arrow-tab" role="tablist">
                   <li class="nav-item mr-1">
-                    <button class="btn btn-link btn-style left m-0 p-0" type="button"><i class="fa fa-chevron-left error-card"></i></button>
+                    <button class="btn btn-link btn-style left m-0 p-0" type="button" style="font-size: 16px !important"><i class="fa fa-chevron-left"></i></button>
                   </li>
                   <li class="nav-item ml-1">
-                    <button class="btn btn-link btn-style right m-0 p-0" type="button"><i class='fa fa-chevron-right error-card'></i></button>
+                    <button class="btn btn-link btn-style right m-0 p-0" type="button" style="font-size: 16px !important"><i class='fa fa-chevron-right'></i></button>
                   </li>
                 </ul>
                 <div hidden>
@@ -553,67 +544,158 @@ $(document).ready(function(){
                       <a class="p-0" id="pills-error-monthly-tab" data-toggle="pill" href="#pills-error-monthly" role="tab" aria-controls="pills-error-monthly" aria-selected="true"><h6></h6></a>
                     </li>
                     <li class="nav-item ml-1">
-                      <a class="p-0" id="pills-error-disputed-tab" data-toggle="pill" href="#pills-error-disputed" role="tab" aria-controls="pills-error-disputed" aria-selected="false"><h6><i class="fa fa-chevron-right "></i></h6></a>
+                      <a class="p-0" id="pills-error-disputed-tab" data-toggle="pill" href="#pills-error-disputed" role="tab" aria-controls="pills-error-disputed" aria-selected="false"><h6 class=" font-weight-bold text-dark"><i class="fa fa-chevron-right"></i></h6></a>
                     </li>
                     <li class="nav-item ml-1">
-                      <a class="p-0" id="pills-error-pending-tab" data-toggle="pill" href="#pills-error-pending" role="tab" aria-controls="pills-error-pending" aria-selected="false"><h6><i class="fa fa-chevron-right "></i></h6></a>
+                      <a class="p-0" id="pills-error-pending-tab" data-toggle="pill" href="#pills-error-pending" role="tab" aria-controls="pills-error-pending" aria-selected="false"><h6 class=" font-weight-bold text-dark"><i class="fa fa-chevron-right"></i></h6></a>
                     </li>
                   </ul>
                 </div>
-              </div>
-            </div>
-            <div class="tab-content" id="pills-tabContent">
-              <div class="tab-pane fade show active" id="pills-error-monthly" role="tabpanel" aria-labelledby="pills-error-monthly-tab">
-                <div class="row">
-                  <div class="col-8">
-                    <h4 class="m-0 entry-count"><%= @err_logs_count %> <small>active</small></h4>
+                <br>
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-error-monthly" role="tabpanel" aria-labelledby="pills-error-monthly-tab">
+                    <div class="row">
+                      <div class="col-8">
+                        <h4 class="m-0 entry-count"><%= @err_logs_count %> <small>active</small></h4>
+                      </div>
+                      <div class="col-4">
+                        <i class="fa fa-calendar-times-o pull-right pt-3"></i>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-4">
-                    <i class="fa fa-calendar-times-o pull-right pt-2"></i>
+                  <div class="tab-pane" id="pills-error-disputed" role="tabpanel" aria-labelledby="pills-error-disputed-tab">
+                    <div class="row">
+                      <div class="col-8">
+                        <h4 class="m-0 entry-count"><%= @err_logs_dispute %> <small>disputed</small></h4>
+                      </div>
+                      <div class="col-4">
+                        <i class="fa fa-calendar-times-o pull-right pt-3"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="pills-error-pending" role="tabpanel" aria-labelledby="pills-error-pending-tab">
+                    <div class="row">
+                      <div class="col-8">
+                        <h4 class="m-0 entry-count"><%= @err_logs_pending %> <small>pending</small></h4>
+                      </div>
+                      <div class="col-4">
+                        <i class="fa fa-calendar-times-o pull-right pt-3"></i>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="tab-pane" id="pills-error-disputed" role="tabpanel" aria-labelledby="pills-error-disputed-tab">
+              </li>
+              <li class="list-group-item border-left" style="border-left-width: 10px !important;border-radius: 0;"  id="error-cost-card-body">
                 <div class="row">
-                  <div class="col-8">
-                    <h4 class="m-0 entry-count"><%= @err_logs_dispute %> <small>disputed</small></h4>
-                  </div>
-                  <div class="col-4">
-                    <i class="fa fa-calendar-times-o pull-right pt-2"></i>
+                  <div class="col-12">
+                    <u>Improvement Cost</u>
                   </div>
                 </div>
-              </div>
-              <div class="tab-pane" id="pills-error-pending" role="tabpanel" aria-labelledby="pills-error-pending-tab">
                 <div class="row">
                   <div class="col-8">
-                    <h4 class="m-0 entry-count"><%= @err_logs_pending %> <small>pending</small></h4>
+                    <h4 class="m-0">$<%= number_with_precision(@error_cost, :precision => 1) %> <small>total</small></h4>
                   </div>
-                  <div class="col-4">
-                    <i class="fa fa-calendar-times-o pull-right pt-2"></i>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-clock-o pt-3"></i>
                   </div>
                 </div>
-              </div>
-            </div>
+              </li>
+              
+              <li class="list-group-item border-left" style="border-left-width: 10px !important;border-radius: 0;"  id="uph-card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <u>UPH</u>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                    <h4 class="m-0"><%= number_with_precision(@uph, :precision => 1) %> <small>monthly</small></h4>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-hashtag pt-3"></i>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-left" style="border-left-width: 10px !important;border-radius: 0;"  id="occupancy-card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <u>Occupancy</u>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                    <h4 class="m-0"><%= number_with_precision(@occ, :precision => 1) %>% <small>monthly</small></h4>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-clock-o pt-3"></i>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-left" style="border-left-width: 10px !important;border-radius: 0;"  id="aht-card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <u>AHT</u>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                    <h4 class="m-0"><%= @aht %> <small>monthly</small></h4>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-clock-o pt-3"></i>
+                  </div>
+                </div>
+              </li>
+              
+              <li class="list-group-item border-left" style="border-left-width: 10px !important;border-radius: 0;"  id="turntime-card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <u>Turntime</u>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                    <h4 class="m-0"><%= number_with_precision(@turntime, :precision => 1) %> <small>monthly</small></h4>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-clock-o pt-3"></i>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-left" style="border-left-width: 10px !important;border-radius: 0;"  id="contracts-card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <u>Contracts</u>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                    <h4 class="m-0"><%= @contracts %> <small>monthly</small></h4>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-clock-o pt-3"></i>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
+          <script>
+
+          $(".btn-style").click(function () {
+              var target = $("#pills-tab li.active");
+              var sibbling;
+              if ($(this).hasClass('right')) {
+                  sibbling = target.next();
+              } else {
+                  sibbling = target.prev();
+              }
+              if (sibbling.is("li")) {
+                  target.removeClass("active")
+                  sibbling.addClass("active").children("a").tab("show");
+              }
+          });
+          </script>
         </div>
-
-<script>
-
-$(".btn-style").click(function () {
-    var target = $("#pills-tab li.active");
-    var sibbling;
-    if ($(this).hasClass('right')) {
-        sibbling = target.next();
-    } else {
-        sibbling = target.prev();
-    }
-    if (sibbling.is("li")) {
-        target.removeClass("active")
-        sibbling.addClass("active").children("a").tab("show");
-    }
-});
-</script>
-
       </div>
 
       <div class="col-12 col-md-6">
@@ -622,45 +704,41 @@ $(".btn-style").click(function () {
             <h6 class="mr-auto">Agent Stats - 7 day</h6>
           </div>
           <div class="card-body" style="height: 500px">
-            <canvas id="statChart" width="200" height="100"></canvas>
-            <center>
-              <div id="pointer">
-              <i class="fa fa-chevron-down box bounce-4" style="font-size: 10em"></i>
-              </div>
-            </center>
+            <canvas id="statChart" width="200" height="175"></canvas>
+            
           </div>
         </div>
       </div>
 
-    <div class="col-3 ">
-      <!-- RECENT ACTIVITY TABLE -->
-      <div class="card inspectable float">
-        <!-- component-title: Timeline Card -->
-        <div class="card-header">
-          <h6>RECENT ACTIVITY</h6>
-        </div>
-        <div class="card-body" style="height: 500px">
-          <div class="timeline">
-            <ul class="left-timeline">
-              <% @user_entry.each do |entry| %>
-                <li class="timeline-item">
-                  <time class=''>
-                    <strong>
-                      <%= entry.occurrence.name %> - <%= entry.occurrence.ovalue %>
-                    </strong>
-                  </time>
-                  <div class="activity-text">
-                    <strong><%= entry.edate.strftime("%m/%d/%Y") %></strong>
-                    <small class="text-muted">EXPIRES: <%= (entry.edate + 90.days).strftime("%m/%d/%Y") %></small>
-                  </div>
-                </li>
-              <% end %>
-            </ul>
+      <div class="col-3 ">
+        <!-- RECENT ACTIVITY TABLE -->
+        <div class="card inspectable float">
+          <!-- component-title: Timeline Card -->
+          <div class="card-header">
+            <h6>RECENT ACTIVITY</h6>
+          </div>
+          <div class="card-body p-0 m-0" style="height: 500px">
+            <div class="timeline">
+              <ul class="left-timeline">
+                <% @user_entry.each do |entry| %>
+                  <li class="timeline-item">
+                    <time class=''>
+                      <strong>
+                        <%= entry.occurrence.name %> - <%= entry.occurrence.ovalue %>
+                      </strong>
+                    </time>
+                    <div class="activity-text">
+                      <strong><%= entry.edate.strftime("%m/%d/%Y") %></strong>
+                      <small class="text-muted">EXPIRES: <%= (entry.edate + 90.days).strftime("%m/%d/%Y") %></small>
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
           </div>
         </div>
+        <!-- /RECENT ACTIVITY TABLE-->
       </div>
-      <!-- /RECENT ACTIVITY TABLE-->
-    </div>
 
       
     </div>
