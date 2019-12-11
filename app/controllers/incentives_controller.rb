@@ -14,7 +14,7 @@ class IncentivesController < ApplicationController
     @errors = ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', current_user.id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').where(errdate: Date.current.beginning_of_month...Date.today).count
       csv_file = params[:file].read
       CSV.parse(csv_file) do |row|
-      incentives = Incentive.create(user_id: row[0], uph: row[1], occupancy: row[2], date: row[3])
+      incentives = Incentive.create(user_id: row[0], uph: row[1], occupancy: row[2], date: row[3], aht: row[4], turntime: row[5], error_amount: row[6], contracts: row[7])
       incentives.save
     end
     redirect_to incentives_path, notice: "Que added"
