@@ -51,7 +51,7 @@ gem 'popper_js'
 gem 'toastr-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-select-rails'
-
+gem 'activeadmin'
 gem 'pg_search'
 gem "will_paginate", "~> 3.0.4"
 gem "simple_calendar", "~> 2.0"
