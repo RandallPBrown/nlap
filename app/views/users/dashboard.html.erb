@@ -1,331 +1,166 @@
+<!-- STYLESHEETS -->
+<%= stylesheet_link_tag "user_dashboard.css" %>
+<%= stylesheet_link_tag "slider.css" %>
+<!-- /STYLESHEETS -->
+
+<!-- Page ready logic || Can't transfer over to a separate JS file because of the ERB. Eventually this will need to get switched to proper AJAX, but then we'll need to refactor the entire dispute modal -->
   <script>
+  $(document).ready(function(t){
+  // ENTRIES TABLE
+  var t = $('#userEntryTable').DataTable({ 
+          "pageLength": 5,
+          select: true,
+          columns: [ 
+                { data: 'Name' }, 
+                { data: 'Type' },
+                { data: 'Date' }, 
+                { data: 'Expires' },
+                { data: 'Description' },
+                { data: '' } 
+              ]
+            });
+    t.draw();
 
 
+  // So we should have done AJAX for all of these, but the dispute modal is a masterpiece of hacky engineering so don't right now unless you're prepared to look at it too. 
+  t.rows.add(
+    [<% @user_entry.each do |entry| %>{'Name': '<%= entry.agent.user.full_name %>', 'Type': '<%= entry.occurrence.name.truncate(15) %>', 'Date':'<%= entry.edate %>', 'Expires':'<%= entry.edate + 90.days %>', 'Description':'<%= entry.edesc.truncate(15) %>', '':''},<% else %><% end %>]
+    ).draw();
 
-$(document).ready(function(t){
-// ENTRIES TABLE
-var t = $('#userEntryTable').DataTable({ 
-        "pageLength": 5,
-        select: true,
-        columns: [ 
-              { data: 'Name' }, 
-              { data: 'Type' },
-              { data: 'Date' }, 
-              { data: 'Expires' },
-              { data: 'Description' },
-              { data: '' } 
-            ]
-          });
-  t.draw();
-
-
-
-t.rows.add(
-  [<% @user_entry.each do |entry| %>{'Name': '<%= entry.agent.user.full_name %>', 'Type': '<%= entry.occurrence.name.truncate(15) %>', 'Date':'<%= entry.edate %>', 'Expires':'<%= entry.edate + 90.days %>', 'Description':'<%= entry.edesc.truncate(15) %>', '':''},<% else %><% end %>]
-  ).draw();
-
-// ERROR TABLE
-var t = $('#userErrorTable').DataTable({ 
-        "pageLength": 5,
-        select: true,
-        columns: [ 
-              { data: 'Date' }, 
-              { data: 'SO' },
-              { data: 'Cost' }, 
-              { data: 'Type' },
-              { data: 'Description' },
-              { data: 'Status' },
-              { data: '' }
-            ]
-          });
-  t.draw();
+  // ERROR TABLE
+  var t = $('#userErrorTable').DataTable({ 
+          "pageLength": 5,
+          select: true,
+          columns: [ 
+                { data: 'Date' }, 
+                { data: 'SO' },
+                { data: 'Cost' }, 
+                { data: 'Type' },
+                { data: 'Description' },
+                { data: 'Status' },
+                { data: '' }
+              ]
+            });
+    t.draw();
 
 
+  // So we should have done AJAX for all of these, but the dispute modal is a masterpiece of hacky engineering so don't right now unless you're prepared to look at it too. 
+  t.rows.add(
+    [<% @err_logs.each do |err_log| %>{'Date': '<%= err_log.errdate %>', 'SO': '<%= err_log.serviceorder %>', 'Cost': '<%= err_log.err_cost %>', 'Type': '<%= err_log.err_name.errname %>', 'Description': '<%= err_log.errdesc.truncate(15) %>', 'Status': '<%= err_log.err_status.statusname %>', '': '<center><%= link_to "VIEW", users_modal_path(err_log.id),  {:remote => true, "data-toggle" => "modal", "data-target" => "#modal-error", class: "btn btn-primary btn-sm m-auto font-weight-bold"}%></center>' },<% else %><% end %>]
+    ).draw();
 
-t.rows.add(
-  [<% @err_logs.each do |err_log| %>{'Date': '<%= err_log.errdate %>', 'SO': '<%= err_log.serviceorder %>', 'Cost': '<%= err_log.err_cost %>', 'Type': '<%= err_log.err_name.errname %>', 'Description': '<%= err_log.errdesc.truncate(15) %>', 'Status': '<%= err_log.err_status.statusname %>', '': '<center><%= link_to "VIEW", users_modal_path(err_log.id),  {:remote => true, "data-toggle" => "modal", "data-target" => "#modal-error", class: "btn btn-primary btn-sm m-auto font-weight-bold"}%></center>' },<% else %><% end %>]
-  ).draw();
-
-// DAPS TABLE
-var t = $('#userDapTable').DataTable({ 
-        "pageLength": 5,
-        select: true,
-        columns: [ 
-              { data: 'Name' }, 
-              { data: 'Type' },
-              { data: 'Date' }, 
-              { data: 'Expires' },
-              { data: 'Description' },
-              { data: '' } 
-            ]
-          });
-  t.draw();
+  // DAPS TABLE
+  var t = $('#userDapTable').DataTable({ 
+          "pageLength": 5,
+          select: true,
+          columns: [ 
+                { data: 'Name' }, 
+                { data: 'Type' },
+                { data: 'Date' }, 
+                { data: 'Expires' },
+                { data: 'Description' },
+                { data: '' } 
+              ]
+            });
+    t.draw();
 
 
+  // So we should have done AJAX for all of these, but the dispute modal is a masterpiece of hacky engineering so don't right now unless you're prepared to look at it too. 
+  t.rows.add(
+    [<% @user_dap.each do |dap| %>{'Name': '<%= dap.user.full_name %>', 'Type': '<%= dap.writeup.name %>', 'Date':'<%= dap.ddate %>', 'Expires':'<%= dap.ddate + 90.days %>', 'Description':'<%= dap.description.truncate(15) %>', '':''},<% else %><% end %>]
+    ).draw();
 
-t.rows.add(
-  [<% @user_dap.each do |dap| %>{'Name': '<%= dap.user.full_name %>', 'Type': '<%= dap.writeup.name %>', 'Date':'<%= dap.ddate %>', 'Expires':'<%= dap.ddate + 90.days %>', 'Description':'<%= dap.description.truncate(15) %>', '':''},<% else %><% end %>]
-  ).draw();
-
-});
+  });
   </script>
-
+<!-- /Page ready logic -->
 
 
 <% content_for :no_page_header, true %>
 <% content_for :js_libs, "modernizr gmaps flot chartjs demo-dashboard demo-chartjs demo-sparklines" %>
 
-<style>
-html {
-  scroll-behavior: smooth;
-}
-
-.modal-content:hover {
-  opacity: 1 !important;
-}
-
-.float {
-  box-shadow: 3px 3px 3px 3px lightgrey;
-}
-
-.float:hover {
-  box-shadow: 5px 5px 5px 5px lightgrey;
-}
-
-.float-active {
-  box-shadow: 5px 5px 5px 5px lightgrey;
-}
-
-
-.float-inset {
-  box-shadow: inset 3px 3px 3px 3px lightgrey;
-}
-
-.muted {
-  opacity: 0.5;
-}
-
-table tbody tr:hover {
-  color:black;
-}
-
-.even-space {
-  width: 20%;
-}
-
-/* bouncing arrow effec */
-.box {
-    animation-duration: 2s;
-    animation-iteration-count: 10;
-    height: 200px;
-    margin: 0 auto 0 auto;
-    transform-origin: bottom;
-    width: 200px;
-}
-
-.bounce-4 {
-    animation-name: bounce-4;
-    animation-timing-function: ease;
-}
-@keyframes bounce-4 {
-    0%   { transform: scale(1,1)    translateY(0); }
-    10%  { transform: scale(1.1,.9) translateY(0); }
-    30%  { transform: scale(.9,1.1) translateY(40px); }
-    50%  { transform: scale(1,1)    translateY(0); }
-    100% { transform: scale(1,1)    translateY(0); }
-}
-
-
-/* fade in effect on incentive tracker modal */
-.fancy-fade {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in both;
-}
-
-.fancy-fade-1 {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in both;
-  animation-delay: 0.5s;
-}
-.fancy-fade-2 {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in both;
-  animation-delay: 1s;
-}
-.fancy-fade-3 {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in both;
-  animation-delay: 1.5s;
-}
-.fancy-fade-4 {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in both;
-  animation-delay: 2s;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate3d(0, -20%, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-#sidebar-wrapper{
-  z-index:1;
-  position: fixed;
-  top:0;
-  width:0;
-  height:100%;
-  overflow-y:hidden;
-  background: #f7f7f8;
-  transition:all .5s;
-  display:flex;
-}
-
-.sidebar-wrapper-open {
-  box-shadow: 3px 3px 15px 10px;
-}
-
-/* Main Content */
-#page-content-wrapper{
-  width: 100%;  
-  position: fixed;
-  padding:15px;
-  transition:all .5s;
-}
-
-#menu-toggle{
-  transition:all .5s;
-  font-size:2em;
-}
-/* Change the width of the sidebar to display it*/
-#wrapper.menuDisplayed #sidebar-wrapper{
-  width:300px ;
-}
-
-#wrapper.menuDisplayed #page-content-wrapper{
-  padding-left:300px  ;
-}
-
-#wrapper-pills-error-tab.active, #wrapper-pills-entry-tab.active, #wrapper-pills-dap-tab.active {
-  background-color: #707070;
-}
-
-
-.slider {
-  z-index: 1;
-  position:fixed;
-  top:45%;
-  left:0;
-  height: 125px;
-  width:25px;
-  transition: left 0.5s;
-  border-radius: 0 calc(0.25rem - 1px) calc(0.25rem - 1px) 0;
-}
-
-.menu-slide {
-  left: 300px  !important;
-  transition: left 0.5s;
-}
-
-.border-left-danger {
-  border-color: #dddddd;
-  border-left-color: #ff5551 !important;
-}
-
-.border-left-warning {
-  border-color: #dddddd;
-  border-left-color: #ffc200 !important;
-}
-
-.border-left-success {
-  border-color: #dddddd;
-  border-left-color: #00c884 !important;
-}
-
-</style>
 
 <body>
-<!-- COOKIE MODAL BELOW (FUNCTIONING). CAN BE USED FOR INSTRUCTIONS OR TO GIVE A WEEKLY BREAKDOWN -->
+<!-- Cookie Modal used for incentive tracker.  -->
 <script>
 $(document).ready(function() {
-    if (Cookies.get('morning_modal') == null) {
-        Cookies.set('morning_modal', 'yes', { expires: 1, path: '/' });
+    if (Cookies.get('morning_modal') == null) { // Disable this to make the incentive modal pop every time
+        Cookies.set('morning_modal', 'yes', { expires: 1, path: '/' }); // Disable this to make the incentive modal pop every time
         $('#morningModal').modal('show');
-    }
+    } // Disable this to make the incentive modal pop every time
     // highlight entry card
     if (<%= @user_entry_total_effective_monthly %> == <%= @incentive_settings.map {|m| m.attendance }.first.to_f %>) {
-      $('#occurrence-modal').addClass('bg-warning text-white');
-      $('#occurrence-card-body').addClass('border-left-warning');
+      $('#occurrence-modal').addClass('bg-warning text-white'); //Daily incentive tracker modal
+      $('#occurrence-card-body').addClass('border-left-warning'); //Breakdown section card
     } else if (<%= @user_entry_total_effective_monthly %> > <%= @incentive_settings.map {|m| m.attendance }.first.to_f %>) {
-      $('#occurrence-modal').addClass('bg-danger text-white');
-      $('#occurrence-card-body').addClass('border-left-danger');
+      $('#occurrence-modal').addClass('bg-danger text-white'); //Daily incentive tracker modal
+      $('#occurrence-card-body').addClass('border-left-danger'); //Breakdown section card
     } else {
-      $('#occurrence-modal').addClass('bg-success text-white');
-      $('#occurrence-card-body').addClass('border-left-success')
+      $('#occurrence-modal').addClass('bg-success text-white'); //Daily incentive tracker modal
+      $('#occurrence-card-body').addClass('border-left-success'); //Breakdown section card
     }
     // highlight wu card
     if (<%= @user_writeup_written %> > 0) {
-      $('#wu-modal').addClass('bg-danger text-white');
-      $('#wu-card-body').addClass('border-left-danger');
+      $('#wu-modal').addClass('bg-danger text-white'); //Daily incentive tracker modal
+      $('#wu-card-body').addClass('border-left-danger');  //Breakdown section card
     } else {
-      $('#wu-modal').addClass('bg-success text-white');
-      $('#wu-card-body').addClass('border-left-success');
+      $('#wu-modal').addClass('bg-success text-white'); //Daily incentive tracker modal
+      $('#wu-card-body').addClass('border-left-success'); //Breakdown section card
     }
     // highlight uph card
     if (<%= number_with_precision(@uph, :precision => 1) %> < <%= @incentive_settings.map {|m| m.uph }.first.to_f %>) {
-      $('#uph-modal').addClass('bg-warning text-white');
-      $('#uph-card-body').addClass('border-left-warning');
+      $('#uph-modal').addClass('bg-warning text-white'); //Daily incentive tracker modal
+      $('#uph-card-body').addClass('border-left-warning'); //Breakdown section card
     } else {
-      $('#uph-modal').addClass('bg-success text-white');
-      $('#uph-card-body').addClass('border-left-success');
+      $('#uph-modal').addClass('bg-success text-white'); //Daily incentive tracker modal
+      $('#uph-card-body').addClass('border-left-success'); //Breakdown section card
     }
     // highlight occ card
     if (<%= number_with_precision(@occ, :precision => 1) %> < <%= @incentive_settings.map {|m| m.occupancy }.first.to_f %>) {
-      $('#occupancy-modal').addClass('bg-warning text-white');
-      $('#occupancy-card-body').addClass('border-left-warning');
+      $('#occupancy-modal').addClass('bg-warning text-white'); //Daily incentive tracker modal
+      $('#occupancy-card-body').addClass('border-left-warning'); //Breakdown section card
     } else {
-      $('#occupancy-modal').addClass('bg-success text-white');
-      $('#occupancy-card-body').addClass('border-left-success');
+      $('#occupancy-modal').addClass('bg-success text-white'); //Daily incentive tracker modal
+      $('#occupancy-card-body').addClass('border-left-success'); //Breakdown section card
     }
     // highlight err card
     if (<%= @err_logs_count %> > <%= @incentive_settings.map {|m| m.error }.first.to_f %>) {
-      $('#error-modal').addClass('bg-danger text-white');
-      $('#error-card-body').addClass('border-left-danger');
+      $('#error-modal').addClass('bg-danger text-white'); //Daily incentive tracker modal
+      $('#error-card-body').addClass('border-left-danger'); //Breakdown section card
     } else {
-      $('#error-modal').addClass('bg-success text-white');
-      $('#error-card-body').addClass('border-left-success');
+      $('#error-modal').addClass('bg-success text-white'); //Daily incentive tracker modal
+      $('#error-card-body').addClass('border-left-success'); //Breakdown section card
     }   
     // highlight error_amount card
     if (<%= @error_amount %> > <%= @incentive_settings.map {|m| m.error_amount }.first.to_f %>) {
-      $('#error-cost-card-body').addClass('border-left-danger');
+      $('#error-cost-card-body').addClass('border-left-danger'); //Breakdown section card
     } else {
-      $('#error-cost-card-body').addClass('border-left-success');
+      $('#error-cost-card-body').addClass('border-left-success'); //Breakdown section card
     }
     // highlight aht card
     if (<%= @aht %> > <%= @incentive_settings.map {|m| m.aht }.first.to_f %>) {
-      $('#aht-card-body').addClass('border-left-danger');
+      $('#aht-card-body').addClass('border-left-danger'); //Breakdown section card
     } else {
-      $('#aht-card-body').addClass('border-left-success');
+      $('#aht-card-body').addClass('border-left-success'); //Breakdown section card
     }
     // highlight turntime card
     if (<%= @turntime %> > <%= @incentive_settings.map {|m| m.turntime }.first.to_f %>) {
-      $('#turntime-card-body').addClass('border-left-danger');
+      $('#turntime-card-body').addClass('border-left-danger'); //Breakdown section card
+      $('#turntime-modal').addClass('bg-danger text-white'); //Daily incentive tracker modal
     } else {
-      $('#turntime-card-body').addClass('border-left-success');
+      $('#turntime-card-body').addClass('border-left-success'); //Breakdown section card
+      $('#turntime-modal').addClass('bg-success text-white'); //Daily incentive tracker modal
     }
     // highlight contracts card
     if (<%= @contracts %> > <%= @incentive_settings.map {|m| m.contracts }.first.to_f %>) {
-      $('#contracts-card-body').addClass('border-left-danger');
+      $('#contracts-card-body').addClass('border-left-danger'); //Breakdown section card
+      $('#contracts-modal').addClass('bg-danger text-white'); //Daily incentive tracker modal
     } else {
-      $('#contracts-card-body').addClass('border-left-success');
+      $('#contracts-card-body').addClass('border-left-success'); //Breakdown section card
+      $('#contracts-modal').addClass('bg-success text-white'); //Daily incentive tracker modal
     }
 });
 
+// quick action sidebar logic
 $(document).ready(function(){
   $("#menu-toggle").click(function(e){
     e.preventDefault();
@@ -336,54 +171,55 @@ $(document).ready(function(){
 });
 </script>
 
-<% if current_user.admin == true %>
-<!-- Sidebar -->
-<div id="wrapper">
-  <div id="sidebar-wrapper">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <center><%= image_tag("newleaf logo leaf.png") %></center>
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-12 p-0">
-          <div class="nav flex-column nav-pills w-100" id="wrapper-pills-tab" role="tablist" aria-orientation="vertical">
-            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link active" id="wrapper-pills-error-tab" data-toggle="pill" href="#wrapper-pills-error" role="tab" aria-controls="wrapper-pills-error" aria-selected="true">IMPROVEMENT LOG</a>
-            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link" id="wrapper-pills-entry-tab" data-toggle="pill" href="#wrapper-pills-entry" role="tab" aria-controls="wrapper-pills-entry" aria-selected="false">OCCURRENCE LOG</a>
-            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link" id="wrapper-pills-dap-tab" data-toggle="pill" href="#wrapper-pills-dap" role="tab" aria-controls="wrapper-pills-dap" aria-selected="false">PROGRESSIVE LOG</a>
+<!-- Quick action sidebar || Should only be available to ADMIN. Need to clean it up more to restrict individual permissions later. Possible implement CANCANCAN -->
+  <% if current_user.admin == true %>
+    <div id="wrapper">
+      <div id="sidebar-wrapper">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <center><%= image_tag("newleaf logo leaf.png") %></center>
+            </div>
           </div>
-        </div>
-      </div>
-      <hr>
-      <div class="row mx-1">
-        <div class="col-12 p-0">
-          <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="wrapper-pills-error" role="tabpanel" aria-labelledby="wrapper-pills-error-tab" style="">
-              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
-                <%= render "err_logs/form" %>
+          <hr>
+          <div class="row">
+            <div class="col-12 p-0">
+              <div class="nav flex-column nav-pills w-100" id="wrapper-pills-tab" role="tablist" aria-orientation="vertical">
+                <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link active" id="wrapper-pills-error-tab" data-toggle="pill" href="#wrapper-pills-error" role="tab" aria-controls="wrapper-pills-error" aria-selected="true">IMPROVEMENT LOG</a>
+                <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link" id="wrapper-pills-entry-tab" data-toggle="pill" href="#wrapper-pills-entry" role="tab" aria-controls="wrapper-pills-entry" aria-selected="false">OCCURRENCE LOG</a>
+                <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link" id="wrapper-pills-dap-tab" data-toggle="pill" href="#wrapper-pills-dap" role="tab" aria-controls="wrapper-pills-dap" aria-selected="false">PROGRESSIVE LOG</a>
               </div>
             </div>
-            <div class="tab-pane fade" id="wrapper-pills-entry" role="tabpanel" aria-labelledby="wrapper-pills-entry-tab">
-              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
-                <%= render "entries/form" %>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="wrapper-pills-dap" role="tabpanel" aria-labelledby="wrapper-pills-dap-tab">
-              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
-                <%= render "daps/form" %>
+          </div>
+          <hr>
+          <div class="row mx-1">
+            <div class="col-12 p-0">
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="wrapper-pills-error" role="tabpanel" aria-labelledby="wrapper-pills-error-tab" style="">
+                  <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                    <%= render "err_logs/form" %>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="wrapper-pills-entry" role="tabpanel" aria-labelledby="wrapper-pills-entry-tab">
+                  <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                    <%= render "entries/form" %>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="wrapper-pills-dap" role="tabpanel" aria-labelledby="wrapper-pills-dap-tab">
+                  <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                    <%= render "daps/form" %>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-<div class="bg-primary slider" style=""><a href="#" class="font-weight-bold text-white btn btn-link px-auto pl-1" id="menu-toggle" style="writing-mode: vertical-rl;text-orientation: sideways;font-size: 12px"><%= fa_icon_tag("plus") %> QUICK ACTION</a></div>
-<!-- /Sidebar -->
-<% end %>
+    <!-- Floating tab on the left hand side -->
+    <div class="bg-primary slider" style=""><a href="#" class="font-weight-bold text-white btn btn-link px-auto pl-1" id="menu-toggle" style="writing-mode: vertical-rl;text-orientation: sideways;font-size: 12px"><%= fa_icon_tag("plus") %> QUICK ACTION</a></div>
+  <% end %>
+<!-- /Quick action sidebar -->
 
 <!-- INCENTIVES MODAL -->
 <div class="modal fade" id="morningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -392,60 +228,106 @@ $(document).ready(function(){
       <div class="bg-light m-3 rounded float-inset">
         <div class="row pl-3 pr-3 pb-1 pt-3">
           <div class="col d-flex align-items-stretch">
-            <div class="card fancy-fade float" style="width: 12rem;">
+            <div class="card fancy-fade float" style="width: 12rem;"> 
+            <!-- Fancy Fade goes from fancy-fade to fancy-fade-4. If they aren't dropping in order, may need to play with it.  -->
               <div class="card-header m-auto" id="occurrence-modal">
                 <i style="font-size: 6rem;" class="m-auto pt-4 fa fa-calendar-times-o"></i>
               </div>
+              <!-- In the card body, there's 'advice' that will need to be played with during production. -->
               <div class="card-body">
                 <center><h6 class="font-weight-bold text-dark text-uppercase">Occurrences</h6></center>
-                <p class="card-text text-center"><%if @user_entry_total_effective_monthly == 0.5 %>You are at capacity for occurrences this month with <u><%= @user_entry_total_effective_monthly %></u>. Watch your attendance for the remainder of the month!<% elsif @user_entry_total_effective_monthly > 0.5 %>Unfortunately, you have missed the mark on your attendance this month. Please be sure to work on that for the next month!<% else %>Fantastic job!<% end %></p>
+                <p class="card-text text-center"><%if @user_entry_total_effective_monthly == @incentive_settings.map {|m| m.attendance }.first.to_f %>You are at capacity for occurrences this month with <u><%= @user_entry_total_effective_monthly %></u>. Watch your attendance for the remainder of the month!<% elsif @user_entry_total_effective_monthly > @incentive_settings.map {|m| m.attendance }.first.to_f %>Unfortunately, you have missed the mark on your attendance this month. Please be sure to work on that for the next month!<% else %>Fantastic job!<% end %></p>
               </div>
             </div>
           </div>
           <div class="col d-flex align-items-stretch">
             <div class="card fancy-fade-1 float" style="width: 12rem;">
+            <!-- Fancy Fade goes from fancy-fade to fancy-fade-4. If they aren't dropping in order, may need to play with it.  -->  
               <div class="card-header m-auto" id="wu-modal">
                 <i style="font-size: 6rem;" class="m-auto pt-4 fa fa-wpforms "></i>
               </div>
+              <!-- In the card body, there's 'advice' that will need to be played with during production. -->
               <div class="card-body">
                 <center><h6 class="font-weight-bold text-dark text-uppercase">PROGRESSIVE LOGS</h6></center>
                 <p class="card-text text-center"><% if @user_writeup_written >= 1 %>Unfortunately your progressive action is still active this month. Your last progressive action is due to drop off on <%= (@user_dap.map {|d| d.ddate }.first + 90.days).strftime('%m/%d/%Y') %>.<% else %>Great Job!<% end %></p>
               </div>
             </div>
           </div>
+          <% if (@incentive_settings.map {|m| m.uph }.first.to_f) > 0 %> <!-- probably needs to be set to nil -->
           <div class="col d-flex align-items-stretch">
             <div class="card fancy-fade-2 float" style="width: 12rem;">
+            <!-- Fancy Fade goes from fancy-fade to fancy-fade-4. If they aren't dropping in order, may need to play with it.  -->  
               <div class="card-header m-auto" id="uph-modal">
                 <i style="font-size: 6rem" class="m-auto pt-4 fa fa-hashtag "></i>
               </div>
+              <!-- In the card body, there's 'advice' that will need to be played with during production. -->
               <div class="card-body">
                 <center><h6 class="font-weight-bold text-dark text-uppercase">UPH</h6></center>
-                <p class="card-text text-center"><% if @uph.to_f < 7.5 %>Looks like your UPH needs work to reach the goal of 7.5 units/hour. Work on reducing your handle time.<% else %>Keep it up!<% end %></p>
+                <p class="card-text text-center"><% if @uph.to_f < @incentive_settings.map {|m| m.uph }.first.to_f %>Looks like your UPH needs work to reach the goal of 7.5 units/hour. Work on reducing your handle time.<% else %>Keep it up!<% end %></p>
               </div>
             </div>
           </div>
+          <% end %>
+          <% if (@incentive_settings.map {|m| m.occupancy }.first.to_f) > 0 %>
           <div class="col d-flex align-items-stretch">
             <div class="card fancy-fade-3 float" style="width: 12rem;">
+            <!-- Fancy Fade goes from fancy-fade to fancy-fade-4. If they aren't dropping in order, may need to play with it.  -->  
               <div class="card-header m-auto" id="occupancy-modal">
                 <i style="font-size: 6rem" class="m-auto pt-4 fa fa-clock-o "></i>
               </div>
+              <!-- In the card body, there's 'advice' that will need to be played with during production. -->
               <div class="card-body">
                 <center><h6 class="font-weight-bold text-dark text-uppercase">Occupancy</h6></center>
-                <p class="card-text text-center"><% if @occ.to_f >= 100 %> Great work, just be sure you do not exceed the 100% threshold by only working on one item at a time. <% elsif @occ.to_f < 90 %>Need to keep working on this. Speak to a lead or manager to see how.<% else %>Great, keep it between 90%-100%!<% end %></p>
+                <p class="card-text text-center"><% if @occ.to_f >= @incentive_settings.map {|m| m.occupancy }.first.to_f %> Great work, just be sure you do not exceed the 100% threshold by only working on one item at a time. <% elsif @occ.to_f < @incentive_settings.map {|m| m.occupancy }.first.to_f %>Need to keep working on this. Speak to a lead or manager to see how.<% else %>Great, keep it between 90%-100%!<% end %></p>
               </div>
             </div>
           </div>
+          <% end %>
+          <% if @incentive_settings.map {|m| m.turntime }.first.to_f > 0 %>
+          <div class="col d-flex align-items-stretch">
+            <div class="card fancy-fade-2 float" style="width: 12rem;">
+            <!-- Fancy Fade goes from fancy-fade to fancy-fade-4. If they aren't dropping in order, may need to play with it.  -->  
+              <div class="card-header m-auto" id="turntime-modal">
+                <i style="font-size: 6rem" class="m-auto pt-4 fa fa-exclamation-triangle "></i>
+              </div>
+              <!-- In the card body, there's 'advice' that will need to be played with during production. -->
+              <div class="card-body">
+                <center><h6 class="font-weight-bold text-dark text-uppercase">TURNTIME</h6></center>
+                <p class="card-text text-center"><% if @turntime.to_f > @incentive_settings.map {|m| m.turntime }.first.to_f %>Unfortunately the turntime on service orders is too high. Keep working!<% else %>Don't lose momentum!<% end %></p>
+              </div>
+            </div>
+          </div>
+          <% end %>
+          <% if @incentive_settings.map {|m| m.contracts }.first.to_f > 0 %>
+          <div class="col d-flex align-items-stretch">
+            <div class="card fancy-fade-3 float" style="width: 12rem;">
+            <!-- Fancy Fade goes from fancy-fade to fancy-fade-4. If they aren't dropping in order, may need to play with it.  -->  
+              <div class="card-header m-auto" id="contracts-modal">
+                <i style="font-size: 6rem" class="m-auto pt-4 fa fa-exclamation-triangle "></i>
+              </div>
+              <!-- In the card body, there's 'advice' that will need to be played with during production. -->
+              <div class="card-body">
+                <center><h6 class="font-weight-bold text-dark text-uppercase">CONTRACTS</h6></center>
+                <p class="card-text text-center"><% if @contracts.to_f < @incentive_settings.map {|m| m.contracts }.first.to_f %>Keep working on recruitment!<% else %>Don't lose momentum!<% end %></p>
+              </div>
+            </div>
+          </div>
+          <% end %>
+          <% if (@incentive_settings.map {|m| m.error }.first.to_f) > 0 %>
           <div class="col d-flex align-items-stretch">
             <div class="card fancy-fade-4 float" style="width: 12rem;">
+            <!-- Fancy Fade goes from fancy-fade to fancy-fade-4. If they aren't dropping in order, may need to play with it.  -->  
               <div class="card-header m-auto" id="error-modal">
                 <i style="font-size: 6rem" class="m-auto pt-4 fa fa-exclamation-triangle "></i>
               </div>
+              <!-- In the card body, there's 'advice' that will need to be played with during production. -->
               <div class="card-body">
                 <center><h6 class="font-weight-bold text-dark text-uppercase">IMPROVEMENT LOGS</h6></center>
-                <p class="card-text text-center"><% if @err_logs_count > 2 %>Unfortunately, your errors are a bit too much this month. Work on accuracy for next month!<% else %>Don't lose momentum!<% end %></p>
+                <p class="card-text text-center"><% if @err_logs_count > @incentive_settings.map {|m| m.error }.first.to_f %>Unfortunately, your errors are a bit too much this month. Work on accuracy for next month!<% else %>Don't lose momentum!<% end %></p>
               </div>
             </div>
           </div>
+          <% end %>
         </div>
       </div>
       <div class="row">
@@ -680,7 +562,7 @@ $(document).ready(function(){
             </ul>
           </div>
           <script>
-
+            // couldn't figure out the best way to use two buttons for 3 page pagination so this is it.
           $(".btn-style").click(function () {
               var target = $("#pills-tab li.active");
               var sibbling;
@@ -704,7 +586,7 @@ $(document).ready(function(){
             <h6 class="mr-auto">Agent Stats - 7 day</h6>
           </div>
           <div class="card-body" style="height: 500px">
-            <canvas id="statChart" width="200" height="175"></canvas>
+            <canvas id="statChart" width="200" height="125"></canvas>
             
           </div>
         </div>
@@ -739,8 +621,6 @@ $(document).ready(function(){
         </div>
         <!-- /RECENT ACTIVITY TABLE-->
       </div>
-
-      
     </div>
   </div>
 </section>
@@ -757,7 +637,7 @@ $(document).ready(function(){
     </div>
     <div class="col-6">
       <div class="pull-right pr-5">
-        <h3 class="font-weight-bold" id="table-title" style="opacity:0"><span class="text-uppercase" name="table-title-current-anchor" id="table-title-current">OCCURRENCE</span> BREAKDOWN</h3>
+        <h3 class="font-weight-bold" id="table-title"><span class="text-uppercase" name="table-title-current-anchor" id="table-title-current">OCCURRENCE</span> BREAKDOWN</h3>
       </div>
     </div>
   </div>
@@ -842,16 +722,14 @@ $(document).ready(function(){
   </div>
 </div>
 <script>
-$(window).scroll(function(){
-  $('#pointer').css('opacity', 1 - $(window).scrollTop() / 300);
-  $('#table-title').css('opacity', 0 + $(window).scrollTop() / 400);
-});
-
-$('.table-select').click(function(){
+// Change the table name when you select a button. Nothing fancy.
+$('.table-select').click(function(){ 
   $('#table-title-current').text($(this).attr('name'));
 })
 
-var chart_labels = <%= raw @agent_chart_labels_effective %>;
+
+// If you're reading this, you're probably familiar with how Chart.js works so I wont dive into it much.
+var chart_labels = <%= raw @agent_chart_labels_effective %>; 
 var uph_data = <%= @agent_chart_data_effective %>;
 var occ_data = <%= @agent_chart_data_effective_occupancy %>;
 var dataset_label = "UPH";
@@ -882,7 +760,7 @@ var config = {
     },
     options: {
         scales: {
-            yAxes: [{
+            yAxes: [{ // For occupancy
               id: 'A',
               type: 'linear',
               position: 'right',
@@ -893,7 +771,7 @@ var config = {
                       return value + '%';
                   }
               }
-            }, {
+            }, { // For UPH
               id: 'B',
               type: 'linear',
               position: 'left',

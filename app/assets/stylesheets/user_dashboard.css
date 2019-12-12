@@ -1,0 +1,114 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.modal-content:hover {
+  opacity: 1 !important;
+}
+
+.float {
+  box-shadow: 3px 3px 3px 3px lightgrey;
+}
+
+.float:hover {
+  box-shadow: 5px 5px 5px 5px lightgrey;
+}
+
+.float-active {
+  box-shadow: 5px 5px 5px 5px lightgrey;
+}
+
+
+.float-inset {
+  box-shadow: inset 3px 3px 3px 3px lightgrey;
+}
+
+.muted {
+  opacity: 0.5;
+}
+
+table tbody tr:hover {
+  color:black;
+}
+
+.even-space {
+  width: 20%;
+}
+
+/* bouncing arrow effec */
+.box {
+    animation-duration: 2s;
+    animation-iteration-count: 10;
+    height: 200px;
+    margin: 0 auto 0 auto;
+    transform-origin: bottom;
+    width: 200px;
+}
+
+.bounce-4 {
+    animation-name: bounce-4;
+    animation-timing-function: ease;
+}
+@keyframes bounce-4 {
+    0%   { transform: scale(1,1)    translateY(0); }
+    10%  { transform: scale(1.1,.9) translateY(0); }
+    30%  { transform: scale(.9,1.1) translateY(40px); }
+    50%  { transform: scale(1,1)    translateY(0); }
+    100% { transform: scale(1,1)    translateY(0); }
+}
+
+
+/* fade in effect on incentive tracker modal */
+.fancy-fade {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in both;
+}
+
+.fancy-fade-1 {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in both;
+  animation-delay: 0.5s;
+}
+.fancy-fade-2 {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in both;
+  animation-delay: 1s;
+}
+.fancy-fade-3 {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in both;
+  animation-delay: 1.5s;
+}
+.fancy-fade-4 {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in both;
+  animation-delay: 2s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+
+
+.border-left-danger {
+  border-color: #dddddd;
+  border-left-color: #ff5551 !important;
+}
+
+.border-left-warning {
+  border-color: #dddddd;
+  border-left-color: #ffc200 !important;
+}
+
+.border-left-success {
+  border-color: #dddddd;
+  border-left-color: #00c884 !important;
+}

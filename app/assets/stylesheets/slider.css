@@ -1,0 +1,57 @@
+#sidebar-wrapper{
+  z-index:900;
+  position: fixed;
+  top:0;
+  width:0;
+  height:100%;
+  overflow-y:hidden;
+  background: #f7f7f8;
+  transition:all .5s;
+  display:flex;
+}
+
+.sidebar-wrapper-open {
+  box-shadow: 3px 3px 15px 10px;
+}
+
+/* Main Content */
+#page-content-wrapper{
+  width: 100%;  
+  position: fixed;
+  padding:15px;
+  transition:all .5s;
+}
+
+#menu-toggle{
+  transition:all .5s;
+  font-size:2em;
+}
+/* Change the width of the sidebar to display it*/
+#wrapper.menuDisplayed #sidebar-wrapper{
+  width:300px ;
+}
+
+#wrapper.menuDisplayed #page-content-wrapper{
+  padding-left:300px  ;
+}
+
+#wrapper-pills-error-tab.active, #wrapper-pills-entry-tab.active, #wrapper-pills-dap-tab.active {
+  background-color: #707070;
+}
+
+
+.slider {
+  z-index: 900;
+  position:fixed;
+  top:45%;
+  left:0;
+  height: 125px;
+  width:25px;
+  transition: left 0.5s;
+  border-radius: 0 calc(0.25rem - 1px) calc(0.25rem - 1px) 0;
+}
+
+.menu-slide {
+  left: 300px  !important;
+  transition: left 0.5s;
+}
