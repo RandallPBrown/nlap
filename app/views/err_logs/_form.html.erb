@@ -1,39 +1,4 @@
-<!-- <script>
-//  jQuery(function() {
-//   var users;
-//   users = $('#err_log_user_id').html();
-//   console.log(users);
-//   return $('#err_log_department_id').change(function() {
-//     var department, options;
-//     department = $('#err_log_department_id :selected').text();
-//     options = $(users).filter("optgroup[label=" + department + "]").html();
-//     console.log(options);
-//     if (options) {
-//       return $('#err_log_user_id').html(options);
-//     } else {
-//       return $('#err_log_user_id').empty();
-//     }
-//   });
-// });
 
-jQuery(function() {
-  var users_text;
-  users = $('#err_log_user_id').html();
-  users_text = $('#err_log_user_id :selected').text();
-  console.log(users_text);
-  return $('#err_log_user_id').change(function() {
-    var department, options;
-    department = $('#err_log_department_id').text();
-    options = $(department).filter("optgroup[label=" + users_text + "]").html();
-    console.log(options);
-    if (options) {
-      return $('#err_log_department_id').html(options);
-    } else {
-      return $('#err_log_department_id').empty();
-    }
-  });
-});
-</script> -->
 <style>
 .span-wide {
   width: 100% !important;
@@ -82,7 +47,7 @@ jQuery(function() {
     <%= f.form_group :err_cost, class: 'row' do |f| %>
       <%= f.label 'Error Cost', class: 'control-label col-md-12' %>
       <div class='col-12 col-md-12'>
-        <%= f.number_field :err_cost, class: 'form-control form-control-sm text-dark', 'value': '0.00' %>
+        <%= f.number_field :err_cost, class: 'form-control form-control-sm text-dark', 'value': '0.00', step: :any %>
         <%= f.error_messages %>
       </div>
     <% end %>

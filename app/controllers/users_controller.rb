@@ -50,35 +50,31 @@ class UsersController < ApplicationController
   def dashboard          
     # @body_class = "with-sidebar show-sidebar"
     # @current_user = current_user
-    @uph = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:uph).nil?
+    @uph = if Incentive.all.where("user_id = ?", current_user.id).where(:date => Date.today.beginning_of_month..Date.today.end_of_day).average(:uph).nil?
       "0"
     else
-      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:uph)
+      Incentive.all.where("user_id = ?", current_user.id).where(:date => Date.today.beginning_of_month..Date.today.end_of_day).average(:uph)
     end
-    @occ = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:occupancy).nil?
+    @occ = if Incentive.all.where("user_id = ?", current_user.id).where(:date => Date.today.beginning_of_month..Date.today.end_of_day).average(:occupancy).nil?
       "0"
     else
-      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:occupancy)
+      Incentive.all.where("user_id = ?", current_user.id).where(:date => Date.today.beginning_of_month..Date.today.end_of_day).average(:occupancy)
     end
-    @aht = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:aht).nil?
+    @aht = if Incentive.all.where("user_id = ?", current_user.id).where(:date => Date.today.beginning_of_month..Date.today.end_of_day).average(:aht).nil?
       "0"
     else
-      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:aht)
+      Incentive.all.where("user_id = ?", current_user.id).where(:date => Date.today.beginning_of_month..Date.today.end_of_day).average(:aht)
     end
-    @turntime = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:turntime).nil?
+    @turntime = if Incentive.all.where("user_id = ?", current_user.id).where(:date => Date.today.beginning_of_month..Date.today.end_of_day).average(:turntime).nil?
       "0"
     else
-      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).average(:turntime)
+      Incentive.all.where("user_id = ?", current_user.id).where(:date => Date.today.beginning_of_month..Date.today.end_of_day).average(:turntime)
     end
-    @error_amount = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).sum(:error_amount).nil?
+    @error_amount = ErrLog.all.where('user_id = ?', current_user.id).where(:errdate => Date.today.beginning_of_month..Date.today.end_of_day).sum(:err_cost)
+    @contracts = if Incentive.all.where("user_id = ?", current_user.id).where(:date => Date.today.beginning_of_month..Date.today.end_of_day).sum(:contracts).nil?
       "0"
     else
-      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).sum(:error_amount)
-    end
-    @contracts = if Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).sum(:contracts).nil?
-      "0"
-    else
-      Incentive.all.where("user_id = ?", current_user.id).where(:date => 1.month.ago.beginning_of_day..Date.today.end_of_day).sum(:contracts)
+      Incentive.all.where("user_id = ?", current_user.id).where(:date => Date.today.beginning_of_month..Date.today.end_of_day).sum(:contracts)
     end
 
     @incentive_settings = IncentiveSetting.all.where("department_id = ?", current_user.department.id)
@@ -100,6 +96,7 @@ class UsersController < ApplicationController
     @agent_chart_labels_effective = Incentive.all.where(:date => 7.days.ago.to_date..Date.today.to_date.end_of_day).where("user_id = ?", helpers.current_user.id).map { |l| l.date.strftime("%m/%d/%Y") }.to_a;
   	@agent_chart_data_effective = Incentive.all.where(:date => 7.days.ago.to_date..Date.today.to_date.end_of_day).where("user_id = ?", helpers.current_user.id).map { |l| l.uph }.to_a;
     @agent_chart_data_effective_occupancy = Incentive.all.where(:date => 7.days.ago.to_date..Date.today.to_date.end_of_day).where("user_id = ?", helpers.current_user.id).map { |l| l.occupancy }.to_a;
+    @agent_chart_data_effective_aht = Incentive.all.where(:date => 7.days.ago.to_date..Date.today.to_date.end_of_day).where("user_id = ?", helpers.current_user.id).map { |l| l.aht }.to_a;
     
 
     @agent_chart_labels_total = Entry.all.occurrence_user.where("users.id = ?", current_user.id).acl

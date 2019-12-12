@@ -1,40 +1,13 @@
 
-<script>
-  jQuery(function() {
-  var agents;
-  agents = $('#entry_agent_id').html();
-  console.log(agents);
-  return $('#entry_dept').change(function() {
-    var department, options;
-    department = $('#entry_dept :selected').text();
-    options = $(agents).filter("optgroup[label=" + department + "]").html();
-    console.log(options);
-    if (options) {
-      return $('#entry_agent_id').html(options);
-    } else {
-      return $('#entry_agent_id').empty();
-    }
-  });
-});
-
-</script>
 
 <%= form_for(@entry, html: { class: 'form-horizontal' }) do |f| %>
   <%= f.error_notification %>
 
   <div class='form-inputs'>
-    <%= f.form_group :dept, class: 'row' do |f| %>
-      <%= f.label 'department', class: 'control-label col-md-12' %>
-      <div class='col-12 col-md-12'>
-        <%= f.collection_select :dept, Department.order(:id), :id, :name, {}, {:class=>'form-control form-control-sm text-dark'} %>
-        <%= f.error_messages %>
-      </div>
-    <% end %>
-
     <%= f.form_group :agent, class: 'row' do |f| %>
       <%= f.label 'Agent', class: 'control-label col-md-12' %>
       <div class='col-12 col-md-12'>
-        <%= f.grouped_collection_select :agent_id, Department.order(:id), :agents, :name, :id, :user_full_name, {}, {:class=>'form-control form-control-sm text-dark'} %>
+        <%= f.grouped_collection_select :agent_id, Department.order(:id), :agents, :name, :id, :user_full_name, {}, {'data-live-search': true, :class=>'selectpicker text-dark'} %>
         <%= f.error_messages %>
       </div>
     <% end %>

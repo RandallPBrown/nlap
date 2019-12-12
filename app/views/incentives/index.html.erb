@@ -23,7 +23,6 @@
                                           <th>Errors</th>
                                           <th>Occupancy</th>
                                           <th>Turntime</th>
-                                          <th>Error Cost</th>
                                           <th>Contracts</th>
                                           <th>AHT</th>
                                           <th>Date</th>
@@ -39,7 +38,6 @@
                                           <td><%= ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', incentive.user_id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').where(errdate: incentive.date).count %></td>
                                           <td><%= incentive.occupancy %></td>
                                           <td><%= incentive.turntime %></td>
-                                          <td><%= incentive.error_amount %></td>
                                           <td><%= incentive.contracts %></td>
                                           <td><%= incentive.aht %></td>
                                           <td><%= incentive.date %></td>
