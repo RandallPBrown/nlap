@@ -4,6 +4,10 @@ class PartsController < ApplicationController
   before_action :authorize_admin, only: [:dashboard]
   before_action :set_part, only: [:show, :edit, :update, :destroy]
 
+    rails_admin do 
+      @parts = Part.all
+    end
+
   # GET /parts
   def index
     require 'will_paginate/array'
@@ -11,12 +15,13 @@ class PartsController < ApplicationController
     if params[:search].present?
       @parts = Part.order(created_at: :desc, updated_at: :desc).perform_search(params[:search]).order(params[:sort]).paginate(page: params[:page], :per_page => 10)
     else
-      @parts = Part.all.order(created_at: :desc, updated_at: :desc)
+      @parts = Part.all.order(created_at: :desc, updated_at: :desc).paginate(page: params[:page], :per_page => 10)
     end
     @approvedby = User.all.where('users.admin = ?', true).pluck(:first_name, :last_name)
     @pending = Part.where('parts.covered = ?', 'pending')
     @pendinguser = Part.order(updated_at: :desc).where('parts.covered = ?', 'pending').where('parts.submitted_by = ?', current_user.full_name).paginate(page: params[:page], :per_page => 5)
     @alluser = Part.order(updated_at: :desc).where(:read_at => nil).where('parts.submitted_by = ?', current_user.full_name).paginate(page: params[:page], :per_page => 5)
+
   end
 
   def dashboard

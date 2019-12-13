@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
 
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   resources :incentive_settings
   resources :err_types
   put 'agent_stats/all_stats' => 'agent_stats#all_stats'
   put 'agent_stats/csv_upload' => 'agent_stats#csv_upload'
 
+  get 'admin/entries/form'
   get 'shortkeys/data', defaults: { format: 'json'} 
   get 'network_map/index'
   get 'messages/message'

@@ -3,7 +3,7 @@
 
 class UsersController < ApplicationController
   layout 'scaffold'
-  before_action :authorize_admin, except: [:show, :dashboard, :edit, :update]
+  # before_action :authorize_admin, except: [:show, :dashboard, :edit, :update]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   helper_method :is_admin?
 

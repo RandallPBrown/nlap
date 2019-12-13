@@ -51,9 +51,10 @@ gem 'popper_js'
 gem 'toastr-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-select-rails'
-gem 'activeadmin'
 gem 'pg_search'
-gem "will_paginate", "~> 3.0.4"
+gem "will_paginate", "~> 3.1.1"
+gem 'activeadmin'
+gem "active_admin_import"
 gem "simple_calendar", "~> 2.0"
 # pdf to create forms
 gem 'wicked_pdf', '~> 1.1'
