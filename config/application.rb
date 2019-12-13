@@ -6,7 +6,21 @@ require 'csv'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups)
+Bundler.require(:assets, *Rails.groups)
+
+module Bildungsnetz
+  class Application < Rails::Application
+    # Enable the asset pipeline
+    config.assets.enabled = true
+    
+    # Disable application initialize on precompile (heroku faq: fixes database access error on precompile)
+    config.assets.initialize_on_precompile = false
+    
+    # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+    config.assets.precompile += %w( active_admin.css active_admin/print.css active_admin.js )
+  end
+end
+
 module Ops
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
