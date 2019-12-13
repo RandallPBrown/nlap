@@ -4,9 +4,7 @@ class PartsController < ApplicationController
   before_action :authorize_admin, only: [:dashboard]
   before_action :set_part, only: [:show, :edit, :update, :destroy]
 
-    rails_admin do 
-      @parts = Part.all
-    end
+
 
   # GET /parts
   def index
