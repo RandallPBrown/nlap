@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   put 'agent_stats/all_stats' => 'agent_stats#all_stats'
   put 'agent_stats/csv_upload' => 'agent_stats#csv_upload'
 
-  get 'admin/entries/form'
   get 'shortkeys/data', defaults: { format: 'json'} 
   get 'network_map/index'
   get 'messages/message'
@@ -96,8 +95,6 @@ Rails.application.routes.draw do
   resources :messages
   resources :chatrooms
   resources :shortkeys
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
   devise_for :users, :skip => [:registrations], controllers: {
         sessions: 'users/sessions'
         # registrations: 'users/registrations'
