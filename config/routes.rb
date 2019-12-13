@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
+  
   resources :incentive_settings
   resources :err_types
   put 'agent_stats/all_stats' => 'agent_stats#all_stats'
@@ -97,6 +96,8 @@ Rails.application.routes.draw do
   resources :messages
   resources :chatrooms
   resources :shortkeys
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   devise_for :users, :skip => [:registrations], controllers: {
         sessions: 'users/sessions'
         # registrations: 'users/registrations'
