@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  date: 2019-12-14
+  kudo_reason: one
+  description: MyText
+  submitted_by: MyString
+  status: MyString
+
+two:
+  user: two
+  date: 2019-12-14
+  kudo_reason: two
+  description: MyText
+  submitted_by: MyString
+  status: MyString

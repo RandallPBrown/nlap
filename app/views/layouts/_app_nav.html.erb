@@ -82,7 +82,22 @@
         <% else %>
         <% end %>
       </ul>
+      
       <ul class="nav navbar-nav ml-auto">
+<!--           <div class="dropdown">
+            <button class="border-0 m-0 p-0" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <small class="badge bg-white text-dark mt-1 mr-0" style="border-radius: 3px 0px 0px 3px !important"><span class="text-uppercase"><span class="mr-1"><%= current_user.full_name %></span> | <span class="ml-1"><%= fa_icon_tag("caret-down") %></span></span>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <% Kudo.all.uniq{|t| t.user_id }.each do |k| %>
+                <button class="dropdown-item" type="button"><%= (k.user.full_name) + " | " + (Kudo.all.where("user_id = ?", k.user_id).count(:id)).to_s %></button>
+              <% end %>
+            </div>
+          </div>
+        </small> -->
+<!--         <small class="badge badge-secondary ml-0 mt-1 mr-3" style="border-radius: 0px 3px 3px 0px !important">
+          <span class="text-warning mr-1"><%= fa_icon_tag("star") %></span> | <small class="ml-1 font-weight-bold">+</small>0
+        </small> -->
         <li class="nav-item dropdown user-nav rounded">
           <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <%= fa_icon_tag("user") %>

@@ -10,36 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191212223440) do
+ActiveRecord::Schema.define(version: 20191214210846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  # create_table "active_admin_comments", force: :cascade do |t|
-  #   t.string "namespace"
-  #   t.text "body"
-  #   t.string "resource_type"
-  #   t.bigint "resource_id"
-  #   t.string "author_type"
-  #   t.bigint "author_id"
-  #   t.datetime "created_at", null: false
-  #   t.datetime "updated_at", null: false
-  #   t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-  #   t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-  #   t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
-  # end
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
 
-  # create_table "admin_users", force: :cascade do |t|
-  #   t.string "email", default: "", null: false
-  #   t.string "encrypted_password", default: "", null: false
-  #   t.string "reset_password_token"
-  #   t.datetime "reset_password_sent_at"
-  #   t.datetime "remember_created_at"
-  #   t.datetime "created_at", null: false
-  #   t.datetime "updated_at", null: false
-  #   t.index ["email"], name: "index_admin_users_on_email", unique: true
-  #   t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
-  # end
+  create_table "admin_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
 
   create_table "agent_stats", force: :cascade do |t|
     t.string "extension"
@@ -300,6 +300,32 @@ ActiveRecord::Schema.define(version: 20191212223440) do
     t.integer "contracts"
     t.float "aht"
     t.index ["user_id"], name: "index_incentives_on_user_id"
+  end
+
+  create_table "kudo_reasons", force: :cascade do |t|
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "kudo_statuses", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "kudos", force: :cascade do |t|
+    t.bigint "user_id"
+    t.date "date"
+    t.bigint "kudo_reason_id"
+    t.text "description"
+    t.string "submitted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "kudo_status_id"
+    t.index ["kudo_reason_id"], name: "index_kudos_on_kudo_reason_id"
+    t.index ["kudo_status_id"], name: "index_kudos_on_kudo_status_id"
+    t.index ["user_id"], name: "index_kudos_on_user_id"
   end
 
   create_table "languages", force: :cascade do |t|
@@ -584,6 +610,9 @@ ActiveRecord::Schema.define(version: 20191212223440) do
   add_foreign_key "fergusons", "users"
   add_foreign_key "incentive_settings", "departments"
   add_foreign_key "incentives", "users"
+  add_foreign_key "kudos", "kudo_reasons"
+  add_foreign_key "kudos", "kudo_statuses"
+  add_foreign_key "kudos", "users"
   add_foreign_key "messages", "chatrooms"
   add_foreign_key "messages", "users"
   add_foreign_key "mfg_parts", "manufacturers"

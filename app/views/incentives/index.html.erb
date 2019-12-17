@@ -65,7 +65,7 @@
                 </div>
 
                                   <%# Remove the trailing if condition if you're using pagination. %>
-                  <%= will_paginate @incentives if @incentives.respond_to?(:total_pages) %>
+                  <%= will_paginate @incentives %>
                 
                               </div>
 

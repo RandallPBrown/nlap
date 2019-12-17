@@ -7,7 +7,8 @@ class IncentivesController < ApplicationController
 
   # GET /incentives
   def index
-    @incentives = Incentive.all.joins(:user)
+    require 'will_paginate/array'
+    @incentives = Incentive.all.joins(:user).paginate(page: params[:page], :per_page => 10)
   end
 
   def import

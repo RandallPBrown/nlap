@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
   
+  resources :kudo_statuses
+  resources :kudos
+  resources :kudo_reasons
   resources :incentive_settings
   resources :err_types
   put 'agent_stats/all_stats' => 'agent_stats#all_stats'

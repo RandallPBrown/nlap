@@ -200,8 +200,8 @@ end
     #     render  pdf: "OCCURRENCE-#{current_user.full_name}-#{Date.today}"
     #   end
     # end
+    end
   end
-end
 
 
   def calendar
