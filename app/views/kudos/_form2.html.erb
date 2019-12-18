@@ -1,0 +1,53 @@
+<%= form_for(@kudo, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.form_group :user_id, class: 'row' do |f| %>
+      <%= f.label 'Agent', class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
+        <%= f.grouped_collection_select :user_id, Department.order(:id), :users, :name, :id, :full_name, {}, {'data-live-search': true, :class=>'selectpicker text-dark'} %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :date, class: 'row' do |f| %>
+      <%= f.label :date, class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
+        <%= f.date_field :date, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :kudo_reason_id, class: 'row' do |f| %>
+      <%= f.label :kudo_reason_id, class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
+        <%= f.collection_select :kudo_reason_id, KudoReason.order(:description), :id, :description, {}, { class: 'form-control' } %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :description, class: 'row' do |f| %>
+      <%= f.label :description, class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
+        <%= f.text_area :description, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :kudo_status_id, class: 'row' do |f| %>
+      <%= f.label :kudo_status_id, class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
+        <%= f.collection_select :kudo_status_id, KudoStatus.order(:description), :id, :description, {}, { class: 'form-control' } %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div class="d-flex">
+    <div class="ml-auto">
+      <%= f.submit class: 'btn btn-primary' %>
+      <%= link_to "Cancel", kudos_path, class: 'btn btn-outline-default' %>
+    </div>
+  </div>
+<% end %>

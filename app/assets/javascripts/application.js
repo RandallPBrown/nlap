@@ -25,5 +25,6 @@
 //= require best_in_place.jquery-ui
 //= require datatables.min
 //= require papaparse
+//= require jquery.ticker
 //= require_tree ./channels
 //= require_tree .

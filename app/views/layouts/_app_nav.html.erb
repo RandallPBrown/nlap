@@ -23,6 +23,25 @@
     });
 </script> -->
 
+<div class="modal fade" id="kudosModal" tabindex="-1" role="dialog" aria-labelledby="kudosModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="font-weight-bold" id="kudosModalLabel">Submit a Kudos!</h5>
+        <button type="button" class="btn btn-sm" data-dismiss="modal" aria-label="Close">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+          <%= render partial: "kudos/form", locals: { kudo: Kudo.new } %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <%= stylesheet_link_tag "pagination.css" %>
 <%= render :layout => "layouts/base" do %>
@@ -81,6 +100,20 @@
         </li>
         <% else %>
         <% end %>
+                <script>
+            $(document).ready(function(t){
+              $('.ticker').ticker();
+            });
+        </script>
+        <span class="text-white font-weight-bold pr-3 pull-right">RECENT KUDOS: </span>
+        <div class="ticker">
+          
+          <ul>
+              <% Kudo.all.order(date: :desc).where("kudo_status_id = ?", 2).each do |k| %>
+                <li><span class="font-weight-bold text-white text-uppercase">[<%= k.date.strftime("%m/%d/%Y") %>]</span> <span class="font-weight-bold text-white text-uppercase"><%= k.user.full_name %></span> <%= fa_icon_tag 'star', class: 'text-warning' %> <span class="text-white font-weight-bold"><%= Kudo.all.order(date: :desc).where("user_id = ?", k.user_id).where('kudo_status_id = ?', 2).count(:id) %></span> <span class="font-weight-bold text-white text-uppercase">- <%= k.kudo_reason.description %></span></li>
+              <% end %>
+          </ul>
+        </div>
       </ul>
       
       <ul class="nav navbar-nav ml-auto">
@@ -98,6 +131,17 @@
 <!--         <small class="badge badge-secondary ml-0 mt-1 mr-3" style="border-radius: 0px 3px 3px 0px !important">
           <span class="text-warning mr-1"><%= fa_icon_tag("star") %></span> | <small class="ml-1 font-weight-bold">+</small>0
         </small> -->
+        <script>
+        function popKudoModal(){
+          $('#kudosModal').modal('show')
+        }
+        </script>
+        <small class="badge bg-white text-dark mt-1 mr-0 text-uppercase" style="border-radius: 3px 0px 0px 3px !important">
+          <button type="button" class="btn p-0" onclick="popKudoModal()">SUBMIT KUDOS</button>
+        </small>
+        <small class="badge badge-secondary ml-0 mt-1 mr-3" style="border-radius: 0px 3px 3px 0px !important">
+          <span class="text-warning mr-1"><%= fa_icon_tag("star") %></span> | <small class="ml-1 font-weight-bold">+</small><%= Kudo.all.where("user_id = ?", current_user.id).where("kudo_status_id = ?", 2).count(:id) %>
+        </small>
         <li class="nav-item dropdown user-nav rounded">
           <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <%= fa_icon_tag("user") %>
@@ -159,5 +203,6 @@
       </ul>
     </div>
   </nav>
+
   <%= yield %>
 <% end %>

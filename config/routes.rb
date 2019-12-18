@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   put 'agent_stats/all_stats' => 'agent_stats#all_stats'
   put 'agent_stats/csv_upload' => 'agent_stats#csv_upload'
 
+  get 'kudos/form2'
+
   get 'shortkeys/data', defaults: { format: 'json'} 
   get 'network_map/index'
   get 'messages/message'

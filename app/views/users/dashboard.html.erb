@@ -6,6 +6,7 @@
 <!-- Page ready logic || Can't transfer over to a separate JS file because of the ERB. Eventually this will need to get switched to proper AJAX, but then we'll need to refactor the entire dispute modal -->
   <script>
   $(document).ready(function(t){
+
   // ENTRIES TABLE
   var t = $('#userEntryTable').DataTable({ 
           "pageLength": 5,
@@ -83,7 +84,7 @@
                 { data: 'AHT' }
               ]
             });
-    t.draw();
+    t.order( [ 0, 'desc' ] ).draw();
 
 
   // So we should have done AJAX for all of these, but the dispute modal is a masterpiece of hacky engineering so don't right now unless you're prepared to look at it too. 
@@ -103,6 +104,7 @@
 
 
 <body>
+
 <!-- Cookie Modal used for incentive tracker.  -->
 <script>
 $(document).ready(function() {
@@ -243,6 +245,7 @@ $(document).ready(function(){
     <div class="bg-primary slider" style=""><a href="#" class="font-weight-bold text-white btn btn-link px-auto pl-1" id="menu-toggle" style="writing-mode: vertical-rl;text-orientation: sideways;font-size: 12px"><%= fa_icon_tag("plus") %> QUICK ACTION</a></div>
   <% end %>
 <!-- /Quick action sidebar -->
+
 
 <!-- Incentives breakdown modal -->
 <div class="modal fade" id="incentivesModal" tabindex="-1" role="dialog" aria-labelledby="incentivesModalLabel" aria-hidden="true">
@@ -410,6 +413,7 @@ $(document).ready(function(){
   </div>
 </div>
 <!-- /Dispute Modal -->
+<!-- Body -->
 
 <section class="px-3 pt-5 pb-3 mb-3 d-flex flex-column float-inset" style="background-color: #eeeeee !important">
   <div class="container-fluid">
@@ -794,6 +798,8 @@ $(document).ready(function(){
     </div>
   </div>
 </div>
+
+<!-- Javascripts -->
 <script>
 // Change the table name when you select a button. Nothing fancy.
 $('.table-select').click(function(){ 
