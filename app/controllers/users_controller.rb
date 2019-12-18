@@ -76,7 +76,7 @@ class UsersController < ApplicationController
     else
       Incentive.all.where("user_id = ?", current_user.id).where(:date => Date.today.beginning_of_month..Date.today.end_of_day).sum(:contracts)
     end
-
+    @incentives = Incentive.all.where("user_id = ?", current_user.id).order(date: :desc)
     @incentive_settings = IncentiveSetting.all.where("department_id = ?", current_user.department.id)
     @err_log = ErrLog.new
     @err_logs = ErrLog.all.where('user_id = ?', current_user.id)
