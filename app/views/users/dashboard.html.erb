@@ -647,7 +647,16 @@ $(document).ready(function(){
       <div class="col-12 col-md-6">
         <div class="card float" style="background-color: #ffffff !important">
           <div class="card-header d-flex align-items-center">
-            <h6 class="mr-auto">Agent Stats - 7 day</h6>
+            <h6 class="mr-auto">Agent Stats</h6>
+            <div class="dropdown">
+              <button class="btn btn-sm btn-primary dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                DATE RANGE
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <button type="button" class="dropdown-item" id="incentiveWeekButton">7 Day</button>
+                <button type="button" class="dropdown-item" id="incentiveMonthButton">Monthly</button>
+              </div>
+            </div>
           </div>
           <div class="card-body" style="height: 500px">
             <canvas id="statChart" width="200" height="125"></canvas>
@@ -819,7 +828,7 @@ var config = {
             backgroundColor: 'rgb(51,131,51, 0.7)',
             borderColor: '#373737',
             borderWidth: 1,
-            order: 2
+            order: 3
         },{
             label: 'OCC',
             yAxisID: 'A',
@@ -832,6 +841,7 @@ var config = {
         }]
     },
     options: {
+        responsive: true,
         scales: {
             yAxes: [{ // For occupancy
               id: 'A',
@@ -857,7 +867,30 @@ var config = {
     }
 };
 var stat_chart = new Chart(ctx, config);
-
+$("#incentiveWeekButton").click(function() {
+  var chart_labels = <%= raw @agent_chart_labels_effective %>; 
+  var uph_data = <%= @agent_chart_data_effective %>;
+  var occ_data = <%= @agent_chart_data_effective_occupancy %>;
+  var aht_data = <%= @agent_chart_data_effective_aht %>;
+    var data = stat_chart.config.data;
+    data.datasets[0].data = uph_data;
+    data.datasets[2].data = occ_data;
+    data.datasets[1].data = aht_data;
+    data.labels = chart_labels;
+    stat_chart.update();
+});
+$("#incentiveMonthButton").click(function() {
+  var chart_labels = <%= raw @agent_chart_labels_effective_month %>; 
+  var uph_data = <%= @agent_chart_data_effective_month %>;
+  var occ_data = <%= @agent_chart_data_effective_occupancy_month %>;
+  var aht_data = <%= @agent_chart_data_effective_aht_month %>;
+    var data = stat_chart.config.data;
+    data.datasets[0].data = uph_data;
+    data.datasets[2].data = occ_data;
+    data.datasets[1].data = aht_data;
+    data.labels = chart_labels;
+    stat_chart.update();
+});
 
 </script>
 </body>
