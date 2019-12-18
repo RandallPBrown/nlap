@@ -14,6 +14,7 @@ class KudosController < ApplicationController
 	  # GET /kudos/new
 	  def new
 	    @kudo = Kudo.new
+
 	  end
 
 	  # GET /kudos/1/edit
@@ -25,7 +26,8 @@ class KudosController < ApplicationController
 	    @kudo = Kudo.new(kudo_params)
 
 	    if @kudo.save
-	      redirect_to @kudo, notice: 'Kudo was successfully created.'
+	      redirect_back(fallback_location: root_path)
+      		flash[:notice] = 'Your submission will be reviewed by management. Thank you!'
 	    else
 	      render :new
 	    end
@@ -34,7 +36,8 @@ class KudosController < ApplicationController
 	  # PATCH/PUT /kudos/1
 	  def update
 	    if @kudo.update(kudo_params)
-	      redirect_to @kudo, notice: 'Kudo was successfully updated.'
+	      redirect_back(fallback_location: root_path)
+      		flash[:notice] = 'Kudos has been updated'
 	    else
 	      render :edit
 	    end
@@ -43,7 +46,8 @@ class KudosController < ApplicationController
 	  # DELETE /kudos/1
 	  def destroy
 	    @kudo.destroy
-	    redirect_to kudos_url, notice: 'Kudo was successfully destroyed.'
+	    redirect_back(fallback_location: root_path)
+      	flash[:notice] = 'Destroyed Kudos'
 	  end
   	
   	private

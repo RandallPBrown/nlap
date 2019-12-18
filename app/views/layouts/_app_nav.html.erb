@@ -23,24 +23,7 @@
     });
 </script> -->
 
-<div class="modal fade" id="kudosModal" tabindex="-1" role="dialog" aria-labelledby="kudosModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="font-weight-bold" id="kudosModalLabel">Submit a Kudos!</h5>
-        <button type="button" class="btn btn-sm" data-dismiss="modal" aria-label="Close">
-          <i class="fa fa-times"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-          <%= render partial: "kudos/form", locals: { kudo: Kudo.new } %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 
 <%= stylesheet_link_tag "pagination.css" %>
@@ -100,12 +83,13 @@
         </li>
         <% else %>
         <% end %>
+        <% if current_user.admin == true %>
                 <script>
             $(document).ready(function(t){
               $('.ticker').ticker();
             });
         </script>
-        <span class="text-white font-weight-bold pr-3 pull-right">RECENT KUDOS: </span>
+        <span class="text-white font-weight-bold pl-4 pr-2 pull-right">RECENT KUDOS: </span>
         <div class="ticker">
           
           <ul>
@@ -114,6 +98,7 @@
               <% end %>
           </ul>
         </div>
+        <% end %>
       </ul>
       
       <ul class="nav navbar-nav ml-auto">
@@ -131,6 +116,7 @@
 <!--         <small class="badge badge-secondary ml-0 mt-1 mr-3" style="border-radius: 0px 3px 3px 0px !important">
           <span class="text-warning mr-1"><%= fa_icon_tag("star") %></span> | <small class="ml-1 font-weight-bold">+</small>0
         </small> -->
+        <% if current_user.admin == true %>
         <script>
         function popKudoModal(){
           $('#kudosModal').modal('show')
@@ -142,6 +128,7 @@
         <small class="badge badge-secondary ml-0 mt-1 mr-3" style="border-radius: 0px 3px 3px 0px !important">
           <span class="text-warning mr-1"><%= fa_icon_tag("star") %></span> | <small class="ml-1 font-weight-bold">+</small><%= Kudo.all.where("user_id = ?", current_user.id).where("kudo_status_id = ?", 2).count(:id) %>
         </small>
+        <% end %>
         <li class="nav-item dropdown user-nav rounded">
           <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <%= fa_icon_tag("user") %>
@@ -203,6 +190,23 @@
       </ul>
     </div>
   </nav>
-
+<div class="modal fade" id="kudosModal" tabindex="-1" role="dialog" aria-labelledby="kudosModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="font-weight-bold" id="kudosModalLabel">Submit a Kudos!</h5>
+        <button type="button" class="btn btn-sm" data-dismiss="modal" aria-label="Close">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+          <%= render partial: "kudos/form", locals: { kudo: Kudo.new } %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
   <%= yield %>
 <% end %>
