@@ -26,8 +26,14 @@ class KudosController < ApplicationController
 	    @kudo = Kudo.new(kudo_params)
 
 	    if @kudo.save
-	    	KudoMailer.new_kudo_email(@kudo).deliver_now
-	      redirect_back(fallback_location: root_path)
+	    	@recipient = Recipient.all.where('recipient_group.description = ?', 'Kudos')
+	    	
+	    	@recipient.each do |recipient|
+		        KudoMailer.new_kudo_email(@kudo, recipient).deliver_now
+		    end
+	    	
+	    	
+	    	redirect_back(fallback_location: root_path)
       		flash[:notice] = 'Your submission will be reviewed by management. Thank you!'
 	    else
 	      render :new

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   
+  resources :recipient_groups
   resources :kudo_statuses
   resources :kudos
   resources :kudo_reasons

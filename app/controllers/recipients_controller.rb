@@ -55,6 +55,6 @@ class RecipientsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def recipient_params
-      params.require(:recipient).permit(:user_id)
+      params.require(:recipient).permit(:user_id, :recipient_group_id)
     end
 end

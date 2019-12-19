@@ -108,10 +108,10 @@ class ToolsController < ApplicationController
   	# @tool.receipt = :receipt
   	@tool.save
   	if @tool.save
-  		@recipient = Recipient.all
+  		@recipient = Recipient.all.where('recipient_group.description = ?', 'Tools')
      	@recipient.each do |recipient|
-        	ToolMailer.tool_email(@tool, recipient).deliver_now
-        end
+        ToolMailer.tool_email(@tool, recipient).deliver_now
+      end
     end
   end
 

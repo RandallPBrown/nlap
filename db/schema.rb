@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191214210846) do
+ActiveRecord::Schema.define(version: 20191219223411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -467,10 +467,18 @@ ActiveRecord::Schema.define(version: 20191214210846) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "recipient_groups", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "recipients", force: :cascade do |t|
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "recipient_group_id"
+    t.index ["recipient_group_id"], name: "index_recipients_on_recipient_group_id"
     t.index ["user_id"], name: "index_recipients_on_user_id"
   end
 
@@ -618,6 +626,7 @@ ActiveRecord::Schema.define(version: 20191214210846) do
   add_foreign_key "mfg_parts", "manufacturers"
   add_foreign_key "parts", "buying_groups"
   add_foreign_key "parts", "products"
+  add_foreign_key "recipients", "recipient_groups"
   add_foreign_key "recipients", "users"
   add_foreign_key "sections", "procedures"
   add_foreign_key "shortkeys", "departments"
