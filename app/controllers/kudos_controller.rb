@@ -26,7 +26,7 @@ class KudosController < ApplicationController
 	    @kudo = Kudo.new(kudo_params)
 
 	    if @kudo.save
-	    	@recipient = Recipient.all.where('recipient_group.description = ?', 'Kudos')
+	    	@recipient = Recipient.all.joins(:recipient_group).where('recipient_group.description = ?', 'Kudos')
 	    	
 	    	@recipient.each do |recipient|
 		        KudoMailer.new_kudo_email(@kudo, recipient).deliver_now
