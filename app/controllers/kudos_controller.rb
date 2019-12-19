@@ -26,7 +26,7 @@ class KudosController < ApplicationController
 	    @kudo = Kudo.new(kudo_params)
 
 	    if @kudo.save
-	    	KudoMailer.with(kudo: @kudo).new_kudo_email.deliver_now
+	    	KudoMailer.new_kudo_email(@kudo).deliver_now
 	      redirect_back(fallback_location: root_path)
       		flash[:notice] = 'Your submission will be reviewed by management. Thank you!'
 	    else
