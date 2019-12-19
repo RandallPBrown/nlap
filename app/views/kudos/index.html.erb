@@ -1,4 +1,4 @@
-<% @title = "Listing kudos" %>
+<% @title = "Kudos Dashboard" %>
 
 <% content_for :description do %>
   <% end %>
@@ -30,7 +30,7 @@
             <div class="card">
                 
               <div class="card-body" style="height:400px;overflow-y: scroll;">
-                <h5 class="text-uppercase m-auto font-weight-bold">PENDING APPROVAL ERRORS</h5>
+                <h5 class="text-uppercase m-auto font-weight-bold">PENDING APPROVAL KUDOS</h5>
                 <div class="table-responsive">
                   <table class="table table-striped table-hover display border rounded" id="kudos_index_pending">
                     <thead>
@@ -41,11 +41,10 @@
                                           <th>Description</th>
                                           <th>Submitted by</th>
                                           <th>Status</th>
-                                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <% @kudos.order(created_at: :asc).each do |kudo| %>
+                    <% @kudos.order(created_at: :asc).where('kudo_status_id = ?', 1).each do |kudo| %>
                       <tr data-toggle="collapse" data-target="#accordion<%= kudo.id %>" class="accordion-toggle" data-href="#accordion<%= kudo.id %>">
                                             <td><%= kudo.user.full_name %></td>
                                           <td><%= kudo.date %></td>
@@ -53,15 +52,6 @@
                                           <td><%= kudo.description %></td>
                                           <td><%= kudo.submitted_by %></td>
                                           <td><%= kudo.kudo_status.description %></td>
-                                        <td class="actions text-right">
-                      <div class="btn-group">
-                        <%= link_to theme_icon_tag("eye"), kudo, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("pencil-alt"), edit_kudo_path(kudo), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("trash"), kudo, 'data-toggle': 'tooltip', title: 'Delete',
-                        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
-                      </div>
-                      </td>
-                        
                         </tr>
                         <tr>
                           <td colspan="10" class="hiddenrow">

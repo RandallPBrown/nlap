@@ -85,38 +85,26 @@
         <% else %>
         <% end %>
         <% if current_user.admin == true %>
-                <script>
-            $(document).ready(function(t){
-              $('.ticker').ticker();
-            });
-        </script>
+                
         <span class="text-white font-weight-bold pl-4 pr-2 pull-right">RECENT KUDOS: </span>
         <div class="ticker">
           
-          <ul>
-              <% Kudo.all.order(date: :desc).where("kudo_status_id = ?", 2).each do |k| %>
+          <ul id="kudos-list" hidden>
+              <% Kudo.all.order(date: :desc).where("kudo_status_id = ?", 2).limit(10).each do |k| %>
                 <li><span class="font-weight-bold text-white text-uppercase">[<%= k.date.strftime("%m/%d/%Y") %>]</span> <span class="font-weight-bold text-white text-uppercase"><%= k.user.full_name %></span> <%= fa_icon_tag 'star', class: 'text-warning' %> <span class="text-white font-weight-bold"><%= Kudo.all.order(date: :desc).where("user_id = ?", k.user_id).where('kudo_status_id = ?', 2).count(:id) %></span> <span class="font-weight-bold text-white text-uppercase">- <%= k.kudo_reason.description %></span></li>
               <% end %>
           </ul>
         </div>
+        <script>
+            $(window).load(function() {
+              $('#kudos-list').attr('hidden', false);
+              $('.ticker').ticker();
+            });
+        </script>
         <% end %>
       </ul>
       
       <ul class="nav navbar-nav ml-auto">
-<!--           <div class="dropdown">
-            <button class="border-0 m-0 p-0" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <small class="badge bg-white text-dark mt-1 mr-0" style="border-radius: 3px 0px 0px 3px !important"><span class="text-uppercase"><span class="mr-1"><%= current_user.full_name %></span> | <span class="ml-1"><%= fa_icon_tag("caret-down") %></span></span>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <% Kudo.all.uniq{|t| t.user_id }.each do |k| %>
-                <button class="dropdown-item" type="button"><%= (k.user.full_name) + " | " + (Kudo.all.where("user_id = ?", k.user_id).count(:id)).to_s %></button>
-              <% end %>
-            </div>
-          </div>
-        </small> -->
-<!--         <small class="badge badge-secondary ml-0 mt-1 mr-3" style="border-radius: 0px 3px 3px 0px !important">
-          <span class="text-warning mr-1"><%= fa_icon_tag("star") %></span> | <small class="ml-1 font-weight-bold">+</small>0
-        </small> -->
         <% if current_user.admin == true %>
         <script>
         function popKudoModal(){
@@ -124,7 +112,7 @@
         }
         </script>
         <small class="badge bg-white text-dark mt-1 mr-0 text-uppercase" style="border-radius: 3px 0px 0px 3px !important">
-          <button type="button" class="btn p-0" onclick="popKudoModal()">SUBMIT KUDOS</button>
+          <button type="button" class="btn p-0" onclick="popKudoModal()">KUDOS MENU</button>
         </small>
         <small class="badge badge-secondary ml-0 mt-1 mr-3" style="border-radius: 0px 3px 3px 0px !important">
           <span class="text-warning mr-1"><%= fa_icon_tag("star") %></span> | <small class="ml-1 font-weight-bold">+</small><%= Kudo.all.where("user_id = ?", current_user.id).where("kudo_status_id = ?", 2).count(:id) %>
@@ -145,7 +133,7 @@
                       <span class="pull-left"><strong>Email:</strong></span>
                     </div>
                     <div class="col-7 bg-white rounded">
-                        <span class="pull-left"><%= user_email %></span>
+                      <span class="pull-left"><%= user_email %></span>
                     </div>
                   </div>
                   <div class="row p-1">
@@ -192,22 +180,152 @@
     </div>
   </nav>
 <div class="modal fade" id="kudosModal" tabindex="-1" role="dialog" aria-labelledby="kudosModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content" style="height: 800px">
       <div class="modal-header">
-        <h5 class="font-weight-bold" id="kudosModalLabel">Submit a Kudos!</h5>
-        <button type="button" class="btn btn-sm" data-dismiss="modal" aria-label="Close">
+        <h5 class="font-weight-bold bg-gradient-primary" id="kudosModalLabel">KUDOS <small class="font-weight-bold pl-5">*All kudos are reviewed by management before they are accepted*</small></h5> 
+        <button type="button" class="btn btn-sm py-2" data-dismiss="modal" aria-label="Close">
           <i class="fa fa-times"></i>
         </button>
       </div>
       <div class="modal-body">
-          <%= render partial: "kudos/form", locals: { kudo: Kudo.new } %>
+        <div class="row border-top pt-4">
+          <div class="col-6">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="current-user-tab" data-toggle="tab" href="#current-user" role="tab" aria-controls="current-user" aria-selected="true">Personal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="recent-tab" data-toggle="tab" href="#recent" role="tab" aria-controls="recent" aria-selected="false">Recent</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="ranking-users-tab" data-toggle="tab" href="#ranking-users" role="tab" aria-controls="ranking-users" aria-selected="false">Ranking</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="all-users-tab" data-toggle="tab" href="#all-users" role="tab" aria-controls="all-users" aria-selected="false">All</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="kudos-content">
+              <div class="tab-pane fade show active border-right pr-2" id="current-user" role="tabpanel" aria-labelledby="current-user-tab" style="overflow-y: auto; height: 550px">
+                <div class="card mt-3 p-2 bg-light" style="height: 90%">
+                  <div class="list-group">
+                    <% Kudo.all.where('user_id = ?', current_user.id).where('kudo_status_id = ?', 2).order(date: :desc).each do |k| %>
+                      <button type="button" class="list-group-item list-group-item-action border" data-user="<%= k.user.full_name %>" data-reason="<%= k.kudo_reason.description %>" data-date="<%= k.date.strftime("%m/%d/%Y") %>" data-desc="<%= k.description %>" data-submitted="<%= k.submitted_by %>" onclick="viewToggle(this)">
+                        <div class="row">
+                          <div class="col-4"><%= k.user.full_name.truncate(15) %></div> | <div class="col-3"><%= k.kudo_reason.description.truncate(12) %></div> | <div class="col"><%= k.date.strftime("%m/%d/%Y") %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
+                        </div>
+                      </button>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade border-right pr-2" id="ranking-users" role="tabpanel" aria-labelledby="ranking-users-tab" style="overflow-y: auto; height: 550px">
+                <div class="card mt-3 p-2 bg-light" style="height: 90%">
+                  <div class="list-group"> 
+                    <% Kudo.all.where('kudo_status_id = ?', 2).group(:id).order('COUNT(id) DESC').group(:user_id).limit(50).uniq(&:user_id).each do |k| %>
+                      <button type="button" class="list-group-item list-group-item-action border">
+                        <div class="row">
+                          <div class="col-4"><%= k.user.full_name.truncate(15) %></div> | <div class="col-3"><%= k.kudo_reason.description.truncate(12) %></div> | <div class="col"><%= k.date.strftime("%m/%d/%Y") %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
+                        </div>
+                      </button>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade border-right pr-2" id="all-users" role="tabpanel" aria-labelledby="all-users-tab" style="overflow-y: auto; height: 550px">
+                <div class="card mt-3 p-2 bg-light" style="height: 90%">
+                  <div class="list-group"> 
+                    <% Kudo.all.where('kudo_status_id = ?', 2).order(date: :desc).limit(50).each do |k| %>
+                      <button type="button" class="list-group-item list-group-item-action border" data-user="<%= k.user.full_name %>" data-reason="<%= k.kudo_reason.description %>" data-date="<%= k.date.strftime("%m/%d/%Y") %>" data-desc="<%= k.description %>" data-submitted="<%= k.submitted_by %>" onclick="viewToggle(this)">
+                        <div class="row">
+                          <div class="col-4"><%= k.user.full_name.truncate(15) %></div> | <div class="col-3"><%= k.kudo_reason.description.truncate(12) %></div> | <div class="col"><%= k.date.strftime("%m/%d/%Y") %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
+                        </div>
+                      </button>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade border-right pr-2" id="recent" role="tabpanel" aria-labelledby="recent-tab" style="overflow-y: auto; height: 550px">
+                <div class="card mt-3 p-2 bg-light" style="height: 90%">
+                  <div class="list-group">
+                    <div class="card">
+                      <% Kudo.all.where('kudo_status_id = ?', 2).order(date: :desc).each do |k| %>
+                        <button type="button" class="list-group-item list-group-item-action border" data-user="<%= k.user.full_name %>" data-reason="<%= k.kudo_reason.description %>" data-date="<%= k.date.strftime("%m/%d/%Y") %>" data-desc="<%= k.description %>" data-submitted="<%= k.submitted_by %>" onclick="viewToggle(this)">
+                          <div class="row">
+                            <div class="col-4"><%= k.user.full_name.truncate(15) %></div> | <div class="col-3"><%= k.kudo_reason.description.truncate(12) %></div> | <div class="col"><%= k.date.strftime("%m/%d/%Y") %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
+                          </div>
+                        </button>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script>
+            function viewToggle(element){
+              $('#show-tab').tab('show');
+              $('#show-user').html($(element).data("user"));
+              $('#show-reason').html($(element).data("reason"));
+              $('#show-date').html($(element).data("date"));
+              $('#show-description').html($(element).data("desc"));
+              $('#show-submitted').html($(element).data("submitted"));
+            }
+          </script>
+          <div class="col-6">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="show-tab" data-toggle="tab" href="#show" role="tab" aria-controls="show" aria-selected="true">View</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="submit-tab" data-toggle="tab" href="#submit" role="tab" aria-controls="submit" aria-selected="false">Nominate</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="formTabContent">
+              <div class="tab-pane fade show active" id="show" role="tabpanel" aria-labelledby="show-tab" style="overflow-y: auto; height: 550px">
+                <div class="card mt-3 p-2" style="height:90%">
+                  <div class="row pt-2 pb-3">
+                    <div class="col-12">
+                      <center><h5 class="font-weight-bold text-uppercase" id="show-user">SELECT AN ITEM</h5></center>
+                      <center><h6 class="font-weight-bold text-uppercase" id="show-reason">IN LEFT PANE</h6></center>
+                    </div>
+                  </div>
+                  <div class="row pt-3">
+                    <div class="col-6">
+                      <span class="font-weight-bold">Date:</span> <span class="font-weight-bold text-uppercase" id="show-date"></span>
+                    </div>
+                    <div class="col-6">
+                      <span class="font-weight-bold">Submitted By:</span> <span class="font-weight-bold text-uppercase" id="show-submitted"></span>
+                    </div>
+                  </div>
+                  <div class="row pt-3">
+                    <div class="col-12">
+                      <span class="font-weight-bold">Description:</span><br>
+                      <p id="show-description"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="submit" role="tabpanel" aria-labelledby="submit-tab" style="overflow-y: auto; height: 550px">
+                <div class="card mt-3 p-2" style="height: 90%">
+                  <%= render partial: "kudos/form", locals: { kudo: Kudo.new } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Close</button>
+      <div class="modal-footer border-top p-3">
+        <button type="button" class="btn btn-primary m-auto w-25 font-weight-bold text-uppercase" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
   <%= yield %>
 <% end %>
+
+
+
+
+
+

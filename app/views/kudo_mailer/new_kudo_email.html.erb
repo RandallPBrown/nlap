@@ -1,0 +1,33 @@
+<head>
+	  <link rel="stylesheet" href="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	      <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+
+</head>
+<body>
+<%= image_tag 'logo.png' %><br /><br />
+
+<div class="container-fluid">
+	<div class="card">
+		<div class="card-header">
+			<h1>A new Kudos has been nominated!</h1>
+		</div>
+		<div class="card-body">
+			<h3>Please log into <a href="https://www.nlscap.net/kudos">https://www.nlscap.net/kudos</a> to review.</h3>
+			<p>Nominee: <%= @kudo.user.full_name %></p><br>
+			<p>Nominated By: <%= @kudo.submitted_by %></p><br>
+			<p>Date: <%= @kudo.date %></p><br>
+			<p>Class: <%= @kudo.kudo_reason.description %></p><br>
+			<p>Notes:</p><br>
+			<p><%= @kudo.description %></p><br><br>
+			<small>
+				<p class="text-justify"><center>New Leaf Service Contracts, LLC.</center></p>
+				<p class="text-justify"><center>909 Lake Carolyn Pkwy, Ste 900</center></p>
+				<p class="text-justify"><center>Irving, TX 75039-3919</center></p>
+			</small>
+		</div>
+	</div>
+</div>
+  <script src="http://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+  <script src="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+  </body>

@@ -5,6 +5,7 @@
  * Copyright 2014 Benjamin Harris
  * Released under the MIT license
  */
+
 (function($) {
 
     // The ticker plugin
