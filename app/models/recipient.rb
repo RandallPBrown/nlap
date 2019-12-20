@@ -1,4 +1,4 @@
 class Recipient < ApplicationRecord
   belongs_to :user
-  has_one :recipient_group
+  belongs_to :recipient_group
 end
