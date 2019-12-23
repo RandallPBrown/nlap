@@ -24,9 +24,9 @@ class KudosController < ApplicationController
 	  # POST /kudos
 	  def create
 	    @kudo = Kudo.new(kudo_params)
+	    @recipient = Recipient.all.includes(:recipient_group).group(:id).where('recipient_group.description = ?', 'Kudos').references(:recipient_group)
 
 	    if @kudo.save
-	    	@recipient = Recipient.all.includes(:recipient_group).group(:id).where('recipient_group.description = ?', 'Kudos').references(:recipient_group)
 	    	
 	    	@recipient.includes(:recipient_group).each do |recipient|
 		        KudoMailer.new_kudo_email(@kudo, recipient).deliver_now
