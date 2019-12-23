@@ -91,7 +91,7 @@
           
           <ul id="kudos-list" hidden>
               <% Kudo.all.order(date: :desc).where("kudo_status_id = ?", 2).limit(10).each do |k| %>
-                <li><span class="font-weight-bold text-white text-uppercase">[<%= k.date.strftime("%m/%d/%Y") %>]</span> <span class="font-weight-bold text-white text-uppercase"><%= k.user.full_name %></span> <%= fa_icon_tag 'star', class: 'text-warning' %> <span class="text-white font-weight-bold"><%= Kudo.all.order(date: :desc).where("user_id = ?", k.user_id).where('kudo_status_id = ?', 2).count(:id) %></span> <span class="font-weight-bold text-white text-uppercase">- <%= k.kudo_reason.description %></span></li>
+                <li><span class="font-weight-bold text-white text-uppercase"><%= k.user.full_name %></span> <%= fa_icon_tag 'star', class: 'text-warning' %> <span class="text-white font-weight-bold"><%= Kudo.all.order(date: :desc).where("user_id = ?", k.user_id).where('kudo_status_id = ?', 2).count(:id) %></span> <span class="font-weight-bold text-white text-uppercase">- <%= k.kudo_reason.description %></span></li>
               <% end %>
           </ul>
         </div>

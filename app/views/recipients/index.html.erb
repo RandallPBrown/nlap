@@ -18,13 +18,15 @@
                 <thead>
                   <tr>
                                           <th>User</th>
+                                          <th>Email</th>
                                         <th></th>
                   </tr>
                 </thead>
                 <tbody>
                 <% @recipients.each do |recipient| %>
                   <tr>
-                                          <td><%= recipient.user %></td>
+                                          <td><%= recipient.user.full_name %></td>
+                                          <td><%= recipient.user.email %></td>
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to theme_icon_tag("eye"), recipient, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>

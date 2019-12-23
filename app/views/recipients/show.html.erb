@@ -14,7 +14,16 @@
                 <label class="col-12 col-md-2 form-label">User</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
-                    <%= @recipient.user %>
+                    <%= @recipient.user.full_name %>
+                  </span>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Email</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @recipient.user.email %>
                   </span>
                 </div>
               </div>
