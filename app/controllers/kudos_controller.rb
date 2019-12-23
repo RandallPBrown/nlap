@@ -24,7 +24,8 @@ class KudosController < ApplicationController
 	  # POST /kudos
 	  def create
 	    @kudo = Kudo.new(kudo_params)
-	    @recipient = Recipient.all.includes(:recipient_groups).group(:id).where('recipient_groups.description = ?', 'Kudos').references(:recipient_groups)
+	    @kudo.save
+	    @recipient = Recipient.all.includes(:recipient_group).group(:id).where('description = ?', 'Kudos').references(:recipient_groups)
 
 	    if @kudo.save
 	    	

@@ -24,7 +24,7 @@ class RecipientsController < ApplicationController
   # POST /recipients
   def create
     @recipient = Recipient.new(recipient_params)
-
+    @recipient.save
     if @recipient.save
       redirect_to @recipient, notice: 'Recipient was successfully created.'
     else
