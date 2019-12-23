@@ -29,7 +29,7 @@ class KudosController < ApplicationController
 
 	    if @kudo.save
 	    	
-	    	@recipient.includes(:recipient_groups).each do |recipient|
+	    	@recipient.includes(:recipient_group).each do |recipient|
 		        KudoMailer.new_kudo_email(@kudo, recipient).deliver_now
 		    end
 	    	
