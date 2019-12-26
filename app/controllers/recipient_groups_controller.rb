@@ -1,4 +1,4 @@
-class RecipientGroupsController < InheritedResources::Base
+class RecipientGroupsController < ApplicationController
 	layout "scaffold"
 
   before_action :set_recipient_group, only: [:show, :edit, :update, :destroy]
