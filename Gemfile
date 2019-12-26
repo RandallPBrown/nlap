@@ -20,6 +20,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+gem "strip_attributes"
 
 # Last attempt at getting agent stats in portal for awhile
 gem 'rack-ssl-enforcer'
@@ -53,8 +54,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-select-rails'
 gem 'pg_search'
 gem "will_paginate", "~> 3.1.1"
-gem 'activeadmin'
-gem "active_admin_import"
+#gem 'activeadmin'
+#gem "active_admin_import"
 gem "simple_calendar", "~> 2.0"
 # pdf to create forms
 gem 'wicked_pdf', '~> 1.1'

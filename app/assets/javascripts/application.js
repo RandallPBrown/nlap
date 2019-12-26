@@ -15,7 +15,6 @@
 //= require popper
 //= require rails-ujs
 //= require turbolinks
-// require bootstrap
 //= require bootstrap-datepicker
 //= require bootstrap-select
 //= require rrt

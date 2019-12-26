@@ -196,9 +196,6 @@
                 <a class="nav-link active" id="current-user-tab" data-toggle="tab" href="#current-user" role="tab" aria-controls="current-user" aria-selected="true">Personal</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="recent-tab" data-toggle="tab" href="#recent" role="tab" aria-controls="recent" aria-selected="false">Recent</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" id="ranking-users-tab" data-toggle="tab" href="#ranking-users" role="tab" aria-controls="ranking-users" aria-selected="false">Ranking</a>
               </li>
               <li class="nav-item">
@@ -225,7 +222,7 @@
                     <% Kudo.all.where('kudo_status_id = ?', 2).group(:id).order('COUNT(id) DESC').group(:user_id).limit(50).uniq(&:user_id).each do |k| %>
                       <button type="button" class="list-group-item list-group-item-action border">
                         <div class="row">
-                          <div class="col-4"><%= k.user.full_name.truncate(15) %></div> | <div class="col-3"><%= k.kudo_reason.description.truncate(12) %></div> | <div class="col"><%= k.date.strftime("%m/%d/%Y") %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
+                          <div class="col-4"><%= k.user.full_name.truncate(15) %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
                         </div>
                       </button>
                     <% end %>
@@ -235,28 +232,13 @@
               <div class="tab-pane fade border-right pr-2" id="all-users" role="tabpanel" aria-labelledby="all-users-tab" style="overflow-y: auto; height: 550px">
                 <div class="card mt-3 p-2 bg-light" style="height: 90%">
                   <div class="list-group"> 
-                    <% Kudo.all.where('kudo_status_id = ?', 2).order(date: :desc).limit(50).each do |k| %>
+                    <% Kudo.all.where('kudo_status_id = ?', 2).group(:id).order(date: :desc).group(:user_id).limit(50).uniq(&:user_id).each do |k| %>
                       <button type="button" class="list-group-item list-group-item-action border" data-user="<%= k.user.full_name %>" data-reason="<%= k.kudo_reason.description %>" data-date="<%= k.date.strftime("%m/%d/%Y") %>" data-desc="<%= k.description %>" data-submitted="<%= k.submitted_by %>" onclick="viewToggle(this)">
                         <div class="row">
                           <div class="col-4"><%= k.user.full_name.truncate(15) %></div> | <div class="col-3"><%= k.kudo_reason.description.truncate(12) %></div> | <div class="col"><%= k.date.strftime("%m/%d/%Y") %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
                         </div>
                       </button>
                     <% end %>
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane fade border-right pr-2" id="recent" role="tabpanel" aria-labelledby="recent-tab" style="overflow-y: auto; height: 550px">
-                <div class="card mt-3 p-2 bg-light" style="height: 90%">
-                  <div class="list-group">
-                    <div class="card">
-                      <% Kudo.all.where('kudo_status_id = ?', 2).order(date: :desc).each do |k| %>
-                        <button type="button" class="list-group-item list-group-item-action border" data-user="<%= k.user.full_name %>" data-reason="<%= k.kudo_reason.description %>" data-date="<%= k.date.strftime("%m/%d/%Y") %>" data-desc="<%= k.description %>" data-submitted="<%= k.submitted_by %>" onclick="viewToggle(this)">
-                          <div class="row">
-                            <div class="col-4"><%= k.user.full_name.truncate(15) %></div> | <div class="col-3"><%= k.kudo_reason.description.truncate(12) %></div> | <div class="col"><%= k.date.strftime("%m/%d/%Y") %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
-                          </div>
-                        </button>
-                      <% end %>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -317,6 +299,7 @@
       </div>
       <div class="modal-footer border-top p-3">
         <button type="button" class="btn btn-primary m-auto w-25 font-weight-bold text-uppercase" data-dismiss="modal">Close</button>
+        <%= 
       </div>
     </div>
   </div>

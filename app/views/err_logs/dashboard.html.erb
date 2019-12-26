@@ -1,175 +1,150 @@
-<script>
-    $(document).ready(function() {
-    /* Activating Best In Place */
-    jQuery(".best_in_place").best_in_place();
-  });
-
-    $(document).ready( function () {
-    $('#error_index_all').DataTable();
-  });
-</script>
 <style>
+.dt-collapse {
+  height: 400px;
+  transition: height 0.5s;
+}
+
+.dt-expand {
+  height: 800px;
+  transition: height 0.5s;
+}
+
+table.dataTable td.details-control:before {
+   content: '\f0fe';
+   font-family: 'FontAwesome';
+   cursor: pointer;
+   font-size: 22px;
+   color: black;
+
+}
+table.dataTable tr.shown td.details-control:before {
+  content: '\f146';
+  color: black;
+  height:750px;
+  transition: height 5s;
+}
+table.dataTable thead th {
+    position: relative;
+    background-image: none !important;
+}
+ 
+table.dataTable thead th.sorting:after,
+table.dataTable thead th.sorting_asc:after,
+table.dataTable thead th.sorting_desc:after {
+    position: absolute;
+    top: 12px;
+    right: 8px;
+    display: block;
+    font-family: FontAwesome;
+}
+table.dataTable thead th.sorting:after {
+    content: "\f0dc";
+    color: #ddd;
+    font-size: 0.8em;
+    padding-top: 0.12em;
+}
+table.dataTable thead th.sorting_asc:after {
+    content: "\f0de";
+}
+table.dataTable thead th.sorting_desc:after {
+    content: "\f0dd";
+}
 
 </style>
 
+<script>
+$(document).ready(function() {
+    var table = $('#error_index_pending').DataTable( {
+        "columns": [
+            {
+                "className":      "details-control",
+                "orderable":      false,
+                "data":           null,
+                "defaultContent": ""
+            },
+            { "data": "ID" },
+            { "data": "Agent" },
+            { "data": "Department" },
+            { "data": "Date" },
+            { "data": "Status" }
+        ],
+        "order": [[3, 'asc'],[2, 'asc']]
+    } );
+    
+    table.rows.add([<% @err_logs.each do |err_log| %><% @improvement_id = err_log.id %>{'': '', 'ID': '<%= err_log.id %>', 'Agent': '<%= err_log.user.full_name %>', 'Department': '<%= err_log.department.name %>', 'Date':'<%= err_log.errdate.strftime('%m/%d/%Y') %>', 'Status':'<%= err_log.err_status.statusname %>'},<% else %><% end %>]).draw();
+
+    // Add event listener for opening and closing details
+    $('#error_index_pending tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+            $('#pending-card').removeClass('dt-expand');
+            $('#pending-card').addClass('dt-collapse');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+            $('#pending-card').removeClass('dt-collapse');
+            $('#pending-card').addClass('dt-expand');
+        }
+    });
+function format() {
+    <% @err_log = ErrLog.find(@improvement_id) %>
+    // `d` is the original data object for the row
+    return '<div class="m-2" id="dropdown-form"><%= form_for(@err_log, html: { class: "form" }) do |f| %><%= f.error_notification %><%= f.form_group :user_id, class: "row" do |f| %><%= f.label "ID", class: "control-label col-md-4" -%><div class="col-8 col-md-8"><%= f.text_field :user_id, class: "form-control form-control-sm text-dark" %><%= f.error_messages -%></div><% end %><%= f.form_group :department_id, class: "row" do |f| %><%= f.label "Department", class: "control-label col-md-4" -%><div class="col-8 col-md-8"><%= f.text_field :department_id, class: "form-control form-control-sm text-dark" %><%= f.error_messages -%></div><% end %><div class="form-inputs"><%= f.form_group :serviceorder, class: "row" do |f| %><%= f.label "Service Order", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= f.text_field :serviceorder, class: "form-control form-control-sm text-dark"%><%= f.error_messages %></div><% end %><%= f.form_group :errdate, class: "row" do |f| %><%= f.label "Improvement Date", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= f.date_field :errdate, class: "form-control form-control-sm text-dark" %><%= f.error_messages %></div><% end %><%= f.form_group :errdesc, class: "row" do |f| %><%= f.label "Description", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= f.text_field :errdesc, class: "form-control form-control-sm text-dark" %><%= f.error_messages %></div><% end %><%= f.form_group :err_cost, class: "row" do |f| %><%= f.label "Improvement Cost", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= f.number_field :err_cost, class: "form-control form-control-sm text-dark", "value": "0.00", step: :any %><%= f.error_messages %></div><% end %><%= f.form_group :err_type_id, class: "row" do |f| %>\n<%= f.label "Type", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= j(f.collection_select(:err_type_id, ErrType.order(:description), :id, :description, {}, {:class=>"form-control form-control-sm text-dark"}))  %><%= f.error_messages %></div><% end %><%= f.form_group :err_name_id, class: "row" do |f| %>\n<%= f.label "Disposition", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= j(f.collection_select(:err_name_id, ErrName.order(:id), :id, :errname, {}, {:class=>"form-control form-control-sm text-dark"}))  %><%= f.error_messages %></div><% end %><%= f.hidden_field :err_name_id, value: "3" %><%= f.hidden_field :err_status_id, value: "1" %><%= f.hidden_field :errsubmitby, value: current_user.full_name %></div><div class="d-flex"><div class="ml-auto"><%= f.submit "SUBMIT", class: "font-weight-bold mt-3 mr-2 btn btn-primary" %></div></div><% end %></div>';
+  }
+});
+
+
+
+</script>
+
+
       <div class="container">
         <div class="row">
-          <div class="col-9">
-            <div class="card">
-                
-              <div class="card-body" style="height:400px;overflow-y: scroll;">
-                <h5 class="text-uppercase m-auto font-weight-bold">PENDING APPROVAL ERRORS</h5>
+          <div class="col-12">
+            <div class="card dt-collapse" id="pending-card">
+              <div class="card-body">
+                <h5 class="text-uppercase m-auto font-weight-bold">PENDING IMPROVEMENT LOGS</h5>
                 <div class="table-responsive">
-                  <table class="table table-striped table-hover display border rounded" id="parts_index_pending">
+                  <table id="error_index_pending" class="table table-striped table-hover display" style="width:100%">
                     <thead>
                     <tr>
-                                            <th>Agent</th>
-                                            <th>Department</th>
-                                            <th>Date</th>
-                                            <th>Status</th>
+                      <th></th>
+                      <th>ID</th>
+                      <th>Agent</th>
+                      <th>Department</th>
+                      <th>Date</th>
+                      <th>Status</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <% @err_logs.each do |err_log| %>
-                      <tr data-toggle="collapse" data-target="#accordion<%= err_log.id %>" class="accordion-toggle" data-href="#accordion<%= err_log.id %>">
-                                            <td><%= err_log.user.full_name %></td>
-                                            <td><%= err_log.department.name %></td>
-                                            <td><%= err_log.errdate %></td>
-                                            <td><%= err_log.err_status.statusname %></td>
-                        
-                        </tr>
-                        <tr>
-                          <td colspan="10" class="hiddenrow">
-                            <div id="accordion<%= err_log.id %>" class="collapse">
-                              <div class="card m-1 p-1">
-                                <%= form_for(err_log, html: { class: 'form-horizontal' }) do |f| %>
-                                  <%= f.error_notification %>
 
-                                  <div class="form-inputs">
-                                  <div class="row">  
-                                    <div class="col-6">
-                                      <div class="row p-1">
-                                        <div class="col-3">
-                                          <label>Error Type:</label>
-                                        </div>
-                                        <div class="col-9">
-                                          <%= f.collection_select :err_name_id, ErrName.order(errname: :desc), :id, :errname, {}, {:class=>'form-control form-control-sm text-dark'} %>
-                                        </div>
-                                      </div>
-                                      <div class="row p-1">
-                                        <div class="col-3">
-                                          <label>Error Cost</label>
-                                        </div>
-                                        <div class="col-9">  
-                                          <%= f.number_field :err_cost, class: 'form-control form-control-sm text-dark' %>
-                                        </div>
-                                      </div>
-                                      <div class="row p-1">
-                                        <div class="col-3">
-                                          <label>Trainer:</label>
-                                        </div>
-                                        <div class="col-9">
-                                          <%= f.collection_select :approved_by, @approved_by, :full_name, :full_name, {}, {:class=>'form-control form-control-sm text-dark'} %>
-                                        </div>
-                                      </div>
-                                      <div class="row p-1">
-                                        <div class="col-3">
-                                          <label>Type:</label>
-                                        </div>
-                                        <div class="col-9">  
-                                          <%= f.collection_select :err_type_id, ErrType.order(:description), :id, :description, {}, {:class=>'form-control form-control-sm text-dark'} %>
-                                        </div>
-                                      </div>
-                                      <div class="row p-1">
-                                        <% if err_log.dispute.present? %>
-                                          <div class="col-3">
-                                            <label>Trainer Response:</label>
-                                          </div>
-                                          <div class="col-9">  
-                                            <%= f.text_area :dispute_response, class: "form-control form-control-sm text-dark" %>
-                                          </div>
-                                        <% else %>
-                                          <div class="col-3">
-                                            <label>Notes:</label>
-                                          </div>
-                                          <div class="col-9">  
-                                            <%= f.text_area :err_notes, class: "form-control form-control-sm text-dark" %>
-                                          </div>
-                                        <% end %>
-                                      </div>
-                                    </div>
-                                    <div class="col-6" style="overflow-y: scroll">
-                                      <% if err_log.errdesc.present? %>
-                                      <div class="row p-1">
-                                        <div class="col-12">
-                                          <label>Incident Notes:</label>
-                                        </div>
-                                      </div>
-                                      <div class="row p-1">
-                                        <div class="col-12">
-                                          <%= err_log.errdesc %>
-                                        </div>
-                                      </div>
-                                      <% else %>
-                                      <div class="row p-1">
-                                        <div class="col-12">
-                                          <label>Incident Notes:</label>
-                                        </div>
-                                      </div>
-                                      <div class="row p-1">
-                                        <div class="col-12">
-                                          <span class="text-monospace">NO ERROR INFORMATION SUBMITTED</span>
-                                        </div>
-                                      </div>
-                                      <% end %>
-                                      <% if err_log.dispute.present? %>
-                                      <hr>
-                                      <div class="row p-1">
-                                        <div class="col-12">
-                                          <label>Dispute Notes:</label>
-                                        </div>
-                                      </div>
-                                      <div class="row p-1">
-                                        <div class="col-12">
-                                          <%= err_log.dispute %>
-                                        </div>
-                                      </div>
-                                      <% end %>
-                                    </div>
-                                  </div>
-                                  <%= f.hidden_field :err_status_id, value: '3' %>
-                                  </div>
-
-                                  <div class="d-flex pt-3">
-                                      <%= f.submit 'UPDATE', class: 'btn btn-block btn-primary' %>
-                                  </div>
-                                <% end %>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <% end %>
-                        <% if @err_logs.length == 0 %>
-                        <tr><td colspan=42 class='text-center'>No Errors</td></tr>
-                        <% end %>
-                        </tbody>
                       </table>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-3 d-flex align-items-stretch">
-              <div class="card">
-                Filters coming soon!
-              </div>
-            </div>
           </div>
+
+<script>
+
+
+  $(document).ready(function() {
+    var table = $('#error_index_all').DataTable();
+    table.draw();
+  });
+</script>
 
         <div class="row">
           <div class="col-md-12">
-            <div class="card">
+            <div class="card p-3">
               <div class="table-responsive">
-                <table class="table table-striped table-hover table-sm-responsive p-1" id="error_index_all">
+                <table class="table table-striped table-hover" id="error_index_all">
                   <thead>
                     <tr>
                                             <th>User</th>
@@ -187,9 +162,9 @@
                     <tr>
                                             <td><%= err_log.user.full_name %></td>
                                             <td><%= err_log.department.name %></td>
-                                            <td><%= err_log.errdate %></td>
-                                            <td><%= err_log.err_name.errname %></td>
-                                            <td><%= err_log.errdesc %></td>
+                                            <td><%= err_log.errdate.strftime('%m/%d/%Y') %></td>
+                                            <td><%= err_log.err_name.errname.truncate(10) %></td>
+                                            <td><%= err_log.errdesc.truncate(10) %></td>
                                             <td><%= err_log.err_status.statusname %></td>
                                             <td><%= err_log.errsubmitby %></td>
                                           <td class="actions text-right">
@@ -212,3 +187,4 @@
               </div>
             </div>
           </div>
+<div id="buttons"></div>
