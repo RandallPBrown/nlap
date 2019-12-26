@@ -1,4 +1,4 @@
-class KudoStatusesController < InheritedResources::Base
+class KudoStatusesController < ApplicationController
 	layout "scaffold"
   	
   	private

@@ -1,4 +1,4 @@
-class KudoReasonsController < InheritedResources::Base
+class KudoReasonsController < ApplicationController
 	layout "scaffold"
   	
   	private
