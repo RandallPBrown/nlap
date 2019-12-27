@@ -106,12 +106,11 @@ class ToolsController < ApplicationController
   def validator_email
   	@tool = Tool.new(validator_params)
   	# @tool.receipt = :receipt
-  	@tool.save
+    @recipient = Recipient.all.joins(:recipient_group).group(:id).where('description = ?', 'Tools').references(:recipient_groups)
   	if @tool.save
-  		@recipient = Recipient.all.where('recipient_group.description = ?', 'Tools')
-     	@recipient.each do |recipient|
-        ToolMailer.tool_email(@tool, recipient).deliver_now
-      end
+  		@recipient.joins(:recipient_group).group(:id).each do |recipient|
+            ToolMailer.tool_email(@tool, recipient).deliver_now
+        end
     end
   end
 

@@ -30,8 +30,8 @@ body::-webkit-scrollbar {
 <script>
   
 $(document).on('turbolinks:load', function() {
-$('table').DataTable().buttons().destroy();
-$('table').DataTable().clear().destroy();
+// $('table').DataTable().buttons().destroy();
+// $('table').DataTable().clear().destroy();
 var entryTable = $('#entryTable').DataTable({ 
         "pageLength": 10,
         select: true,
@@ -66,13 +66,13 @@ var entryTable = $('#entryTable').DataTable({
     //   t.rows.add([{'Agent': data.agent, 'Department': data.department, 'Occurrence': data.occurrence, 'Value': data.ovalue, 'Date': data.date, 'Expiration': data.exp, 'Description': data.description, '': 'JUST ADDED'}]).draw();
     // });
 
-var buttons = new $.fn.DataTable.Buttons(entryTable, {
-    buttons: [
-      'copyHtml5',
-      'selectAll',
-      'csvHtml5'
-    ]
-}).container().appendTo($('#buttons'));
+// var buttons = new $.fn.DataTable.Buttons(entryTable, {
+//     buttons: [
+//       'copyHtml5',
+//       'selectAll',
+//       'csvHtml5'
+//     ]
+// }).container().appendTo($('#buttons'));
 
 
 

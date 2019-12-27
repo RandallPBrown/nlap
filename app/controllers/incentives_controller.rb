@@ -2,13 +2,11 @@ class IncentivesController < ApplicationController
   layout "scaffold"
   before_action :authorize_admin
   before_action :authenticate_user!
-  before_action :authorize_admin
   before_action :set_incentive, only: [:show, :edit, :update, :destroy]
 
   # GET /incentives
   def index
-    require 'will_paginate/array'
-    @incentives = Incentive.all.joins(:user).paginate(page: params[:page], :per_page => 10)
+    @incentives = Incentive.all.joins(:user)
   end
 
   def import

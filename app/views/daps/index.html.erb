@@ -94,31 +94,31 @@ var t = $('#dapsTable').DataTable({
             ]
           });
   t.order( [ 1, 'desc' ] ).draw();
-  var buttons = new $.fn.dataTable.Buttons(t, {
-     buttons: [
-       'copyHtml5',
-       'selectNone',
-       'selectAll',
-       'csvHtml5'
-    ]
-}).container().appendTo($('#buttons'));
+//   var buttons = new $.fn.dataTable.Buttons(t, {
+//      buttons: [
+//        'copyHtml5',
+//        'selectNone',
+//        'selectAll',
+//        'csvHtml5'
+//     ]
+// }).container().appendTo($('#buttons'));
 
     // Enable pusher logging - don't include this in production
 
-    var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>', {
-      cluster: '<%= ENV["PUSHER_CLUSTER"] %>',
-      forceTLS: true
-    });
+    // var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>', {
+    //   cluster: '<%= ENV["PUSHER_CLUSTER"] %>',
+    //   forceTLS: true
+    // });
 
-    var channel = pusher.subscribe('dap');
-    channel.bind('new-dap', function(data) {
-      t.rows.add([{'Nature of Incident': data.noi, 'Date': data.date, 'Agent': data.agent, 'Type': data.wuname, 'OSD': data.osd, '': 'JUST ADDED'}]).draw();
-    });
+    // var channel = pusher.subscribe('dap');
+    // channel.bind('new-dap', function(data) {
+    //   t.rows.add([{'Nature of Incident': data.noi, 'Date': data.date, 'Agent': data.agent, 'Type': data.wuname, 'OSD': data.osd, '': 'JUST ADDED'}]).draw();
+    // });
 
 t.rows.add([<% @daps.each do |dap| %><% if dap.user.deleted_at.blank? %>{'Nature of Incident': '<%= dap.wunature.description %>', 'Date': '<%= dap.ddate %>', 'Agent': '<%= dap.user.full_name %>', 'Department': '<%= dap.user.department.name %>', 'Type': '<%= dap.writeup.name %>', '': '<div class="btn-group"><%= link_to theme_icon_tag("eye"), dap, "data-toggle": "tooltip", title: "Show", class: "btn btn-link" %><%= link_to theme_icon_tag("pencil-alt"), edit_dap_path(dap), "data-toggle": "tooltip", title: "Edit", class: "btn btn-link" %><%= link_to theme_icon_tag("trash"), dap, "data-toggle": "tooltip", title: "Delete", data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %></div>'},<% else %><% end %><% else %><% end %>]
   ).draw();
-t.buttons().container()
-    .appendTo( $('.col-sm-6:eq(0)', t.table().container() ) );
+// t.buttons().container()
+//     .appendTo( $('.col-sm-6:eq(0)', t.table().container() ) );
 $('#dtDepartmentSearch').on( 'change', function () {
   t.columns( 3 )
     .search( this.value )
