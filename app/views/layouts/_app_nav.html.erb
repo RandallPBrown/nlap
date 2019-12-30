@@ -222,7 +222,7 @@
                     <% Kudo.all.where('kudo_status_id = ?', 2).group(:id).order('COUNT(id) DESC').group(:user_id).limit(50).uniq(&:user_id).each do |k| %>
                       <button type="button" class="list-group-item list-group-item-action border">
                         <div class="row">
-                          <div class="col-4"><%= k.user.full_name.truncate(15) %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
+                          <div class="col-4"><%= k.user.full_name %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
                         </div>
                       </button>
                     <% end %>
