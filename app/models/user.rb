@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :daps
   has_many :messages
   has_many :chatrooms, through: :messages
+  has_many :incentives
   accepts_nested_attributes_for :department
   accepts_nested_attributes_for :entries
   accepts_nested_attributes_for :daps

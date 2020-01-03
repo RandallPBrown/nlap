@@ -1,4 +1,4 @@
-<% @title = "Listing incentives" %>
+
 
 <script>
 $(document).ready(function(){
@@ -6,7 +6,7 @@ $(document).ready(function(){
         "pageLength": 25,
         select: true,
         ajax: {
-        url: 'incentives/incentive_breakdown',
+        url: 'incentive_dashboard_breakdown',
         "processing": true,
         dataSrc: ''
         },
@@ -19,24 +19,11 @@ $(document).ready(function(){
               { data: 'Turntime' },
               { data: 'Contracts' },
               { data: 'AHT' },
-              { data: 'Date' },
               { data: '' } 
             ]
           });
 });
 </script>
-
-  <% content_for :actions do %>
-    <%= link_to new_incentive_path, class: 'btn btn-primary btn-large pull-right ml-2 font-weight-bold text-uppercase' do %>
-      <%= fa_icon_tag "plus" %> Add Incentive
-      <% end %>
-    <%= link_to incentives_dashboard_path, class: 'btn btn-primary btn-large pull-right font-weight-bold text-uppercase' do %>
-      Dashboard
-      <% end %>
-      <% end %>
-      <%= @errors %>
-
-
       <div class="container pt-5">
         <div class="row">
           <div class="col-12 col-md-12">
@@ -52,15 +39,11 @@ $(document).ready(function(){
                                           <th>Turntime</th>
                                           <th>Contracts</th>
                                           <th>AHT</th>
-                                          <th>Date</th>
                                         <th></th>
                   </tr>
                 </thead>
                 <tbody>
 
-                    <% if @incentives.length == 0 %>
-                    <tr><td colspan=42 class='text-center'>No incentives.</td></tr>
-                    <% end %>
                     </tbody>
                   </table>
                   <div>

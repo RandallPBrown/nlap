@@ -11,6 +11,30 @@ class ErrLogsController < ApplicationController
     @err_log = ErrLog.new
   end
 
+
+
+  def err_log_breakdown
+    @err_logs = ErrLog.all
+    err_log_array = Array.new
+    @err_logs.each do |err_log| 
+      if err_log.user.deleted_at.nil? 
+        err_log_array << {
+         '': '', 
+         'ID': err_log.id,
+         'Agent': err_log.user.full_name, 
+         'Department': err_log.department.name, 
+         'Date': err_log.errdate.strftime('%m/%d/%Y'), 
+         'Status': err_log.err_status.statusname
+       }
+       else 
+      end  
+    end 
+    respond_to do |format|
+      format.html
+      format.json {render :json => err_log_array, public: true}
+    end
+  end
+
   def modal
     @err_logs_cost_departmental = ErrLog.all.where("department_id = ?", current_user.department.id).where(errdate: Date.today.beginning_of_month...Date.today.end_of_month).sum(:err_cost)
   end
@@ -35,6 +59,30 @@ class ErrLogsController < ApplicationController
 
   # GET /err_logs/1/edit
   def edit
+    @err_log_data = {
+          'ID': @err_log.id,
+          'dispute_response': @err_log.dispute_response, 
+          'serviceorder': @err_log.serviceorder, 
+          'approved_by': @err_log.approved_by, 
+          'err_notes': @err_log.err_notes, 
+          'err_cost': @err_log.err_cost, 
+          'user_id': @err_log.user_id,
+          'user_name': @err_log.user.full_name, 
+          'department_id': @err_log.department_id,
+          'department_name': @err_log.department.name,
+          'errdate': @err_log.errdate, 
+          'err_name_id': @err_log.err_name_id, 
+          'errdesc': @err_log.errdesc, 
+          'err_status_id': @err_log.err_status_id, 
+          'err_status_name': @err_log.err_status.statusname,
+          'errsubmitby': @err_log.errsubmitby, 
+          'dispute': @err_log.dispute, 
+          'err_type_id': @err_log.err_type_id
+       }
+    respond_to do |format|
+      format.html
+      format.json {render :json => @err_log_data, public: true}
+    end
   end
 
   # POST /err_logs

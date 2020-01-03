@@ -1,0 +1,102 @@
+
+<div class="m-1" id="dropdown-form">
+  <div class="row">
+    <div class="col-6">
+      <%= form_for(@err_log, html: { class: "form" }) do |f| %>
+        <%= f.error_notification %>
+        <%= f.form_group :user_id, class: "row" do |f| %>
+          <%= f.label "ID:", class: "font-weight-bold text-uppercase control-label col-md-3" -%>
+          <div class="col-7 col-md-7">
+            <%= f.text_field :user_id, class: "form-control form-control-sm text-dark" %>
+            <%= f.error_messages -%>
+          </div>
+        <% end %>
+        <%= f.form_group :department_id, class: "row" do |f| %>
+          <%= f.label "Department:", class: "font-weight-bold text-uppercase control-label col-md-3" -%>
+          <div class="col-7 col-md-7">
+            <%= f.text_field :department_id, class: "form-control form-control-sm text-dark" %>
+            <%= f.error_messages -%>
+          </div>
+        <% end %>
+        <%= f.form_group :serviceorder, class: "row" do |f| %>
+          <%= f.label "Service Order:", class: "font-weight-bold text-uppercase control-label col-md-3" %>
+          <div class="col-7 col-md-7">
+            <%= f.text_field :serviceorder, class: "form-control form-control-sm text-dark"%>
+            <%= f.error_messages %>
+          </div>
+        <% end %>
+        <%= f.form_group :errdate, class: "row" do |f| %>
+          <%= f.label "Improvement Date:", class: "font-weight-bold text-uppercase control-label col-md-3" %>
+          <div class="col-7 col-md-7">
+            <%= f.date_field :errdate, class: "form-control form-control-sm text-dark" %>
+            <%= f.error_messages %>
+          </div>
+        <% end %>
+        <%= f.form_group :err_cost, class: "row" do |f| %>
+          <%= f.label "Improvement Cost:", class: "font-weight-bold text-uppercase control-label col-md-3" %>
+          <div class="col-7 col-md-7">
+            <%= f.number_field :err_cost, class: "form-control form-control-sm text-dark", "value": "0.00", step: :any %>
+            <%= f.error_messages %>
+          </div>
+        <% end %>
+        <%= f.form_group :err_type_id, class: "row" do |f| %>
+          <%= f.label "Type:", class: "font-weight-bold text-uppercase control-label col-md-3" %>
+          <div class="col-7 col-md-7">
+            <%= f.collection_select(:err_type_id, ErrType.order(:description), :id, :description, {}, {:class=>"form-control text-dark"})  %>
+            <%= f.error_messages %>
+          </div>
+        <% end %>
+
+        <%= f.hidden_field :err_name_id, value: "3" %>
+        <%= f.hidden_field :err_status_id, value: "3" %>
+        <%= f.hidden_field :errsubmitby, value: current_user.full_name %>
+      </div>
+      <div class="col-6">
+        <%= f.form_group :err_name_id, class: "row" do |f| %>
+          <%= f.label "Disposition:", class: "font-weight-bold text-uppercase control-label col-md-3" %>
+          <div class="col-7 col-md-7">
+            <%= f.collection_select(:err_name_id, ErrName.order(:id), :id, :errname, {}, {:class=>"form-control  text-dark"})%>
+            <%= f.error_messages %>
+          </div>
+        <% end %>
+        <%= f.form_group :errdesc, class: "row" do |f| %>
+          <%= f.label "Description:", class: "font-weight-bold text-uppercase control-label col-md-3" %>
+          <div class="col-7 col-md-7">
+            <%= f.text_area :errdesc, class: "form-control form-control-sm text-dark" %>
+            <%= f.error_messages %>
+          </div>
+        <% end %>
+        <% if @generate_stuff.dispute.nil? %>
+          <%= f.form_group :err_notes, class: "row" do |f| %>
+            <%= f.label "Arbitrator Notes:", class: "font-weight-bold text-uppercase control-label col-md-3" %>
+            <div class="col-7 col-md-7">
+              <%= f.text_area :err_notes, class: "form-control form-control-sm text-dark" %>
+              <%= f.error_messages %>
+            </div>
+          <% end %>
+        <% else %>
+          <%= f.form_group :dispute, class: "row" do |f| %>
+            <%= f.label "Dispute Notes:", class: "font-weight-bold text-uppercase control-label col-md-3" %>
+            <div class="col-7 col-md-7">
+              <%= f.text_area :dispute, class: "form-control form-control-sm text-dark" %>
+              <%= f.error_messages %>
+            </div>
+          <% end %>
+          <%= f.form_group :dispute_response, class: "row" do |f| %>
+            <%= f.label "Arbitrator Response:", class: "font-weight-bold text-uppercase control-label col-md-3" %>
+            <div class="col-7 col-md-7">
+              <%= f.text_area :dispute_response, class: "form-control form-control-sm text-dark" %>
+              <%= f.error_messages %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="d-flex">
+        <div class="ml-auto">
+          <%= f.submit "SUBMIT", class: "font-weight-bold mt-3 mr-2 btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  <% end %>

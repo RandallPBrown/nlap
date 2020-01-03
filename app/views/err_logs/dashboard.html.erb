@@ -55,6 +55,13 @@ table.dataTable thead th.sorting_desc:after {
 <script>
 $(document).ready(function() {
     var table = $('#error_index_pending').DataTable( {
+        "pageLength": 10,
+        select: true,
+        ajax: {
+        url: 'err_log_breakdown',
+        "processing": true,
+        dataSrc: ''
+        },
         "columns": [
             {
                 "className":      "details-control",
@@ -71,7 +78,7 @@ $(document).ready(function() {
         "order": [[3, 'asc'],[2, 'asc']]
     } );
     
-    table.rows.add([<% @err_logs.each do |err_log| %><% @improvement_id = err_log.id %>{'': '', 'ID': '<%= err_log.id %>', 'Agent': '<%= err_log.user.full_name %>', 'Department': '<%= err_log.department.name %>', 'Date':'<%= err_log.errdate.strftime('%m/%d/%Y') %>', 'Status':'<%= err_log.err_status.statusname %>'},<% else %><% end %>]).draw();
+    // table.rows.add([<% @err_logs.each do |err_log| %><% @improvement_id = err_log.id %>{'': '', 'ID': '<%= err_log.id %>', 'Agent': '<%= err_log.user.full_name %>', 'Department': '<%= err_log.department.name %>', 'Date':'<%= err_log.errdate.strftime('%m/%d/%Y') %>', 'Status':'<%= err_log.err_status.statusname %>'},<% else %><% end %>]).draw();
 
     // Add event listener for opening and closing details
     $('#error_index_pending tbody').on('click', 'td.details-control', function () {
@@ -86,18 +93,56 @@ $(document).ready(function() {
             $('#pending-card').addClass('dt-collapse');
         }
         else {
+          var rowData = row.data();
+          var tmp = null;
+          $.ajax({
+              'type': "GET",
+              'dataType': 'json',
+              'url': rowData.ID + "/edit",
+              'data': { 'request': "", 'target': 'arrange_url', 'method': 'method_target' },
+              'success': function (data) {
+                  tmp = data;
+                  console.log(tmp)
+                  row.child( format(row.data()) ).show();
+                  tr.addClass('shown');
+                  return tmp;
+              }
+          });
+          function format(rowData) {
+            <%# @err_log = ErrLog.find(@improvement_id) %>
+            // `d` is the original data object for the row
+            console.log(rowData);
+            return  '<div class="m-2" id="dropdown-form">'+
+                      '<form class="form">'+
+                        '<label class="font-weight-bold text-uppercase control-label col-md-3">User ID: </label>'+
+                        '<input type="text" name="err_log[user_id]" id="err_log_user_id" class="form-control form-control-sm text-dark" value="'+ tmp.user_id +'">'+
+                        '<label class="font-weight-bold text-uppercase control-label col-md-3">Department ID: </label>'+
+                        '<input type="text" name="err_log[department_id]" id="err_log_department_id" class="form-control form-control-sm text-dark" value="'+ tmp.department_id +'">'+
+                        '<label class="font-weight-bold text-uppercase control-label col-md-3">Service Order: </label>'+
+                        '<input type="text" name="err_log[serviceorder]" id="err_log_serviceorder" class="form-control form-control-sm text-dark" value="'+ tmp.serviceorder +'">'+
+                        '<label class="font-weight-bold text-uppercase control-label col-md-3">Date: </label>'+
+                        '<input type="text" name="err_log[errdate]" id="err_log_errdate" class="form-control form-control-sm text-dark" value="'+ tmp.errdate +'">'+
+                        '<label class="font-weight-bold text-uppercase control-label col-md-3">Cost: </label>'+
+                        '<input type="text" name="err_log[err_cost]" id="err_log_err_cost" class="form-control form-control-sm text-dark" value="'+ tmp.err_cost +'">'+
+                        '<input type="text" name="err_log[err_name_id]" id="err_log_err_name_id" class="form-control form-control-sm text-dark" value="'+ tmp.err_name_id +'" hidden>'+
+                        '<input type="text" name="err_log[err_status_id]" id="err_log_err_status_id" class="form-control form-control-sm text-dark" value="'+ tmp.err_status_id +'" hidden>'+
+                        '<input type="text" name="err_log[errsubmitby]" id="err_log_errsubmitby" class="form-control form-control-sm text-dark" value="'+ tmp.errsubmitby +'" hidden>'+
+                        '<button type="submit" class="btn btn-sm btn-primary font-weight-bold">SUBMIT</button>'+
+                      '</form>'+
+                    '</div>';
+          }
+          // $.get((rowData.ID + "/edit"), function(data){
+          //   console.log(data)
+          //   row.child( format(row.data()) ).show();
+          //   tr.addClass('shown');
+          //  })
             // Open this row
-            row.child( format(row.data()) ).show();
-            tr.addClass('shown');
+            
             $('#pending-card').removeClass('dt-collapse');
             $('#pending-card').addClass('dt-expand');
         }
     });
-function format() {
-    <% @err_log = ErrLog.find(@improvement_id) %>
-    // `d` is the original data object for the row
-    return '<div class="m-2" id="dropdown-form"><%= form_for(@err_log, html: { class: "form" }) do |f| %><%= f.error_notification %><%= f.form_group :user_id, class: "row" do |f| %><%= f.label "ID", class: "control-label col-md-4" -%><div class="col-8 col-md-8"><%= f.text_field :user_id, class: "form-control form-control-sm text-dark" %><%= f.error_messages -%></div><% end %><%= f.form_group :department_id, class: "row" do |f| %><%= f.label "Department", class: "control-label col-md-4" -%><div class="col-8 col-md-8"><%= f.text_field :department_id, class: "form-control form-control-sm text-dark" %><%= f.error_messages -%></div><% end %><div class="form-inputs"><%= f.form_group :serviceorder, class: "row" do |f| %><%= f.label "Service Order", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= f.text_field :serviceorder, class: "form-control form-control-sm text-dark"%><%= f.error_messages %></div><% end %><%= f.form_group :errdate, class: "row" do |f| %><%= f.label "Improvement Date", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= f.date_field :errdate, class: "form-control form-control-sm text-dark" %><%= f.error_messages %></div><% end %><%= f.form_group :errdesc, class: "row" do |f| %><%= f.label "Description", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= f.text_field :errdesc, class: "form-control form-control-sm text-dark" %><%= f.error_messages %></div><% end %><%= f.form_group :err_cost, class: "row" do |f| %><%= f.label "Improvement Cost", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= f.number_field :err_cost, class: "form-control form-control-sm text-dark", "value": "0.00", step: :any %><%= f.error_messages %></div><% end %><%= f.form_group :err_type_id, class: "row" do |f| %>\n<%= f.label "Type", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= j(f.collection_select(:err_type_id, ErrType.order(:description), :id, :description, {}, {:class=>"form-control text-dark"}))  %><%= f.error_messages %></div><% end %><%= f.form_group :err_name_id, class: "row" do |f| %>\n<%= f.label "Disposition", class: "control-label col-md-4" %><div class="col-8 col-md-8"><%= j(f.collection_select(:err_name_id, ErrName.order(:id), :id, :errname, {}, {:class=>"form-control  text-dark"}))  %><%= f.error_messages %></div><% end %><%= f.hidden_field :err_name_id, value: "3" %><%= f.hidden_field :err_status_id, value: "1" %><%= f.hidden_field :errsubmitby, value: current_user.full_name %></div><div class="d-flex"><div class="ml-auto"><%= f.submit "SUBMIT", class: "font-weight-bold mt-3 mr-2 btn btn-primary" %></div></div><% end %></div>';
-  }
+
 });
 
 
@@ -132,8 +177,6 @@ function format() {
           </div>
 
 <script>
-
-
   $(document).ready(function() {
     var table = $('#error_index_all').DataTable();
     table.draw();

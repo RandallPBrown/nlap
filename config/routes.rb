@@ -29,6 +29,13 @@ Rails.application.routes.draw do
   get 'users/password_reset'
   get 'users/user_breakdown'
   get 'parts/dashboard'
+
+  get 'incentives/dashboard'
+  get 'incentives/incentive_breakdown'
+  get 'incentives/incentive_dashboard_breakdown'
+  get 'incentives/incentive_dashboard_breakdown_pdf', defaults: { format: 'pdf'} 
+
+  get 'err_logs/err_log_breakdown'
   get 'err_logs/dashboard'
   get 'err_logs/form_dispute'
   get 'users/modal', defaults: { format: 'js'} 
