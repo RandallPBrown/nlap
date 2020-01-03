@@ -12,10 +12,10 @@ tfoot {
   display: table-row-group !important;
 }
 
-tr {
+/*tr {
   page-break-inside: avoid !important;
-}
-
+}*/
+.page-break { display:block; clear:both; page-break-after:always; }
 </style>
 <div class="container">
   <div class="card p-2">
@@ -120,27 +120,53 @@ tr {
         </div>
       </div>
   	</div>
+  	<div class="page-break"></div>
+  	<div class="row pb-5">
+      <div class="col-12">
+        <div class="card bg-light">
+          <center><h1 class="text-monospace text-uppercase font-weight-bold"><u>AGENT INFORMATION</u></h1></center>
+          <div class="row">
+            <div class="col-6">
+              <label class="font-weight-bold text-uppercase text-monospace">Agent: </label>
+              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.full_name %>">
+
+              <label class="font-weight-bold text-uppercase text-monospace">Department: </label>
+              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.agent.department.name %>">
+
+             
+            </div>
+            <div class="col-6">
+              <label class="font-weight-bold text-uppercase text-monospace">Active Occurrences: </label>
+              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.agent.occurrences.values.first %>">
+
+              <label class="font-weight-bold text-uppercase text-monospace">Active Prog Actions: </label>
+              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.daps.count.to_f %>">
+            </div>
+          </div>
+        </div>
+      </div>
+  	</div>
   	<div class="row">
     	<div class="col-12">
         	<div class="card bg-light p-5">
         		<label class="font-weight-bold text-uppercase text-monospace">Employee Print:</label>
-        		<input class="form-control form-control-lg" type="text">
+        		<input class="form-control form-control-lg bg-white" type="text">
         		<label class="font-weight-bold text-uppercase text-monospace">Employee Signature:</label>
-        		<input class="form-control form-control-lg" type="text">
+        		<input class="form-control form-control-lg bg-white" type="text">
         		<br>
         		<hr>
         		<br>
         		<label class="font-weight-bold text-uppercase text-monospace">Coach Print:</label>
-        		<input class="form-control form-control-lg" type="text">
+        		<input class="form-control form-control-lg bg-white" type="text">
         		<label class="font-weight-bold text-uppercase text-monospace">Coach Signature:</label>
-        		<input class="form-control form-control-lg" type="text">
+        		<input class="form-control form-control-lg bg-white" type="text">
         		<br>
         		<hr>
         		<br>
         		<label class="font-weight-bold text-uppercase text-monospace">Management Print:</label>
-        		<input class="form-control form-control-lg" type="text">
+        		<input class="form-control form-control-lg bg-white" type="text">
         		<label class="font-weight-bold text-uppercase text-monospace">Management Signature:</label>
-        		<input class="form-control form-control-lg" type="text">
+        		<input class="form-control form-control-lg bg-white" type="text">
         	</div>
         </div>
     </div>
