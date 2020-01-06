@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   get 'tools/ferguson'
   get 'tools/val'
   get 'tools/pendingreview'
+  get 'tools/manufacturer_check'
 
   get 'daps/form2'  
   get 'home/dashboard'
@@ -72,6 +73,7 @@ Rails.application.routes.draw do
   resources :incentives do 
     collection { post :import }
   end 
+  resources :search, only: [:index]
   resources :mfg_warranties
   resources :fergusons
   resources :districts

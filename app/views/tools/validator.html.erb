@@ -169,7 +169,46 @@ $(document).ready(function(){
 									</div>
 								</div>
 							</div>
-							
+							<script>
+								$('#modelNumberCalls').change(function(){
+									$.ajax({
+								  type:"GET",
+								  url:"manufacturer_check",
+								  dataType:"json",
+								  data: {submitted_code: $('#modelNumberCalls').val()},
+								  success:function(result){
+								  	if (result == null) {
+								  		$('#warrantyLinkCalls').val("New model, check MFG").addClass('text-danger')
+								  	} else {
+								  		
+								  		$('#warrantyLinkCalls').val(result.warranty_link).removeClass('text-danger')
+								  	}
+								  	
+								  },
+								  error:function(result){
+								  	$('#warrantyLinkCalls').val('No model listed, please go back and submit');
+								  }
+								});
+								})
+								
+							</script>
+<!-- 							<script>
+								$('#modelNumberCalls').change(function(){
+									var model = $('#modelNumberCalls').val();
+									$.ajax({
+									    type: "GET",  
+									    url: "manufacturer_check",
+									    data: { model_number: model },
+									    success: function(data){  
+									          // $('#warrantyLinkCalls').val()
+									          alert(data.link)
+									    },
+									    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+									        alert("New model submitted, please verify links for accuracy."); 
+									    }       
+									});
+								})
+							</script> -->
 							<div class="row mb-3">
 								<div class="col-12">
 									<div class="input-group input-group-sm">

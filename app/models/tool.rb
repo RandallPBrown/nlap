@@ -13,4 +13,6 @@ class Tool < ApplicationRecord
 		:associated_against => {
 		:dealer => :code
 	}
+	pg_search_scope :search, :against => :model_number
+
 end

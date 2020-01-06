@@ -87,7 +87,21 @@ class ToolsController < ApplicationController
     end
   end
 
-
+  def manufacturer_check
+    submitted_code = params[:submitted_code]
+    mfg_warranties = MfgWarranty.where("model_number = ")
+    
+    # do something with submitted_code and return the results
+    if params[:submitted_code].present?
+      @mfg_code = MfgWarranty.all.find_by(model_number: submitted_code)
+    else
+      @mfg_code = " "
+    end
+    respond_to do |format|
+      format.html
+      format.json {render :json => @mfg_code}
+    end
+  end
 
   def get_district
     submitted_code = params[:submitted_code]
