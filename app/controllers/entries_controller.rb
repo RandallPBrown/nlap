@@ -144,7 +144,7 @@ end
   end
 
   def entry_breakdown
-    @entries = Entry.all.joins(:department, :occurrence, agent: :user).order(params[:sort]).order('edate desc').includes(:user, :department, :occurrence)
+    @entries = Entry.all.joins(:department, :occurrence, agent: :user).includes(:user, :department, :occurrence)
     entry_array = Array.new
     @entries.each do |entry| 
       if entry.user.deleted_at.nil? 
