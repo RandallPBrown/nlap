@@ -90,7 +90,7 @@ if ($('#dtDateStart').length > 0) {
                   var iFini = document.getElementById('dtDateStart').value;
               }
               if ($('#dtDateEnd').val() == "") {
-                  var iFfin = "2019-08-06";
+                  var iFfin = "<%= Date.today.strftime("%Y-%m-%d") %>";
               } else {
                   var iFfin = document.getElementById('dtDateEnd').value;
               }
