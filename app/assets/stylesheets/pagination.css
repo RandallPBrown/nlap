@@ -27,3 +27,17 @@
   background-color: #dcedc8 !important;
 }
 
+.pagination .page-item .page-link, .pagination ul li a {
+  border-radius: 2px !important;
+  background-color: #707070 !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.buttons-html5 {
+  width: 100% !important;
+  border-radius: 2px !important;
+  background-color: #707070 !important;
+  color: white !important;
+  font-weight: bold !important;
+}

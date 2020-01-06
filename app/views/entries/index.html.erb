@@ -33,7 +33,8 @@ $(document).on('turbolinks:load', function() {
 // $('table').DataTable().buttons().destroy();
 // $('table').DataTable().clear().destroy();
 var entryTable = $('#entryTable').DataTable({ 
-        "pageLength": 10,
+        // dom: 'Bfrtip',
+        "pageLength": 15,
         select: true,
         ajax: {
         url: 'entries/entry_breakdown',
@@ -66,13 +67,14 @@ var entryTable = $('#entryTable').DataTable({
     //   t.rows.add([{'Agent': data.agent, 'Department': data.department, 'Occurrence': data.occurrence, 'Value': data.ovalue, 'Date': data.date, 'Expiration': data.exp, 'Description': data.description, '': 'JUST ADDED'}]).draw();
     // });
 
-// var buttons = new $.fn.DataTable.Buttons(entryTable, {
-//     buttons: [
-//       'copyHtml5',
-//       'selectAll',
-//       'csvHtml5'
-//     ]
-// }).container().appendTo($('#buttons'));
+var buttons = new $.fn.DataTable.Buttons(entryTable, {
+    buttons: [
+            'copy',
+            'excel',
+            'csv',
+            'pdf'
+        ]
+}).container().appendTo($('#buttons'));
 
 
 
@@ -232,4 +234,4 @@ $.fn.dataTableExt.afnFiltering.push(
   </div>
 </div>
 
-<%= javascript_include_tag("https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js") %>
+<%#= javascript_include_tag("https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js") %>
