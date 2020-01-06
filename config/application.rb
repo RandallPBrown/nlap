@@ -15,7 +15,7 @@ module Ops
 
     # TWEAK MORE TO MAKE HTTP WORK FOR STATS
     # config.middleware.insert_before  ActionDispatch::Cookies, Rack::SslEnforcer
-    config.middleware.use Rack::SslEnforcer, :except => ['/tools/validator', '/mfg_warranties'], :except_environments => 'development', strict: true
+    config.middleware.use Rack::SslEnforcer, :except => ['/tools/manufacturer_check', '/tools/validator', '/mfg_warranties'], :except_environments => 'development', strict: true
     # config.middleware.use Rack::SslEnforcer, :except_environments => 'development'
 
     # for API usage later possibly
