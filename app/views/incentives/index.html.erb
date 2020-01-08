@@ -1,9 +1,9 @@
 <% @title = "Listing incentives" %>
-
+<%= stylesheet_link_tag "pagination.css" %>
 <script>
 $(document).ready(function(){
   var table = $('#incentivetable').dataTable({ 
-        "pageLength": 25,
+        "pageLength": 15,
         select: true,
         ajax: {
         url: 'incentives/incentive_breakdown',
@@ -37,43 +37,48 @@ $(document).ready(function(){
       <%= @errors %>
 
 
-      <div class="container pt-5">
-        <div class="row">
-          <div class="col-12 col-md-12">
-            <div class="card  p-2">
-              <table class="table table-striped table-hover" id="incentivetable">
-                <thead>
-                  <tr>
-                                          <th>User</th>
-                                          <th>Occurrences</th>
-                                          <th>Uph</th>
-                                          <th>Errors</th>
-                                          <th>Occupancy</th>
-                                          <th>Turntime</th>
-                                          <th>Contracts</th>
-                                          <th>AHT</th>
-                                          <th>Date</th>
-                                        <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                    <% if @incentives.length == 0 %>
-                    <tr><td colspan=42 class='text-center'>No incentives.</td></tr>
-                    <% end %>
-                    </tbody>
-                  </table>
-                  <div>
-                    <%= form_tag import_incentives_path, multipart: true do %>
-                      <%= file_field_tag :file, class: 'btn btn-primary font-weight-bold' %>
-                      <%= submit_tag "IMPORT", class: 'btn btn-primary font-weight-bold' %>
-                    <% end %>
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-12 col-md-12">
+        <div class="card  p-2">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover" id="incentivetable">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Occurrences</th>
+                  <th>Uph</th>
+                  <th>Errors</th>
+                  <th>Occupancy</th>
+                  <th>Turntime</th>
+                  <th>Contracts</th>
+                  <th>AHT</th>
+                  <th>Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if @incentives.length == 0 %>
+                  <tr><td colspan=42 class='text-center'>No incentives.</td></tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="custom-file px-2 py-2 mb-2">
+              <%= form_tag import_incentives_path, multipart: true do %>
+                <div class="form-row">
+                  <div class="col-11">
+                    <%= file_field_tag :file, class: 'custom-file-input font-weight-bold' %>
+                    <label class="custom-file-label" for="customFile">Choose file to import</label>
+                  </div>
+                  <div class="col-1">
+                    <%= submit_tag "IMPORT", class: 'btn btn-primary font-weight-bold' %>
                   </div>
                 </div>
-
-                                  <%# Remove the trailing if condition if you're using pagination. %>
-                
-                              </div>
-
-            </div>
+              <% end %>
           </div>
+        </div>                
+      </div>
+    </div>
+  </div>
