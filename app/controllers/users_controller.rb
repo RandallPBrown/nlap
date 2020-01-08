@@ -167,7 +167,8 @@ class UsersController < ApplicationController
         @user.roles = []
         @user.add_role params[:user][:role]
         Agent.where("user_id = ?", @user.id).update({:department_id => @user.department_id, :user_id => @user.id})
-        redirect_to @user, notice: 'User was successfully updated.'
+        redirect_back(fallback_location: root_path)
+        flash[:notice] = 'New agent has been created successfully.'
       else
         render :edit
       end
