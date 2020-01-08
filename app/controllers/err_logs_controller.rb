@@ -41,6 +41,21 @@ class ErrLogsController < ApplicationController
 
   def dashboard
     # @part = Part.find(params[:id])
+        @err_logs = ErrLog.all
+    err_log_array = Array.new
+    @err_logs.each do |err_log| 
+      if err_log.user.deleted_at.nil? 
+        err_log_array << {
+         '': '', 
+         'ID': err_log.id,
+         'Agent': err_log.user.full_name, 
+         'Department': err_log.department.name, 
+         'Date': err_log.errdate.strftime('%m/%d/%Y'), 
+         'Status': err_log.err_status.statusname
+       }
+       else 
+      end  
+    end 
     @err_log = ErrLog.all
     @approved_by = User.order(:id).where('users.admin = ?', true)
     @err_logs = ErrLog.includes(:err_status).joins(:err_status).where('statusname = ? OR statusname = ?', 'Pending', 'Dispute').order(created_at: :desc, updated_at: :desc)
