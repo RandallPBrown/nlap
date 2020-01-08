@@ -13,7 +13,7 @@ class IncentivesController < ApplicationController
   end
 
   def incentive_breakdown
-    @incentives = Incentive.all
+    @incentives = Incentive.all.order(date: :desc).limit(800)
     incentive_array = Array.new
     @incentives.each do |incentive| 
       if incentive.user.deleted_at.nil? 
