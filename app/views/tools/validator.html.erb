@@ -762,6 +762,7 @@ $(document).ready(function(){
 			    		<a class="nav-link" id="v-pills-crdofr-tab" data-toggle="pill" href="#v-pills-crdofr" role="tab" aria-controls="v-pills-crdofr" aria-selected="false">CRDOFR</a>
 			    		<a class="nav-link" id="v-pills-jfrr-tab" data-toggle="pill" href="#v-pills-jfrr" role="tab" aria-controls="v-pills-jfrr" aria-selected="false">JFRR</a>
 			    		<a class="nav-link" id="v-pills-edgprt-tab" data-toggle="pill" href="#v-pills-edgprt" role="tab" aria-controls="v-pills-edgprt" aria-selected="false">EDGPRT</a>
+			    		<a class="nav-link" id="v-pills-ADGCACP-tab" data-toggle="pill" href="#v-pills-ADGCACP" role="tab" aria-controls="v-pills-ADGCACP" aria-selected="false">ADGCACP</a>
 			    	</div>
 			    	<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 			    		<button class="nav-link border-light" id="shortkeyReset">RESET</button>
@@ -863,6 +864,26 @@ Estimate: Approved (  ), Pending (  ), DENIED (  ), REVISED (  )
 Pre-Approval Code: CODE
 
 Thank you,
+
+<%= current_user.full_name %>
+<%= current_user.department.name %>
+				    			</textarea>
+				    		</div>
+				    		<div class="tab-pane fade" id="v-pills-ADGCACP" role="tabpanel" aria-labelledby="v-pills-ADGCACP-tab">
+				    			<textarea class="form-control m-2" style="min-height: 500px !important; max-height: 100% !important; width: 98% !important">
+Customer has been informed of the Adorama Electronic Gift Card in the amount of $
+The electronic gift card will be sent to customer via email
+This can be used at Adorama online, in store or over the phone.
+Customer’s Email Address: (THIS IS REQUIRED)
+It can take up to 5 business days for customer to receive the email.  If you do not receive after 5 business days please contact us back at 855-608-4501 and select opt 2
+(If customer calls back for Status transfer them to Service Center Questions queue ext 1102)
+***NEVER REFER CUSTOMER BACK TO ADORAMA FOR STATUS***
+WHAT IS THE DISPOSITION OF CUSTOMER’S ORIGINAL UNIT? (Delete all that does not apply)
+Sent To Anew (order will not be placed till unit received)
+Depot Facility scrapping unit (PROCEED)
+Other (explain)
+SEND SHORTKEY TO PENDINGREVIEW@NEWLEAFSC.NET FOR DISPATCH TO ADORAMA*
+Advise Customer: THIS WILL FULFILL ALL OBLIGATIONS OF THIS SERVICE CONTRACT FOR THIS UNIT.
 
 <%= current_user.full_name %>
 <%= current_user.department.name %>
@@ -1241,7 +1262,7 @@ Thank you,
     <%= javascript_include_tag('Config.js') %>
     <%= javascript_include_tag('kendo.dataviz.min.js') %>
     <%= javascript_include_tag('https://kit.fontawesome.com/7932b0d104.js') %>
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
         //$.ajaxSetup({ error: handleError });
         $.ajaxSetup({ error: function(jqXHR, exception) {
                 alert("Status: " + jqXHR.status + "\nStatusText: " + jqXHR.statusText + "\nException: " + exception + "\nResponseText: " + jqXHR.responseText);
@@ -3556,7 +3577,7 @@ Thank you,
             this.value = value;
         }
         
-    </script> -->
+    </script>
     <style type="text/css">
 
 
