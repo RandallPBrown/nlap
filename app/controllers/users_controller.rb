@@ -153,7 +153,8 @@ class UsersController < ApplicationController
       if @user.save
         @user.add_role params[:user][:role]
         # UserMailer.welcome_email(@user).deliver_now
-        redirect_to users_path, notice: 'User was successfully created.'
+        redirect_back(fallback_location: root_path)
+        flash[:notice] = 'New agent has been created successfully.'
         Agent.create({:department_id => @user.department_id, :user_id => @user.id})
       else
         render :new
@@ -168,7 +169,7 @@ class UsersController < ApplicationController
         @user.add_role params[:user][:role]
         Agent.where("user_id = ?", @user.id).update({:department_id => @user.department_id, :user_id => @user.id})
         redirect_back(fallback_location: root_path)
-        flash[:notice] = 'New agent has been created successfully.'
+        flash[:notice] = 'Agent has been updated successfully.'
       else
         render :edit
       end
