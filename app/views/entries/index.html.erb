@@ -159,10 +159,8 @@ $('#dtAgentSearch').on( 'change', function () {
 <div class="modal fade" id="modal-entry" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <h3 class="modal-title text-white font-weight-bold m-auto" id="exampleModalLabel">NEW ENTRY</h3>
-      </div>
       <div class="modal-body">
+        <h3 class="modal-title text-dark text-center font-weight-bold border-bottom" id="exampleModalLabel">NEW ENTRY <button type="button" class="btn btn-link btn-sm text-dark pull-right " data-dismiss="modal"><%= fa_icon_tag('times') %></button></h3>
         <%= render 'form' %>
       </div>
       <div class="modal-footer">

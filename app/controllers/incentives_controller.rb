@@ -13,7 +13,7 @@ class IncentivesController < ApplicationController
   end
 
   def incentive_breakdown
-    @incentives = Incentive.all.order(date: :desc).limit(800)
+    @incentives = Incentive.all.limit(800)
     incentive_array = Array.new
     @incentives.each do |incentive| 
       if incentive.user.deleted_at.nil? 
@@ -25,7 +25,7 @@ class IncentivesController < ApplicationController
          'Turntime': incentive.turntime, 
          'Contracts': incentive.contracts, 
          'AHT': incentive.aht,
-         'Date': incentive.date.strftime("%m/%d/%Y"),
+         'Date': incentive.date,
          '': (helpers.link_to(helpers.theme_icon_tag('eye'), incentive, 'data-toggle': 'tooltip', title: 'Show', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('pencil-alt'), edit_incentive_path(incentive), 'data-toggle': 'tooltip', title: 'Edit', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('trash'), incentive, 'data-toggle': 'tooltip', title: 'Delete', method: :delete, class: 'btn btn-link p-1'))}
        else 
       end  
@@ -43,12 +43,12 @@ class IncentivesController < ApplicationController
       if user.deleted_at.nil? 
         incentive_array << {'User': helpers.link_to(user.full_name, incentives_incentive_dashboard_breakdown_pdf_path(:id => user.id, format: :pdf), class: 'btn btn-link p-1'),
          'Occurrences': user.agent.entries.effective.joins(:occurrence).sum(:ovalue), 
-         'Uph': user.incentives.average(:uph), 
+         'Uph': user.incentives.average(:uph).round(2), 
          'Errors': ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', user.id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').count, 
-         'Occupancy': user.incentives.average(:occupancy), 
+         'Occupancy': user.incentives.average(:occupancy).round(2), 
          'Turntime': user.incentives.average(:turntime), 
          'Contracts': user.incentives.sum(:contracts), 
-         'AHT': user.incentives.average(:aht),
+         'AHT': user.incentives.average(:aht).round(2),
          '': (helpers.link_to(helpers.theme_icon_tag('eye'), user, 'data-toggle': 'tooltip', title: 'Show', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('pencil-alt'), edit_incentive_path(user), 'data-toggle': 'tooltip', title: 'Edit', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('trash'), user, 'data-toggle': 'tooltip', title: 'Delete', method: :delete, class: 'btn btn-link p-1'))}
        else 
       end  

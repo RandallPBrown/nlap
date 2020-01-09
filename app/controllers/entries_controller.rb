@@ -148,7 +148,7 @@ end
     entry_array = Array.new
     @entries.each do |entry| 
       if entry.user.deleted_at.nil? 
-        entry_array << {'Agent': entry.user.full_name, 
+        entry_array << {'Agent': entry.user.full_name.truncate(15), 
          'Department': entry.department.name.truncate(15), 
          'Occurrence': entry.occurrence.name.truncate(12), 
          'Value': entry.occurrence.ovalue, 
