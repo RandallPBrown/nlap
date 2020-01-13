@@ -129,6 +129,6 @@ class IncentivesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def incentive_params
-      params.require(:incentive).permit(:user_id, :uph, :quality, :improvement_opp, :occupancy, :turntime, :contracts, :aht, :date)
+      params.require(:incentive).permit( :website, :user_id, :uph, :quality, :improvement_opp, :occupancy, :turntime, :contracts, :aht, :date)
     end
 end

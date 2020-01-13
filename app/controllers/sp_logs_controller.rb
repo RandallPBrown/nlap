@@ -12,10 +12,11 @@ class SpLogsController < ApplicationController
     @sp_logs = SpLog.all
       csv_file = params[:file].read
       CSV.parse(csv_file) do |row|
-      sp_logs = SpLog.create(name: row[0], phone: row[1], state: row[2], email: row[3], notes: row[4], sp_log_type_id: row[5])
+      sp_logs = SpLog.create(name: row[0], phone: row[1], state: row[2], email: row[3], notes: row[4], sp_log_type_id: row[5], website: row[6], pcmi_dispatch: row[7])
       sp_logs.save
     end
-    redirect_to :back, notice: "Imported successfully"
+    redirect_back(fallback_location: root_path)
+          flash[:notice] = 'SP Log has been imported'
   end
 
   # GET /sp_logs/1
@@ -36,7 +37,8 @@ class SpLogsController < ApplicationController
     @sp_log = SpLog.new(sp_log_params)
 
     if @sp_log.save
-      redirect_to @sp_log, notice: 'Sp log was successfully created.'
+      redirect_back(fallback_location: root_path)
+          flash[:notice] = 'SP Log has been created'
     else
       render :new
     end
@@ -45,7 +47,8 @@ class SpLogsController < ApplicationController
   # PATCH/PUT /sp_logs/1
   def update
     if @sp_log.update(sp_log_params)
-      redirect_to @sp_log, notice: 'Sp log was successfully updated.'
+      redirect_back(fallback_location: root_path)
+          flash[:notice] = 'SP Log has been updated'
     else
       render :edit
     end
@@ -54,7 +57,8 @@ class SpLogsController < ApplicationController
   # DELETE /sp_logs/1
   def destroy
     @sp_log.destroy
-    redirect_to sp_logs_url, notice: 'Sp log was successfully destroyed.'
+    redirect_back(fallback_location: root_path)
+          flash[:notice] = 'SP Log has been destroyed'
   end
 
   private
@@ -65,6 +69,6 @@ class SpLogsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def sp_log_params
-      params.require(:sp_log).permit(:name, :phone, :state, :email, :notes, :sp_log_type_id)
+      params.require(:sp_log).permit(:pcmi_dispatch, :website, :name, :phone, :state, :email, :notes, :sp_log_type_id)
     end
 end

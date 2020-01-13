@@ -8,6 +8,10 @@
   opacity: 0.7 !important;
 }
 
+.bg-success {
+  opacity: 0.7 !important;
+}
+
 ::-webkit-scrollbar {
     width: 5px !important;
     height: 5px !important;
@@ -31,8 +35,8 @@
   <% content_for :actions do %>
     <%= link_to new_sp_log_path, class: 'btn btn-primary btn-large pull-right' do %>
       <%= fa_icon_tag "plus" %> Add Sp log
-      <% end %>
-      <% end %>
+    <% end %>
+  <% end %>
 <% end %>
       <div class="container">
         <div class="row">
@@ -53,8 +57,10 @@
                   <% @sp_logs.each do |sp_log| %>
                     <% if sp_log.sp_log_type_id == 1 %>
                       <tr class="bg-warning font-weight-bold text-dark">
-                    <% else %>
+                    <% elsif sp_log.sp_log_type_id == 2 %>
                       <tr class="bg-danger font-weight-bold text-dark">
+                    <% else %>
+                      <tr class="bg-success font-weight-bold text-dark">
                     <% end %>    
                         <td><a class="btn btn-link" data-toggle="collapse" href="#multiCollapse-<%= sp_log.id %>" role="button" aria-expanded="false" aria-controls="multiCollapse-<%= sp_log.id %>"><%= fa_icon_tag("plus") %></a></td>
                         <td><%= sp_log.name %></td>
@@ -80,6 +86,11 @@
                                 <input type="text" class="allowCopy form-control form-control-sm text-uppercase text-monospace text-dark" value="<%= sp_log.email %>" id="email-<%= sp_log.id %>" readonly>
                                 <small class="pl-1">click above to copy</small>
                               </div>
+                              <div class="col-6">
+                                <label class="control-label">Wesbite: </label>
+                                <input type="text" class="allowCopy form-control form-control-sm text-uppercase text-monospace text-dark" value="<%= sp_log.website %>" id="website-<%= sp_log.id %>" readonly>
+                                <small class="pl-1">click above to copy</small>
+                              </div>
                             </div>
 
                             <div class="row">
@@ -87,6 +98,10 @@
                                 <label class="control-label">Phone: </label>
                                 <input type="text" class="allowCopy form-control form-control-sm text-uppercase text-monospace text-dark" value="<%= sp_log.phone.to_s %>" id="phone-<%= sp_log.id %>" readonly>
                                 <small class="pl-1">click above to copy</small>
+                              </div>
+                              <div class="col-6">
+                                <label class="control-label">PCMI Dispatch: </label>
+                                <input type="text" class="form-control form-control-sm text-uppercase text-monospace text-dark" value="<%= sp_log.pcmi_dispatch ? 'yes' : 'no' %>" id="pcmi_dispatch-<%= sp_log.id %>" readonly>
                               </div>
                             </div>
                             <div class="row pb-2">
@@ -189,7 +204,8 @@ $(function() {
   $(document).ready(function(){
     var t = $('#sp-log-table').DataTable({
       "pageLength": 10,
-      select: true
+      select: true,
+      order: [1, 'asc']
     });
     var buttons = new $.fn.dataTable.Buttons(t, {
        buttons: [
