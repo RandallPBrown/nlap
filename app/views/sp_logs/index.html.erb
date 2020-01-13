@@ -69,9 +69,11 @@
                         <td class="actions text-right">
                           <div class="btn-group">
                             <%= link_to theme_icon_tag("eye"), sp_log, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                            <%= link_to theme_icon_tag("pencil-alt"), edit_sp_log_path(sp_log), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
-                            <%= link_to theme_icon_tag("trash"), sp_log, 'data-toggle': 'tooltip', title: 'Delete',
-                            data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+                            <% if current_user.admin == true %>
+                              <%= link_to theme_icon_tag("pencil-alt"), edit_sp_log_path(sp_log), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                              <%= link_to theme_icon_tag("trash"), sp_log, 'data-toggle': 'tooltip', title: 'Delete',
+                              data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+                            <% end %>
                           </div>
                         </td>
                         <div class="collapse multi-collapse" id="multiCollapse-<%= sp_log.id %>">
