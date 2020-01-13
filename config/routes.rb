@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
   
+  resources :sp_logs do 
+    collection { post :import }
+  end 
+  resources :sp_log_types
   resources :recipient_groups
   resources :kudo_statuses
   resources :kudos

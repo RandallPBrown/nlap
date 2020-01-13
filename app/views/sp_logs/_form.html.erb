@@ -1,0 +1,63 @@
+
+<%= form_for(@sp_log, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.form_group :name, class: 'row' do |f| %>
+      <%= f.label :name, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :name, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :phone, class: 'row' do |f| %>
+      <%= f.label :phone, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :phone, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :state, class: 'row' do |f| %>
+      <%= f.label :state, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :state, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :email, class: 'row' do |f| %>
+      <%= f.label :email, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :email, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :notes, class: 'row' do |f| %>
+      <%= f.label :notes, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_area :notes, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :sp_log_type_id, class: 'row' do |f| %>
+      <%= f.label :sp_log_type_id, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.collection_select :sp_log_type_id, SpLogType.order(:highlight), :id, :highlight, {}, {class: 'form-control'} %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div class="d-flex">
+    <div class="ml-auto">
+      <%= f.submit class: 'btn btn-primary' %>
+      <%= link_to "Cancel", sp_logs_path, class: 'btn btn-outline-default' %>
+    </div>
+  </div>
+<% end %>
+

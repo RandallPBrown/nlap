@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191219223411) do
+ActiveRecord::Schema.define(version: 20200110201449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -509,6 +509,24 @@ ActiveRecord::Schema.define(version: 20191219223411) do
     t.index ["department_id"], name: "index_shortkeys_on_department_id"
   end
 
+  create_table "sp_log_types", force: :cascade do |t|
+    t.text "highlight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sp_logs", force: :cascade do |t|
+    t.string "name"
+    t.string "phone"
+    t.string "state"
+    t.string "email"
+    t.text "notes"
+    t.bigint "sp_log_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sp_log_type_id"], name: "index_sp_logs_on_sp_log_type_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -630,6 +648,7 @@ ActiveRecord::Schema.define(version: 20191219223411) do
   add_foreign_key "recipients", "users"
   add_foreign_key "sections", "procedures"
   add_foreign_key "shortkeys", "departments"
+  add_foreign_key "sp_logs", "sp_log_types"
   add_foreign_key "teams", "groups"
   add_foreign_key "users", "agents"
   add_foreign_key "users", "departments"
