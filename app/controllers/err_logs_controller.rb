@@ -41,9 +41,9 @@ class ErrLogsController < ApplicationController
 
   def dashboard
     # @part = Part.find(params[:id])
-        @err_logs = ErrLog.all
+    @err_logs_ajax = ErrLog.all
     err_log_array = Array.new
-    @err_logs.each do |err_log| 
+    @err_logs_ajax.each do |err_log| 
       if err_log.user.deleted_at.nil? 
         err_log_array << {
          '': '', 
