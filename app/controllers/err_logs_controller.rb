@@ -125,7 +125,8 @@ class ErrLogsController < ApplicationController
   # DELETE /err_logs/1
   def destroy
     @err_log.destroy
-    redirect_to err_logs_url, notice: 'Err log was successfully destroyed.'
+    redirect_back(fallback_location: root_path)
+    flash[:notice] = 'Error has been logged successfully'
   end
 
   private
