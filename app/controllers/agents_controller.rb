@@ -26,36 +26,51 @@ class AgentsController < ApplicationController
     agent_array = Array.new
     @agents.each do |agent| 
        if agent.user.deleted_at.nil? && (agent.user.has_role?(:agent) || agent.user.has_role?(:lead) || agent.user.has_role?(:reporting))
-        agent_array << {
+        agent_array << 
+            {
           'Full Name':  helpers.link_to(agent.user.full_name, agents_breakdown_pdf_path(:id => agent.id, format: :pdf), target: :_blank), 
           'Email': agent.user.email.truncate(15), 
           'Department': agent.department.name, 
-          'TAO': if agent.entries.map {|a| a.total_effective_occurrence.to_f}.first.to_f > 2.5 
-                agent.entries.map {|a| a.total_effective_occurrence.to_f}.first
-               else 
-                agent.entries.map {|a| a.total_effective_occurrence.to_f}.first
-               end, 
-          'TAW': if agent.user.daps.map {|m| m.total_active_writeup.to_f}.join(' ').to_f > 0 
-                 agent.user.daps.map {|m| m.total_active_writeup.to_f}.join(' ').to_i
-               else 
-                 agent.user.daps.map {|m| m.total_active_writeup.to_i}.join(' ').to_f
-               end, 
-          'OSAW': if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 
-                 agent.user.daps.map{|m| m.occurrence_since_dap}.first
-               else 
-                 agent.user.daps.map{|m| m.occurrence_since_dap}.first
-               end, 
-            'OSW': if agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 
-                   agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first
-                 else 
-                   agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first
-                 end, 
-            'AR': if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 || agent.entries.map {|a| a.total_effective_occurrence}.first.to_f > 2.5 && agent.user.daps.map.count {|m| m.total_active_writeup} == 0 || agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 
+          'TAO': agent.entries.map {|a| a.total_effective_occurrence.to_f}.first, 
+          'TAW': agent.user.daps.map {|m| m.total_active_writeup.to_f}.join(' ').to_i, 
+          'OSAW': agent.user.daps.map{|m| m.occurrence_since_dap}.first, 
+          'OSW': agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first, 
+          'AR': if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 || agent.entries.map {|a| a.total_effective_occurrence}.first.to_f > 2.5 && agent.user.daps.map.count {|m| m.total_active_writeup} == 0 || agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 
                   "<i class='fa fa-times-circle text-danger'><span hidden>Y</span></i>"
-                 else 
+                else 
                   "<i class='fa fa-check-circle text-success'><span hidden>N</span></i>"
-                 end
+                end
             }
+          #   {
+          # 'Full Name':  helpers.link_to(agent.user.full_name, agents_breakdown_pdf_path(:id => agent.id, format: :pdf), target: :_blank), 
+          # 'Email': agent.user.email.truncate(15), 
+          # 'Department': agent.department.name, 
+          # 'TAO': if agent.entries.map {|a| a.total_effective_occurrence.to_f}.first.to_f > 2.5 
+          #       agent.entries.map {|a| a.total_effective_occurrence.to_f}.first
+          #       else 
+          #       agent.entries.map {|a| a.total_effective_occurrence.to_f}.first
+          #       end, 
+          # 'TAW': if agent.user.daps.map {|m| m.total_active_writeup.to_f}.join(' ').to_f > 0 
+          #        agent.user.daps.map {|m| m.total_active_writeup.to_f}.join(' ').to_i
+          #       else 
+          #        agent.user.daps.map {|m| m.total_active_writeup.to_i}.join(' ').to_f
+          #       end, 
+          # 'OSAW': if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 
+          #        agent.user.daps.map{|m| m.occurrence_since_dap}.first
+          #       else 
+          #        agent.user.daps.map{|m| m.occurrence_since_dap}.first
+          #       end, 
+          # 'OSW': if agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 
+          #          agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first
+          #       else 
+          #          agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first
+          #       end, 
+          # 'AR': if agent.user.daps.map {|m| m.occurrence_since_dap}.first.to_f >= 1.0 || agent.entries.map {|a| a.total_effective_occurrence}.first.to_f > 2.5 && agent.user.daps.map.count {|m| m.total_active_writeup} == 0 || agent.user.daps.map {|m| m.total_occurrences_since_writeup.to_f}.first.to_f > 2.5 
+          #         "<i class='fa fa-times-circle text-danger'><span hidden>Y</span></i>"
+          #       else 
+          #         "<i class='fa fa-check-circle text-success'><span hidden>N</span></i>"
+          #       end
+          #   }
          else 
        end 
      end 

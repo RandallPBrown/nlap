@@ -586,7 +586,7 @@ $(document).ready(function(){
                 </div>
                 <div class="row">
                   <div class="col-8">
-                    <h4 class="m-0"><%= @aht %> <small>monthly</small></h4>
+                    <h4 class="m-0"><%= @aht.round(2) %> <small>monthly</small></h4>
                   </div>
                   <div class="col-4 text-right">
                     <i class="fa fa-clock-o pt-3"></i>
@@ -670,7 +670,7 @@ $(document).ready(function(){
         </div>
       </div>
 
-      <div class="col-3 ">
+      <div class="col-3">
         <!-- RECENT ACTIVITY TABLE -->
         <div class="card inspectable float">
           <!-- component-title: Timeline Card -->

@@ -44,6 +44,20 @@ tfoot {
         </div>
       </div>
   	</div>
+    <div class="row pb-5">
+      <div class="col-12">
+        <div class="card bg-light">
+          <center><h1 class="text-monospace text-uppercase font-weight-bold"><u>Monthly Stats Breakdown</u></h1></center>
+          <div class="row">
+            <div class="col-6">
+              <label class="font-weight-bold text-uppercase text-monospace">Average UPH: </label>
+              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @incentives.average(:uph).round(2) %>">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   	<div class="row pb-5">
       <div class="col-12">
         <div class="card bg-light">
@@ -53,12 +67,11 @@ tfoot {
 	            <table class="table table-striped">
 	            	<thead class="thead-dark">
 	                  <tr class="font-weight-bold text-uppercase text-center">
-	                                          <th scope="col">Type</th>
-	                                          <th scope="col">Value</th>
-	                                          <th scope="col">Date</th>
-	                                          <th scope="col">Expiration</th>
-	                                          <th scope="col">Description</th>
-
+                      <th scope="col">Type</th>
+                      <th scope="col">Value</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Expiration</th>
+                      <th scope="col">Description</th>
 	                  </tr>
 	                </thead>
 	                <tbody>

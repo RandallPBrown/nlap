@@ -151,7 +151,9 @@ $(document).ready(function() {
 </script> -->
 <script>
 $(document).ready(function(){
-  $('#error_index_pending').DataTable()
+  $('#error_index_pending').DataTable({
+    'order': [[3, 'desc'], [4, 'desc']]
+  })
 
 });
 
@@ -166,7 +168,7 @@ function expandEdit(){
     <div class="col-12">
       <div class="card dt-collapse" id="pending-card">
         <div class="card-body">
-          <h5 class="text-uppercase m-auto font-weight-bold text-center border-bottom pb-2">PENDING IMPROVEMENT LOGS <button id="generic_close" class="btn btn-link btn-sm pull-right" type="button" data-toggle="collapse" data-target="#tableCollapse" aria-expanded="false" aria-controls="tableCollapse" onclick="expandEdit()" hidden><%= fa_icon_tag('times') %></button></h5>
+          <h5 class="text-uppercase m-auto font-weight-bold text-center border-bottom pb-2">PENDING IMPROVEMENT LOGS</h5>
           <div class="table-responsive">
             <table id="error_index_pending" class="table table-striped table-hover display" style="width:100%">
               <thead>
@@ -217,51 +219,51 @@ function expandEdit(){
   });
 </script>
 
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card p-3">
-              <div class="table-responsive">
-                <table class="table table-striped table-hover" id="error_index_all">
-                  <thead>
-                    <tr>
-                                            <th>User</th>
-                                            <th>Department</th>
-                                            <th>Date</th>
-                                            <th>Type</th>
-                                            <th>Description</th>
-                                            <th>Status</th>
-                                            <th>Submitted</th>
-                                          <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <% @allerrors.each do |err_log| %>
-                    <tr>
-                                            <td><%= err_log.user.full_name %></td>
-                                            <td><%= err_log.department.name %></td>
-                                            <td><%= err_log.errdate.strftime('%m/%d/%Y') %></td>
-                                            <td><%= err_log.err_name.errname.truncate(10) %></td>
-                                            <td><%= err_log.errdesc.truncate(10) %></td>
-                                            <td><%= err_log.err_status.statusname %></td>
-                                            <td><%= err_log.errsubmitby %></td>
-                                          <td class="actions text-right">
-                        <div class="btn-group">
-                          <%= link_to theme_icon_tag("eye"), err_log, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                          <%= link_to theme_icon_tag("pencil-alt"), edit_err_log_path(err_log), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
-                          <%= link_to theme_icon_tag("trash"), err_log, 'data-toggle': 'tooltip', title: 'Delete',
-                          data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
-                        </div>
-                        </td>
-                      </tr>
-                      <% end %>
-                      <% if @err_logs.length == 0 %>
-                      <tr><td colspan=42 class='text-center'>No err_logs.</td></tr>
-                      <% end %>
-                      </tbody>
-                    </table>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card p-3">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover" id="error_index_all">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Department</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Submitted</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            <% @allerrors.each do |err_log| %>
+              <tr>
+                <td><%= err_log.user.full_name %></td>
+                <td><%= err_log.department.name %></td>
+                <td><%= err_log.errdate.strftime('%m/%d/%Y') %></td>
+                <td><%= err_log.err_name.errname.truncate(10) %></td>
+                <td><%= err_log.errdesc.truncate(10) %></td>
+                <td><%= err_log.err_status.statusname %></td>
+                <td><%= err_log.errsubmitby %></td>
+                <td class="actions text-right">
+                  <div class="btn-group">
+                    <%= link_to theme_icon_tag("eye"), err_log, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                    <%#= link_to theme_icon_tag("pencil-alt"), edit_err_log_path(err_log), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                    <%#= link_to theme_icon_tag("trash"), err_log, 'data-toggle': 'tooltip', title: 'Delete',
+                    data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                </td>
+              </tr>
+            <% end %>
+            <% if @err_logs.length == 0 %>
+              <tr><td colspan=42 class='text-center'>No err_logs.</td></tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="buttons"></div>

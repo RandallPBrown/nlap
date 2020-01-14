@@ -56,32 +56,32 @@ $(document).ready( function () {
                   <tbody>
                   <% @err_logs.each do |err_log| %>
                     <tr>
-                                            <td><%= err_log.errdate %></td>                      
-                                            <td><%= err_log.serviceorder %></td>
-                                            <td><%= err_log.err_cost %></td>
-                                            <td><%= err_log.user.full_name %></td>
-                                            <td><%= err_log.department.name %></td>
-                                            <td><%= err_log.err_name.errname.truncate(15) %></td>
-                                            <td><%= err_log.errdesc.truncate(15) %></td>
-                                            <td><%= err_log.err_status.statusname %></td>
-                                            <td><%= err_log.errsubmitby %></td>
-                                          <td class="actions text-right">
+                      <td><%= err_log.errdate %></td>                      
+                      <td><%= err_log.serviceorder %></td>
+                      <td><%= err_log.err_cost %></td>
+                      <td><%= err_log.user.full_name %></td>
+                      <td><%= err_log.department.name %></td>
+                      <td><%= err_log.err_name.errname.truncate(15) %></td>
+                      <td><%= err_log.errdesc.truncate(15) %></td>
+                      <td><%= err_log.err_status.statusname %></td>
+                      <td><%= err_log.errsubmitby %></td>
+                      <td class="actions text-right">
                         <div class="btn-group">
                           <%= link_to theme_icon_tag("eye"), err_log, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                          <%#= link_to theme_icon_tag("pencil-alt"), edit_err_log_path(err_log), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
-                          <%#= link_to theme_icon_tag("trash"), err_log, 'data-toggle': 'tooltip', title: 'Delete',
-                          data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+                            <%#= link_to theme_icon_tag("pencil-alt"), edit_err_log_path(err_log), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                            <%#= link_to theme_icon_tag("trash"), err_log, 'data-toggle': 'tooltip', title: 'Delete',
+                            data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                         </div>
-                        </td>
-                      </tr>
-                      <% end %>
-                      <% if @err_logs.length == 0 %>
-                      <tr><td colspan=42 class='text-center'>No err_logs.</td></tr>
-                      <% end %>
-                      </tbody>
-                    </table>
-                  </div>
+                      </td>
+                    </tr>
+                    <% end %>
+                    <% if @err_logs.length == 0 %>
+                    <tr><td colspan=42 class='text-center'>No err_logs.</td></tr>
+                    <% end %>
+                    </tbody>
+                  </table>
                 </div>
+              </div>
 
                                   <%# Remove the trailing if condition if you're using pagination. %>
                   <%= will_paginate @err_logs if @err_logs.respond_to?(:total_pages) %>

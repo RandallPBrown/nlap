@@ -1,3 +1,32 @@
+<%= stylesheet_link_tag "pagination.css" %>
+<style>
+.bg-danger {
+  opacity: 0.7 !important;
+}
+
+.bg-warning {
+  opacity: 0.7 !important;
+}
+
+.bg-success {
+  opacity: 0.7 !important;
+}
+
+::-webkit-scrollbar {
+    width: 5px !important;
+    height: 5px !important;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: white !important;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: grey !important;
+  outline: 1px solid white !important;
+}
+</style>
+
 <% @title = "Kudos Dashboard" %>
 <%= stylesheet_link_tag "pagination.css" %>
 <% content_for :description do %>
