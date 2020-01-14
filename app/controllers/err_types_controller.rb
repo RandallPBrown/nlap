@@ -1,6 +1,7 @@
 class ErrTypesController < ApplicationController
   layout "scaffold"
-  
+  before_action :authorize_admin, except: [:show]
+  before_action :authenticate_user!
   before_action :set_err_type, only: [:show, :edit, :update, :destroy]
 
   # GET /err_types

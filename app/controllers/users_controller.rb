@@ -192,7 +192,8 @@ def destroy
     # respond_with_navigational(@user){ redirect_to agents_path(@user.id) }
 
   # @user.destroy!
-  redirect_to users_path, notice: 'User was successfully destroyed.'
+  redirect_back(fallback_location: root_path)
+  flash[:notice] = 'New agent has been created successfully.'
   else
     redirect_to users_path, notice: 'Unauthorized'
   end
