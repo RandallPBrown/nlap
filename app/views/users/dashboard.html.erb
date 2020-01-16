@@ -586,7 +586,7 @@ $(document).ready(function(){
                 </div>
                 <div class="row">
                   <div class="col-8">
-                    <h4 class="m-0"><%= @aht %> <small>monthly</small></h4>
+                    <h4 class="m-0"><%= number_with_precision(@aht, :precision => 1) %> <small>monthly</small></h4>
                   </div>
                   <div class="col-4 text-right">
                     <i class="fa fa-clock-o pt-3"></i>
@@ -723,14 +723,14 @@ $(document).ready(function(){
 
 
 <div class="container-fluid p-4 float-inset" style="height: 450px;background-color: #eeeeee !important;">
-  <div class="row">
+  <div class="row pt-3 px-3">
     <div class="col-12 ">
       <div class="row">
         <div class="col-12">
           <!-- OCCURRENCE TABLE -->
           <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-occurrence" role="tabpanel" aria-labelledby="pills-occurrence-tab">
-              <div class="card card-sheet sheet-condensed inspectable float">
+              <div class="card card-sheet sheet-condensed inspectable float p-1">
                 <div class="table-responsive" >
                   <table class="table table-hover table-striped" id="userEntryTable">
                     <thead>
@@ -800,104 +800,104 @@ $(document).ready(function(){
   </div>
 </div>
 
-<!-- Javascripts -->
-<script>
-// Change the table name when you select a button. Nothing fancy.
-$('.table-select').click(function(){ 
-  $('#table-title-current').text($(this).attr('name'));
-})
+  <!-- Javascripts -->
+  <script>
+    // Change the table name when you select a button. Nothing fancy.
+    $('.table-select').click(function(){ 
+      $('#table-title-current').text($(this).attr('name'));
+    })
 
 
-// If you're reading this, you're probably familiar with how Chart.js works so I wont dive into it much.
-var chart_labels = <%= raw @agent_chart_labels_effective %>; 
-var uph_data = <%= @agent_chart_data_effective %>;
-var occ_data = <%= @agent_chart_data_effective_occupancy %>;
-var aht_data = <%= @agent_chart_data_effective_aht %>;
-var dataset_label = "UPH";
-var chart_type = 'line';
-var ctx = document.getElementById("statChart").getContext('2d');
-var config = {
-    type: 'bar',
-    data: {
-        labels: chart_labels,
-        datasets: [{
-            label: "UPH",
-            yAxisID: 'B',
-            data: uph_data,
-            backgroundColor: 'rgb(0,100,0, 0.7)',
-            borderColor: '#373737',
-            borderWidth: 1,
-            order: 2
-        },{
-            label: "AHT",
-            yAxisID: 'B',
-            data: aht_data,
-            backgroundColor: 'rgb(51,131,51, 0.7)',
-            borderColor: '#373737',
-            borderWidth: 1,
-            order: 3
-        },{
-            label: 'OCC',
-            yAxisID: 'A',
-            data: occ_data,
-            backgroundColor: 'rgb(152,251,152,0.9)',
-            borderColor: '#373737',
-            borderWidth: 1,
-            type: 'line',
-            order: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            yAxes: [{ // For occupancy
-              id: 'A',
-              type: 'linear',
-              position: 'right',
-              ticks: {
-                  min: 50,
-                  max: 150,
-                  callback: function(value, index, values) {
-                      return value + '%';
-                  }
-              }
-            }, { // For UPH
-              id: 'B',
-              type: 'linear',
-              position: 'left',
-              ticks: {
-                  min: 0,
-                  max: 20
-              }
+    // If you're reading this, you're probably familiar with how Chart.js works so I wont dive into it much.
+    var chart_labels = <%= raw @agent_chart_labels_effective %>; 
+    var uph_data = <%= @agent_chart_data_effective %>;
+    var occ_data = <%= @agent_chart_data_effective_occupancy %>;
+    var aht_data = <%= @agent_chart_data_effective_aht %>;
+    var dataset_label = "UPH";
+    var chart_type = 'line';
+    var ctx = document.getElementById("statChart").getContext('2d');
+    var config = {
+        type: 'bar',
+        data: {
+            labels: chart_labels,
+            datasets: [{
+                label: "UPH",
+                yAxisID: 'B',
+                data: uph_data,
+                backgroundColor: 'rgb(0,100,0, 0.7)',
+                borderColor: '#373737',
+                borderWidth: 1,
+                order: 2
+            },{
+                label: "AHT",
+                yAxisID: 'B',
+                data: aht_data,
+                backgroundColor: 'rgb(51,131,51, 0.7)',
+                borderColor: '#373737',
+                borderWidth: 1,
+                order: 3
+            },{
+                label: 'OCC',
+                yAxisID: 'A',
+                data: occ_data,
+                backgroundColor: 'rgb(152,251,152,0.9)',
+                borderColor: '#373737',
+                borderWidth: 1,
+                type: 'line',
+                order: 1
             }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                yAxes: [{ // For occupancy
+                  id: 'A',
+                  type: 'linear',
+                  position: 'right',
+                  ticks: {
+                      min: 50,
+                      max: 150,
+                      callback: function(value, index, values) {
+                          return value + '%';
+                      }
+                  }
+                }, { // For UPH
+                  id: 'B',
+                  type: 'linear',
+                  position: 'left',
+                  ticks: {
+                      min: 0,
+                      max: 20
+                  }
+                }]
+            }
         }
-    }
-};
-var stat_chart = new Chart(ctx, config);
-$("#incentiveWeekButton").click(function() {
-  var chart_labels = <%= raw @agent_chart_labels_effective %>; 
-  var uph_data = <%= @agent_chart_data_effective %>;
-  var occ_data = <%= @agent_chart_data_effective_occupancy %>;
-  var aht_data = <%= @agent_chart_data_effective_aht %>;
-    var data = stat_chart.config.data;
-    data.datasets[0].data = uph_data;
-    data.datasets[2].data = occ_data;
-    data.datasets[1].data = aht_data;
-    data.labels = chart_labels;
-    stat_chart.update();
-});
-$("#incentiveMonthButton").click(function() {
-  var chart_labels = <%= raw @agent_chart_labels_effective_month %>; 
-  var uph_data = <%= @agent_chart_data_effective_month %>;
-  var occ_data = <%= @agent_chart_data_effective_occupancy_month %>;
-  var aht_data = <%= @agent_chart_data_effective_aht_month %>;
-    var data = stat_chart.config.data;
-    data.datasets[0].data = uph_data;
-    data.datasets[2].data = occ_data;
-    data.datasets[1].data = aht_data;
-    data.labels = chart_labels;
-    stat_chart.update();
-});
+    };
+    var stat_chart = new Chart(ctx, config);
+    $("#incentiveWeekButton").click(function() {
+      var chart_labels = <%= raw @agent_chart_labels_effective %>; 
+      var uph_data = <%= @agent_chart_data_effective %>;
+      var occ_data = <%= @agent_chart_data_effective_occupancy %>;
+      var aht_data = <%= @agent_chart_data_effective_aht %>;
+        var data = stat_chart.config.data;
+        data.datasets[0].data = uph_data;
+        data.datasets[2].data = occ_data;
+        data.datasets[1].data = aht_data;
+        data.labels = chart_labels;
+        stat_chart.update();
+    });
+    $("#incentiveMonthButton").click(function() {
+      var chart_labels = <%= raw @agent_chart_labels_effective_month %>; 
+      var uph_data = <%= @agent_chart_data_effective_month %>;
+      var occ_data = <%= @agent_chart_data_effective_occupancy_month %>;
+      var aht_data = <%= @agent_chart_data_effective_aht_month %>;
+        var data = stat_chart.config.data;
+        data.datasets[0].data = uph_data;
+        data.datasets[2].data = occ_data;
+        data.datasets[1].data = aht_data;
+        data.labels = chart_labels;
+        stat_chart.update();
+    });
 
-</script>
+  </script>
 </body>

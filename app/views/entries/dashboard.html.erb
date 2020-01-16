@@ -1,4 +1,22 @@
 <%= stylesheet_link_tag "slider.css" %>
+<%= stylesheet_link_tag "pagination.css" %>
+<style>
+.float {
+  box-shadow: 3px 3px 3px 3px lightgrey;
+}
+
+.float:hover {
+  box-shadow: 5px 5px 5px 5px lightgrey;
+}
+
+.float-active {
+  box-shadow: 5px 5px 5px 5px lightgrey;
+}
+
+.float-inset {
+  box-shadow: inset 3px 3px 3px 3px lightgrey;
+}
+</style>
 <script>
 var chart_labels = <%= raw @chart_labels_dept_today %>;
 var chart_data = <%= raw @chart_data_dept_today %>;

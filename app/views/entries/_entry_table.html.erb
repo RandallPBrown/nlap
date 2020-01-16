@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row pt-3">
   <div class="col-12">
-    <div class="card card-default position-relative inspectable">
+    <div class="card card-default position-relative inspectable p-1">
       <!-- component-title: Active Users Table -->
       <div class="card-header">
         <h6>Recent Occurrences</h6>
@@ -21,7 +21,7 @@
                 <% @entries.each do |entry| %>
                   <tr>
                                           <% if entry.agent.user.deleted_at.blank? then %>
-                                          <td><%= entry.agent.user.email %></td>
+                                          <td><%= entry.agent.user.full_name %></td>
                                           <td><%= entry.agent.department.name.truncate(15) %></td>
                                           <td><%= entry.occurrence.ovalue %></td>
                                           <td><%= entry.edate %></td>
