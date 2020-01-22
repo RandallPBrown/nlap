@@ -38,7 +38,7 @@
         <li class="nav-item">
           <a class="nav-link text-white font-weight-bold" href="../users/dashboard" data-turbolinks="false"> <%= fa_icon_tag("home") %></a>
         </li>
-        <% if current_user.department.name == "Pre-Approvals" || current_user.department.name == "Pending-Review" || current_user.department.name == "Executive" || current_user.department.name == "Ferguson" || current_user.department.name == "Back Office"  %>
+        <% if current_user.department.name == "Pre-Approvals" || current_user.department.name == "Pending-Review" || current_user.department.name == "Executive" || current_user.department.name == "Ferguson" || current_user.department.name == "Back Office" || current_user.department.name == "Contact Center"  %>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">  <%= fa_icon_tag("wrench") %></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
