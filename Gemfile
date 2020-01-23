@@ -60,6 +60,7 @@ gem "simple_calendar", "~> 2.0"
 # pdf to create forms
 gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-heroku', '2.12.5.0'
 # Realtime updates
 gem 'pusher'
 gem 'figaro'

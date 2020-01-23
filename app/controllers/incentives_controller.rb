@@ -60,14 +60,17 @@ class IncentivesController < ApplicationController
   end
 
   def incentive_dashboard_breakdown_pdf
-
-    @user = User.find(params[:id])
+    @user = User.joins(agent: [entries: :occurrence]).find(params[:id])
+    @entries_count = Entry.effective.joins(:occurrence, agent: :user).group(:edate).where("users.id = ?", @user.id).group(:ovalue).pluck(:ovalue)
+    @daps_count = Dap.written.joins(:user).where("users.id = ?", @user.id)
     @incentives = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.today.beginning_of_month..Date.today.end_of_month)
     @entries = Entry.all.joins(:occurrence, agent: :user).where('user_id = ?', @user.id).order(edate: :desc).where(edate: 90.days.ago..Date.today)
+    
     respond_to do |format|
       format.html
       format.pdf do
-        render  pdf: "Breakdown-#{current_user.full_name}-#{Date.today}"
+        render  pdf: "Breakdown-#{current_user.full_name}-#{Date.today}",
+        layout: 'pdf.html.erb'
       end
     end
   end
