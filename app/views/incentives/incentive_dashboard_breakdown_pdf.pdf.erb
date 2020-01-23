@@ -5,7 +5,7 @@
 <div class="container-fluid mt-5">
   <div class="card">
     <div class="card-header text-center">
-      <h1 class="font-weight-bold text-dark p-5">AGENT COACHING</h1>
+      <h1 class="font-weight-bold text-dark p-3">AGENT COACHING</h1>
     </div>
     <div class="card-body">
       <div class="row mb-3">
@@ -16,32 +16,32 @@
             </div>
             <div class="card-body">
               <div class="form-group row">
-                <label class="col-xs-2 col-form-label font-weight-bold">Agent: </label>
-                <div class="col-xs-10">
+                <label class="col-xs-6 col-form-label font-weight-bold">Agent: </label>
+                <div class="col-xs-6">
                   <span class="text-uppercase text-monospace"><%= @user.full_name %></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xs-2 col-form-label font-weight-bold">Department: </label>
-                <div class="col-xs-10">
+                <label class="col-xs-6 col-form-label font-weight-bold">Department: </label>
+                <div class="col-xs-6">
                   <span class="text-uppercase text-monospace"><%= @user.department.name %></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xs-2 col-form-label font-weight-bold">Role: </label>
-                <div class="col-xs-10">
+                <label class="col-xs-6 col-form-label font-weight-bold">Role: </label>
+                <div class="col-xs-6">
                   <span class="text-uppercase text-monospace"><%= @user.roles.all.map{|f| f.name}.join(" ") %></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xs-2 col-form-label font-weight-bold">Extension: </label>
-                <div class="col-xs-10">
+                <label class="col-xs-6 col-form-label font-weight-bold">Extension: </label>
+                <div class="col-xs-6">
                   <span class="text-uppercase text-monospace"><%= @user.extension %></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xs-2 col-form-label font-weight-bold">Email: </label>
-                <div class="col-xs-10">
+                <label class="col-xs-6 col-form-label font-weight-bold">Email: </label>
+                <div class="col-xs-6">
                   <span class="text-uppercase text-monospace"><%= @user.email %></span>
                 </div>
               </div>
@@ -55,20 +55,20 @@
             </div>
             <div class="card-body">
               <div class="form-group row">
-                <label class="col-xs-2 col-form-label font-weight-bold">Generated Date: </label>
-                <div class="col-xs-10">
+                <label class="col-xs-6 col-form-label font-weight-bold">Generated Date: </label>
+                <div class="col-xs-6">
                   <span class="text-uppercase text-monospace"><%= Date.today.strftime('%m/%d/%Y') %></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xs-2 col-form-label font-weight-bold">Occurrences: </label>
-                <div class="col-xs-10">
+                <label class="col-xs-6 col-form-label font-weight-bold">Occurrences: </label>
+                <div class="col-xs-6">
                   <span class="text-uppercase text-monospace"><%= @entries_count.sum %></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xs-2 col-form-label font-weight-bold">Disciplinary Actions: </label>
-                <div class="col-xs-10">
+                <label class="col-xs-6 col-form-label font-weight-bold">Disciplinary Actions: </label>
+                <div class="col-xs-6">
                   <span class="text-uppercase text-monospace"><%= @daps_count.count %></span>
                 </div>
               </div>
@@ -98,24 +98,24 @@
               <div class="row">
                 <div class="col-xs-4"> 
                   <div class="form-group row">
-                    <label class="col-xs-2 col-form-label font-weight-bold">UPH: </label>
-                    <div class="col-xs-10">
+                    <label class="col-xs-6 col-form-label font-weight-bold">UPH: </label>
+                    <div class="col-xs-6">
                       <span class="text-uppercase text-monospace"><%= @incentives.average(:uph).round(2) %></span>
                     </div>
                   </div>
                 </div>
                 <div class="col-xs-4">
                   <div class="form-group row">
-                    <label class="col-xs-2 col-form-label font-weight-bold">OCCUPANCY: </label>
-                    <div class="col-xs-10">
+                    <label class="col-xs-6 col-form-label font-weight-bold">OCCUPANCY: </label>
+                    <div class="col-xs-6">
                       <span class="text-uppercase text-monospace"><%= @incentives.average(:occupancy).round(2) %></span>
                     </div>
                   </div>
                 </div>
                 <div class="col-xs-4">
                   <div class="form-group row">
-                    <label class="col-xs-2 col-form-label font-weight-bold">AHT: </label>
-                    <div class="col-xs-10">
+                    <label class="col-xs-6 col-form-label font-weight-bold">AHT: </label>
+                    <div class="col-xs-6">
                       <span class="text-uppercase text-monospace"><%= @incentives.average(:aht).round(2) %></span>
                     </div>
                   </div>
@@ -124,24 +124,24 @@
               <div class="row">
                 <div class="col-xs-4">
                   <div class="form-group row">
-                    <label class="col-xs-2 col-form-label font-weight-bold">TURNTIME: </label>
-                    <div class="col-xs-10">
+                    <label class="col-xs-6 col-form-label font-weight-bold">TURNTIME: </label>
+                    <div class="col-xs-6">
                       <span class="text-uppercase text-monospace"><%= @incentives.average(:turntime) ? @incentives.average(:turntime).round(2) : "N/A" %></span>
                     </div>
                   </div>
                 </div>
                 <div class="col-xs-4">
                   <div class="form-group row">
-                    <label class="col-xs-2 col-form-label font-weight-bold">CONTRACTS: </label>
-                    <div class="col-xs-10">
+                    <label class="col-xs-6 col-form-label font-weight-bold">CONTRACTS: </label>
+                    <div class="col-xs-6">
                       <span class="text-uppercase text-monospace"><%= @incentives.sum(:contracts) ? @incentives.sum(:contracts).round(2) : "N/A" %></span>
                     </div>
                   </div>
                 </div>
                 <div class="col-xs-4">
                   <div class="form-group row">
-                    <label class="col-xs-2 col-form-label font-weight-bold">IMPROVEMENT LOGS: </label>
-                    <div class="col-xs-10">
+                    <label class="col-xs-6 col-form-label font-weight-bold">IMPROVEMENT LOGS: </label>
+                    <div class="col-xs-6">
                       <span class="text-uppercase text-monospace"><%= @incentives.average(:turntime) ? @incentives.average(:turntime).round(2) : "N/A" %></span>
                     </div>
                   </div>
@@ -249,30 +249,30 @@
             <div class="card-body">
               <table class="table table-striped">
                 <thead>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
                 </tbody>
@@ -290,30 +290,30 @@
             <div class="card-body">
               <table class="table table-striped">
                 <thead>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
-                  <tr style="height: 50px !important">
+                  <tr style="height: 25px !important">
                     <td></td>
                   </tr>
                 </tbody>
