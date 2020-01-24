@@ -1,5 +1,17 @@
 <%= wicked_pdf_image_tag 'logo.png', class: 'pb-2' %>
 <style>
+thead {
+  display: table-header-group !important;
+}
+
+tfoot {
+  display: table-row-group !important;
+}
+
+tr {
+  page-break-inside: avoid !important;
+}
+
 .page-break { display:block; clear:both; page-break-after:always; }
 </style>
 <div class="container-fluid mt-5">
