@@ -67,7 +67,7 @@ class IncentivesController < ApplicationController
     @incentives_annual = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.today.beginning_of_year..Date.today.end_of_month)
     @incentives_week = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.today.beginning_of_week..Date.today.end_of_month)
     @entries = Entry.all.joins(:occurrence, agent: :user).where('user_id = ?', @user.id).order(edate: :desc).where(edate: 90.days.ago..Date.today)
-    
+    @days_from_this_week = (Date.today.at_beginning_of_week..Date.today.at_end_of_week).map
     respond_to do |format|
       format.html
       format.pdf do
