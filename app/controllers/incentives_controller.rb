@@ -10,6 +10,8 @@ class IncentivesController < ApplicationController
   end
 
   def dashboard
+        @users = User.all
+
   end
 
   def incentive_breakdown
@@ -41,7 +43,7 @@ class IncentivesController < ApplicationController
     incentive_array = Array.new
     @incentives.each do |user| 
       if user.deleted_at.nil? 
-        incentive_array << {'User': helpers.link_to(user.full_name, incentives_incentive_dashboard_breakdown_pdf_path(:id => user.id, format: :pdf), target: "_blank", class: 'btn btn-link p-1'),
+        incentive_array << {'User': user.full_name,
          'Occurrences': user.agent.entries.effective.joins(:occurrence).sum(:ovalue), 
          'Uph': user.incentives.average(:uph).round(2), 
          'Errors': ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', user.id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').count, 
@@ -63,11 +65,11 @@ class IncentivesController < ApplicationController
     @user = User.joins(agent: [entries: :occurrence]).find(params[:id])
     @entries_count = Entry.effective.joins(:occurrence, agent: :user).group(:edate).where("users.id = ?", @user.id).group(:ovalue).pluck(:ovalue)
     @daps_count = Dap.written.joins(:user).where("users.id = ?", @user.id)
-    @incentives = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.today.beginning_of_month..Date.today.end_of_month)
-    @incentives_annual = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.today.beginning_of_year..Date.today.end_of_month)
-    @incentives_week = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.today.beginning_of_week..Date.today.end_of_month)
-    @entries = Entry.all.joins(:occurrence, agent: :user).where('user_id = ?', @user.id).order(edate: :desc).where(edate: 90.days.ago..Date.today)
-    @days_from_this_week = (Date.today.at_beginning_of_week..Date.today.at_end_of_week).map
+    @incentives = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.parse(params[:selected_date]).beginning_of_month..Date.parse(params[:selected_date]).end_of_month)
+    @incentives_annual = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.parse(params[:selected_date]).beginning_of_year..Date.parse(params[:selected_date]).end_of_year)
+    @incentives_week = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.parse(params[:selected_date]).beginning_of_week..Date.parse(params[:selected_date]).end_of_week)
+    @entries = Entry.all.joins(:occurrence, agent: :user).where('user_id = ?', @user.id).order(edate: :desc).where(edate: 90.days.ago..Date.parse(params[:selected_date]))
+    @days_from_this_week = (Date.parse(params[:selected_date]).at_beginning_of_week..Date.parse(params[:selected_date]).at_end_of_week).map
     respond_to do |format|
       format.html
       format.pdf do

@@ -67,9 +67,9 @@ tr {
             </div>
             <div class="card-body">
               <div class="form-group row">
-                <label class="col-xs-6 col-form-label font-weight-bold">Generated Date: </label>
+                <label class="col-xs-6 col-form-label font-weight-bold">Date: </label>
                 <div class="col-xs-6">
-                  <span class="text-uppercase text-monospace"><%= Date.today.strftime('%m/%d/%Y') %></span>
+                  <span class="text-uppercase text-monospace"><%= params[:selected_date] %></span>
                 </div>
               </div>
               <div class="form-group row">
@@ -306,7 +306,7 @@ tr {
                 </thead>
                 <tbody>
                   <tr>
-                    
+
                   </tr>
                 </tbody>
               </table>
@@ -317,7 +317,11 @@ tr {
     </div>
   </div>
 </div>
+<% if params[:selected_incentives] == false && params[:selected_progressives] == false && params[:selected_occurrences] == false %>
+
+<% else %>
 <div class="page-break"></div>
+
 <div class="container-fluid mt-5">
   <div class="card">
     <div class="card-header text-center">
@@ -326,6 +330,7 @@ tr {
     <div class="card-body">
       <div class="row mb-3">
         <div class="col-xs-12">
+          <% if params[:selected_incentives] == true %>
           <div class="row mt-3 border-top mb-3">
             <div class="col-xs-12">
               <div class="card card-full-height mt-2 p-2">
@@ -365,6 +370,10 @@ tr {
               </div>
             </div>
           </div>
+          <% else %>
+
+          <% end %>
+          <% if params[:selected_occurrences] == true %>
           <div class="row mt-3 border-top mb-3">
             <div class="col-xs-12">
               <div class="card card-full-height mt-2 p-2">
@@ -401,6 +410,10 @@ tr {
               </div>
             </div>
           </div>
+          <% else %>
+
+          <% end %>
+          <% if params[:selected_progressives] == true %>
           <div class="row mt-3 border-top mb-3">
             <div class="col-xs-12">
               <div class="card card-full-height mt-2 p-2">
@@ -437,11 +450,15 @@ tr {
               </div>
             </div>
           </div>
+          <% else %>
+
+          <% end %>
         </div>
       </div>
     </div>
   </div>
 </div>
+<% end %>
 <div class="page-break"></div>
 <div class="container-fluid mt-5">
   <div class="card">

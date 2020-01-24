@@ -1,8 +1,11 @@
 
   <% content_for :actions do %>
-    <%= link_to incentives_path, class: 'btn btn-primary btn-large pull-right font-weight-bold text-uppercase' do %>
+    <%= link_to incentives_path, class: 'ml-2 btn btn-primary btn-large pull-right font-weight-bold text-uppercase' do %>
       INDEX
     <% end %>
+    <button type="button" class="btn btn-primary btn-large pull-right font-weight-bold text-uppercase" data-toggle="modal" data-target="#exampleModalCenter">
+      COACHING
+    </button>
   <% end %>
   <%= @errors %>
 <script>
@@ -59,3 +62,87 @@ $(document).ready(function(){
 
             </div>
           </div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="text-uppercase font-weight-bold text-dark m-auto" id="exampleModalCenterTitle">COACHING FORM BUILDER</h5>
+      </div>
+      <div class="modal-body pt-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-4">
+              <label for="selected_agent" class="text-uppercase font-weight-bold text-dark">Agent:</label>
+            </div>
+            <div class="Col-8">
+              <%= select_tag(:selected_agent, options_from_collection_for_select(@users, :id, :full_name), 'data-live-search': true, class: 'selectpicker text-dark', id: "selected_agent") %><br>
+              <small>if this fails to load, refresh</small>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-4">
+              <label for="selected_date" class="text-uppercase font-weight-bold text-dark">Date:</label>
+            </div>
+            <div class="col-8">
+              <input type="date" class="form-control text-dark" id="selected_date" style="width:100% !important">
+              <small>select week by choosing a day within</small>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-4">
+              <label for="selected_date" class="text-uppercase font-weight-bold text-dark">Entries:</label>
+            </div>
+            <div class="col-8">
+              <%= select_tag :selected_occurrences, options_for_select([['Show', true], ['Hide', false]]), class: "form-control text-dark" %>
+              <small>show the occurrence table</small>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-4">
+              <label for="selected_date" class="text-uppercase font-weight-bold text-dark">Progressives:</label>
+            </div>
+            <div class="col-8">
+              <%= select_tag :selected_progressives, options_for_select([['Show', true], ['Hide', false]]), class: "form-control text-dark" %>
+              <small>show the progressive action table</small>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-4">
+              <label for="selected_date" class="text-uppercase font-weight-bold text-dark">Incentives:</label>
+            </div>
+            <div class="col-8">
+              <%= select_tag :selected_incentives, options_for_select([['Show', true], ['Hide', false]]), class: "form-control text-dark" %>
+              <small>show the incentive breakdown table</small>
+            </div>
+          </div>
+        </div> 
+      </div>
+      <div class="modal-footer pt-5">
+        <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal">CLOSE</button>
+        <button type="button" class="btn btn-primary font-weight-bold" id="submitBreakdown" target="_blank"><%= fa_icon_tag("file-pdf-o") %> PDF</button>
+        <script>
+          $(document).ready(function() {
+             $('.selectpicker').selectpicker();
+          });
+            $('#submitBreakdown').click(function(){
+              var id = $('#selected_agent').children("option:selected").val();
+              var date = new Date($('#selected_date').val());
+              var incentives = $('#selected_incentives').children("option:selected").val();
+              var progs = $('#selected_progressives').children("option:selected").val();
+              var entries = $('#selected_occurrences').children("option:selected").val();
+              day = date.getDate() + 1;
+              month = date.getMonth() + 1;
+              year = date.getFullYear();
+              formatted = [year, month, day].join('-');
+              window.open('../incentives/incentive_dashboard_breakdown_pdf?id=' + id + '&selected_date=' + formatted + '&selected_incentives=' + incentives + '&selected_progressives=' + progs + '&selected_occurrences=' + entries)
+            })
+          </script>
+      </div>
+    </div>
+  </div>
+</div>
