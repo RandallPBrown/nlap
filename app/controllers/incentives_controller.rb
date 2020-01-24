@@ -64,6 +64,8 @@ class IncentivesController < ApplicationController
     @entries_count = Entry.effective.joins(:occurrence, agent: :user).group(:edate).where("users.id = ?", @user.id).group(:ovalue).pluck(:ovalue)
     @daps_count = Dap.written.joins(:user).where("users.id = ?", @user.id)
     @incentives = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.today.beginning_of_month..Date.today.end_of_month)
+    @incentives_annual = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.today.beginning_of_year..Date.today.end_of_month)
+    @incentives_week = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.today.beginning_of_week..Date.today.end_of_month)
     @entries = Entry.all.joins(:occurrence, agent: :user).where('user_id = ?', @user.id).order(edate: :desc).where(edate: 90.days.ago..Date.today)
     
     respond_to do |format|

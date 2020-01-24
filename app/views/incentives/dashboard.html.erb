@@ -1,9 +1,14 @@
 
-
+  <% content_for :actions do %>
+    <%= link_to incentives_path, class: 'btn btn-primary btn-large pull-right font-weight-bold text-uppercase' do %>
+      INDEX
+    <% end %>
+  <% end %>
+  <%= @errors %>
 <script>
 $(document).ready(function(){
   var table = $('#incentivetable').dataTable({ 
-        "pageLength": 25,
+        "pageLength": 10,
         select: true,
         ajax: {
         url: 'incentive_dashboard_breakdown',
@@ -46,12 +51,6 @@ $(document).ready(function(){
 
                     </tbody>
                   </table>
-                  <div>
-                    <%= form_tag import_incentives_path, multipart: true do %>
-                      <%= file_field_tag :file, class: 'btn btn-primary font-weight-bold' %>
-                      <%= submit_tag "IMPORT", class: 'btn btn-primary font-weight-bold' %>
-                    <% end %>
-                  </div>
                 </div>
 
                                   <%# Remove the trailing if condition if you're using pagination. %>
