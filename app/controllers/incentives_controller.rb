@@ -41,7 +41,7 @@ class IncentivesController < ApplicationController
     incentive_array = Array.new
     @incentives.each do |user| 
       if user.deleted_at.nil? 
-        incentive_array << {'User': helpers.link_to(user.full_name, incentives_incentive_dashboard_breakdown_pdf_path(:id => user.id, format: :pdf), class: 'btn btn-link p-1'),
+        incentive_array << {'User': helpers.link_to(user.full_name, incentives_incentive_dashboard_breakdown_pdf_path(:id => user.id, format: :pdf), target: "_blank", class: 'btn btn-link p-1'),
          'Occurrences': user.agent.entries.effective.joins(:occurrence).sum(:ovalue), 
          'Uph': user.incentives.average(:uph).round(2), 
          'Errors': ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', user.id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').count, 
