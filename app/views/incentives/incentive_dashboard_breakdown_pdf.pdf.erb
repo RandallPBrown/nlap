@@ -100,124 +100,63 @@ tr {
           </div>
         </div>
       </div>
-      <div class="row mt-3 border-top mb-3">
-        <div class="col-xs-12">
-          <div class="card card-full-height mt-2 p-2">
-            <div class="card-header">
-              <h3 class="font-weight-bold text-dark">STATISTICS - WEEK</h3>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-xs-4"> 
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">UPH: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_week.average(:uph).nil? ? "N/A" : @incentives_week.average(:uph).round(2) %></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">OCCUPANCY: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_week.average(:occupancy).nil? ? "N/A" : @incentives_week.average(:occupancy).round(2) %></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">AHT: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_week.average(:aht).nil? ? "N/A" : @incentives_week.average(:aht).round(2) %></span>
-                    </div>
-                  </div>
-                </div>
+      <% if params[:selected_week] == "true" %>
+        <div class="row mt-3 border-top mb-3">
+          <div class="col-xs-12">
+            <div class="card card-full-height mt-2 p-2">
+              <div class="card-header">
+                <h3 class="font-weight-bold text-dark">STATISTICS - WEEK</h3>
               </div>
-              <div class="row">
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">TURNTIME: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_week.average(:turntime).nil? ? "N/A" : @incentives_week.average(:turntime).round(2) %></span>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xs-4"> 
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">UPH: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.average(:uph).nil? ? "N/A" : @incentives_week.average(:uph).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">OCCUPANCY: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.average(:occupancy).nil? ? "N/A" : @incentives_week.average(:occupancy).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">AHT: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.average(:aht).nil? ? "N/A" : @incentives_week.average(:aht).round(2) %></span>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">CONTRACTS: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_week.sum(:contracts).nil? ? "N/A" : @incentives_week.sum(:contracts).round(2) %></span>
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">TURNTIME: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.average(:turntime).nil? ? "N/A" : @incentives_week.average(:turntime).round(2) %></span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">IMPROVEMENT LOGS: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_week.average(:turntime).nil? ? "N/A" : @incentives_week.average(:turntime).round(2) %></span>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">CONTRACTS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.sum(:contracts).nil? ? "N/A" : @incentives_week.sum(:contracts).round(2) %></span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-3 border-top mb-3">
-        <div class="col-xs-12">
-          <div class="card card-full-height mt-2 p-2">
-            <div class="card-header">
-              <h3 class="font-weight-bold text-dark">STATISTICS - MONTH</h3>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-xs-4"> 
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">UPH: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives.average(:uph).nil? ? "N/A" : @incentives.average(:uph).round(2) %></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">OCCUPANCY: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives.average(:occupancy).nil? ? "N/A" : @incentives.average(:occupancy).round(2) %></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">AHT: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives.average(:aht).nil? ? "N/A" : @incentives.average(:aht).round(2) %></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">TURNTIME: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives.average(:turntime).nil? ? "N/A" : @incentives.average(:turntime).round(2) %></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">CONTRACTS: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives.sum(:contracts).nil? ?  "N/A" : @incentives.sum(:contracts).round(2) %></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">IMPROVEMENT LOGS: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives.average(:turntime).nil? ? "N/A" : @incentives.average(:turntime).round(2) %></span>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">IMPROVEMENT LOGS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.average(:turntime).nil? ? "N/A" : @incentives_week.average(:turntime).round(2) %></span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -225,62 +164,66 @@ tr {
             </div>
           </div>
         </div>
-      </div>
-      <div class="row mt-3 border-top mb-3">
-        <div class="col-xs-12">
-          <div class="card card-full-height mt-2 p-2">
-            <div class="card-header">
-              <h3 class="font-weight-bold text-dark">STATISTICS - ANNUAL</h3>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-xs-4"> 
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">UPH: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:uph).nil? ? "N/A" : @incentives_annual.average(:uph).round(2) %></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">OCCUPANCY: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:occupancy).nil? ? "N/A" : @incentives_annual.average(:occupancy).round(2) %></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">AHT: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:aht).nil? ? "N/A" : @incentives_annual.average(:aht).round(2) %></span>
-                    </div>
-                  </div>
-                </div>
+      <% else %>
+      
+      <% end %>
+      <% if params[:selected_month] == "true" %>  
+        <div class="row mt-3 border-top mb-3">
+          <div class="col-xs-12">
+            <div class="card card-full-height mt-2 p-2">
+              <div class="card-header">
+                <h3 class="font-weight-bold text-dark">STATISTICS - MONTH</h3>
               </div>
-              <div class="row">
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">TURNTIME: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:turntime).nil? ?  "N/A" : @incentives_annual.average(:turntime).round(2) %></span>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xs-4"> 
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">UPH: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.average(:uph).nil? ? "N/A" : @incentives.average(:uph).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">OCCUPANCY: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.average(:occupancy).nil? ? "N/A" : @incentives.average(:occupancy).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">AHT: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.average(:aht).nil? ? "N/A" : @incentives.average(:aht).round(2) %></span>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">CONTRACTS: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_annual.sum(:contracts).nil? ?  "N/A" : @incentives_annual.sum(:contracts).round(2) %></span>
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">TURNTIME: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.average(:turntime).nil? ? "N/A" : @incentives.average(:turntime).round(2) %></span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="form-group row">
-                    <label class="col-xs-6 col-form-label font-weight-bold">IMPROVEMENT LOGS: </label>
-                    <div class="col-xs-6">
-                      <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:turntime).nil? ?  "N/A" : @incentives_annual.average(:turntime).round(2) %></span>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">CONTRACTS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.sum(:contracts).nil? ?  "N/A" : @incentives.sum(:contracts).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">IMPROVEMENT LOGS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.average(:turntime).nil? ? "N/A" : @incentives.average(:turntime).round(2) %></span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -288,7 +231,76 @@ tr {
             </div>
           </div>
         </div>
-      </div>
+      <% else %>
+      
+      <% end %>
+      <% if params[:selected_year] == "true" %>  
+        <div class="row mt-3 border-top mb-3">
+          <div class="col-xs-12">
+            <div class="card card-full-height mt-2 p-2">
+              <div class="card-header">
+                <h3 class="font-weight-bold text-dark">STATISTICS - ANNUAL</h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xs-4"> 
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">UPH: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:uph).nil? ? "N/A" : @incentives_annual.average(:uph).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">OCCUPANCY: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:occupancy).nil? ? "N/A" : @incentives_annual.average(:occupancy).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">AHT: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:aht).nil? ? "N/A" : @incentives_annual.average(:aht).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">TURNTIME: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:turntime).nil? ?  "N/A" : @incentives_annual.average(:turntime).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">CONTRACTS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.sum(:contracts).nil? ?  "N/A" : @incentives_annual.sum(:contracts).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">IMPROVEMENT LOGS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:turntime).nil? ?  "N/A" : @incentives_annual.average(:turntime).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+      
+      <% end %>  
       <!-- <div class="row mt-3 border-top mb-3">
         <div class="col-xs-12">
           <div class="card card-full-height mt-2 p-2">
