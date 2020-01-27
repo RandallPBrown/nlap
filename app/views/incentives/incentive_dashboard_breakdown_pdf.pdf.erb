@@ -353,27 +353,27 @@ tr {
                   <table class="table table-striped">
                     <thead>
                         <tr class="font-weight-bold text-uppercase text-center">
-                                                <th scope="col">Occurrences</th>
-                                                <th scope="col">Uph</th>
-                                                <th scope="col">Errors</th>
-                                                <th scope="col">Occupancy</th>
-                                                <th scope="col">Turntime</th>
-                                                <th scope="col">Contracts</th>
-                                                <th scope="col">AHT</th>
-                                                <th scope="col">Date</th>
+                          <th scope="col">Occurrences</th>
+                          <th scope="col">Uph</th>
+                          <th scope="col">Errors</th>
+                          <th scope="col">Occupancy</th>
+                          <th scope="col">Turntime</th>
+                          <th scope="col">Contracts</th>
+                          <th scope="col">AHT</th>
+                          <th scope="col">Date</th>
                         </tr>
                       </thead>
                       <tbody>
                         <% @incentives.each do |incentive| %>
                         <tr class="text-uppercase text-center">
-                          <td><%= incentive.user.agent.entries.effective.joins(:occurrence).sum(:ovalue) %></td>
-                          <td><%= incentive.uph %></td>
-                          <td><%= ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', incentive.user_id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').where(errdate: incentive.date).count %></td>
-                          <td><%= incentive.occupancy %></td>
-                          <td><%= incentive.turntime %></td>
-                          <td><%= incentive.contracts %></td>
-                          <td><%= incentive.aht %></td>
-                          <td><%= incentive.date.strftime("%m/%d/%Y") %></td>
+                          <td><%= incentive.user.agent.entries.effective.joins(:occurrence).nil? ? " " : incentive.user.agent.entries.effective.joins(:occurrence).sum(:ovalue).round(2) %></td>
+                          <td><%= incentive.uph.nil? ? " " : incentive.uph.round(2) %></td>
+                          <td><%= ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', incentive.user_id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').where(errdate: incentive.date).nil? ? " " : ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', incentive.user_id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').where(errdate: incentive.date).count.round(2) %></td>
+                          <td><%= incentive.occupancy.nil? ? " " : incentive.occupancy.round(2) %></td>
+                          <td><%= incentive.turntime.nil? ? " " : incentive.turntime.round(2) %></td>
+                          <td><%= incentive.contracts.nil? ? " " : incentive.contracts.round(2) %></td>
+                          <td><%= incentive.aht.nil? ? " " : incentive.aht.round(2) %></td>
+                          <td><%= incentive.date.nil? ? " " : incentive.date.strftime("%m/%d/%Y") %></td>
                         </tr>
                         <% end %>
                       </tbody>
