@@ -23,8 +23,14 @@ tr {
 }
 
 .page-break { display:block; clear:both; page-break-after:always; }
+.main-bg {
+  background-image: url('file://<%= Rails.root.join('app/assets/images/facebook_leaf.jpg') %>');
+  background-repeat: no-repeat;
+  background-size:100% 100%;
+  background-color:rgba(0, 0, 0, 0.2);
+}
 </style>
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 main-bg">
   <div class="card">
     <div class="card-header text-center top-bg">
       <h1 class="font-weight-bold p-3">AGENT COACHING</h1>
@@ -344,7 +350,7 @@ tr {
 <% else %>
 <div class="page-break"></div>
 
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 main-bg">
   <div class="card">
     <div class="card-header text-center top-bg">
       <h1 class="font-weight-bold p-3">BREAKDOWN</h1>
@@ -482,7 +488,7 @@ tr {
 </div>
 <% end %>
 <div class="page-break"></div>
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 main-bg">
   <div class="card">
     <div class="card-header text-center top-bg">
       <h1 class="font-weight-bold p-3">ACKNOWLEDGEMENT</h1>
