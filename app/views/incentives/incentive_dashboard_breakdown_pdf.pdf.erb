@@ -22,16 +22,44 @@ tr {
   color: white !important;
 }
 
-.page-break { display:block; clear:both; page-break-after:always; }
-.main-bg {
-  background-image: url('file://<%= Rails.root.join('app/assets/images/facebook_leaf.jpg') %>');
+.page-break { 
+  display:block; 
+  clear:both; 
+  page-break-after:always; 
+}
+
+/*main-bg {
+  background-image: url('file://<%= Rails.root.join('app/assets/images/leaf_logo.jpg') %>');
+  height: 1330px;
+  background-repeat: repeat-y;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  background-color: rgba(255,255,255, 0.3) !important;
+  page-break-after: always; 
+}*/
+.watermarked {
+  position: relative;
+}
+
+.watermarked:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("file://<%= Rails.root.join('app/assets/images/leaf_logo.jpg') %>");
+  background-size: 100% 100%;
+  background-position: 30px 30px;
   background-repeat: no-repeat;
-  background-size:100% 100%;
-  background-color:rgba(0, 0, 0, 0.2);
+  opacity: 0.1;
 }
 </style>
-<div class="container-fluid mt-5 main-bg">
-  <div class="card">
+<div class="container-fluid mt-5 main-bg watermarked">
+  <div class="card ">
+    
     <div class="card-header text-center top-bg">
       <h1 class="font-weight-bold p-3">AGENT COACHING</h1>
     </div>
@@ -350,7 +378,7 @@ tr {
 <% else %>
 <div class="page-break"></div>
 
-<div class="container-fluid mt-5 main-bg">
+<div class="container-fluid mt-5 main-bg watermarked">
   <div class="card">
     <div class="card-header text-center top-bg">
       <h1 class="font-weight-bold p-3">BREAKDOWN</h1>
@@ -488,7 +516,7 @@ tr {
 </div>
 <% end %>
 <div class="page-break"></div>
-<div class="container-fluid mt-5 main-bg">
+<div class="container-fluid mt-5 main-bg watermarked">
   <div class="card">
     <div class="card-header text-center top-bg">
       <h1 class="font-weight-bold p-3">ACKNOWLEDGEMENT</h1>
