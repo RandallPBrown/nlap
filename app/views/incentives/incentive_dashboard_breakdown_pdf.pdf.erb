@@ -28,16 +28,6 @@ tr {
   page-break-after:always; 
 }
 
-/*main-bg {
-  background-image: url('file://<%= Rails.root.join('app/assets/images/leaf_logo.jpg') %>');
-  height: 1330px;
-  background-repeat: repeat-y;
-  background-position: center;
-  background-attachment: fixed;
-  background-size: 100% 100%;
-  background-color: rgba(255,255,255, 0.3) !important;
-  page-break-after: always; 
-}*/
 .watermarked {
   position: relative;
 }
@@ -59,7 +49,6 @@ tr {
 </style>
 <div class="container-fluid mt-5 main-bg watermarked">
   <div class="card ">
-    
     <div class="card-header text-center top-bg">
       <h1 class="font-weight-bold p-3">AGENT COACHING</h1>
     </div>
@@ -128,18 +117,6 @@ tr {
                   <span class="text-uppercase text-monospace"><%= @daps_count.nil? ? "0" : @daps_count.count %></span>
                 </div>
               </div>
-              <!-- <div class="form-group row">
-                <label class="col-xs-2 col-form-label font-weight-bold">Improvement Opportunities: </label>
-                <div class="col-xs-10">
-                  <span class="text-uppercase text-monospace">COMING SOON</span>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-xs-2 col-form-label font-weight-bold">Kudos: </label>
-                <div class="col-xs-10">
-                  <span class="text-uppercase text-monospace">COMING SOON</span>
-                </div>
-              </div> -->
             </div>
           </div>
         </div>
@@ -345,31 +322,6 @@ tr {
       <% else %>
       
       <% end %>  
-      <!-- <div class="row mt-3 border-top mb-3">
-        <div class="col-xs-12">
-          <div class="card card-full-height mt-2 p-2">
-            <div class="card-header">
-              <h3 class="font-weight-bold text-dark">STATISTICS - WEEKLY RECAP</h3>
-            </div>
-            <div class="card-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <% @days_from_this_week.each do |d| %>
-                      <th><%= d.strftime('%m/%d/%Y') %></th>
-                    <% end %>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </div>
@@ -663,187 +615,3 @@ tr {
     </div>
   </div>
 </div>
-<!-- <style>
-thead {
-  display: table-header-group !important;
-}
-
-tfoot {
-  display: table-row-group !important;
-}
-
-/*tr {
-  page-break-inside: avoid !important;
-}*/
-.page-break { display:block; clear:both; page-break-after:always; }
-</style>
-<div class="container">
-  <div class="card p-2">
-    <div class="row pb-5">
-      <div class="col-12">
-        <div class="card bg-light">
-          <center><h1 class="text-monospace text-uppercase font-weight-bold"><u>AGENT INFORMATION</u></h1></center>
-          <div class="row">
-            <div class="col-6">
-              <label class="font-weight-bold text-uppercase text-monospace">Agent: </label>
-              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.full_name %>">
-
-              <label class="font-weight-bold text-uppercase text-monospace">Department: </label>
-              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.agent.department.name %>">
-
-             
-            </div>
-            <div class="col-6">
-              <label class="font-weight-bold text-uppercase text-monospace">Active Occurrences: </label>
-              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.agent.occurrences.values.first %>">
-
-              <label class="font-weight-bold text-uppercase text-monospace">Active Prog Actions: </label>
-              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.daps.count.to_f %>">
-            </div>
-          </div>
-        </div>
-      </div>
-  	</div>
-    <div class="row pb-5">
-      <div class="col-12">
-        <div class="card bg-light">
-          <center><h1 class="text-monospace text-uppercase font-weight-bold"><u>Monthly Stats Breakdown</u></h1></center>
-          <div class="row">
-            <div class="col-6">
-              <label class="font-weight-bold text-uppercase text-monospace">Average UPH: </label>
-              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @incentives.average(:uph).round(2) %>">
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  	<div class="row pb-5">
-      <div class="col-12">
-        <div class="card bg-light">
-          <center><h1 class="text-monospace text-uppercase font-weight-bold"><u>Occurrences Breakdown</u></h1></center>
-          <div class="row">
-          	<div class="col-12">
-	            <table class="table table-striped">
-	            	<thead class="thead-dark">
-	                  <tr class="font-weight-bold text-uppercase text-center">
-                      <th scope="col">Type</th>
-                      <th scope="col">Value</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Expiration</th>
-                      <th scope="col">Description</th>
-	                  </tr>
-	                </thead>
-	                <tbody>
-	                	<% @entries.each do |entry| %>
-	                	<tr class="text-uppercase text-center">
-	                		<td><%= entry.occurrence.name %></td>
-	                		<td><%= entry.occurrence.ovalue %></td>
-	                		<td><%= entry.edate %></td>
-	                		<td><%= entry.edate + 90.days %></td>
-	                		<td><%= entry.edesc.truncate(30) %></td>
-	                	</tr>
-	                	<% end %>
-	                	<% if @entries.length == 0 %>
-	                    <tr><td colspan=42 class='text-center'>No Entries.</td></tr>
-	                    <% end %>
-	                </tbody>
-	            </table>
-	         </div>
-          </div>
-        </div>
-      </div>
-  	</div>
-  	<div class="row pb-5">
-      <div class="col-12">
-        <div class="card bg-light">
-          <center><h1 class="text-monospace text-uppercase font-weight-bold"><u>Stats Breakdown</u></h1></center>
-          <div class="row">
-          	<div class="col-12">
-	            <table class="table table-striped">
-	            	<thead class="thead-dark">
-	                  <tr class="font-weight-bold text-uppercase text-center">
-	                                          <th scope="col">Occurrences</th>
-	                                          <th scope="col">Uph</th>
-	                                          <th scope="col">Errors</th>
-	                                          <th scope="col">Occupancy</th>
-	                                          <th scope="col">Turntime</th>
-	                                          <th scope="col">Contracts</th>
-	                                          <th scope="col">AHT</th>
-	                                          <th scope="col">Date</th>
-	                  </tr>
-	                </thead>
-	                <tbody>
-	                	<% @incentives.each do |incentive| %>
-	                	<tr class="text-uppercase text-center">
-	                		<td><%= incentive.user.agent.entries.effective.joins(:occurrence).sum(:ovalue) %></td>
-	                		<td><%= incentive.uph %></td>
-	                		<td><%= ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', incentive.user_id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').where(errdate: incentive.date).count %></td>
-	                		<td><%= incentive.occupancy %></td>
-	                		<td><%= incentive.turntime %></td>
-	                		<td><%= incentive.contracts %></td>
-	                		<td><%= incentive.aht %></td>
-	                		<td><%= incentive.date.strftime("%m/%d/%Y") %></td>
-	                	</tr>
-	                	<% end %>
-	                </tbody>
-	            </table>
-	         </div>
-          </div>
-        </div>
-      </div>
-  	</div>
-  	<div class="page-break"></div>
-  	<div class="row pb-5">
-      <div class="col-12">
-        <div class="card bg-light">
-          <center><h1 class="text-monospace text-uppercase font-weight-bold"><u>AGENT INFORMATION</u></h1></center>
-          <div class="row">
-            <div class="col-6">
-              <label class="font-weight-bold text-uppercase text-monospace">Agent: </label>
-              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.full_name %>">
-
-              <label class="font-weight-bold text-uppercase text-monospace">Department: </label>
-              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.agent.department.name %>">
-
-             
-            </div>
-            <div class="col-6">
-              <label class="font-weight-bold text-uppercase text-monospace">Active Occurrences: </label>
-              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.agent.occurrences.values.first %>">
-
-              <label class="font-weight-bold text-uppercase text-monospace">Active Prog Actions: </label>
-              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @user.daps.count.to_f %>">
-            </div>
-          </div>
-        </div>
-      </div>
-  	</div>
-  	<div class="row">
-    	<div class="col-12">
-        	<div class="card bg-light p-5">
-        		<label class="font-weight-bold text-uppercase text-monospace">Employee Print:</label>
-        		<input class="form-control form-control-lg bg-white" type="text">
-        		<label class="font-weight-bold text-uppercase text-monospace">Employee Signature:</label>
-        		<input class="form-control form-control-lg bg-white" type="text">
-        		<br>
-        		<hr>
-        		<br>
-        		<label class="font-weight-bold text-uppercase text-monospace">Coach Print:</label>
-        		<input class="form-control form-control-lg bg-white" type="text">
-        		<label class="font-weight-bold text-uppercase text-monospace">Coach Signature:</label>
-        		<input class="form-control form-control-lg bg-white" type="text">
-        		<br>
-        		<hr>
-        		<br>
-        		<label class="font-weight-bold text-uppercase text-monospace">Management Print:</label>
-        		<input class="form-control form-control-lg bg-white" type="text">
-        		<label class="font-weight-bold text-uppercase text-monospace">Management Signature:</label>
-        		<input class="form-control form-control-lg bg-white" type="text">
-        	</div>
-        </div>
-    </div>
-  </div>
-</div>
-
- -->

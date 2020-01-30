@@ -62,7 +62,7 @@ class IncentivesController < ApplicationController
   end
 
   def incentive_dashboard_breakdown_pdf
-    @user = User.joins(agent: [entries: :occurrence]).find(params[:id])
+    @user = User.find(params[:id])
     @entries_count = Entry.effective.joins(:occurrence, agent: :user).group(:edate).where("users.id = ?", @user.id).group(:ovalue).pluck(:ovalue)
     @daps_count = Dap.written.joins(:user).where("users.id = ?", @user.id)
     @incentives = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.parse(params[:selected_date]).beginning_of_month..Date.parse(params[:selected_date]).end_of_month)
