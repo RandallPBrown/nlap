@@ -11,12 +11,12 @@
 				</div>
 				<hr>
 				<% if @err_log.dispute_response.present? %>
-					<label>Trainer Response:</label><br>
+					<label>Arbitrator Response:</label><br>
 					<div class=" p-1">
 						<%= @err_log.dispute_response %>
 					</div>
 				<% else %>
-					<label>Trainer Notes:</label><br>
+					<label>Arbitrator Notes:</label><br>
 					<div class=" p-1">
 						<%= @err_log.err_notes %>
 					</div>
@@ -72,14 +72,6 @@
 					</div>
 				</div>
 				<hr>
-				<div class="row">
-					<div class="col-6">
-						Departmental Total:
-					</div>
-					<div class="col-6">
-						COMING SOON<%#= (number_with_precision(@err_logs_cost_departmental, :precision => 2) || "0.00") %>
-					</div>
-				</div>
 			</div>
 		</div>
 		<div class="row m-auto pt-3 pb-0">
