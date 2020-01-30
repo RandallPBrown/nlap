@@ -55,7 +55,7 @@
     <%= f.form_group :err_type_id, class: 'row' do |f| %>
       <%= f.label 'Type', class: 'control-label col-md-12 text-capitalize' %>
       <div class='col-12 col-md-12'>
-        <%= f.collection_select :err_type_id, ErrType.order(:description), :id, :description, {}, {:class=>'form-control form-control-sm text-dark border-bottom pb-3'}  %>
+        <%= f.collection_select :err_type_id, ErrType.order(:description), :id, :description, {}, {:class=>'form-control form-control-sm text-dark border-bottom'}  %>
         <%= f.error_messages %>
       </div>
     <% end %>
@@ -70,7 +70,7 @@
 
   <div class="d-flex">
     <div class="ml-auto">
-      <%= f.submit class: 'btn btn-primary' %>
+      <%= f.submit "SUBMIT", class: 'btn btn-primary' %>
       <%= link_to "Cancel", err_logs_path, class: 'btn btn-outline-default', 'data-dismiss': 'modal' %>
     </div>
   </div>
