@@ -1,30 +1,3 @@
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/4.4.0/pusher.min.js"></script> -->
-<!-- <script>
-    // Enable pusher logging - don't include this in production
-    var pusher = new Pusher('<%#= ENV["PUSHER_KEY"] %>', {
-      cluster: '<%#= ENV["PUSHER_CLUSTER"] %>',
-      forceTLS: true
-    });
-
-    var ind_entry_count_channel = pusher.subscribe('entry');
-    ind_entry_count_channel.bind('new-entry', function(data) {
-      var indEntryCount = $('.entry-count').first().text();
-      if (<%#= current_user.id %> == data.id) {
-          $('.entry-count').html(parseFloat(indEntryCount) + parseFloat(data.ovalue))
-      }
-    });
-
-    var ind_dap_count_channel = pusher.subscribe('dap');
-    ind_dap_count_channel.bind('new-dap', function(data) {
-      var indDapCount = $('.dap-count').first().text();
-      if (<%#= current_user.id %> == data.id) {
-          $('.dap-count').html(parseFloat(indDapCount) + 1)
-      }
-    });
-</script> -->
-
-
-
 
 <%= stylesheet_link_tag "pagination.css" %>
 <%= render :layout => "layouts/base" do %>
@@ -99,7 +72,7 @@
           </ul>
         </div>
         <script>
-            $(window).load(function() {
+            $(document).ready(function() {
               $('#kudos-list').attr('hidden', false);
               $('.ticker').ticker();
             });
