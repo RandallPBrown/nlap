@@ -763,6 +763,9 @@ $(document).ready(function(){
 			    		<a class="nav-link" id="v-pills-jfrr-tab" data-toggle="pill" href="#v-pills-jfrr" role="tab" aria-controls="v-pills-jfrr" aria-selected="false">JFRR</a>
 			    		<a class="nav-link" id="v-pills-edgprt-tab" data-toggle="pill" href="#v-pills-edgprt" role="tab" aria-controls="v-pills-edgprt" aria-selected="false">EDGPRT</a>
 			    		<a class="nav-link" id="v-pills-ADGCACP-tab" data-toggle="pill" href="#v-pills-ADGCACP" role="tab" aria-controls="v-pills-ADGCACP" aria-selected="false">ADGCACP</a>
+			    		<a class="nav-link" id="v-pills-lieu-tab" data-toggle="pill" href="#v-pills-lieu" role="tab" aria-controls="v-pills-lieu" aria-selected="false">LIEU</a>
+			    		<a class="nav-link" id="v-pills-cci-tab" data-toggle="pill" href="#v-pills-cci" role="tab" aria-controls="v-pills-cci" aria-selected="false">CCI</a>
+			    		<a class="nav-link" id="v-pills-chkmsn-tab" data-toggle="pill" href="#v-pills-chkmsn" role="tab" aria-controls="v-pills-chkmsn" aria-selected="false">CHKMSN</a>
 			    	</div>
 			    	<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 			    		<button class="nav-link border-light" id="shortkeyReset">RESET</button>
@@ -884,6 +887,39 @@ Depot Facility scrapping unit (PROCEED)
 Other (explain)
 SEND SHORTKEY TO PENDINGREVIEW@NEWLEAFSC.NET FOR DISPATCH TO ADORAMA*
 Advise Customer: THIS WILL FULFILL ALL OBLIGATIONS OF THIS SERVICE CONTRACT FOR THIS UNIT.
+
+<%= current_user.full_name %>
+<%= current_user.department.name %>
+				    			</textarea>
+				    		</div>
+				    		<div class="tab-pane fade" id="v-pills-lieu" role="tabpanel" aria-labelledby="v-pills-ADGCACP-tab">
+				    			<textarea class="form-control m-2" style="min-height: 500px !important; max-height: 100% !important; width: 98% !important">
+Calling customer to offer cash in lieu of repairs in the amount of _______. If customer does not accept offer, we can move forward with repair but that will leave ________ for the remaining of the contract.
+
+<%= current_user.full_name %>
+<%= current_user.department.name %>
+				    			</textarea>
+				    		</div>
+				    		<div class="tab-pane fade" id="v-pills-cci" role="tabpanel" aria-labelledby="v-pills-ADGCACP-tab">
+				    			<textarea class="form-control m-2" style="min-height: 500px !important; max-height: 100% !important; width: 98% !important">
+Who Called: 
+|| Reason for Call: 
+|| Outcome:
+
+<%= current_user.full_name %>
+<%= current_user.department.name %>
+				    			</textarea>
+				    		</div>
+				    		<div class="tab-pane fade" id="v-pills-chkmsn" role="tabpanel" aria-labelledby="v-pills-ADGCACP-tab">
+				    			<textarea class="form-control m-2" style="min-height: 500px !important; max-height: 100% !important; width: 98% !important">
+Check #:
+Check Date:
+Amount:
+SO:
+Cust/Serv Prov:
+Carrier:
+ 
+Please confirm that the above referenced check has not been cashed.  If not, please issue a stop payment and reissue check.
 
 <%= current_user.full_name %>
 <%= current_user.department.name %>
