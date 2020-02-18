@@ -153,7 +153,7 @@ end
          'Occurrence': entry.occurrence.name.truncate(12), 
          'Value': entry.occurrence.ovalue, 
          'Date': entry.edate, 
-         'Expiration': entry.edate + 90.days, 
+         'Expiration': entry.edate.nil? ? "N/A" : entry.edate + 90.days, 
          'Description': entry.edesc.truncate(10), 
          '': (helpers.link_to(helpers.theme_icon_tag('eye'), entry, 'data-toggle': 'tooltip', title: 'Show', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('pencil-alt'), edit_entry_path(entry), 'data-toggle': 'tooltip', title: 'Edit', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('trash'), entry, 'data-toggle': 'tooltip', title: 'Delete', method: :delete, class: 'btn btn-link p-1'))}
        else 
