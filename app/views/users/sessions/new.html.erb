@@ -42,7 +42,7 @@
                     <% if user_signed_in? %>
                       <%= link_to "LOGOUT", destroy_user_session_path, :method => :delete, :class => 'btn btn-sm btn-outline-light text-white text-hover-dark' %>
                     <% else %>
-                    <a class="btn btn-sm btn-outline-light text-white text-hover-dark" href="mailto:hsmith@newleafsc.net">LOST PASS</a>
+                      <a class="btn btn-sm btn-outline-light text-white text-hover-dark" href="mailto:hsmith@newleafsc.net">LOST PASS</a>
                     <% end %>
                   </li>
                 </ul>
@@ -69,11 +69,11 @@
         </div>
           </div>
           <div class="col-12 col-md-5">
-            <div class="card bg-transparent border-0" style="box-shadow: 0 !important">
-              <div class="card-header bg-transparent border-0 p-0 mx-0 mb-3">
-                <h5 class="font-weight-bold jumbo-text p-3 w-100 text-center">SIGN IN</h5>
+            <div class="card bg-transparent border-0 shadow-none" style="box-shadow: 0 !important">
+              <div class="card-header bg-transparent border-0 p-0 mx-0 mb-0">
+                <h5 class="font-weight-bold jumbo-text p-5 w-100 text-center" style="font-size:2.5vw">SIGN IN</h5>
               </div>
-              <div class="card-body bg-white">
+              <div class="card-body bg-transparent mx-0 mt-0 pt-0">
                 <% if user_signed_in? %>
                       <h6 class="font-weight-bold">You're already logged in, <%= current_user.full_name %>!</h6>
                       <h6 class="font-weight-bold">Proceed to your <a class="font-weight-bold" href="../users/dashboard">dashboard</a>.</h6>
@@ -93,14 +93,14 @@
                     <% end -%>
 
                     <%= f.form_group :email, class: "row" do |f| %>
-                      <%= f.label 'EMAIL:', class: "form-label text-uppercase text-dark font-weight-bold" %>
-                      <%= f.email_field :email, autofocus: true, class: "form-control" %>
+                      <%= f.label 'EMAIL:', class: "form-label text-uppercase text-white font-weight-bold", style: 'font-size: 1.2vw' %>
+                      <%= f.email_field :email, autofocus: true, class: "form-control border-white text-dark" %>
                       <%= f.error_messages %>
                     <% end %>
 
                     <%= f.form_group :password, class: "row" do |f| %>
-                      <%= f.label 'PASSWORD:', class: "form-label text-uppercase text-dark font-weight-bold" %>
-                      <%= f.password_field :password, class: "form-control" %>
+                      <%= f.label 'PASSWORD:', class: "form-label text-uppercase text-white font-weight-bold", style: 'font-size: 1.2vw' %>
+                      <%= f.password_field :password, class: "form-control border-white text-dark" %>
                       <%= f.error_messages %>
                     <% end %>
 
@@ -108,9 +108,9 @@
                       <div class="d-flex align-items-center">
                         <div class="checkbox m-0 mr-auto">
                           <%= f.check_box :remember_me %>
-                          <%= f.label 'remember me?', class: "checkbox m-0 mr-auto" %>
+                          <%= f.label 'remember me?', class: "checkbox m-0 mr-auto text-white font-weight-bold" %>
                         </div>
-                        <%= f.submit "Log in", class: "btn btn-primary text-uppercase font-weight-bold" %>
+                        <%= f.submit "Log in", class: "btn btn-outline-light text-hover-dark text-white text-uppercase font-weight-bold" %>
                       </div>
                     <% end %>
                 <% end %>
@@ -124,7 +124,7 @@
     <div class=" ">
   <div class="container">
     <div class="row">
-      <h2 class="header-separator text-center col-12 my-4 mb-3">Keep up to Date</h2>
+      <h2 class="header-separator text-center col-12 my-3 mb-3">Keep up to Date</h2>
     </div>
     <div class="row">
       <div class="col-12 col-md-3 text-center">
