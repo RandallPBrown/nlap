@@ -60,13 +60,15 @@ Rails.application.routes.draw do
   get 'tools/val'
   get 'tools/pendingreview'
   get 'tools/manufacturer_check'
+  get 'tools/shortkey'
+  put 'tools/validator_email' => 'tools#validator_email'
 
   get 'daps/form2'  
   get 'home/dashboard'
   get 'home', to: 'home#index'
   get 'myresults', to: 'entries#my_results', defaults: { format: 'csv'}  
   put 'parts/read_at' => 'parts#read_at'
-  put 'tools/validator_email' => 'tools#validator_email'
+  
 
   resources :tools do
       collection do

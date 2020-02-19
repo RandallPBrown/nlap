@@ -2,7 +2,7 @@
 .jumbo-text {
   background-color: white;
   color: black;
-  font-size: 2vw; 
+  font-size: 2.2vw; 
   font-weight: bold;
   mix-blend-mode: screen;
 }
@@ -29,7 +29,10 @@
                     <a class="nav-link" href="../users/dashboard">Dashboard</a>
                   </li>
                   <li class="nav-item ">
-                    <a class="nav-link" href="https://www.newleafsc.net/">Newleaf Home</a>
+                    <a class="nav-link" target="_blank" href="https://www.newleafsc.net/">Newleaf</a>
+                  </li>
+                  <li class="nav-item ">
+                    <a class="nav-link" target="_blank" href="https://newleaf.pcrscw.com/Main/MainPage.aspx#jumpforward">PCMI</a>
                   </li>
                 </ul>
                 <a href="javascript:" class="navbar-brand navbar-center text-center d-none d-sm-none d-md-none d-lg-block">
@@ -39,7 +42,7 @@
                     <% if user_signed_in? %>
                       <%= link_to "LOGOUT", destroy_user_session_path, :method => :delete, :class => 'btn btn-sm btn-outline-light text-white text-hover-dark' %>
                     <% else %>
-                    <a class="btn btn-sm btn-outline-light text-white text-hover-dark" href="mailto:pbrown@newleafsc.net">LOST PASS</a>
+                    <a class="btn btn-sm btn-outline-light text-white text-hover-dark" href="mailto:hsmith@newleafsc.net">LOST PASS</a>
                     <% end %>
                   </li>
                 </ul>
@@ -59,18 +62,18 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-12">
-                    <p class="jumbo-text p-3 ml-5 text-center">Check your stats, occurrences, and more!<br> Login to the right to begin.</p>
+                <div class="col-12 px-0">
+                    <p class="jumbo-text py-4 px-5 ml-5 text-center">Check your stats, occurrences, and more!<br> Login to the right to begin.</p>
                 </div>
             </div>
         </div>
           </div>
           <div class="col-12 col-md-5">
-            <div class="card p-4">
-              <div class="card-header">
-                <div class="mx-auto"><h5 class="font-weight-bold">SIGN IN</h5></div>
+            <div class="card bg-transparent border-0" style="box-shadow: 0 !important">
+              <div class="card-header bg-transparent border-0 p-0 mx-0 mb-3">
+                <h5 class="font-weight-bold jumbo-text p-3 w-100 text-center">SIGN IN</h5>
               </div>
-              <div class="card-body">
+              <div class="card-body bg-white">
                 <% if user_signed_in? %>
                       <h6 class="font-weight-bold">You're already logged in, <%= current_user.full_name %>!</h6>
                       <h6 class="font-weight-bold">Proceed to your <a class="font-weight-bold" href="../users/dashboard">dashboard</a>.</h6>
@@ -90,13 +93,13 @@
                     <% end -%>
 
                     <%= f.form_group :email, class: "row" do |f| %>
-                      <%= f.label :email, class: "form-label" %>
+                      <%= f.label 'EMAIL:', class: "form-label text-uppercase text-dark font-weight-bold" %>
                       <%= f.email_field :email, autofocus: true, class: "form-control" %>
                       <%= f.error_messages %>
                     <% end %>
 
                     <%= f.form_group :password, class: "row" do |f| %>
-                      <%= f.label :password, class: "form-label" %>
+                      <%= f.label 'PASSWORD:', class: "form-label text-uppercase text-dark font-weight-bold" %>
                       <%= f.password_field :password, class: "form-control" %>
                       <%= f.error_messages %>
                     <% end %>
@@ -105,9 +108,9 @@
                       <div class="d-flex align-items-center">
                         <div class="checkbox m-0 mr-auto">
                           <%= f.check_box :remember_me %>
-                          <%= f.label :remember_me, class: "checkbox m-0 mr-auto" %>
+                          <%= f.label 'remember me?', class: "checkbox m-0 mr-auto" %>
                         </div>
-                        <%= f.submit "Log in", class: "btn btn-primary" %>
+                        <%= f.submit "Log in", class: "btn btn-primary text-uppercase font-weight-bold" %>
                       </div>
                     <% end %>
                 <% end %>
@@ -175,7 +178,7 @@
         <h1 class="text-shadow-light leading-normal">Notice an error? Got an idea?</h1>
         <p class="lead font-weight-medium mt-5 text-shadow-light">Don't keep it to yourself! Click below to send an email to the admin and we'll be in touch shortly!</p>
         <a class="btn btn-lg btn-circle btn-outline-light text-white text-hover-dark"
-        href="mailto:pbrown@newleafsc.net">email</a>
+        href="mailto:hsmith@newleafsc.net">email</a>
       </div>
     </div>
   </div>
@@ -183,21 +186,16 @@
 <div class=" ">
   <div class="row no-gutters equal-cols align-items-center">
     <div class="col-12 col-md-5 mx-md-auto">
-      <h2 class="leading-normal">Ultime fantastic nightstand reproduction</h2>
-      <p class="lead">Dolor obcaecati at nesciunt quibusdam sed nesciunt quibusdam repellendus,
-        ab reprehenderit. Ea tempore voluptas esse qui eius consequuntur!</p>
-      <a
-      class="d-table btn btn-outline-primary btn-border-2x" href="javascript:">See the demo</a>
+      <h2 class="leading-normal text-uppercase">Newleaf Service Contracts</h2>
+      <p class="lead">This system is intended for use only by authorized New Leaf Service Contract personnel. Unauthorized access is strictly prohibited.</p>
         <div class="row no-gutters mt-5">
           <div class="col-12 col-md-5">
-            <h6 class="font-weight-normal">Cats on the roof</h6>
-            <p class="small text-muted">Ipsum quaerat officia accusantium totam aliquid. Facere quaerat fugiat
-              nostrum debitis officia? Tempore repudiandae eaque expedita quisquam nisi?</p>
+            <h6 class="font-weight-normal">Location Information</h6>
+            <p class="small text-muted">909 Lake Carolyn Pkwy<br>Suite 900<br>Irving, Texas 75039-3919</p>
           </div>
           <div class="col-12 col-md-5 ml-md-auto">
-            <h6 class="font-weight-normal">Cats on the roof</h6>
-            <p class="small text-muted">Ipsum quaerat officia accusantium totam aliquid. Facere quaerat fugiat
-              nostrum debitis officia? Tempore repudiandae eaque expedita quisquam nisi?</p>
+            <h6 class="font-weight-normal">Contact Information</h6>
+            <p class="small text-muted">Dan Pressley<br>Vice President, Operations<br>dpressley@newleafsc.net<br>(972) 573-1265</p>
           </div>
         </div>
     </div>
