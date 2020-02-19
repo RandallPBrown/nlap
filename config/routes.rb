@@ -63,6 +63,7 @@ Rails.application.routes.draw do
 
   get 'daps/form2'  
   get 'home/dashboard'
+  get 'home', to: 'home#index'
   get 'myresults', to: 'entries#my_results', defaults: { format: 'csv'}  
   put 'parts/read_at' => 'parts#read_at'
   put 'tools/validator_email' => 'tools#validator_email'
@@ -123,5 +124,6 @@ Rails.application.routes.draw do
 
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: "users#home"
+  
+  root to: "home#index"
 end
