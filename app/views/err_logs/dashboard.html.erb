@@ -54,19 +54,7 @@ table.dataTable thead th.sorting_desc:after {
 </style>
 
 
-<script>
-$(document).ready(function(){
-  $('#error_index_pending').DataTable({
-    'order': [[3, 'desc'], [4, 'desc']]
-  })
 
-});
-
-function expandEdit(){
-  $('#pending-card').removeClass('dt-collapse');
-  $('#pending-card').addClass('dt-expand');
-}
-</script>
 
 <div class="container">
   <div class="row">
@@ -166,3 +154,16 @@ function expandEdit(){
   </div>
 </div>
 <div id="buttons"></div>
+<script>
+$(document).ready(function(){
+  $('#error_index_pending').DataTable({
+    'order': [[3, 'desc'], [4, 'desc']]
+  })
+
+});
+
+function expandEdit(){
+  $('#pending-card').removeClass('dt-collapse');
+  $('#pending-card').addClass('dt-expand');
+}
+</script>

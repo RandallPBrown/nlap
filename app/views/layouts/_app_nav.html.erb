@@ -62,7 +62,7 @@
         <% end %>
         <% if current_user.admin == true %>
                 
-        <span class="text-white font-weight-bold pl-4 pr-2 pull-right">RECENT KUDOS: </span>
+       <!--  <span class="text-white font-weight-bold pl-4 pr-2 pull-right">RECENT KUDOS: </span>
         <div class="ticker">
           
           <ul id="kudos-list" hidden>
@@ -76,13 +76,13 @@
               $('#kudos-list').attr('hidden', false);
               $('.ticker').ticker();
             });
-        </script>
+        </script> -->
         <% end %>
       </ul>
       
       <ul class="nav navbar-nav ml-auto">
-        <% if current_user.admin == true %>
-        <script>
+        <%# if current_user.admin == true %>
+<!--         <script>
         function popKudoModal(){
           $('#kudosModal').modal('show')
         }
@@ -92,8 +92,8 @@
         </small>
         <small class="badge badge-secondary ml-0 mt-1 mr-3" style="border-radius: 0px 3px 3px 0px !important">
           <span class="text-warning mr-1"><%= fa_icon_tag("star") %></span> | <small class="ml-1 font-weight-bold">+</small><%= Kudo.all.where("user_id = ?", current_user.id).where("kudo_status_id = ?", 2).count(:id) %>
-        </small>
-        <% end %>
+        </small> -->
+        <%# end %>
         <li class="nav-item dropdown user-nav rounded">
           <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <%= fa_icon_tag("user") %>
@@ -155,7 +155,7 @@
       </ul>
     </div>
   </nav>
-<div class="modal fade" id="kudosModal" tabindex="-1" role="dialog" aria-labelledby="kudosModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="kudosModal" tabindex="-1" role="dialog" aria-labelledby="kudosModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
     <div class="modal-content" style="height: 800px">
       <div class="modal-header">
@@ -278,7 +278,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
   <%= yield %>
 <% end %>
 
