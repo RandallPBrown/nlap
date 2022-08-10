@@ -75,8 +75,8 @@ gem 'best_in_place', '~> 3.0.1'
 gem 'smarter_csv'
 
 
-source "https://gems.rapidrailsthemes.com/gems" do
-  gem "rrt"
+source "https://gems.kiso.io/" do
+  gem "rrt", "~> 1.0.17"
 end
 
 group :development, :test do
