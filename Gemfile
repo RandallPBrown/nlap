@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.5.1'
+ruby '3.1.2'
 
 
 git_source(:github) do |repo_name|
@@ -11,7 +11,7 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
 
-gem 'pg', '~> 0.18.4'
+gem 'pg', '~> 1.4.3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -73,7 +73,7 @@ gem 'rolify'
 # Edit forms in line
 gem 'best_in_place', '~> 3.0.1'
 gem 'smarter_csv'
-
+gem 'net-smtp', require: false
 
 gem 'kiso_themes', '~> 1.0', '>= 1.0.2'
 
