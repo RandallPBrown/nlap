@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '3.1.2'
+ruby '2.5.1'
 
 
 git_source(:github) do |repo_name|
@@ -9,7 +9,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.4'
+gem 'rails', '~> 5.2.3'
 
 gem 'pg', '~> 0.18.4'
 # Use Puma as the app server
@@ -75,9 +75,7 @@ gem 'best_in_place', '~> 3.0.1'
 gem 'smarter_csv'
 
 
-source "https://gems.rapidrailsthemes.com/gems" do
-  gem "rrt", "~> 1.0.17"
-end
+gem 'kiso_themes', '~> 1.0', '>= 1.0.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

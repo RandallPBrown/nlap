@@ -17,7 +17,7 @@
 //= require turbolinks
 //= require bootstrap-datepicker
 //= require bootstrap-select
-//= require rrt
+//= require kiso_themes
 // require validator
 //= require toastr
 //= require best_in_place
