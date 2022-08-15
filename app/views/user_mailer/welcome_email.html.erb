@@ -1,0 +1,31 @@
+<head>
+	  <link rel="stylesheet" href="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	      <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+
+</head>
+<body>
+<%= image_tag 'logo.png' %><br /><br />
+
+<div class="container-fluid">
+	<div class="card">
+		<div class="card-header">
+			<h1>Hello, <%= @user.first_name %>!</h1>
+		</div>
+		<div class="card-body">
+			<h3>Welcome to Service Roots, the New Leaf Agent Portal!</h3>
+			  <p>
+			    You have been registered with the username [<%= @user.email%>] and the password your admin has provided for you. Please begin by selecting "Change my password" in the user menu located in the top right-hand corner of your screen.<br>
+			  </p>
+			<p>We at New Leaf are excited to have you with us and look forward to a happy career together.</p><br /><br />
+			<small>
+				<p class="text-justify">New Leaf Service Contracts, LLC.</p>
+				<p class="text-justify">909 Lake Carolyn Pkwy, Ste 900</p>
+				<p class="text-justify">Irving, TX 75039-3919</p>
+			</small>
+		</div>
+	</div>
+</div>
+  <script src="http://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+  <script src="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+  </body>

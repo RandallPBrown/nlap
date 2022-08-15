@@ -1,0 +1,12 @@
+
+
+                <%= month_calendar events: @entries do |date, entries| %>
+                  <%= date.day %> <br />
+                  <% entries.each do |entry| %>
+                      <small>
+                        <b><%= entry.occurrence.name.truncate(4, omission: ' - ') %></b>
+                        <%= link_to entry.user.full_name.truncate(15), entry, 'data-toggle': 'tooltip', title: entry.user.full_name, class: "text-dark" %>
+                        <hr>
+                      </small>
+                  <% end %>
+                <% end %>  

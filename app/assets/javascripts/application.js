@@ -12,7 +12,18 @@
 //
 
 //= require jquery
+//= require popper
 //= require rails-ujs
 //= require turbolinks
+//= require bootstrap-datepicker
+//= require bootstrap-select
 //= require rrt
+// require validator
+//= require toastr
+//= require best_in_place
+//= require best_in_place.jquery-ui
+//= require datatables.min
+//= require papaparse
+//= require jquery.ticker
+//= require_tree ./channels
 //= require_tree .

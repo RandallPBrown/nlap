@@ -1,0 +1,182 @@
+<% @title = "Showing Entry" %>
+
+<% content_for :description do %>
+
+  <% end %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-9">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-horizontal">
+                          <div class="form-group row">
+                <label class="col-2 col-md-2 form-label">Email</label>
+                <div class="col-2 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @entry.agent.user.email %>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Department</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @entry.agent.department.name%>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Occurence</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @entry.occurrence.ovalue %>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Date</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @entry.edate %>
+                  </span>
+                </div>
+              </div>
+
+                          <div class="form-group row">
+                <label class="col-12 col-md-2 form-label">Description</label>
+                <div class="col-12 col-md-10 form-control uneditable-input">
+                  <span>
+                    <%= @entry.edesc %>
+                  </span>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 hidepane">
+      <!-- RECENT ACTIVITY TABLE -->
+      <div class="card inspectable">
+        <!-- component-title: Timeline Card -->
+        <div class="card-header">
+          <h6>Current Items</h6>
+        </div>
+        <div class="card-body">
+          <div class="timeline" style="height: 450px">
+            <ul class="left-timeline">
+              <li>
+                <% if @entry.total_effective_occurrence > 2.5 && @entry.user.daps.map.count {|m| m.total_active_writeup} == 0 then %>
+                <strong>Occurrences: <span class="text-danger pull-right"> <%= @entry.total_effective_occurrence %></span>
+                  <center><small class="text-danger">***Agent Writeup Required***</small></center>
+                <% else %>
+                <strong>Occurrences: <span class="pull-right"><%= @entry.total_effective_occurrence %></span>
+                <% end %>
+              </li><br />
+              <li>
+                <% if @entry.agent.user.daps.map.count {|m| m.total_active_writeup} > 0 then %>
+                  <strong>Writeups: <span class="text-danger pull-right"><%= @entry.agent.user.daps.map.count {|m| m.total_active_writeup} %></span>
+                <% else %>
+                  <strong>Writeups: <span class="pull-right"><%= @entry.agent.user.daps.map.count {|m| m.total_active_writeup} %></span>
+                <% end %>
+              </li><br />
+              <li>
+                <% if @entry.agent.user.daps.map.first {|m| m.occurence_since_dap}.to_f >= 1 then %>
+                <strong>Since Writeup: <span class="text-danger"><%= @entry.agent.user.daps.map.first {|m| m.occurence_since_dap} %></span></strong>
+                <center><small class ="text-danger">**Agent Writeup Required**</small></center>
+                <% else %>
+                <strong>Since Writeup: <span><%= @entry.agent.user.daps.map.first {|m| m.occurence_since_dap}%></span></strong>
+                <% end %> 
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- /RECENT ACTIVITY TABLE-->
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-12">
+      <div class="card inspectable">
+        <div class="card-header d-flex align-items-center">
+          <h6><%= @entry.agent.user.first_name %>'s Active Occurrences</h6>   
+        </div>
+        <div class="table-responsive" >
+          <table class="table table-hover table-striped" id="userEntryTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <% @user_entry.each do |entry| %>
+              <tr>
+                <td><%= entry.agent.user.full_name %></td>
+                <td><%= entry.occurrence.name %></td>
+                <td><%= entry.edate %></td>
+                <td><%= entry.edesc.truncate(15) %></td>
+                <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), entry, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                      </div>
+                      </td>
+              </tr>
+            <% end %>
+          </table>
+          <center><%= will_paginate @user_entry %></center>
+        </div><br>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-12">
+      <div class="card inspectable">      
+        <div class="card-header d-flex align-items-center">
+          <h6><%= @entry.agent.user.first_name %>'s Active Disciplinary Actions</h6>   
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped" id="userDapTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <% @user_dap.each do |dap| %>
+              <tr>
+                <td><%= dap.user.full_name %></td>
+                <td><%= dap.writeup.name %></td>
+                <td><%= dap.ddate %></td>
+                <td><%= dap.description %></td>
+                <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), dap, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                      </div>
+                      </td>
+              </tr>
+            <% end %>
+          </table>
+          
+        </div>
+        <center><%= will_paginate @user_dap %></center>
+      </div>
+    </div>
+  </div>
+  </div>  
+</div>
+</body>

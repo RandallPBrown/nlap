@@ -1,0 +1,1122 @@
+<!-- START SCRIPTS -->
+<%= stylesheet_link_tag "validator.css" %>
+<%= javascript_include_tag "validator.js" %>
+
+  <!-- Begin top navbar -->
+  <nav class="navbar navbar-expand-md sticky-top navbar-dark green" role="navigation">
+    <div class="container">
+        <ul class="nav navbar-nav mr-auto nav-pills" role="tablist">
+          <li class="nav-item">
+            <%= image_tag 'service_roots.png', size: "30x35"%>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link green darken-1 text-white font-weight-bold" role="button" href="/"><%= fa_icon_tag("home") %></a>
+          </li>  
+        </ul>     
+        <div class="navbar-header">  
+        <ul class="nav navbar-nav mr-auto nav-pills" id="pills-tab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link green darken-1 text-white font-weight-bold" role="button" href="../parts/new" target="_blank">PARTS</a>
+          </li>  
+          <li class="nav-item">
+            <a class="nav-link green darken-1 text-white font-weight-bold" role="button" aria-expanded="false" onclick="$('#setModal').modal('show');">SETTLEMENT</a>
+          </li>  
+          <li class="nav-item dropdown">
+            <a class="nav-link green darken-1 text-white font-weight-bold"  role="button" data-toggle="modal" data-target="#historyModal">
+             HISTORY
+            </a>
+
+          </li>        
+          <li class="nav-item">
+            <a data-toggle="pill" id="primaryButton" class="nav-link green darken-1 text-white font-weight-bold" href="#primaryTab" role="tab" aria-controls="primaryTab" aria-selected="true">QUEUE CALL</a>
+          </li>
+          <li class="nav-item">
+            <a data-toggle="pill" id="secondaryButton" class="nav-link green darken-1 text-white font-weight-bold" href="#secondaryTab" role="tab" aria-controls="secondaryTab" aria-selected="false">DASHBOARD</a>
+          </li>
+          <li class="nav-item" id="logoToggle">
+            <a class="font-weight-bold nav-link green darken-1">
+              <%= fa_icon_tag("angle-double-down") %>
+            </a>  
+          </li>
+        </ul> 
+        </div> 
+      </div>
+    </div>           
+  </nav>
+
+
+<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="text-center m-auto text-white font-weight-bold">HISTORY</h5>
+      </div>
+      <div class="modal-body">
+        <textarea class="mirror3 form-control" name="receiptHistory" id="receiptHistory" rows="10" style="width: 100% !important; height: 75% !important;"></textarea><br />
+        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">CLOSE</button>   
+      </div>
+    </div>
+  </div>
+</div>
+
+<input type="text" value="<%= current_user.full_name %>" id="username" hidden>  
+
+        <!-- start form -->
+  <div class="tab-content" id="myTabContent">
+    <div id="primaryTab" class="tab-pane fade show active" role="tabpanel" aria-labelledby="primaryTab">  
+    <div class="card" id="formCard">
+        <div class="card-body">    
+          <br>    
+          <form id="estForm" name="form1">
+            <!-- Basic Information Block -->             
+             <div>
+                 <h4 id="infoBlock" class="page-header font-weight-bold"><i class="fa fa-user"></i> BASIC INFORMATION</h4>
+                 <hr>
+                 <br>
+              <div class="form-row">
+                <div class="form-group col-xs-6 col-md-6">
+                  <label for="soNumber">SO Number: </label>
+                  <input id="soNumber" class="form-control form-control-sm" type="text" placeholder="...">
+                </div>
+                <div class="form-group col-xs-4 col-md-4">
+                  <label for="spCode">SP Code: </label>
+                  <input id="spCode" class="form-control form-control-sm" type="text" placeholder="...">
+                </div>
+                <div class="form-group col-xs-1 col-md-1">
+                </div>                
+                <div class="form-check col-xs-1 col-md-1">
+                  <label for="rspButton" class="material-checkbox">
+                  <input type="checkbox" value="" id="rspButton" onclick="">
+                  <span> RSP</span>
+                  </label>
+                </div> 
+              </div>   
+              <div class="form-row">
+                <div class="form-group col-xs-6 col-md-6">
+                  <label for="callerName">Caller Name: </label>
+                  <input id="callerName" class="form-control form-control-sm" type="text" placeholder="...">
+                </div>
+                <div class="form-group col-xs-6 col-md-6">
+                  <label for="serviceProvider">Service Provider: </label>
+                  <input id="serviceProvider" class="form-control form-control-sm" type="text" placeholder="...">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-xs-6 col-md-6">
+                  <label for="modelNumber">Model Number: </label>
+                  <input id="modelNumber" class="form-control form-control-sm" type="text" placeholder="...">
+                </div>
+                <div class="form-group col-xs-4 col-md-4">
+                  <label for="serialNumber">Serial Number: </label>
+                  <input id="serialNumber" class="form-control form-control-sm" type="text" placeholder="...">
+                </div>
+                <div class="form-group col-xs-1 col-md-1">
+                </div>
+                <div class="form-check col-xs-1 col-md-1">
+                  <label for="samCheckButton" class="material-checkbox">
+                  <input type="checkbox" value="" id="samCheckButton">
+                  <span> SAM</span>
+                  </label>
+                </div> 
+              </div>
+              <div class="form-row">
+                <div class="form-group col-xs-12 col-md-12">
+                  <label for="failureCause">What was the cause of failure?</label>
+                  <textarea id="failureCause" class="form-control md-textarea" type="text" placeholder="EXAMPLE: Mechanical Breakdown, Impact Damage, Etc..." rows="2"></textarea> 
+                </div>
+              </div>
+             </div>  
+             <br>
+            <!-- Verification Block-->
+             <div>
+                 <h4 id="verificationBlock" class="page-header font-weight-bold"><i class="fa fa-search"></i> VERIFICATION</h4>
+                 <hr>
+                 <br>
+               <div class="form-row">
+                 <div class="form-group col-xs-10 col-md-10">
+                   <label for="warrantyLink">Manufacturer's Warranty Link:</label>
+                   <input id="warrantyLink" class="form-control form-control-sm" type="text" placeholder="Use MFG Website..">
+                 </div>
+                 <div class="form-group col-xs-1 col-md-1">
+                 </div>
+                 <div class="form-check col-xs-1 col-md-1">
+                 <label for="warrantyExtension" class="material-checkbox">
+                 <input type="checkbox" value="" id="warrantyExtension" onclick="$('#overridewarrantyModal').modal('show');">
+                 <span> EXT</span>
+                 </label>
+                 </div>                 
+               </div>
+               <div class="form-row">
+                 <div class="form-group col-xs-12 col-md-12">
+                   <label for="skuVerification">Plan SKU: </label>
+                   <input id="skuVerification" class="form-control form-control-sm" type="text" placeholder="...">
+                 </div>               
+               </div>
+             </div>  
+             <br>         
+            <!-- Liabilities & Maximums Block--> 
+             <div>
+                 <h4 id="liabilitiesBlock" class="page-header font-weight-bold"><i class="fa fa-tags"></i> LIABILITIES & MAXIMUMS</h4>
+                 <hr>
+                 <br>
+               <div class="form-row">
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="originalPrice">Original Purchase Price: </label>
+                   <input id="originalPrice" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000" placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="previousPaid">Previous Paid Claims: </label>
+                   <input id="previousPaid" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="limitLiability">Limit of Liability: </label>
+                   <input id="limitLiability" class="form-control form-control-sm" type="number" step="0.01"  placeholder="$0.00..." data-toggle="tooltip" data-placement="bottom" data-html="true" title="Liability Below $300.00">
+                   <div id="calculateLiabilitiesVal"></div>
+                 </div>
+               </div>
+               <div class="form-row">
+                 <div class="form-group col-md-4 col-xs-4">
+                 </div> 
+                 <div class="form-group col-xs-4 col-md-4" id="rspCheckField" hidden>
+                   <label for="rspCheck">LOL Percentage: </label>
+                   <input id="rspCheck" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000" placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                 </div>
+               </div>  
+             </div>       
+             <br>          
+            <!-- Expense Charges Block--> 
+             <div>
+                 <h4 id="expenseBlock" class="page-header font-weight-bold"><i class="fa fa-money"></i> EXPENSE CHARGES</h4>
+                 <hr>
+                 <br>                   
+               <div class="form-row">
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalParts">Total Parts: </label>
+                   <input id="totalParts" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalLabor">Labor:  </label>
+                   <input id="totalLabor" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalTax">Tax: </label>
+                   <input id="totalTax" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+               </div>
+               <div class="form-row">
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalMileage">Mileage: </label>
+                   <input id="totalMileage" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalMisc">Misc: </label>
+                   <input id="totalMisc" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">                 
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalDeductible">Deductible: </label>
+                   <input id="totalDeductible" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+               </div>
+               <div class="form-row">
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalEstimate">Total Estimate: </label>
+                   <input id="totalEstimate" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00..." readonly>
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4" id="expDiv">
+                   <label for="remainingLOL">LOL After Repairs:   </label>
+                   <input id="remainingLOL" class="form-control form-control-sm red-tooltip" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00..." data-container="#expDiv" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Remaining Liability Below $0.00">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="diagOnly">Attempted/Diag:  </label>
+                   <input id="diagOnly" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00..." disabled>
+                 </div>
+               </div>
+               <div class="form-row">
+                 <div class="form-group col-md-4 col-xs-4">
+                 </div> 
+                 <div class="form-group col-xs-4 col-md-4" id="rspCheckField2" hidden>
+                   <label for="rspCheck2">Percentage of LOL: </label>
+                   <input id="rspCheck2" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000" placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                 </div>
+             </div>                      
+               <div class="form-row">                   
+                 <div class="form-group col-xs-12 col-md-12">
+                   <label for="partDistributor">Where were part prices verified: </label>
+                   <input id="partDistributor" class="form-control form-control-sm" type="text" placeholder="Part Distributor Name..">
+                 </div>       
+               </div>                 
+               <div class="form-row">
+                 <div id="ppcDIAG" class="form group col-xs-2 col-md-2">
+                   <label>  </label>
+                 </div>
+                 <div class="form-control">
+                   <label for="estApproved">Estimate Disposition </label>
+                   <select id="estApproved" class="custom-select">
+                    <option value="APPROVED">APPROVED</option>
+                    <option value="DENIED">DENIED</option>
+                    <option value="PENDING">PENDING</option>
+                   </select>
+                 </div>
+                 </div>
+               </div>
+               <div class="form-row"> 
+                 <div class="form-group col-xs-2 col-md-2"><label>  </label>
+                 </div>
+                 <div class="form-group col-xs-8 col-md-8">
+                 </div>
+                 <div class="form-group col-xs-2 col-md-2"><label>  </label>
+                 </div>               
+               </div>
+             <button type="submit" hidden="true"></button>  
+             
+        <!-- Begin Override modal -->
+        <div class="modal fade" data-backdrop="true" id="overrideModal" tabindex="-1" role="dialog" aria-labelledby="overrideModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header justify-content-center" id="overrideHeader" hidden>  
+                <h6 class="text-danger font-weight-bold text-center blinker">CHECK CREDIT CARD TAB</h6>     
+              </div>
+              <div class="modal-body">
+                <div class="form-check" id="samVerification" hidden>
+                  <table id="samPartTable" class="table table-bordered table-striped table-hover table-sm">
+                  <!--Table head-->
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Part Name</th>
+                        <th>Part Number</th>
+                      </tr>
+                    </thead>
+                    <!--Table head-->
+                    <!--Table body-->
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Ice Maker</td>
+                        <td>DA97-13718</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Ice Maker</td>
+                        <td>DA97-15217</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Auger Motor</td>
+                        <td>DA97-12540</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">4</th>
+                        <td>Y Clip</td>
+                        <td>DA82-02367</td>
+                      </tr>
+                    </tbody>
+                    <!--Table body-->
+                  </table>
+                  <label class="material-checkbox" for="overrideSam">
+                  <input type="checkbox" value="" id="overrideSam" disabled>
+                  <span>Parts Above Referred To Samsung</span>
+                  </label> 
+                </div>  
+                <div class="form-check" id="overrideWarrantyVis" hidden>
+                  <textarea class="mirror" name="overrideWarrantyList" id="overrideWarrantyList" rows="10"></textarea><br>
+                  <label class="material-checkbox" for="overrideWarranty">
+                  <input type="checkbox" value="" id="overrideWarranty" disabled>
+                  <span>Verified No Parts Under MFG?</span>
+                  </label>                       
+                </div>   
+                <div class="form-check" id="overrideSPVis" hidden> 
+                  <label class="material-checkbox" for="overrideSP">
+                  <input type="checkbox" value="" id="overrideSP" disabled>  
+                  <span>Filled Out Credit Card Tab?</span>
+                  </label>  
+                </div>                           
+              </div>
+              <div class="modal-footer">
+                <button id="bypassModalCloseButton" type="button" class="btn btn-light-green"" data-dismiss="modal" onclick="receiptModalBypass();" disabled>Bypass</button>
+                <button type="button" class="btn btn-light-green" data-dismiss="modal">Cancel</button>                
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Override Modal -->
+
+        <!-- Primary Samsung Verification Modal -->
+        <div class="modal fade" data-backdrop="true" id="samModal" tabindex="-1" role="dialog" aria-labelledby="samModalTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <div class="form-row">
+                  <div class="form-group col-xs-6 col-md-6">
+                    <label for="modelNumberSam">Model Number: </label>
+                    <input id="modelNumberSam" class="form-control form-control-sm" type="text" placeholder="..." readonly>
+                  </div>
+                  <div class="form-group col-xs-6 col-md-6">
+                    <label for="serialNumberSam">Serial Number: </label>
+                    <input id="serialNumberSam" class="form-control form-control-sm" type="text" placeholder="..." readonly>
+                  </div>
+                </div>  
+                <div class="form-row" id="samWarning" hidden>
+                  <!--Table-->
+                  <table id="samTable" class="table table-bordered table-striped table-hover table-sm">
+                  <!--Table head-->
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Description</th>
+                        <th>Condition</th>
+                      </tr>
+                    </thead>
+                    <!--Table head-->
+                    <!--Table body-->
+                    <tbody>
+                      <tr id="modAlert">
+                        <th scope="row">1</th>
+                        <td>Model begins with</td>
+                        <td>"RF"</td>
+                      </tr>
+                      <tr id="serAlert">
+                        <th scope="row">2</th>
+                        <td>8th & 9th digit of serial number</td>
+                        <td>"HC", "J1", "J2", "J3", "J4", "J5", "J6", "J7", "J8", "J9"</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Production period</td>
+                        <td>December 2016-September 2017</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">4</th>
+                        <td>Failure description is or contains</td>
+                        <td>"No ice"</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">5</th>
+                        <td>Failure date on or after</td>
+                        <td>August 9th, 2018</td>
+                      </tr>
+                    </tbody>
+                    <!--Table body-->
+                  </table>
+                  <!--Table-->   
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light-green"" data-dismiss="modal" onclick="samOverride();">Okay</button>  
+              </div>
+            </div>
+          </div>
+        </div>
+         <!-- /Primary Samsung Verification Modal -->
+
+        <!-- Begin Warranty Exceptions Modal -->
+        <div class="modal fade" data-backdrop="true" id="overridewarrantyModal" tabindex="-1" role="dialog" aria-labelledby="overridewarrantyModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">       
+              </div>
+              <div class="modal-body">
+                <textarea class="mirror"  name="overrideWarrantyList" id="overrideWarrantyList" rows="10"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light-green"" data-dismiss="modal">Okay</button>                
+              </div>
+            </div>
+          </div>
+        </div>
+         <!-- /Warranty Exceptions Modal -->
+
+<!-- Alert Menu -->
+    <div class="accordion" id="alertSidebar">
+      <div id="alertBody" class="collapse" aria-labelledby="alertHeader" data-parent="#alertSidebar">
+        <div class="bg-success z-depth-1" id="alertStyle">
+        <h6 class="font-weight-bold text-white"><center><u>ALERTS</u></center></h6>
+        <ul style="columns: 2;">
+          <i class="fa fa-check-circle-o text-white font-weight-bold" id="mjcAlert" aria-hidden="true"> SKU</i><br>
+          <i class="fa fa-check-circle-o text-white font-weight-bold" id="rspAlert" aria-hidden="true"> RSP</i><br>
+          <i class="fa fa-check-circle-o text-white font-weight-bold" id="300Alert" aria-hidden="true"> 300</i><br>
+          <i class="fa fa-check-circle-o text-white font-weight-bold" id="lolAlert" aria-hidden="true"> LOL</i><br>
+        </ul>  
+        <ul>
+          <button class="form-button btn btn-sm bg-light" id="alertBoxButton" disabled="true" onclick="alertBoxOverride();">OVERRIDE</button>
+        </ul>  
+        </div>                      
+      </div>  
+      <div class="card-header bg-success z-depth-1" id="alertHeader" hidden>
+        <a href="#alertBody" class="card-link" data-toggle="collapse" data-target="#alertBody" aria-expanded="false" aria-controls="alertBody"><h6 class="text-center text-white font-weight-bold">ALERTS</h6></a>
+      </div> 
+    </div>            
+<!-- Submit FAB -->
+  <nav class="fabcontainer" id="fabNav"> 
+    <button href="#" class="fabbuttons bg-success" tooltip="Google+" hidden disabled></button>
+    <button class="fabbuttons bg-success" tooltip="Refresh" onclick="resetestFormButton();"><i class="fa fa-refresh text-white"></i></button>
+    <button class="fabbuttons bg-success" tooltip="Top" href="#estForm" id="topAnchor"><i class="fa fa-arrow-circle-up text-white" aria-hidden="true"></i></button>
+    <button class="fabbuttons bg-success" tooltip="Submit" onclick="submitForm();" id="formSubmitButton"><i class="fa fa-check-square white-text"></i></button>
+  </nav>
+<!-- Alert FAB -->
+  <nav class="fabcontainer2" id="fabNav"> 
+    <button href="#" class="fabbuttons bg-success" tooltip="Google+" hidden disabled></button>
+    <button class="fabbuttons bg-success" tooltip="Refresh" onclick="resetestFormButton();"><i class="fa fa-refresh text-white" hidden disabled></i></button>
+    <button class="fabbuttons bg-success" tooltip="Top" href="#estForm" id="topAnchor"><i class="fa fa-arrow-circle-up text-white" aria-hidden="true" hidden disabled></i></button>
+    <button class="fabbuttons bg-success" data-toggle="collapse" data-target="#alertBody" aria-expanded="false" aria-controls="alertBody" id="alertFAB"><i class="fa fa-warning white-text"></i></button>
+  </nav>
+
+
+   
+          </form>  
+        </div>
+      </div>  
+<!-- END FORM -->
+
+
+
+
+        <!-- Begin completion receipt modal -->
+        <div class="modal fade" data-backdrop="true" id="formReceiptModal" tabindex="-1" role="dialog" aria-labelledby="formReceiptCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="height: 80% !important;">
+            <div class="modal-content" style="height: 100% !important;">
+              <div class="modal-header bg-primary">
+                 <!-- Modal Tab Headers -->
+                 <ul class="nav m-auto" role="tablist">
+                    <li class="nav-item">
+                      <a class="btn btn-primary active" href="#est1Tab" role="tab" data-toggle="tab">EST1</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#jfrrTab" class="btn btn-primary" role="tab" data-toggle="tab">JFRR</a>
+                    </li>
+                 </ul>                
+              </div>
+              <div class="modal-body" style="max-height: calc(100% - 120px) !important; overflow-y: scroll;">
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="est1Tab">
+                    <textarea class="form-control textarea" id="formReceipt" rows="15" style="min-width: 100%; min-height: 100%"></textarea>
+                    <a class="clipboardCopy" onclick="copyToClipboard();">Copy To Clipboard</a>
+                    <br />                    
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="jfrrTab">
+                    <textarea class="form-control textarea" id="formReceiptJFRR" rows="15" style="min-width: 100%; min-height: 100%;"></textarea>
+                    <a class="clipboardCopy" onclick="copyToClipboardJFRR();">Copy To Clipboard</a>
+                    <br />                    
+                  </div>   
+                </div>                 
+              </div>
+              <div class="modal-footer">
+                <button id="modalCloseButton" type="button" class="btn btn-primary m-1" data-dismiss="modal" onclick="appendTemplate()" data-target="#estForm">Save & Reset</button>
+                <button id="emailFormButton" type="button" class="btn btn-warning m-1" hidden>OTL Send</button>
+                <button type="button" class="btn btn-primary m-1" data-dismiss="modal">Cancel</button>                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <!-- /Completion Receipt Modal -->
+
+<!-- xxxxxx SECONDARY TAB BEGIN xxxxxx -->        
+    <div id="secondaryTab" class="tab-pane fade" role="tabpanel" aria-labelledby="secondaryTab">      
+        <!-- start form -->
+    <div class="card z-depth-2" id="formCard2">
+        <div class="card-body">    
+          <br>    
+          <form id="estForm2" name="form2">
+            <!-- Basic Information Block -->               
+             <div>
+                 <h4 id="infoBlock2" class="page-header font-weight-bold"><i class="fa fa-user"></i> BASIC INFORMATION</h4>
+                 <hr>
+                 <br>
+              <div class="form-row">
+                <div class="form-group col-xs-6 col-md-6">
+                  <label for="soNumber2">SO Number: </label>
+                  <input id="soNumber2" class="form-control form-control-sm" type="text" placeholder="...">
+                </div>
+                <div class="form-group col-xs-4 col-md-4">
+                  <label for="spCode2">SP Code: </label>
+                  <input id="spCode2" class="form-control form-control-sm" type="text" placeholder="...">
+                </div>
+                <div class="form-group col-xs-1 col-md-1">
+                </div>                
+                <div class="form-check col-xs-1 col-md-1">
+                  <label for="rspButton2" class="material-checkbox">
+                  <input type="checkbox" value="" id="rspButton2" onclick="">
+                  <span> RSP</span>
+                  </label>
+                </div> 
+              </div>   
+              <div class="form-row">
+                <div class="form-group col-xs-6 col-md-6">
+                  <label for="callerName2">Submitted Via: </label>
+                  <input id="callerName2" class="form-control form-control-sm" type="text" placeholder="..." value="Dashboard">
+                </div>
+                <div class="form-group col-xs-6 col-md-6">
+                  <label for="serviceProvider2">Service Provider: </label>
+                  <input id="serviceProvider2" class="form-control form-control-sm" type="text" placeholder="...">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-xs-6 col-md-6">
+                  <label for="modelNumber2">Model number: </label>
+                  <input id="modelNumber2" class="form-control form-control-sm" type="text" placeholder="...">
+                </div>
+                <div class="form-group col-xs-6 col-md-4">
+                  <label for="serialNumber2">Serial number: </label>
+                  <input id="serialNumber2" class="form-control form-control-sm" type="text" placeholder="...">
+                </div>
+                <div class="form-group col-xs-1 col-md-1">
+                </div>
+                <div class="form-check col-xs-1 col-md-1">
+                  <label for="samCheckButton2" class="material-checkbox">
+                  <input type="checkbox" value="" id="samCheckButton2">
+                  <span> SAM</span>
+                  </label>
+                </div> 
+              </div>
+              <div class="form-row">
+                <div class="form-group col-xs-12 col-md-12">
+                  <label for="failureCause2">What was the cause of failure?</label>
+                  <textarea id="failureCause2" class="form-control md-textarea" type="text" placeholder="EXAMPLE: Mechanical Breakdown, Impact Damage, Etc..." rows="2"></textarea> 
+                </div>
+              </div>
+             </div>  
+             <br>
+            <!-- Verification Block-->
+             <div>
+                 <h4 id="verificationBlock2" class="page-header font-weight-bold"><i class="fa fa-search"></i> VERIFICATION</h4>
+                 <hr>
+                 <br>
+               <div class="form-row">
+                 <div class="form-group col-xs-10 col-md-10">
+                   <label for="warrantyLink2">Manufacturer's Warranty Link:</label>
+                   <input id="warrantyLink2" class="form-control form-control-sm" type="text" placeholder="Use MFG Website..">
+                 </div>
+                 <div class="form-group col-xs-1 col-md-1">
+                 </div> 
+                 <div class="form-check col-xs-1 col-md-1">
+                 <label class="material-checkbox" for="warrantyExtension2"><input type="checkbox" value="" id="warrantyExtension2" onclick="$('#overridewarrantyModal2').modal('show');">
+                  <span> EXT</span>
+                  </label>
+                 </div>                 
+               </div>
+               <div class="form-row">
+                 <div class="form-group col-xs-12 col-md-12">
+                   <label for="skuVerification2">Plan SKU: </label>
+                   <input id="skuVerification2" class="form-control form-control-sm" type="text" placeholder="...">
+                 </div>               
+               </div>
+             </div>  
+             <br>         
+            <!-- Liabilities & Maximums Block--> 
+             <div>
+                 <h4 id="liabilitiesBlock2" class="page-header font-weight-bold"><i class="fa fa-tags"></i> LIABILITIES & MAXIMUMS</h4>
+                 <hr>
+                 <br>
+               <div class="form-row">
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="originalPrice2">Original Purchase Price: </label>
+                   <input id="originalPrice2" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000" placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="previousPaid2">Previous Paid Claims: </label>
+                   <input id="previousPaid2" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="limitLiability2">Limit of Liability: </label>
+                   <input id="limitLiability2" class="form-control form-control-sm" type="number" step="0.01"  placeholder="$0.00..." data-toggle="tooltip" data-placement="bottom" data-html="true" title="Liability Below $300.00">
+                   <div id="calculateLiabilitiesVal2"></div>
+                 </div>
+               </div>
+               <div class="form-row">
+                 <div class="form-group col-md-4 col-xs-4">
+                 </div> 
+                 <div class="form-group col-xs-4 col-md-4" id="rspCheckField3" hidden>
+                   <label for="rspCheck3">LOL Percentage: </label>
+                   <input id="rspCheck3" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000" placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                 </div>
+               </div>                 
+             </div>       
+             <br>          
+            <!-- Expense Charges Block--> 
+             <div>
+                 <h4 id="expenseBlock2" class="page-header font-weight-bold"><i class="fa fa-money"></i> EXPENSE CHARGES</h4>
+                 <hr>
+                 <br>                   
+               <div class="form-row">
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalParts2">Total Parts: </label>
+                   <input id="totalParts2" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalLabor2">Labor:  </label>
+                   <input id="totalLabor2" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalTax2">Tax: </label>
+                   <input id="totalTax2" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+               </div>
+               <div class="form-row">
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalMileage2">Mileage: </label>
+                   <input id="totalMileage2" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalMisc2">Misc: </label>
+                   <input id="totalMisc2" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">                 
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalDeductible2">Deductible: </label>
+                   <input id="totalDeductible2" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00...">
+                 </div>
+               </div>
+               <div class="form-row">
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="totalEstimate2">Total Estimate: </label>
+                   <input id="totalEstimate2" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00..." readonly>
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4" id="expDiv2">
+                   <label for="remainingLOL2">LOL After Repairs:   </label>
+                   <input id="remainingLOL2" class="form-control form-control-sm red-tooltip" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00..." data-container="#expDiv2" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Remaining Liability Below $0.00">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                   <label for="diagOnly2">Attempted/Diag:  </label>
+                   <input id="diagOnly2" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000"  placeholder="$0.00..." disabled>
+                 </div>
+               </div>
+               <div class="form-row">
+                 <div class="form-group col-md-4 col-xs-4">
+                 </div> 
+                 <div class="form-group col-xs-4 col-md-4" id="rspCheckField4" hidden>
+                   <label for="rspCheck4">Percentage of LOL: </label>
+                   <input id="rspCheck4" class="form-control form-control-sm" type="number" min="0.01" step="0.01" max="100000" placeholder="$0.00...">
+                 </div>
+                 <div class="form-group col-xs-4 col-md-4">
+                 </div>
+             </div>                                    
+               <div class="form-row">                   
+                 <div class="form-group col-xs-12 col-md-12">
+                   <label for="partDistributor2">Where were part prices verified: </label>
+                   <input id="partDistributor2" class="form-control form-control-sm" type="text" placeholder="Part Distributor Name..">
+                 </div>       
+               </div>                 
+               <div class="form-row">
+                 <div id="ppcDIAG2" class="form group col-xs-2 col-md-2">
+                   <label>  </label>
+                 </div>
+                 <div class="form-control">
+                   <label for="estApproved2">Estimate Disposition </label>
+                   <select id="estApproved2" class="custom-select">
+                    <option value="APPROVED">APPROVED</option>
+                    <option value="DENIED">DENIED</option>
+                    <option value="PENDING">PENDING</option>
+                   </select>
+                 </div>
+                 </div>
+               </div>
+               <div class="form-row"> 
+                 <div class="form-group col-xs-2 col-md-2"><label>  </label>
+                 </div>
+                 <div class="form-group col-xs-8 col-md-8">
+                 </div>
+                 <div class="form-group col-xs-2 col-md-2"><label>  </label>
+                 </div>               
+               </div>
+             </div>      
+        <!-- Begin Override modal -->
+        <div class="modal fade" data-backdrop="false" id="overrideModal2" tabindex="-1" role="dialog" aria-labelledby="overrideModalCenterTitle2" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header justify-content-center" id="overrideHeader2" hidden>  
+                <h6 class="text-danger font-weight-bold text-center blinker">CHECK CREDIT CARD TAB</h6>     
+              </div>
+              <div class="modal-body">
+                <div class="form-check" id="samVerification2" hidden>
+                  <table id="samPartTable2" class="table table-bordered table-striped table-hover table-sm">
+                  <!--Table head-->
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Part Name</th>
+                        <th>Part Number</th>
+                      </tr>
+                    </thead>
+                    <!--Table head-->
+                    <!--Table body-->
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Ice Maker</td>
+                        <td>DA97-13718</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Ice Maker</td>
+                        <td>DA97-15217</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Auger Motor</td>
+                        <td>DA97-12540</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">4</th>
+                        <td>Y Clip</td>
+                        <td>DA82-02367</td>
+                      </tr>
+                    </tbody>
+                    <!--Table body-->
+                  </table>
+                  <label class="material-checkbox" for="overrideSam2">
+                  <input type="checkbox" value="" id="overrideSam2" disabled>
+                  <span>Parts Above Referred To Samsung</span>
+                  </label> 
+                </div> 
+                 <div class="form-check" id="overrideWarrantyVis2" hidden>
+                 <textarea class="mirror2 textarea" name="overrideWarrantyList2" id="overrideWarrantyList2" rows="10"></textarea><br>               
+                 <input class="form-check-input" type="checkbox" value="" id="overrideWarranty2" disabled>  
+                 <label class="form-check-label" for="overrideWarranty2">Verified No Parts Under MFG?</label>                      
+                 </div>               
+                <div class="form-check" id="overrideSPVis2" hidden> 
+                  <label class="material-checkbox" for="overrideSP2">
+                  <input type="checkbox" value="" id="overrideSP2" disabled>  
+                  <span>Filled Out Credit Card Tab?</span>
+                  </label>  
+                </div>             
+              </div>
+              <div class="modal-footer">
+                <button id="bypassModalCloseButton2" type="button" class="btn btn-light-green"" data-dismiss="modal" onclick="receiptModalBypass2()" disabled>Bypass</button>
+                <button type="button" class="btn btn-light-green"" data-dismiss="modal">Cancel</button>                
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Override Modal -->
+
+       <!-- Dashboard Samsung Verification Modal -->
+        <div class="modal fade" data-backdrop="true" id="samModal2" tabindex="-1" role="dialog" aria-labelledby="samModalTitle2" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <div class="form-row">
+                  <div class="form-group col-xs-6 col-md-6">
+                    <label for="modelNumberSam2">Model Number: </label>
+                    <input id="modelNumberSam2" class="form-control form-control-sm" type="text" placeholder="..." readonly>
+                  </div>
+                  <div class="form-group col-xs-6 col-md-6">
+                    <label for="serialNumberSam2">Serial Number: </label>
+                    <input id="serialNumberSam2" class="form-control form-control-sm" type="text" placeholder="..." readonly>
+                  </div>
+                </div>  
+                <div class="form-row" id="samWarning2" hidden>
+                  <!--Table-->
+                  <table id="samTable2" class="table table-bordered table-striped table-hover table-sm">
+                  <!--Table head-->
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Description</th>
+                        <th>Condition</th>
+                      </tr>
+                    </thead>
+                    <!--Table head-->
+                    <!--Table body-->
+                    <tbody>
+                      <tr id="modAlert2">
+                        <th scope="row">1</th>
+                        <td>Model begins with</td>
+                        <td>"RF"</td>
+                      </tr>
+                      <tr id="serAlert2">
+                        <th scope="row">2</th>
+                        <td>8th & 9th digit of serial number</td>
+                        <td>"HC", "J1", "J2", "J3", "J4", "J5", "J6", "J7", "J8", "J9"</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Production period</td>
+                        <td>December 2016-September 2017</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">4</th>
+                        <td>Failure description is or contains</td>
+                        <td>"No ice"</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">5</th>
+                        <td>Failure date on or after</td>
+                        <td>August 9th, 2018</td>
+                      </tr>
+                    </tbody>
+                    <!--Table body-->
+                  </table>
+                  <!--Table-->   
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light-green"" data-dismiss="modal" onclick="samOverride2();">Okay</button>  
+              </div>
+            </div>
+          </div>
+        </div>
+         <!-- /Dashboard Samsung Verification Modal -->
+
+        <!-- Begin Warranty Exceptions Modal -->
+        <div class="modal fade" data-backdrop="false" id="overridewarrantyModal2" tabindex="-1" role="dialog" aria-labelledby="overridewarrantyModalCenterTitle2" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">       
+              </div>
+              <div class="modal-body">
+                <textarea class="mirror2 textarea" name="overrideWarrantyList2" id="overrideWarrantyList2" rows="10"></textarea>
+              </div> 
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light-green"" data-dismiss="modal">Okay</button>
+              </div>
+            </div>
+          </div>
+        </div>
+         <!-- /Warranty Exceptions Modal -->
+
+<!-- Alert Menu -->
+    <div class="accordion" id="alertSidebar2">
+      <div id="alertBody2" class="collapse" aria-labelledby="alertHeader" data-parent="#alertSidebar2">
+        <div class="bg-success z-depth-1" id="alertStyle2">
+        <h6 class="font-weight-bold text-white"><center><u>ALERTS</u></center></h6>
+        <ul style="columns: 2;">
+          <i class="fa fa-check-circle-o text-white font-weight-bold" id="mjcAlert2" aria-hidden="true"> SKU</i><br>
+          <i class="fa fa-check-circle-o text-white font-weight-bold" id="rspAlert2" aria-hidden="true"> RSP</i><br>
+          <i class="fa fa-check-circle-o text-white font-weight-bold" id="300Alert2" aria-hidden="true"> 300</i><br>
+          <i class="fa fa-check-circle-o text-white font-weight-bold" id="lolAlert2" aria-hidden="true"> LOL</i><br>
+        </ul>  
+        <ul>
+          <button class="form-button btn btn-sm bg-light" id="alertBoxButton2" disabled="true" onclick="alertBoxOverride2()">OVERRIDE</button>
+        </ul>  
+        </div>                      
+      </div>  
+      <div class="card-header bg-success z-depth-1" id="alertHeader2" hidden>
+        <a href="#alertBody2" class="card-link" data-toggle="collapse" data-target="#alertBody2" aria-expanded="false" aria-controls="alertBody2"><h6 class="text-center text-white font-weight-bold">ALERTS</h6></a>
+      </div> 
+    </div>            
+<!-- Submit FAB -->
+  <nav class="fabcontainer" id="fabNav2"> 
+    <button href="#" class="fabbuttons bg-success" tooltip="Google+" hidden disabled></button>
+    <button class="fabbuttons bg-success" tooltip="Refresh" onclick="resetestFormButton2();"><i class="fa fa-refresh text-white"></i></button>
+    <button class="fabbuttons bg-success" tooltip="Top" href="#estForm2" id="topAnchor"><i class="fa fa-arrow-circle-up text-white" aria-hidden="true"></i></button>
+    <button class="fabbuttons bg-success" tooltip="Submit" onclick="submitForm2();" id="formSubmitButton2"><i class="fa fa-check-square white-text"></i></button>
+  </nav>
+<!-- Alert FAB -->
+  <nav class="fabcontainer2" id="fabNav2"> 
+    <button href="#" class="fabbuttons bg-success" tooltip="Google+" hidden disabled></button>
+    <button class="fabbuttons bg-success" tooltip="Refresh" onclick="resetestFormButton2();"><i class="fa fa-refresh text-white" hidden disabled></i></button>
+    <button class="fabbuttons bg-success" tooltip="Top" href="#estForm2" id="topAnchor"><i class="fa fa-arrow-circle-up text-white" aria-hidden="true" hidden disabled></i></button>
+    <button class="fabbuttons bg-success" data-toggle="collapse" data-target="#alertBody2" aria-expanded="false" aria-controls="alertBody2" id="alertFAB2"><i class="fa fa-warning white-text"></i></button>
+  </nav>  
+
+          </form>  
+        </div>
+      </div>  
+<!-- END FORM -->
+
+
+
+
+        <!-- Begin completion receipt modal -->
+        <div class="modal fade" data-backdrop="false" id="formReceiptModal2" tabindex="-1" role="dialog" aria-labelledby="formReceiptCenterTitle2" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="height: 80% !important;">
+            <div class="modal-content" style="height: 100% !important;">
+              <div class="modal-header bg-primary">
+                 <!-- Modal Tab Headers -->
+                 <ul class="nav m-auto" role="tablist">
+                        <li class="nav-item">
+                        <a class="btn btn-primary active" href="#est1Tab2" role="tab" data-toggle="tab">EST1</a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="#jfrrTab2" class="btn btn-primary" role="tab" data-toggle="tab">JFRR</a>
+                        </li>
+                    </ul>                
+              </div>
+              <div class="modal-body" style="max-height: calc(100% - 120px) !important; overflow-y: scroll;">
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="est1Tab2">
+                    <textarea class="form-control textarea" id="formReceipt2" rows="15" style="min-width: 100%; height: 100%;"></textarea>
+                    <a class="clipboardCopy" onclick="copyToClipboard2();">Copy To Clipboard</a>
+                    <br />                    
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="jfrrTab2">
+                    <textarea class="form-control textarea" id="formReceiptJFRR2" rows="15" style="min-width: 100% height: 100%"></textarea>
+                    <a class="clipboardCopy" onclick="copyToClipboardJFRR2();">Copy To Clipboard</a>
+                    <br />                    
+                  </div>   
+                </div>                 
+              </div>
+              <div class="modal-footer">
+                <button id="modalCloseButton2" type="button" class="btn btn-primary m-1" data-dismiss="modal" onclick="appendTemplate2()" data-target="#estForm2">Save & Reset</button>
+                <button id="emailFormButton2" type="button" class="btn btn-warning m-1" hidden>OTL Send</button>
+                <button type="button" class="btn btn-primary m-1" data-dismiss="modal">Cancel</button>                
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <!-- /Completion Receipt Modal -->
+  </div>
+
+        <div class="modal fade" data-backdrop="true" id="setModal" tabindex="-1" role="dialog" aria-labelledby="setModalTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="height: 80% !important;">
+            <div class="modal-content" style="height: 95% !important;">
+              <div class="modal-header bg-primary">
+                 <!-- Modal Tab Headers -->
+                 <ul class="nav m-auto font-weight-bold" role="tablist">
+                    <li class="nav-item">
+                      <a class="btn btn-primary active" href="#setCshofr" role="tab" data-toggle="tab">CSHOFR</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#setRplofr" class="btn btn-primary" role="tab" data-toggle="tab">RPLOFR</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#setCrdofr" class="btn btn-primary" role="tab" data-toggle="tab">CRDOFR</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#setJfrr" class="btn btn-primary" role="tab" data-toggle="tab">JFRR</a>
+                    </li>       
+                    <li class="nav-item">
+                      <a href="#edgprt" class="btn btn-primary" role="tab" data-toggle="tab">EDGPRT</a>
+                    </li>           
+                 </ul>                
+              </div>
+              <div class="modal-body" style="max-height: calc(100% - 120px) !important; overflow-y: scroll;">
+                <form id="setForm">
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="setCshofr">
+                    <textarea class="form-control textarea" id="shortCshofr" rows="12" style="min-width: 100%;">
+Customer has been informed and accepted cash out amount of: $     
+Is the customer’s ADDRESS on the service order the MAILING ADDRESS? Yes ( ) No ( )   
+Is the customer’s MAILING ADDRESS different than the address on the Contract? Yes ( ) No ( )
+***IF YES, CORRECT ADDRESS ON CONTRACT TO MATCH MAILING ADDRESS***   
+Customer address has been verified: Yes ( ) No ( )
+Mailing Address:              
+Mailing City:      
+Mailing State:     
+Mailing Zip:        
+Phone:         
+Customer’s Email: (REQUIRED)
+*Is Proof of Purchase required? Yes _____        No _____ (If Yes make sure it been received).
+*Is Customer required to send in Cord? ___Y ____N (If Yes, advise customer they have 10 days to send that to New Leaf and Confirm customer has received the “Cut Cord” email out of Zeacom, if not resend)
+*Advise customer: WE TRY TO GET CHECKS OUT AS QUICKLY AS WE CAN BUT PLEASE ALLOW UP TO 30 DAYS.  
+* ALL CLAIMS ARE SUBJECT TO INSURANCE CARRIER REVIEW AND APPROVAL BEFORE FINAL PAYMENT**
+*Make sure to do approval for the Cashout
+*SEND SHORTKEY TO CLAIMS@NEWLEAFSC.NET mailto:CLAIMS@NEWLEAFSC.NET  FOR PAYMENT PROCESSING (UNLESS CUSTOMER IS REQUIRED TO SEND IN CORD AND TAG or unit)
+*IF CUSTOMER REQUIRED TO SEND IN CORD AND TAG or UNIT, AGENT WILL COMPLETE APPROVAL AND CHANGE STATUS TO PREAPPROVED (Once cord and tag or unit received send Shortkey to claims *)
+THIS WILL FULFILL ALL OBLIGATIONS OF THIS CONTRACT FOR THIS UNIT
+                    </textarea>
+                    <br />                    
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="setRplofr">
+                    <textarea class="form-control textarea" id="shortRplofr" rows="12" style="min-width: 100%">
+Customer has been informed and accepted replacement model: (Model #) from (Vendor name).         
+Is the customer’s PHYSICAL ADDRESS different than the address on the service order: Yes ( ) No ( )
+***If YES, update on contract***  
+Customer address has been verified: Yes ( ) No ( )    
+Physical Address:             
+City:      
+State:    
+Zip:        
+Phone:
+Customer’s Email:   (REQUIRED)
+Disposition of customer’s old unit: (Delete all that do not apply)
+*Customer to hold for 30 days then if New Leaf or underwriter (Ins Carrier) have not asked for it they are free to dispose of unit. 
+*Depot Repair facility will scrap unit and waive all fees.
+*Unit to be shipped to ANEW.  If so, we must wait till we have notification unit received at ANEW before proceeding with order.
+*Customer to send in Cord and Tag.  If so, we must wait till we have received it at New Leaf before proceeding with order.  Advise customer they have 10 days to send required tag and cord to New Leaf and Confirm customer has received the “Cut Cord” email, if not resend.
+**IF CUSTOMER REQUIRED TO SEND IN CORD AND TAG OR UNIT, AGENT WILL COMPLETE APPROVAL AND CHANGE STATUS TO PREAPPROVED (Once cord and tag or unit received send Shortkey)
+*Regular Contracts, SEND SHORTKEY TO PENDINGREVIEW@NEWLEAFSC.NET mailto:PENDINGREVIEW@NEWLEAFSC.NET FOR DISPATCH TO SELLING RETAILER*
+**EdgeStar Contracts, SEND SHORTKEY TO EDGESTAR@NEWLEAFSC.NET mailto:EDGESTAR@NEWLEAFSC.NET FOR DISPATCH TO EDGESTAR** 
+THIS WILL FULFILL ALL OBLIGATIONS OF THIS CONTRACT FOR THIS UNIT.
+**ALL CLAIMS ARE SUBJECT TO INSURANCE CARRIER REVIEW AND APPROVAL BEFORE FINAL PAYMENT**
+                    </textarea>
+                    <br />                    
+                  </div>   
+                  <div role="tabpanel" class="tab-pane" id="setCrdofr">
+                    <textarea class="form-control textarea" id="shortCrdofr" rows="12" style="min-width: 100%">
+Customer has been informed of the store credit in the amount of: $_____________________.    
+Is the customer’s MAILING ADDRESS different than the address on the service order: Yes ( ) No ( )   
+Customer address has been verified: Yes ( ) No ( )    
+Mailing Address:              
+Mailing City:      
+Mailing State:     
+Mailing Zip:        
+Phone:         
+We will send the information over to the place of purchase within one business day.
+We ask that you go to the place of purchase within 30 days to use your store credit.
+WE TRY TO GET CHECKS OUT AS QUICKLY AS WE CAN BUT PLEASE ALLOW UP TO 30 DAYS. AS A REMINDER, YOU MUST NOT DISPOSE OF THE UNIT FOR 30 DAYS FROM THE DATE THE OFFER IS TENDERED. IF AFTER 30 DAYS WE OR OUR UNDERWRITER HAVE NOT ASKED FOR IT YOU ARE FREE TO DISPOSE OF THE UNIT.  
+
+***SEND SHORTKEY TO PENDINGREVIEW@NEWLEAFSC.NET mailto:PENDINGREVIEW@NEWLEAFSC.NET FOR DISPATCH TO SELLING RETAILER***
+                    </textarea>
+                    <br />                    
+                  </div> 
+                  <div role="tabpanel" class="tab-pane" id="setJfrr">
+                    <textarea class="form-control textarea" id="shortJfrr" rows="12" style="min-width: 100%">
+Justification for Replacement Review (why) :  
+Initial purchase price of unit (OPP): 
+Attempted Repair or Diagnostic Fee: 
+Total of all previous paid, pending and current owed clams: 
+(If Diag was done please enter total amount of estimate here): 
+Is Proof of Purchase required? Yes _____        No _____'
+If Yes make sure it been received'
+If open SO was dispatched you will need to create Sub SO and assigned to Pending Review'
+                    </textarea>
+                    <br />                    
+                  </div> 
+                  <div role="tabpanel" class="tab-pane" id="edgprt">
+                    <textarea class="form-control textarea" id="shortJfrr" rows="12" style="min-width: 100%">
+Subject Line: 
+NEW LEAF PARTS ORDER REQUEST/ CUSTOMERNAME / SO / MODEL / SERIAL
+
+Hello,
+
+Would you please continue with placing the part order and shipping parts to the customer? Could you also provide the tracking number for the order once it becomes available?
+
+CUSTOMER INFORMATION:
+CUSTOMERNAME
+STREETADDRESS
+CITY, ST ZIP
+
+PARTS:
+PARTNAME - PARTNUMBER - PRICE
+SHIPPING: $
+TAX: $
+
+APPROVAL:
+Total Estimate: $
+Estimate: Approved (  ), Pending (  ), DENIED (  ), REVISED (  )
+Pre-Approval Code: CODE
+
+Thank you,
+
+<%= current_user.full_name %>
+<%= current_user.department.name %>
+                    </textarea>
+                    <br />                    
+                  </div> 
+                </div>    
+                </form>             
+              </div>
+              <div class="modal-footer ml-auto mt-1">
+                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" onclick="resetSetForm()">CLOSE</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  <!-- END FORM -->
+  <!-- START ALERT BOX -->
+  <!-- END ALERT BOX -->
+  <!-- START MODALS -->
+  <!-- END MODALS -->
+<!-- END DASHBOARD TAB -->
+
+<%= javascript_include_tag "validator.js" %>

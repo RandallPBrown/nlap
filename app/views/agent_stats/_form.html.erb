@@ -1,0 +1,239 @@
+
+<%= form_for(@agent_stat, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.form_group :extension, class: 'row' do |f| %>
+      <%= f.label :extension, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :extension, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :name, class: 'row' do |f| %>
+      <%= f.label :name, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :name, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :date, class: 'row' do |f| %>
+      <%= f.label :date, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.date_select :date, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :shift, class: 'row' do |f| %>
+      <%= f.label :shift, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :shift, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :total_login, class: 'row' do |f| %>
+      <%= f.label :total_login, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :total_login, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :total_break, class: 'row' do |f| %>
+      <%= f.label :total_break, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :total_break, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :net_login, class: 'row' do |f| %>
+      <%= f.label :net_login, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :net_login, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :requested_worktime, class: 'row' do |f| %>
+      <%= f.label :requested_worktime, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :requested_worktime, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :availability, class: 'row' do |f| %>
+      <%= f.label :availability, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :availability, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :occupancy, class: 'row' do |f| %>
+      <%= f.label :occupancy, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :occupancy, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :queue_calls, class: 'row' do |f| %>
+      <%= f.label :queue_calls, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.number_field :queue_calls, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :queue_talk, class: 'row' do |f| %>
+      <%= f.label :queue_talk, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :queue_talk, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :direct_calls, class: 'row' do |f| %>
+      <%= f.label :direct_calls, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.number_field :direct_calls, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :direct_talk, class: 'row' do |f| %>
+      <%= f.label :direct_talk, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :direct_talk, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :outbound_calls, class: 'row' do |f| %>
+      <%= f.label :outbound_calls, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.number_field :outbound_calls, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :outbound_talk, class: 'row' do |f| %>
+      <%= f.label :outbound_talk, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :outbound_talk, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :callback_calls, class: 'row' do |f| %>
+      <%= f.label :callback_calls, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.number_field :callback_calls, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :callback_talk, class: 'row' do |f| %>
+      <%= f.label :callback_talk, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :callback_talk, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :deleted, class: 'row' do |f| %>
+      <%= f.label :deleted, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.number_field :deleted, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :un_ans, class: 'row' do |f| %>
+      <%= f.label :un_ans, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.number_field :un_ans, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :picked, class: 'row' do |f| %>
+      <%= f.label :picked, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.number_field :picked, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :recover, class: 'row' do |f| %>
+      <%= f.label :recover, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.number_field :recover, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :power_dial, class: 'row' do |f| %>
+      <%= f.label :power_dial, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.number_field :power_dial, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :acw, class: 'row' do |f| %>
+      <%= f.label :acw, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :acw, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :wrapup_time, class: 'row' do |f| %>
+      <%= f.label :wrapup_time, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :wrapup_time, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :total_calls, class: 'row' do |f| %>
+      <%= f.label :total_calls, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.number_field :total_calls, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :total_talk, class: 'row' do |f| %>
+      <%= f.label :total_talk, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :total_talk, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :aht, class: 'row' do |f| %>
+      <%= f.label :aht, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.time_select :aht, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div class="d-flex">
+    <div class="ml-auto">
+      <%= f.submit class: 'btn btn-primary' %>
+      <%= link_to "Cancel", agent_stats_path, class: 'btn btn-outline-default' %>
+    </div>
+  </div>
+<% end %>
+

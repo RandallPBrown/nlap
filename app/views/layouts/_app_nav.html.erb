@@ -1,135 +1,150 @@
+
+<%= stylesheet_link_tag "pagination.css" %>
 <%= render :layout => "layouts/base" do %>
-  <nav class="navbar navbar-expand-lg">
-    <a href="javascript:" class="navbar-brand"><%= app_name %></a>
+  <nav class="navbar navbar-expand-lg" style="background-color: #4caf50 !important">
+    <a href="/" class="navbar-brand mr-auto p-0"><%= image_tag 'newleaf logo leaf.png', size: "35x35", class: 'bg-white rounded' %> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav ml-3">
         <li class="nav-item">
-          <a class="nav-link" href="../users/dashboard">User</a>
+          <a class="nav-link text-white font-weight-bold" href="../users/dashboard" data-turbolinks="false"> <%= fa_icon_tag("home") %></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../entries/dashboard">Company</a>
-        </li>
+        <% if current_user.department.name == "Pre-Approvals" || current_user.department.name == "Pending-Review" || current_user.department.name == "Executive" || current_user.department.name == "Ferguson" || current_user.department.name == "Back Office" || current_user.department.name == "Contact Center" || current_user.department.name == "Training and Development"  %>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Entries</a>
+          <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">  <%= fa_icon_tag("wrench") %></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="downdown-item nav-link" href="../entries">Occurrence Log</a>
-            <a class="downdown-item nav-link" href="../daps">Write-up Log</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../tools/validator?template=Peyton.xml" data-turbolinks="false">Validator</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../parts" data-turbolinks="false">Part Verification</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../tools/pendingreview" data-turbolinks="false">Pending Review</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../sp_logs" data-turbolinks="false">Ferguson SP Log</a>
           </div>  
         </li>
+        <% else %>
+        <% end %>
+        <% if current_user.admin? && current_user.has_role?(:reporting) %>
+        <li class="nav-item">
+          <a class="nav-link text-white font-weight-bold" href="../entries/dashboard" data-turbolinks="false"> <%= fa_icon_tag("pie-chart") %></a>
+        </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Administration</a>
+          <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"> <%= fa_icon_tag("list") %></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="downdown-item nav-link" href="../departments">Departments</a>
-            <a class="downdown-item nav-link" href="../occurrences">Occurrences</a>
-            <a class="downdown-item nav-link" href="../writeups">Disciplinary Actions</a>
-            <a class="downdown-item nav-link" href="../wunatures">Types of Incidents</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../entries" data-turbolinks="false">Occurrence Log</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../incentives/dashboard" data-turbolinks="false">Incentive Log</a>
+        <% elsif current_user.admin? && (current_user.has_role?(:lead) || current_user.has_role?(:supervisor) || current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive)) %>
+        <li class="nav-item">
+          <a class="nav-link text-white font-weight-bold" href="../entries/dashboard" data-turbolinks="false"> <%= fa_icon_tag("pie-chart") %></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"> <%= fa_icon_tag("list") %></a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../entries" data-turbolinks="false">Occurrence Log</a>    
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../incentives/dashboard" data-turbolinks="false">Incentive Log</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../daps" data-turbolinks="false">Prog Action Log</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../err_logs" data-turbolinks="false">Improvement Log</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../agents" data-turbolinks="false">Agents List</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../kudos" data-turbolinks="false">Kudos Log</a>
           </div>  
         </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white font-weight-bold" role="button" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">  <%= fa_icon_tag("cogs") %></a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../departments" data-turbolinks="false">Departments</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../occurrences" data-turbolinks="false">Occurrences</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../writeups" data-turbolinks="false">Prog Actions</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../wunatures" data-turbolinks="false">Types of Incidents</a>
+            <a class="downdown-item nav-link text-dark font-weight-bold" href="../users" data-turbolinks="false">User Management</a>
+          </div>  
+        </li>
+        <% else %>
+        <% end %>
+        <% if current_user.admin == true %>
+                
+       <!--  <span class="text-white font-weight-bold pl-4 pr-2 pull-right">RECENT KUDOS: </span>
+        <div class="ticker">
+          
+          <ul id="kudos-list" hidden>
+              <% Kudo.all.order(date: :desc).where("kudo_status_id = ?", 2).limit(10).each do |k| %>
+                <li><span class="font-weight-bold text-white text-uppercase"><%= k.user.full_name %></span> <%= fa_icon_tag 'star', class: 'text-warning' %> <span class="text-white font-weight-bold"><%= Kudo.all.order(date: :desc).where("user_id = ?", k.user_id).where('kudo_status_id = ?', 2).count(:id) %></span> <span class="font-weight-bold text-white text-uppercase">- <%= k.kudo_reason.description %></span></li>
+              <% end %>
+          </ul>
+        </div>
+        <script>
+            $(document).ready(function() {
+              $('#kudos-list').attr('hidden', false);
+              $('.ticker').ticker();
+            });
+        </script> -->
+        <% end %>
       </ul>
-      <ul class="nav navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link" id="dropdownSearchButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= theme_icon_tag "search" %>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownSearchButton">
-            <li>
-              <form class="form-inline" role="search">
-                <div class="input-group my-0">
-                  <input type="text" class="form-control" id="searchbox" placeholder="Search">
-                </div>
-              </form>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= theme_icon_tag "settings" %>
-            <span class="caret caret-light"></span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-            <li>
-              <a class="dropdown-item" href="#">Site management</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">User management</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Settings</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown notifications">
-          <a class="nav-link with-count" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= theme_icon_tag "bell" %>
-            <span class="badge badge-sm">2</span>
-            <span class="d-none d-xs-block">Notifications</span>
-          </a>
-          <ul class="dropdown-menu  dropdown-menu-right">
-            <li class="dropdown-item">
-              <div class="card">
-                <div class="card-header text-center text-primary">
-                  <strong>You have
-                    <span>2</span>notifications</strong>
-                </div>
-                <div class="list-group">
-                  <a href="#" class="list-group-item">
-                    <div class="media">
-                      <img class="d-flex mr-3 rounded-circle" width="32" height="32" src="/assets/rrt/stock/3-9b9d225ea3cf9c9f07cea81d16c455fb6248b9ccf19717395fbcc184411f0a89.jpg" alt="3">
-                      <div class="media-body">
-                        <p>My name is Inigo Montoya.</p>
-                        <small class="text-muted d-block">10 minutes ago</small>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="" class="media list-group-item">
-                    <span class="media-body">
-                      <div>
-                        <p>You've reached your space quota!</p>
-                        <div class="progress progress-sm m0">
-                          <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                            <span class="sr-only">100% Complete</span>
-                          </div>
-                        </div>
-                      </div>
-                      <small class="text-muted">12 hours ago</small>
-                    </span>
-                  </a>
-                </div>
-                <div class="card-footer">
-                  <a href="#" class="pull-right">
-                    <%= theme_icon_tag "settings" %>
-                  </a>
-                  <a href="#">View all Notifications</a>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown user-nav">
-          <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="material-icons">person_outline</i>
+      
+      <ul class="nav navbar-nav ml-auto">
+        <%# if current_user.admin == true %>
+<!--         <script>
+        function popKudoModal(){
+          $('#kudosModal').modal('show')
+        }
+        </script>
+        <small class="badge bg-white text-dark mt-1 mr-0 text-uppercase" style="border-radius: 3px 0px 0px 3px !important">
+          <button type="button" class="btn p-0" onclick="popKudoModal()">KUDOS MENU</button>
+        </small>
+        <small class="badge badge-secondary ml-0 mt-1 mr-3" style="border-radius: 0px 3px 3px 0px !important">
+          <span class="text-warning mr-1"><%= fa_icon_tag("star") %></span> | <small class="ml-1 font-weight-bold">+</small><%= Kudo.all.where("user_id = ?", current_user.id).where("kudo_status_id = ?", 2).count(:id) %>
+        </small> -->
+        <%# end %>
+        <li class="nav-item dropdown user-nav rounded">
+          <a class="nav-link text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%= fa_icon_tag("user") %>
             <span class="caret caret-light"></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-right" role="menu">
             <li class="dropdown-item text-center">
               <div class="card">
-                <div class="card-body">
-                  <h3><%= current_user.full_name %></h3><br />
-                  <p><%= user_email %></p>
-
+                <div class="card-body bg-white">
+                  <h4 class="m-auto font-weight-bold"><%= current_user.full_name %></h4>
+                  <div class="row p-1 mt-2">
+                    <div class="col-5">
+                      <span class="pull-left"><strong>Email:</strong></span>
+                    </div>
+                    <div class="col-7 bg-white rounded">
+                      <span class="pull-left"><%= user_email %></span>
+                    </div>
+                  </div>
+                  <div class="row p-1">
+                    <div class="col-5">
+                      <span class="pull-left"><strong>Department:</strong></span> 
+                    </div>
+                    <div class="col-7 bg-white rounded">
+                      <span class="pull-left"><%= user_department %></span>
+                    </div>
+                  </div>
+                  <div class="row p-1">
+                    <div class="col-5">
+                      <span class="pull-left"><strong>Position:</strong></span> 
+                    </div>
+                    <div class="col-7 bg-white rounded">
+                      <span class="pull-left text-capitalize"><%= current_user.roles.all.map{|f| f.name}.join(" ") %></span>
+                    </div>
+                  </div>
+                  <div class="row p-1">
+                    <div class="col-5">
+                      <span class="pull-left"><strong>Prog Actions:</strong></span> 
+                    </div>
+                    <div class="col-7 bg-white rounded">
+                      <span class="pull-left dap-count"><%= current_user.daps.ids.count %></span>
+                    </div>
+                  </div>
                 </div>
-                <div class="card-footer d-flex justify-content-between">
+                <div class="card-footer d-flex justify-content-between bg-white">
                   <div>
-                    <%= link_to "Change your password", edit_user_registration_path, :class => 'btn' %>
+                    <%= link_to "EDIT USER", edit_user_path(current_user.id), :class => 'btn btn-primary text-white font-weight-bold mr-1' %>
                   </div>
                   <div>
                     <% if user_signed_in? %>
-                      <%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => 'btn' %>
+                      <%= link_to "LOGOUT", destroy_user_session_path, :method => :delete, :class => 'btn btn-primary text-white font-weight-bold ml-1' %>
                     <% else %>
-                      <%= link_to "Sign up now!",  new_user_registration_path, :class => 'btn'%>
                     <% end %>
                   </div>
                 </div>
@@ -140,5 +155,135 @@
       </ul>
     </div>
   </nav>
+<!-- <div class="modal fade" id="kudosModal" tabindex="-1" role="dialog" aria-labelledby="kudosModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content" style="height: 800px">
+      <div class="modal-header">
+        <h5 class="font-weight-bold bg-gradient-primary" id="kudosModalLabel">KUDOS <small class="font-weight-bold pl-5">*All kudos are reviewed by management before they are accepted*</small></h5> 
+        <button type="button" class="btn btn-sm py-2" data-dismiss="modal" aria-label="Close">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row border-top pt-4">
+          <div class="col-6">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="current-user-tab" data-toggle="tab" href="#current-user" role="tab" aria-controls="current-user" aria-selected="true">Personal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="ranking-users-tab" data-toggle="tab" href="#ranking-users" role="tab" aria-controls="ranking-users" aria-selected="false">Ranking</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="all-users-tab" data-toggle="tab" href="#all-users" role="tab" aria-controls="all-users" aria-selected="false">All</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="kudos-content">
+              <div class="tab-pane fade show active border-right pr-2" id="current-user" role="tabpanel" aria-labelledby="current-user-tab" style="overflow-y: auto; height: 550px">
+                <div class="card mt-3 p-2 bg-light" style="height: 90%">
+                  <div class="list-group">
+                    <% Kudo.all.where('user_id = ?', current_user.id).where('kudo_status_id = ?', 2).order(date: :desc).each do |k| %>
+                      <button type="button" class="list-group-item list-group-item-action border" data-user="<%= k.user.full_name %>" data-reason="<%= k.kudo_reason.description %>" data-date="<%= k.date.strftime("%m/%d/%Y") %>" data-desc="<%= k.description %>" data-submitted="<%= k.submitted_by %>" onclick="viewToggle(this)">
+                        <div class="row">
+                          <div class="col-4"><%= k.user.full_name.truncate(15) %></div> | <div class="col-3"><%= k.kudo_reason.description.truncate(12) %></div> | <div class="col"><%= k.date.strftime("%m/%d/%Y") %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
+                        </div>
+                      </button>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade border-right pr-2" id="ranking-users" role="tabpanel" aria-labelledby="ranking-users-tab" style="overflow-y: auto; height: 550px">
+                <div class="card mt-3 p-2 bg-light" style="height: 90%">
+                  <div class="list-group"> 
+                    <% Kudo.all.where('kudo_status_id = ?', 2).group(:id).order('COUNT(id) DESC').group(:user_id).limit(50).uniq(&:user_id).each do |k| %>
+                      <button type="button" class="list-group-item list-group-item-action border">
+                        <div class="row">
+                          <div class="col-4"><%= k.user.full_name %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
+                        </div>
+                      </button>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade border-right pr-2" id="all-users" role="tabpanel" aria-labelledby="all-users-tab" style="overflow-y: auto; height: 550px">
+                <div class="card mt-3 p-2 bg-light" style="height: 90%">
+                  <div class="list-group"> 
+                    <% Kudo.all.where('kudo_status_id = ?', 2).group(:id).order(date: :desc).group(:user_id).limit(50).uniq(&:user_id).each do |k| %>
+                      <button type="button" class="list-group-item list-group-item-action border" data-user="<%= k.user.full_name %>" data-reason="<%= k.kudo_reason.description %>" data-date="<%= k.date.strftime("%m/%d/%Y") %>" data-desc="<%= k.description %>" data-submitted="<%= k.submitted_by %>" onclick="viewToggle(this)">
+                        <div class="row">
+                          <div class="col-4"><%= k.user.full_name.truncate(15) %></div> | <div class="col-3"><%= k.kudo_reason.description.truncate(12) %></div> | <div class="col"><%= k.date.strftime("%m/%d/%Y") %></div> | <div class="col"><%= fa_icon_tag('star') %> <%= Kudo.all.where('user_id = ?', k.user_id).where('kudo_status_id = ?', 2).count(:id).to_s %></div>
+                        </div>
+                      </button>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script>
+            function viewToggle(element){
+              $('#show-tab').tab('show');
+              $('#show-user').html($(element).data("user"));
+              $('#show-reason').html($(element).data("reason"));
+              $('#show-date').html($(element).data("date"));
+              $('#show-description').html($(element).data("desc"));
+              $('#show-submitted').html($(element).data("submitted"));
+            }
+          </script>
+          <div class="col-6">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="show-tab" data-toggle="tab" href="#show" role="tab" aria-controls="show" aria-selected="true">View</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="submit-tab" data-toggle="tab" href="#submit" role="tab" aria-controls="submit" aria-selected="false">Nominate</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="formTabContent">
+              <div class="tab-pane fade show active" id="show" role="tabpanel" aria-labelledby="show-tab" style="overflow-y: auto; height: 550px">
+                <div class="card mt-3 p-2" style="height:90%">
+                  <div class="row pt-2 pb-3">
+                    <div class="col-12">
+                      <center><h5 class="font-weight-bold text-uppercase" id="show-user">SELECT AN ITEM</h5></center>
+                      <center><h6 class="font-weight-bold text-uppercase" id="show-reason">IN LEFT PANE</h6></center>
+                    </div>
+                  </div>
+                  <div class="row pt-3">
+                    <div class="col-6">
+                      <span class="font-weight-bold">Date:</span> <span class="font-weight-bold text-uppercase" id="show-date"></span>
+                    </div>
+                    <div class="col-6">
+                      <span class="font-weight-bold">Submitted By:</span> <span class="font-weight-bold text-uppercase" id="show-submitted"></span>
+                    </div>
+                  </div>
+                  <div class="row pt-3">
+                    <div class="col-12">
+                      <span class="font-weight-bold">Description:</span><br>
+                      <p id="show-description"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="submit" role="tabpanel" aria-labelledby="submit-tab" style="overflow-y: auto; height: 550px">
+                <div class="card mt-3 p-2" style="height: 90%">
+                  <%= render partial: "kudos/form", locals: { kudo: Kudo.new } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-top p-3">
+        <button type="button" class="btn btn-primary m-auto w-25 font-weight-bold text-uppercase" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div> -->
   <%= yield %>
 <% end %>
+
+
+
+
+
+

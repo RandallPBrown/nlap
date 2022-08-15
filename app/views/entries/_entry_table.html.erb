@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row pt-3">
   <div class="col-12">
-    <div class="card card-default position-relative inspectable">
+    <div class="card card-default position-relative inspectable p-1">
       <!-- component-title: Active Users Table -->
       <div class="card-header">
         <h6>Recent Occurrences</h6>
@@ -20,11 +20,12 @@
                 <tbody>
                 <% @entries.each do |entry| %>
                   <tr>
-                                          <td><%= entry.agent.user.email %></td>
-                                          <td><%= entry.agent.department.name %></td>
+                                          <% if entry.agent.user.deleted_at.blank? then %>
+                                          <td><%= entry.agent.user.full_name %></td>
+                                          <td><%= entry.agent.department.name.truncate(15) %></td>
                                           <td><%= entry.occurrence.ovalue %></td>
                                           <td><%= entry.edate %></td>
-                                          <td><%= entry.edesc %></td>
+                                          <td><%= entry.edesc.truncate(15) %></td>
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to theme_icon_tag("eye"), entry, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
@@ -33,6 +34,8 @@
                         data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
                       </div>
                       </td>
+                      <% else %>
+                      <% end %>
                     </tr>
                     <% end %>
                     <% if @entries.length == 0 %>
@@ -41,9 +44,7 @@
                     </tbody>
 
                   </table>
-                  <div class="pagination justify-content-center">
-                    <%= will_paginate(@entries) %>
-                  </div>
+                    <center><%= will_paginate(@entries) %></center>
       </div>
 
     </div>

@@ -1,0 +1,2 @@
+class SpLogType < ApplicationRecord
+end

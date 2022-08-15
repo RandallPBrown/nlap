@@ -1,0 +1,70 @@
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+
+<div class="modal-header pb-2 m-auto bg-white">
+    <div class="row justify-content-center">
+        <h1 class="font-weight-bold text-uppercase"><%= @user.full_name %></h1>
+    </div>
+  <button type="button" class="btn pull-right bg-light" data-dismiss="modal"><%= fa_icon_tag("times") %></button>
+</div>
+<div class="modal-body bg-light">
+	<div class="container">
+	    <div class="row">
+	    	<div class="col-12 col-md-12">
+    			<div class="row p-1">
+    				<div class="col-6">
+    					<span class="font-weight-bold">POSITION:</span>
+    				</div>
+    				<div class="col-4 bg-white rounded">
+    					<span class="text-capitalize">
+    						<%= @user.roles.map {|n| n.name}.join(" ") %>
+    					</span>
+    				</div>
+    			</div>
+    			<div class="row p-1">
+    				<div class="col-6">
+    					<span class="font-weight-bold">DEPARTMENT:</span>
+    				</div>
+    				<div class="col-4 bg-white rounded">
+    					<%= @user.department.name %>
+    				</div>
+    			</div>
+    			<div class="row p-1">
+    				<div class="col-6">
+    					<span class="font-weight-bold">OCCURRENCES:</span>
+    				</div>
+    				<div class="col-4 bg-white rounded">
+    					<%= @entries_count %> <% if @entries_count > 0 %><small class="pl-1 font-weight-bold" data-toggle="tooltip" data-placement="top" title="<%= @entries_count_dates.join(", ") %>"><%= fa_icon_tag("clock-o") %></small><% else %><small class="pl-1 font-weight-bold" data-toggle="tooltip" data-placement="top" title="none"><%= fa_icon_tag("clock-o") %></small><% end %>
+    				</div>
+    			</div>
+    			<div class="row p-1">
+    				<div class="col-6">
+    					<span class="font-weight-bold">PROGRESSIVE ACTIONS:</span>
+    				</div>
+    				<div class="col-4 bg-white rounded">
+    					<%= @daps_count %> <% if @daps_count > 0 %><small class="pl-1 font-weight-bold" data-toggle="tooltip" data-placement="top" title="<%= @dap_last.join(" ") %>"><%= fa_icon_tag("clock-o") %></small><% else %><small class="pl-1 font-weight-bold" data-toggle="tooltip" data-placement="top" title="none"><%= fa_icon_tag("clock-o") %></small><% end %>
+    				</div>
+    			</div>
+                <div class="row p-1">
+                    <div class="col-6">
+                        <span class="font-weight-bold">SINCE PROGRESSIVE ACTION:</span>
+                    </div>
+                    <div class="col-4 bg-white rounded">
+                        <%= @entries_since_dap.sum %> <% if @entries_since_dap.sum > 0 %><small class="pl-1 font-weight-bold" data-toggle="tooltip" data-placement="top" title="<%= @entries_since_dap_dates.join(", ") %>"><%= fa_icon_tag("clock-o") %></small><% else %><small class="pl-1 font-weight-bold" data-toggle="tooltip" data-placement="top" title="none"><%= fa_icon_tag("clock-o") %></small><% end %>
+                    </div>
+                </div>
+	    	</div>
+		</div>
+	</div>
+</div>
+
+
+
+	        					
+	        					
+	        					
+
+	        					

@@ -1,4 +1,4 @@
-<% @title = "Showing entry" %>
+<% @title = "Showing Entry" %>
 
 <% content_for :description do %>
 
@@ -59,13 +59,134 @@
               <div class="ml-auto">
                 <%= link_to fa_icon_tag("pencil") + ' Edit', edit_entry_path(@entry), class: 'btn btn-primary' %>
                 <%= link_to 'Back', entries_path, class: 'btn' %>
+                <%= link_to fa_icon_tag("file-pdf-o") + ' PDF', entry_path(format: :pdf), target: :_blank, class: 'btn btn-primary' %>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    
+    <div class="col-3 hidepane">
+      <!-- RECENT ACTIVITY TABLE -->
+      <div class="card inspectable">
+        <!-- component-title: Timeline Card -->
+        <div class="card-header">
+          <h6>Current Items</h6>
+        </div>
+        <div class="card-body">
+          <div class="timeline" style="height: 450px">
+            <ul class="left-timeline">
+              <li>
+                <% if @entry.total_effective_occurrence > 2.5 && @entry.user.daps.map.count {|m| m.total_active_writeup} == 0 then %>
+                <strong>Occurrences: <span class="text-danger pull-right"> <%= @entry.total_effective_occurrence %></span>
+                  <center><small class="text-danger">***Progressive Action Required***</small></center>
+                <% else %>
+                <strong>Occurrences: <span class="pull-right"><%= @entry.total_effective_occurrence %></span>
+                <% end %>
+              </li><br />
+              <li>
+                <% if @entry.agent.user.daps.map.count {|m| m.total_active_writeup} > 0 then %>
+                  <strong>Progressive Actions: <span class="text-danger pull-right"><%= @entry.agent.user.daps.map.count {|m| m.total_active_writeup} %></span>
+                <% else %>
+                  <strong>Progressive Actions: <span class="pull-right"><%= @entry.agent.user.daps.map.count {|m| m.total_active_writeup} %></span>
+                <% end %>
+              </li><br />
+              <li>
+                <% if @entry.agent.user.daps.map {|f| f.occurrence_since_dap.blank? } then %>
+                  <strong>Since Prog Action: <span class="text-danger">0</span></strong>
+                <% elsif @entry.agent.user.daps.map.first.to_f {|m| m.occurence_since_dap} >= 1 then %>
+                <strong>Since Prog Action: <span class="text-danger"><%= @entry.agent.user.daps.map.first {|m| m.occurence_since_dap} %></span></strong>
+                <center><small class ="text-danger">**Progressive Action Required**</small></center>
+                <% else %>
+                <strong>Since Prog Action: <span><%= @entry.agent.user.daps.map.first {|m| m.occurence_since_dap}%></span></strong>
+                <% end %> 
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- /RECENT ACTIVITY TABLE-->
+    </div>
   </div>
 </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-12">
+      <div class="card inspectable">
+        <div class="card-header d-flex align-items-center">
+          <h6><%= @entry.agent.user.first_name %>'s Active Occurrences</h6>   
+        </div>
+        <div class="table-responsive" >
+          <table class="table table-hover table-striped" id="userEntryTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <% @user_entry.each do |entry| %>
+              <tr>
+                <td><%= entry.agent.user.full_name %></td>
+                <td><%= entry.occurrence.name %></td>
+                <td><%= entry.edate %></td>
+                <td><%= entry.edesc.truncate(15) %></td>
+                <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), entry, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                      </div>
+                      </td>
+              </tr>
+            <% end %>
+          </table>
+          <center><%= will_paginate @user_entry %></center>
+        </div><br>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-12">
+      <div class="card inspectable">      
+        <div class="card-header d-flex align-items-center">
+          <h6><%= @entry.agent.user.first_name %>'s Active Progressive Actions</h6>   
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped" id="userDapTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <% @user_dap.each do |dap| %>
+              <tr>
+                <td><%= dap.user.full_name %></td>
+                <td><%= dap.writeup.name %></td>
+                <td><%= dap.ddate %></td>
+                <td><%= dap.description %></td>
+                <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), dap, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                      </div>
+                      </td>
+              </tr>
+            <% end %>
+          </table>
+          
+        </div>
+        <center><%= will_paginate @user_dap %></center>
+      </div>
+    </div>
+  </div>
+  </div>  
+</div>
+</body>

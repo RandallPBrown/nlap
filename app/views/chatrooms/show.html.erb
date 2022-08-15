@@ -1,0 +1,41 @@
+<% @title = "Lobby" %>
+
+<div class="row col-md-8 m-auto">
+
+<div class="card">
+  <% if @chatroom.messages.any? %>
+    <div class="card-body" id="messages">
+      <% @messages.each do |f| %>
+        <% if f.user.id == current_user.id %>
+          <div class="row">
+            <div style="width: 250px">
+              <span class="font-weight-bold"><u><%= f.user.full_name %></u></span> 
+              <br><span class="font-weight-bold">Subject:</span> <%= f.subject %>
+              <br><span class="font-weight-bold">Body:</span> <%= f.content %><br>
+              <small class="pull-right">last message: <%= @messages.map { |f| f.created_at.in_time_zone("Central Time (US & Canada)") }.last %></small>
+            </div>
+          </div>
+        <% else %>
+          <div class="row justify-content-end">
+            <div class="pull-right" style="width: 250px">
+              <span class="font-weight-bold"><u><%= f.user.full_name %></u></span> 
+              <br><span><b>Subject</b>: <%= f.subject %></span>
+              <br><span><b>Body</b>: <%= f.content %></span><br> 
+              <small>last message: <%= @messages.map { |f| f.created_at.in_time_zone("Central Time (US & Canada)") }.last %></small>
+            </div>
+          </div>
+        <% end %>  
+      <% end %>
+        
+      <%= render partial: 'messages/message', collection: @chatroom.messages%>
+    </div>
+  <%else%>
+    <div class="card-body hidden" id="messages">
+    </div>
+  <%end%>
+</div>
+  <div class="card card-mini m-auto p-2">
+  <%= render partial: 'messages/form', locals: {message: @message, chatroom: @chatroom}%>
+</div>
+</div>
+

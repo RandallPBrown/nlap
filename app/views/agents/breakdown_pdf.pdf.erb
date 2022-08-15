@@ -1,0 +1,122 @@
+
+<%= wicked_pdf_image_tag 'logo.png', class: 'pb-2' %>
+<style>
+thead {
+  display: table-header-group !important;
+}
+
+tfoot {
+  display: table-row-group !important;
+}
+
+tr {
+  page-break-inside: avoid !important;
+}
+</style>
+<div class="container p-2">
+  <div class="card" style="border-width: 5px !important">
+    <div class="row">
+      <div class="col-12">
+        <div class="card p-2">
+          <center><h1 class="text-monospace text-uppercase font-weight-bold"><u>AGENT INFORMATION</u></h1></center>
+          <div class="row">
+            <div class="col-6">
+              <label class="font-weight-bold text-uppercase text-monospace">Agent: </label>
+              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @agent.user.full_name %>">
+
+              <label class="font-weight-bold text-uppercase text-monospace">Department: </label>
+              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @agent.department.name %>">
+
+              <label class="font-weight-bold text-uppercase text-monospace">Active Occurrences: </label>
+              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @occurrences.values.first %>">
+
+              <label class="font-weight-bold text-uppercase text-monospace">Active Prog Actions: </label>
+              <input class="form-control form-control-sm text-uppercase text-monospace" type="text" value="<%= @daps.count.to_f %>">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 d-flex align-items-stretch">
+        <div class="card p-2">
+          <center><h1 class="text-monospace text-uppercase font-weight-bold"><u>MONTHLY BREAKDOWN</u></h1></center>
+          <div class="p-2">
+            <% @data.map { |g| g[1] }.zip(@data.map { |g| g[0] }) do |a,c| %>
+              <span class="text-uppercase text-monospace font-weight-bold"><%= c %>: </span><span class="text-uppercase text-monospace"><%= a.map {|b| b.ovalue }.sum.to_f %></span><br>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <center><h1 class="font-weight-bold text-uppercase text-monospace"><u>Occurrences</u></h1></center>
+          <table class="table table-striped text-uppercase text-monospace">
+            <thead>
+              <tr>
+                <th>AGENT</th>
+                <th>OCCURRENCE</th>
+                <th>VALUE</th>
+                <th>DATE</th>
+                <th>EXP</th>
+                <th>DESC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @entries.each do |entry| %>
+              <tr>
+                <td><%= entry.user.full_name %></td>
+                <td><%= entry.occurrence.name %></td>
+                <td><%= entry.occurrence.ovalue %></td>
+                <td><%= entry.edate %></td>
+                <td><%= entry.edate + 90.days %></td>
+                <td><%= entry.edesc %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <center><h1 class="font-weight-bold text-uppercase text-monospace"><u>Progressive Actions</u></h1></center>
+          <table class="table table-striped text-uppercase text-monospace">
+            <thead>
+              <tr>
+                <th>AGENT</th>
+                <th>TYPE</th>
+                <th>DATE</th>
+                <th>EXPIRES</th>
+                <th>NATURE OF INCIDENT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @daps.each do |dap| %>
+              <tr>
+                <td><%= dap.user.full_name %></td>
+                <td><%= dap.writeup.name %></td>
+                <td><%= dap.ddate %></td>
+                <td><%= dap.ddate + 90.days %></td>
+                <td><%= dap.wunature.description.truncate(15) %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<small class=" text-uppercase text-monospace">Generated: <%= Date.today.strftime('%m/%d/%y') %> by <%= current_user.full_name %></small>

@@ -1,8 +1,4 @@
-<% @title = "Showing dap" %>
-
-<% content_for :description do %>
-
-  <% end %>
+<% @title = "Showing Progressive Action" %>
 
 <div class="container">
   <div class="row">
@@ -12,7 +8,7 @@
           <div class="form-horizontal">
                           
 
-                          <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-12 col-md-2 form-label">Effective Date</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
@@ -21,7 +17,7 @@
                 </div>
               </div>
 
-                          <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-12 col-md-2 form-label">Agent</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
@@ -30,7 +26,7 @@
                 </div>
               </div>
 
-                          <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-12 col-md-2 form-label">Type</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
@@ -39,7 +35,7 @@
                 </div>
               </div>
 
-                          <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-12 col-md-2 form-label">Nature of Incident</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
@@ -48,7 +44,7 @@
                 </div>
               </div>
 
-                          <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-12 col-md-2 form-label">Notes</label>
                 <div class="col-12 col-md-10 form-control uneditable-input">
                   <span>
@@ -57,11 +53,13 @@
                 </div>
               </div>
 
-                        <div class="d-flex">
+
+            <div class="d-flex">
               <div class="ml-auto">
                 <%= link_to fa_icon_tag("pencil") + ' Edit', edit_dap_path(@dap), class: 'btn btn-primary' %>
 
                 <%= link_to 'Back', daps_path, class: 'btn' %>
+                <%= link_to fa_icon_tag("file-pdf-o") + ' PDF', dap_path(format: :pdf), target: :_blank, class: 'btn btn-primary' %>
               </div>
             </div>
           </div>

@@ -1,0 +1,2 @@
+class PcmiContact < ApplicationRecord
+end

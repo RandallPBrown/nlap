@@ -1,54 +1,118 @@
+
+
+  <script>
+
+$(document).on('turbolinks:load', function() {
+
+var t = $('#agentTable').DataTable({ 
+        "pageLength": 15,
+        ajax: {
+            url: 'agents/agent_breakdown',
+            dataSrc: ''
+        },
+        "processing": true,
+        select: true,
+        columns: [ 
+              { data: 'Full Name' }, 
+              { data: 'Email' },
+              { data: 'Department' }, 
+              { data: 'TAO' },
+              { data: 'TAW' },
+              { data: 'OSAW' },
+              { data: 'OSW' },
+              { data: 'AR' }            
+            ]
+          });
+  t.draw();
+
+  var buttons = new $.fn.dataTable.Buttons(t, {
+        buttons: [
+         'copy',
+         'csv'
+        ]
+  }).container().appendTo($('#buttons'));
+
+
+
+
+$('#dtDepartmentSearch').on( 'change', function () {
+  t.columns( 2 )
+    .search( this.value )
+    .draw();
+  });
+$('#dtArSearch').on( 'change', function () {
+  t.columns( 7 )
+    .search( this.value )
+    .draw();
+  });
+});
+
+
+  </script>
+
 <% @title = "Listing Agents" %>
 
-<% content_for :description do %>
-  <% end %>
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
 
-  <% content_for :actions do %>
-    <%= link_to new_agent_path, class: 'btn btn-primary btn-large pull-right' do %>
-      <%= fa_icon_tag "plus" %> Add Agent
-      <% end %>
-      <% end %>
+
+
+<div id="modal-entry">
+</div>
+<div id="modal-writeup">
+</div>
 
       <div class="container">
         <div class="row">
-          <div class="col-md-9">
-            <div class="card card-sheet sheet-condensed">
-              <table class="table table-striped table-hover table-sm-responsive">
+          <div class="col-md-10">
+            <div class="card p-1">
+              <div class="table-responsive">
+              <table class="table table-striped table-hover table-condensed" id="agentTable">
                 <thead>
                   <tr>
-                                          <th>Agent ID</th>
+                                          <th>Full Name</th>
                                           <th>Email</th>
-                                          <th>Department Name</th>
-                                        <th></th>
+                                          <th>Department</th>
+                                          <th>TAO <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Total Active Occurrences (180 days)' %></small></th>
+                                          <th>TAW <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Total Active Writeups (90 days)' %></small></th>
+                                          <th>OSAW <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Total Occurrences Since Active Progressive Action' %></small></th>
+                                          <th>OSW <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Total Occurrences Since Active Progressive Action' %></small>
+                                          </th>
+                                          <th>AR <small><%= link_to fa_icon_tag("question-circle"), 'data-toggle': 'tooltip', title: 'Disciplinary Action Required' %></small></th>
                   </tr>
                 </thead>
                 <tbody>
-                <% @agents.each do |agent| %>
-                  <tr>
-                                          <td><%= agent.user.id %></td>
-                                          <td><%= agent.user.email %></td>
-                                          <td><%= agent.department.name %></td>
-                                        <td class="actions text-right">
-                      <div class="btn-group">
-                        <%= link_to theme_icon_tag("eye"), agent, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("pencil-alt"), edit_agent_path(agent), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
-                        <%= link_to theme_icon_tag("trash"), agent, 'data-toggle': 'tooltip', title: 'Delete',
-                        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
-                      </div>
-                      </td>
-                    </tr>
-                    <% end %>
-                    <% if @agents.length == 0 %>
-                    <tr><td colspan=42 class='text-center'>No agents.</td></tr>
-                    <% end %>
-                    </tbody>
-                  </table>
-                </div>
 
-                
-                              </div>
-
-
-              
+                </tbody>
+              </table>
             </div>
+            </div>  
           </div>
+          <div class="col-md-2">
+            <ul class="nav nav-stacked nav-caret-left card small pb-2  ">
+              <li class="border-bottom">
+                <h6 class="mt-3 ml-3">Additional Actions</h6>
+              </li>
+              <li class="nav-item p-1">
+                <label class="font-weight-bold">Department:</label>
+                <%= select_tag('Department Filter', options_from_collection_for_select(Department.all, 'name', 'name'), prompt: "All", class: 'form-control form-control-sm custom-select text-dark', id: 'dtDepartmentSearch') %>
+              </li>
+              <li class="nav-item p-1">
+                <label class="font-weight-bold">Action Required:</label>
+                <select id='dtArSearch' class="form-control form-control-sm custom-select text-dark">
+                  <option selected value="">All</option>
+                  <option value='N'>No</option>
+                  <option value='Y'>Yes</option>
+                </select>
+                <%#= select_tag('AR Filter', options_from_collection_for_select('<i class="fa fa-check-circle text-success"></i>', '<i class="fa fa-times-circle text-danger"></i>'), prompt: "All", class: 'form-control form-control-sm custom-select text-dark', id: 'dtArSearch') %>
+              </li>
+              <li class="nav-item p-1" id="buttons">
+
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <%= javascript_include_tag("https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js") %>
+

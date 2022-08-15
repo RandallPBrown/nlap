@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  occupancy: 1.5
+  uph: 1.5
+  attendance: 1.5
+  quality: 1.5
+  error: 1
+  error_amount: 1.5
+  turntime: 1.5
+  contracts: 1.5
+  department: one
+
+two:
+  occupancy: 1.5
+  uph: 1.5
+  attendance: 1.5
+  quality: 1.5
+  error: 1
+  error_amount: 1.5
+  turntime: 1.5
+  contracts: 1.5
+  department: two

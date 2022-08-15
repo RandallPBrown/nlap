@@ -1,0 +1,171 @@
+<style>
+.indent-1 {
+	text-indent: 10%
+}
+.indent-2 {
+	text-indent: 15%
+}
+.indent-3 {
+	text-indent: 20%
+}
+.active-clock {
+	color: green;
+	font-weight: bold;
+}
+</style>
+
+<div class="container pl-0 pr-0 pb-0 border-dark" style="width: 50%;border-style: solid;border-radius: 5px;">
+	<div class="row">
+		<div class="col-12">
+			<button name="timer-buttons" class="text-monospace font-weight-bold btn btn-success btn-block m-0" id="start">START</button>
+			<button name="timer-buttons" class="text-monospace font-weight-bold btn btn-primary btn-block m-0" id="next" onclick="skip()" hidden>NEXT</button>
+			<button name="timer-buttons" class="text-monospace font-weight-bold btn btn-danger btn-block m-0" id="stop" hidden>STOP</button>
+			<button name="timer-buttons" class="text-monospace font-weight-bold btn btn-info btn-block m-0" id="clear" hidden>RESET</button>
+			<div class="table-responsive">
+				<table class="table table-hover mb-0">
+					<thead>
+						<tr>
+							<th class="text-monospace">TIMER</th>
+							<th class="text-monospace">GOAL</th>
+							<th class="text-monospace">SECTION</th>
+						</tr>
+					<tbody>
+						<% @section.each do |f| %>
+						<tr class="timer">
+							<td class="text-monospace clock">
+								<span class="text-monospace"><%= f.start %></span>
+							</td>
+							<td class="text-monospace goal">
+								<span class="text-monospace"><%= f.goal %></span>
+							</td>
+							<td>
+								<span class="text-monospace"><div class="row"><div class="col-2"><%= f.item %></div> <div class="col-10"><%= f.description %></div></div></span>
+							</td>
+						</tr>
+						<% end %>
+					</tbody>
+				</table>
+				<div class="bg-light"><center><b><span class="text-monospace">ELAPSED TIME:</span></b> <span class="text-monospace font-weight-bold total" disabled>00:00</span></center></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+var h1 = $('.active-clock'),
+	start = $('#start'),
+	stop = $('#stop'),
+	clear = $('#clear'),
+	seconds = 0, minutes = 0,
+	seconds2 = 0, minutes2 = 0,
+	t,v;
+
+function add() {
+	var h1 = $('.active-clock');
+	
+	seconds++;
+	if (seconds >= 60) {
+		seconds = 0;
+		minutes++;
+		if (minutes >= 60) {
+			minutes = 0;
+		}
+	}
+
+	h1.text((minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds));
+	timer();
+	
+}
+
+function timer() {
+	t = setTimeout(add, 1000);
+}
+
+function addT() {
+	var tot = $('.total');
+	
+	seconds2++;
+	if (seconds2 >= 60) {
+		seconds2 = 0;
+		minutes2++;
+		if (minutes2 >= 60) {
+			minutes2 = 0;
+		}
+	}
+
+	tot.text((minutes2 ? (minutes2 > 9 ? minutes2 : "0" + minutes2) : "00") + ":" + (seconds2 > 9 ? seconds2 : "0" + seconds2));
+	timerT();
+	
+}
+
+function timerT() {
+	v = setTimeout(addT, 1000);
+}
+
+start.on('click', function() {
+	new timer();
+	new timerT();
+	$('#start').prop('hidden', true);
+	$('#next').prop('hidden', false);
+	$('td.clock').first().addClass('active-clock');
+	$('td.clock').first().parent().addClass('bg-light');
+})
+stop.on('click', function(){
+	clearTimeout(t);
+	clearTimeout(v);
+	$('tr.bg-light').removeClass('bg-light');
+	$('td.active-clock').removeClass("active-clock");
+	$('#stop').prop('hidden', true);
+	$('#clear').prop('hidden', false);
+})
+
+function skip() {
+	clearTimeout(t);
+	var $this = $('td.active-clock');
+	if($this.parent().index() == $this.parent().siblings().length-1) {
+		$('td.active-clock').parent().next('tr.timer').find('td.clock').addClass("active-clock");
+		$('tr.bg-light').next('tr.timer').addClass('bg-light');
+		$('td.active-clock').parent().prev('tr.timer').find('td.clock').removeClass("active-clock");
+		$('tr.bg-light').prev('tr.bg-light').removeClass('bg-light');
+		seconds = 0; minutes = 0;
+		timer();
+		$('#next').prop('hidden', true);
+		$('#stop').prop('hidden', false);
+	} else {
+		$('td.active-clock').parent().next('tr.timer').find('td.clock').addClass("active-clock");
+		$('tr.bg-light').next('tr.timer').addClass('bg-light');
+		$('td.active-clock').parent().prev('tr.timer').find('td.active-clock').removeClass("active-clock");
+		$('tr.bg-light').prev('tr.bg-light').removeClass('bg-light');
+		seconds = 0; minutes = 0;
+		timer();
+	}
+}
+
+clear.on('click', function() {
+	$('td.clock').text("00:00");
+	$('.total').text("00:00");
+	$('td.clock').removeClass('text-danger');
+	$('.total').removeClass('text-danger');
+	$('#clear').prop('hidden', true);
+	$('#start').prop('hidden', false);
+})
+
+$(document).bind('DOMSubtreeModified', function () {
+	var h1 = $('td.active-clock');
+	var h2 = h1.text().split(":");
+	var h3 = h1.next('td.goal').text().split(":");
+	var h4 = $('.total');
+	var h5 = h4.text().split(":")
+	if (h2[1] > h3[1]) {
+		h1.addClass('text-danger');
+	} else {
+		h1.removeClass('text-danger');
+	}
+	if (h5[0] >= 7 && h5[1] > 0) {
+		h4.addClass('text-danger');
+	} else {
+		h4.removeClass('text-danger');
+	}
+})
+
+</script> 

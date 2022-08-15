@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  uph: 1.5
+  quality: 1.5
+  errors: 1
+  occupancy: 1.5
+
+two:
+  user: two
+  uph: 1.5
+  quality: 1.5
+  errors: 1
+  occupancy: 1.5

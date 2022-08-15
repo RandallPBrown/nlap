@@ -1,0 +1,956 @@
+<style>
+.nav-pills .nav-link.active, .nav-pills .show > a.nav-link .a {
+	background-color: #c5e1a5;
+		box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+
+}
+.nav-pills .nav-link:hover {
+	background-color: #c5e1a5;
+	color: white;
+	box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+}
+.nav-pills .nav-link.active {
+	background-color: #c5e1a5;
+		box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+
+}
+.nav-pills .nav-link.active:hover {
+	color: black !important;
+		box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+
+}
+.nav-item a:hover {
+	background: #c5e1a5 /* red */ !important;
+}
+.bg-field-label {
+	background-color: transparent!important;
+	border: none;
+	padding-right: 25px !important;
+}
+.input-group-text {
+	border:none !important;
+}
+.form-control {
+	background-color: #fff !important;
+	border: none;
+	border-radius: 5px 5px 5px 5px !important;
+	color: black !important;
+}
+.nav-pills > .nav-item > .nav-link.active {
+	background-color: #c5e1a5;
+}
+.dealer-icon {
+	border-width: 10px; 
+	border-style: solid;
+	border-color: #494949; 
+	background-color: #8d8d8d
+}
+.bg-main {
+	background-color: #c5e1a5
+}
+.bg-container {
+	background-color: #9ccc65
+}
+.bg-content {
+	background-color: #6b9b37
+
+}
+.nicEdit-main {
+	background-color: #fff !important;
+	border-radius: 0px 0px 5px 5px !important;
+	margin: 0px !important;
+	width: 100% !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1 !important; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888 !important; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555 !important; 
+}
+
+</style>
+<script>
+
+$(document).ready(function(){
+	$('#dealerTable').DataTable().draw();
+	$('#productTable').DataTable().draw();
+	$('#bgTable').DataTable().draw();
+	$('#contactTable').DataTable().draw();
+});
+
+
+
+function copyEmail() {
+  var copyText = document.getElementById("dealerEmail");
+  copyText.select();
+  document.execCommand("copy");
+}
+function copySubject() {
+  var copyText = document.getElementById("dealerSubject");
+  copyText.select();
+  document.execCommand("copy");
+}
+function copyDivToClipboard() {
+	var range = document.createRange();
+	range.selectNode(document.getElementById("requestTemplate"));
+	window.getSelection().removeAllRanges(); // clear current selection
+	window.getSelection().addRange(range); // to select text
+	document.execCommand("copy");
+	window.getSelection().removeAllRanges();// to deselect
+}
+function copyDivToClipboard2() {
+	var range = document.createRange();
+	range.selectNode(document.getElementById("replacementTemplate"));
+	window.getSelection().removeAllRanges(); // clear current selection
+	window.getSelection().addRange(range); // to select text
+	document.execCommand("copy");
+	window.getSelection().removeAllRanges();// to deselect
+}
+$(function() {
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+});
+</script>
+
+
+
+<div class="container">
+	<div class="card shadow-sm pl-2 pr-2 bg-main" style="height: 500px;">
+		<div class="row pl-2 pr-2">
+			<div class="col-2 align-items-stretch d-flex p-1 m-0" style="height: 513px">
+				<div class="card shadow-sm p-2 bg-content">
+					<div class="card shadow-sm p-2 bg-container" style="height: 467px">
+						<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+							<a class="nav-link font-weight-bold a text-center active text-body text-monospace" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">STEP 1 <%= fa_icon_tag("caret-square-o-right") %></a>
+							<a class="nav-link font-weight-bold a text-center text-body text-monospace" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">STEP 2 <%= fa_icon_tag("caret-square-o-right") %></a>
+							<a class="nav-link font-weight-bold a text-center text-body text-monospace" id="v-pills-sk-tab" data-toggle="pill" href="#v-pills-sk" role="tab" aria-controls="v-pills-sk" aria-selected="false">SHORTKEY <%= fa_icon_tag("caret-square-o-right") %></a>
+							<a class="nav-link font-weight-bold a text-center text-body text-monospace btn-block" id="v-pills-4-tab" data-toggle="pill" href="#v-pills-config" role="tab" aria-controls="v-pills-4" aria-selected="false" style="bottom:10px;position: absolute;width:90%">CONFIG <%= fa_icon_tag("caret-square-o-right") %></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-10 align-items-stretch d-flex p-1 m-0">
+				<div class="card shadow-sm p-2 bg-content">
+					<div class="tab-content" id="v-pills-tabContent">
+						<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab" >
+							<div class="tab-content" id="pills-tabContent">
+								<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" style="height: 390px">
+									<div class="card shadow-sm p-2 bg-container" style="height: 390px">
+										<div class="card p-2 bg-main" style="height:373px">
+											<form id="emailForm">
+												<div class="row pb-2">
+													<div class="col-12">
+														<center><h2 class="font-weight-bold m-auto">REPLACE-O-MATIC 9000</h2></center>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoSOLabel">SO Number</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoSO" aria-describedby="inputGroup-sizing-sm">
+														</div>
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoDealerCodeLabel">Code</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoDealerCode">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoCustomerLabel">Customer</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoCustomer">
+														</div>
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoAddressLabel">Address</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoAddress">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoPhoneLabel">Phone</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoPhone">
+														</div>
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoEmailLabel">Email</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoEmail">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoMFGLabel">MFG</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoMFG">
+														</div>
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoProductLabel">Product</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoProduct">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoModelLabel">Model</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoModel">
+														</div>
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoSerialLabel">Serial</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoSerial">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoDOPLabel">DOP</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoDOP"  data-provide="datepicker">
+														</div>
+													</div>
+													<div class="col-6">
+														<div class="input-group input-group-sm mb-3">
+															<div class="input-group-prepend">
+																<span class="input-group-text bg-field-label font-weight-bold text-body text-uppercase text-monospace" id="infoInvoiceLabel">Invoice</span>
+															</div>
+															<input type="text" class="form-control form-control-val" id="infoInvoice">
+														</div>
+													</div>
+												</div>
+												<div class="row justify-content-center">
+													<div class="col-4">
+														<button type="button" class="btn btn-primary btn-block font-weight-bold" onclick="emailSet()">SUBMIT</button>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" style="height: 390px">
+									<div class="card shadow-sm p-2 bg-container" style="height: 390px">
+										<div class="row">
+											<div class="col-4">
+												<div class="card p-2 bg-main" style="height: 374px">
+													<div class="row">
+														<div class="col-5">
+															<span class="font-weight-bold">Dealer Code: </span>
+														</div>
+														<div class="col-7">
+															<span class="text-uppercase" id="dealerCode"></span>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-5">
+															<span class="font-weight-bold">Appliances: </span>
+														</div>
+														<div class="col-7">
+															<span id="dealerAppliance"></span>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-5">
+															<span class="font-weight-bold">Electronics: </span>
+														</div>
+														<div class="col-7">
+															<span id="dealerElectronics"></span>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-5">
+															<span class="font-weight-bold">Furniture: </span>
+														</div>
+														<div class="col-7">
+															<span id="dealerFurniture"></span>
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-12">
+															<span class="font-weight-bold">Special Instructions: </span>
+														</div>
+													</div>
+													<div class="row justify-content-center">
+														<div id="dealerInstructions" name="area2" style="width: 257px;height:210px;overflow-y: scroll"></div>
+													</div>
+												</div>
+											</div>
+											<div class="col-8">
+												<div class="card p-2 bg-main" style="height: 374px">
+													<div class="row">
+														<div class="col-6">
+															<span class="font-weight-bold pull-left">Email: </span>
+														</div>
+														<div class="col-6 pull-right">
+															<button class="btn btn-link p-0 m-0 pull-right" onclick="copyEmail()">Copy</button>
+														</div>
+														<div class="col-12 pb-2">
+															<input type="text" class="form-control form-control-sm" id="dealerEmail">
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-6">
+															<span class="font-weight-bold pull-left">Subject: </span>
+														</div>
+														<div class="col-6 pull-right">
+															<button class="btn btn-link p-0 m-0 pull-right" onclick="copySubject()">Copy</button>
+														</div>
+														<div class="col-12 pb-3">
+															<input type="text" class="form-control form-control-sm" id="dealerSubject">
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-6">
+															<span class="font-weight-bold pull-left">Body: </span>
+														</div>
+														<div class="col-6 pull-right">
+															<button class="btn btn-link p-0 m-0 pull-right" onclick="copyDivToClipboard()">Copy</button>
+														</div>
+														<div class="col-12">
+															<div class="border border-light bg-white text-dark p-1 rounded" contenteditable="true" id="requestTemplate" style="max-height: 150px;overflow-y: scroll">
+																<p id="bodyPrefix"></p>
+																<p>New Leaf is requesting a comparable replacement quote for our mutual customer. The unit is not economical to repair and replacement is being considered as an option.</p>
+
+																<p>Within ONE business day, please provide a comparable replacement quote of like features & functionality on the product listed below:</p>
+
+																<p class="text-danger font-weight-bold">Please be advised if we do not receive a replacement quote within ONE Business Day, we must proceed with other alternatives to resolve the customer’s issue In a timely manner.</p>
+																<span class="font-weight-bold">Customer Name: </span><span id="requestCustomer"></span> <br>
+																<span class="font-weight-bold">Customer Address, City, State, Zip: </span><span id="requestAddress"></span><br>
+																<span class="font-weight-bold">Customer Phone Number: </span><span id="requestPhone"></span><br>
+																<span class="font-weight-bold">Customer Email: </span><span id="requestEmail"></span><br>
+																<span class="font-weight-bold">Manufacturer: </span><span id="requestMFG"></span><br>
+																<span class="font-weight-bold">Model: </span><span id="requestModel"></span><br>
+																<span class="font-weight-bold">Serial: </span><span id="requestSerial"></span><br>
+																<span class="font-weight-bold">Product Date Of Purchase: </span><span id="requestDOP"></span><br>
+																<span class="font-weight-bold">Order/Receipt #: </span><span id="requestInvoice"></span><br>
+
+																<p>Please email the replacement quote to pendingreview@newleafsc.net, including the following information:</p>
+
+																<span class="font-weight-bold">Replacement Manufacturer:</span><br>
+																<span class="font-weight-bold">Replacement Model:</span><br>
+																<span class="font-weight-bold">Replacement Cost to New Leaf (less shipping, taxes, etc):</span><br>
+																<span class="font-weight-bold">Shipping/Delivery Fee (owed by customer):</span><br>
+																<span class="font-weight-bold">Taxes (owed by customer):</span><br><br>
+
+																<p id="bodySuffix"></p>
+
+																<p>Thank you in advance for your prompt response. If/when New Leaf decides to replace, a Service Order will be dispatched to you for the replacement with additional instructions.</p>
+																<span>Sincerely,</span><br>
+																<br>
+																<span><%= current_user.first_name %> <%= current_user.last_name.truncate(3, omission: ". ") %></span><br>
+																<span><%= current_user.department.name %></span><br>
+																<span>New Leaf Service Contracts, LLC.</span><br>
+															</div>
+														</div>
+													</div>
+													<div class="row pt-2">
+														<div class="col-12">
+															<center><button class="btn btn-primary btn-block font-weight-bold" onclick="reset()">RESET</button></center>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" style="height: 390px">
+									<div class="card shadow-sm bg-container p-2" style="height: 390px">
+										<div class="card bg-main p-2" style="height: 372px">
+											<div class="row " id="contactBlock">
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card shadow-sm bg-container" style="top: 20px">
+								<ul class="nav nav-pills justify-content-start p-2" id="pills-tab" role="tablist">
+									<li class="nav-item" style="width: 33.3%">
+								    	<a class="nav-link text-body active font-weight-bold text-monospace" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><%= fa_icon_tag("list") %> FORM</a>
+									</li>
+									<li class="nav-item font-weight-bold text-monospace" style="width: 33.3%">
+								    	<a class="nav-link text-body" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><%= fa_icon_tag("building") %> DEALER</a>
+									</li>
+									<li class="nav-item font-weight-bold text-monospace" style="width: 33.3%">
+								    	<a class="nav-link text-body" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"><%= fa_icon_tag("list-alt") %> CONTACT</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab" style="height:300px">
+							<script src="https://apis.google.com/js/api.js"></script>
+							<script>
+							  /**
+							   * Sample JavaScript code for search.cse.list
+							   * See instructions for running APIs Explorer code samples locally:
+							   * https://developers.google.com/explorer-help/guides/code_samples#javascript
+							   */
+
+							  function loadClient() {
+							    
+								var t = $('#pricingTable').DataTable({ columnDefs: [ {
+								        targets: 0,
+								        render: function ( data, type, row ) {
+								            return data.substr( 0, 15 );
+								        }
+								    },{
+						                "targets": [ 3 ],
+						                "visible": false,
+						                "searchable": false
+						            } ], columns: [ 
+						            { title: 'Description'}, 
+						            { title: 'Link' }, 
+						            { title: 'Price' } ] 
+					        	});
+					        	$('#pricingTable tbody').on( 'click', 'tr', function() {
+								    var data = t.row( this ).data();
+								    $('#quoteTitle').html(data[1]);
+								    $('#quoteLink').html(data[3]);
+								    $('#quotePrice').html(data[2]);
+								    $('#quotePrice2').html(data[2]);
+								} );
+							    gapi.client.setApiKey("AIzaSyAf_3lQsQ2GBDCzK_QZ8U142Rg2THxUr3k");
+							    return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/customsearch/v1/rest")
+							        .then(function() { console.log("GAPI client loaded for API"); },
+							              function(err) { console.error("Error loading GAPI client for API", err); });
+							  }
+							  // Make sure the client is loaded before calling this method.
+							  function execute() {
+							    return gapi.client.search.cse.list({
+							      "q": $('#pricingSearch').val(),
+							      "cx": "004340804614389168203:gvxq_xtyv4w"
+							    })
+							        .then(function(response) {
+							        		var table = $('#pricingTable').DataTable()
+							            	table.clear().draw
+							                
+							                console.log("Response", response);
+							                var pricingList = response.result.items
+							                $.each(pricingList , function (index, value){
+							                	if ( response.result.items[index].pagemap == undefined || response.result.items[index].pagemap.offer == undefined || response.result.items[index].pagemap.offer[0].price == undefined){
+
+							                	} else {
+
+							                		var description = response.result.items[index].title;
+							                		var link = '<a href="'+response.result.items[index].link+'" target="_blank">'+response.result.items[index].displayLink+'</a>';
+							                		var bigLink = response.result.items[index].link
+							                		var price = response.result.items[index].pagemap.offer[0].price
+							                		table.row.add([description, link, price, bigLink]).draw();
+							                		console.log(response.result.items[index].pagemap.offer[0].price)
+							                	}
+							                	
+							                })
+							              },
+							              function(err) { 
+							              	console.error("Execute error", err); 
+							              	alert("Daily limit reached, please inform Peyton: "+err.result.error.message);
+							              });
+							  }
+							  gapi.load("client");
+
+							  function shyButton(){
+							  	$('#load').hide()
+							  }
+							</script>
+							<div class="row">
+								<div class="col-8">
+									<div class="copyDivToClipboard shadow-sm p-2 bg-container">
+										<div class="card p-2 bg-main" style="height: 450px; overflow-y: scroll">
+											<nav class="navbar navbar-light bg-light">
+											  	<div class="row">
+													<div class="input-group">
+													 	<p class="h5 font-weight-bold mt-2 mr-4 ml-2 mb-2">
+													 		MODEL: 
+													 	</p>
+													 		<input type="text" class="form-control mr-5" id="pricingSearch">
+													 	<div class="input-group-append" id="button-addon4">
+													    	<button class="btn btn-primary btn-sm pull-right ml-4" onclick="loadClient();shyButton()" id="load">API LOAD</button>
+															<button class="btn btn-primary btn-sm pull-right" onclick="execute()">SEARCH</button>
+													 	</div>
+													</div>
+											    </div>	
+											</nav>
+											<div class="table-responsive-sm pt-3">
+												<table id="pricingTable" class="table table-sm table-striped table-bordered table-hover" style="width:100%">
+													<thead>
+														<tr>
+															<th scope="col">Description</th>
+															<th scope="col">Link</th>
+															<th scope="col">Price</th>
+															<th scope="col">Full Link</th>
+														</tr>
+													</thead>
+													<tbody id="pricingTableBody">
+														
+													</tbody>
+												</table>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="card shadow-sm p-2 bg-container" style="height: 468px">
+										<div class="card p-2 bg-main" style="height:450px">
+											<div class="row">
+												<div class="col-6">
+													<span class="font-weight-bold pull-left">Replacement: </span>
+												</div>
+												<div class="col-6 pull-right">
+													<button class="btn btn-link p-0 m-0 pull-right" onclick="copyDivToClipboard2()">Copy</button>
+												</div><br>
+												<div class="col-12 pt-2">
+													<div id="replacementTemplate" class="border rounded bg-white p-1" style="height:400px;overflow-y: scroll" contenteditable="true">
+														<span class="font-weight-bold">Replacement quote received from: </span><span id="quoteTitle"></span><br>
+														<span class="font-weight-bold">Via Fax ( ) Phone ( ) Email ( ) Web ( x )</span><br>
+														<span class="font-weight-bold">Replacement mfg: </span><span id="quoteMFG"></span><br>
+														<span class="font-weight-bold">Replacement model: </span><span id="quoteModel"></span><br>
+														<span class="font-weight-bold">Is quote: ( ) New  ( ) Refurbished</span><br>
+														<span class="font-weight-bold">Retail: $ </span><span id="quotePrice"></span><br>
+														<span class="font-weight-bold">Retail verified how: </span><span id="quoteLink"></span><br>
+														<span class="font-weight-bold">New Leaf replacement cost:  </span><span id="quotePrice2"></span><br>
+														<span class="font-weight-bold">Current Servicer obligation amount: </span><span id="quoteSPAmount"></span><br>
+														<span class="font-weight-bold">Total cost of replacement:</span> <span id="quoteTotal"></span><br>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="v-pills-sk" role="tabpanel" aria-labelledby="v-pills-sk-tab" style="height:300px">
+							<div class="card shadow-sm p-2 bg-container" style="height:468px;width:100%">
+								<div class="row">
+									<div class="col-9">
+										<div class="tab-content" id="v-pills-tabContent">
+									    	<div class="tab-pane fade show active" id="v-pills-bg" role="tabpanel" aria-labelledby="v-pills-bg-tab">
+									    		<div class="card bg-main p-2" style="height: 450px; overflow-y: scroll;">
+									    			Awaiting shortkeys, DO NOT USE THIS TAB YET!!
+									    		</div>
+									    	</div>
+									    </div>
+									</div>
+									<div class="col-3">
+										<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+											<a class="nav-link font-weight-bold a active text-body text-monospace pull-left" id="v-pills-bg-tab" data-toggle="pill" href="#v-pills-bg" role="tab" aria-controls="v-pills-bg" aria-selected="true"><%= fa_icon_tag("caret-square-o-left") %> BUYING GROUP</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-d-tab" data-toggle="pill" href="#v-pills-d" role="tab" aria-controls="v-pills-d" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> DEALER</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-c-tab" data-toggle="pill" href="#v-pills-c" role="tab" aria-controls="v-pills-c" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> CONTACT</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-p-tab" data-toggle="pill" href="#v-pills-p" role="tab" aria-controls="v-pills-p" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> PRODUCT</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="v-pills-config" role="tabpanel" aria-labelledby="v-pills-4-tab" style="height:300px">
+							<div class="card shadow-sm p-2 bg-container" style="height:468px;width:100%">
+								<div class="row">
+									<div class="col-9">
+										<div class="tab-content" id="v-pills-tabContent">
+									    	<div class="tab-pane fade show active" id="v-pills-bg" role="tabpanel" aria-labelledby="v-pills-bg-tab">
+									    		<div class="card bg-main p-2" style="height: 450px; overflow-y: scroll;">
+									    			<button type="button" class="btn btn-primary mb-2 pull-right" data-toggle="modal" data-target="#bgModal">
+									                    <%= fa_icon_tag "plus" %> BUYING GROUP
+									                </button>
+									                <div class="table-responsive">
+										    			<table class="table table-striped table-hover" id="bgTable">
+											                <thead>
+											                    <tr>
+											                        <th>Name</th>
+											                        <th></th>
+											                    </tr>
+											                </thead>
+											                <tbody>
+											                <% @buying_groups.each do |buying_group| %>
+											                    <tr>
+											                        <td><%= buying_group.bgname %></td>
+											                        <td class="actions text-right">
+											                        	<div class="btn-group">
+											                        		<%= link_to theme_icon_tag("eye"), buying_group, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+											                        		<%= link_to theme_icon_tag("pencil-alt"), edit_buying_group_path(buying_group), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+											                        		<%= link_to theme_icon_tag("trash"), buying_group, 'data-toggle': 'tooltip', title: 'Delete',
+											                        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+											                        	</div>
+											                        </td>
+											                    </tr>
+											                    <% end %>
+											                    <% if @buying_groups.length == 0 %>
+											                    	<tr>
+											                    		<td colspan=42 class='text-center'>No buying_groups.</td>
+											                    	</tr>
+											                    <% end %>
+											                </tbody>
+											            </table>
+										        	</div>
+									    		</div>
+									    	</div>
+									    	<div class="tab-pane fade" id="v-pills-d" role="tabpanel" aria-labelledby="v-pills-d-tab">
+									    		<div class="card bg-main p-2" style="height: 450px; overflow-y: scroll;">
+									    			<button type="button" class="btn btn-primary mb-2 pull-right" data-toggle="modal" data-target="#dealerModal">
+									                    <%= fa_icon_tag "plus" %> DEALER
+									                </button>
+									                <div class="table-responsive">
+										    			<table class="table table-striped table-hover" id="dealerTable">
+										                  <thead>
+										                    <tr>
+										                                            <th>Code</th>
+										                                            <th>Buying group</th>
+										                                            <th>Appliance</th>
+										                                            <th>Electronic</th>
+										                                            <th>Furniture</th>
+										                                          <th></th>
+										                    </tr>
+										                  </thead>
+										                  <tbody>
+										                  <% @dealers.each do |dealer| %>
+										                    <tr>
+										                                            <td><%= dealer.code %></td>
+										                                            <td><%= dealer.buying_group.bgname %></td>
+										                                            <td><%= dealer.appliance %></td>
+										                                            <td><%= dealer.electronic %></td>
+										                                            <td><%= dealer.furniture %></td>
+										                                          <td class="actions text-right">
+										                        <div class="btn-group">
+										                          <%= link_to theme_icon_tag("eye"), dealer, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+										                          <%= link_to theme_icon_tag("pencil-alt"), edit_dealer_path(dealer), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+										                          <%= link_to theme_icon_tag("trash"), dealer, 'data-toggle': 'tooltip', title: 'Delete',
+										                          data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+										                        </div>
+										                        </td>
+										                      </tr>
+										                      <% end %>
+										                      <% if @dealers.length == 0 %>
+										                      <tr><td colspan=42 class='text-center'>No dealers.</td></tr>
+										                      <% end %>
+										                      </tbody>
+										                    </table>
+										        	</div>
+									    		</div>
+									    	</div>
+									    	<div class="tab-pane fade" id="v-pills-c" role="tabpanel" aria-labelledby="v-pills-c-tab">
+									    		<div class="card bg-main p-2" style="height: 450px; overflow-y: scroll;">
+									    			<button type="button" class="btn btn-primary mb-2 pull-right" data-toggle="modal" data-target="#contactModal">
+									                    <%= fa_icon_tag "plus" %> CONTACT
+									                </button>
+									                <div class="table-responsive">
+										    			<table class="table table-striped table-hover" id="contactTable">
+										                  <thead>
+										                    <tr>
+										                                            <th>Priority</th>
+										                                            <th>First name</th>
+										                                            <th>Last name</th>
+										                                            <th>Email</th>
+										                                            <th>Phone</th>
+										                                            <th>Dealer</th>
+										                                          <th></th>
+										                    </tr>
+										                  </thead>
+										                  <tbody>
+										                  <% @contacts.each do |contact| %>
+										                    <tr>
+										                                            <td><%= contact.priority %></td>
+										                                            <td><%= contact.first_name %></td>
+										                                            <td><%= contact.last_name %></td>
+										                                            <td><%= contact.email %></td>
+										                                            <td><%= contact.phone %></td>
+										                                            <td><%= contact.dealer.code %></td>
+										                                          <td class="actions text-right">
+										                        <div class="btn-group">
+										                          <%= link_to theme_icon_tag("eye"), contact, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+										                          <%= link_to theme_icon_tag("pencil-alt"), edit_contact_path(contact), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+										                          <%= link_to theme_icon_tag("trash"), contact, 'data-toggle': 'tooltip', title: 'Delete',
+										                          data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+										                        </div>
+										                        </td>
+										                      </tr>
+										                      <% end %>
+										                      <% if @contacts.length == 0 %>
+										                      <tr><td colspan=42 class='text-center'>No contacts.</td></tr>
+										                      <% end %>
+										                      </tbody>
+										                    </table>
+										        	</div>
+									    		</div>
+									    	</div>
+									    	<div class="tab-pane fade" id="v-pills-p" role="tabpanel" aria-labelledby="v-pills-p-tab">
+									    		<div class="card bg-main p-2" style="height: 450px; overflow-y: scroll;">
+									    			<button type="button" class="btn btn-primary mb-2 pull-right" data-toggle="modal" data-target="#productModal">
+									                    <%= fa_icon_tag "plus" %> PRODUCT
+									                </button>
+									                <div class="table-responsive">
+										    			<table class="table table-striped table-hover" id="productTable">
+											                <thead>
+											                    <tr>
+											                        <th>Type</th>
+											                        <th></th>
+											                    </tr>
+											                </thead>
+											                <tbody>
+											                <% @products.each do |product| %>
+											                    <tr>
+											                        <td><%= product.pname %></td>
+											                        <td class="actions text-right">
+											                        	<div class="btn-group">
+											                        		<%= link_to theme_icon_tag("eye"), product, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+											                        		<%= link_to theme_icon_tag("pencil-alt"), edit_buying_group_path(product), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+											                        		<%= link_to theme_icon_tag("trash"), product, 'data-toggle': 'tooltip', title: 'Delete',
+											                        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+											                        	</div>
+											                        </td>
+											                    </tr>
+											                    <% end %>
+											                    <% if @products.length == 0 %>
+											                    	<tr>
+											                    		<td colspan=42 class='text-center'>No products.</td>
+											                    	</tr>
+											                    <% end %>
+											                </tbody>
+											            </table>
+										        	</div>
+									    		</div>
+									    	</div>
+									    </div>
+									</div>
+									<div class="col-3">
+										<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+											<a class="nav-link font-weight-bold a active text-body text-monospace pull-left" id="v-pills-bg-tab" data-toggle="pill" href="#v-pills-bg" role="tab" aria-controls="v-pills-bg" aria-selected="true"><%= fa_icon_tag("caret-square-o-left") %> BUYING GROUP</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-d-tab" data-toggle="pill" href="#v-pills-d" role="tab" aria-controls="v-pills-d" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> DEALER</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-c-tab" data-toggle="pill" href="#v-pills-c" role="tab" aria-controls="v-pills-c" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> CONTACT</a>
+											<a class="nav-link font-weight-bold a text-body text-monospace pull-left" id="v-pills-p-tab" data-toggle="pill" href="#v-pills-p" role="tab" aria-controls="v-pills-p" aria-selected="false"><%= fa_icon_tag("caret-square-o-left") %> PRODUCT</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- MODALS -->
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">NEW PRODUCT</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "products/form" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="bgModal" tabindex="-1" role="dialog" aria-labelledby="bgmodalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bgmodalLabel">NEW BUYING GROUP</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "buying_groups/form" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="dealerModal" tabindex="-1" role="dialog" aria-labelledby="dealerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dealerModalLabel">NEW DEALER</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "dealers/form" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contactModalLabel">NEW DEALER</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "contacts/form" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  $(function() {
+    $('.datepicker').datepicker({dateFormat: 'yyyy-mm-dd'});
+});
+</script>
+
+
+<script>
+$('#infoDealerCode').on('blur', function(){
+	var myStr = $("#infoDealerCode").val();
+    var trimStr = $.trim(myStr);
+    $("#infoDealerCode").val(trimStr);
+})
+
+function reset(){
+	$('#pills-tab li:first-child a').tab('show');
+	$('#emailForm').trigger('reset');
+}
+
+
+function emailSet(){
+	$('#dealerSubject').val("REPLACEMENT QUOTE REQUEST: " + $('#infoCustomer').val().toUpperCase() + " - " + $('#infoSO').val().toUpperCase() + " - M: " + $('#infoModel').val().toUpperCase() + "/S: " + $('#infoSerial').val().toUpperCase());
+	$('#dealerEmail').val(' ');
+	$('#pills-tab li:nth-child(2) a').tab('show');
+	$('#requestCustomer').html($('#infoCustomer').val().toUpperCase());
+	$('#requestAddress').html($('#infoAddress').val().toUpperCase());
+	$('#requestPhone').html($('#infoPhone').val().toUpperCase());
+	$('#requestEmail').html($('#infoEmail').val().toUpperCase());
+	$('#requestMFG').html($('#infoMFG').val().toUpperCase());
+	$('#requestModel').html($('#infoModel').val().toUpperCase());
+	$('#requestSerial').html($('#infoSerial').val().toUpperCase());
+	$('#requestDOP').html($('#infoDOP').val().toUpperCase());
+	$('#requestInvoice').html($('#infoInvoice').val().toUpperCase());
+	$.ajax({
+	  type:"GET",
+	  url:"get_dealer",
+	  dataType:"json",
+	  data: {submitted_code: $('#infoDealerCode').val()},
+	  success:function(result){
+	  	var fieldValue = $('#infoDealerCode').val();
+	  	if (fieldValue.length == 0) {
+
+	  	} else {
+	  		$('#dealerCode').html(JSON.parse(result[0]).code);
+	  		$('#dealerBuyingGroup').html(JSON.parse(result[0]).buying_group.bgname);
+	  		$('#dealerAppliance').html(JSON.parse(result[0]).appliance.toString().replace(true, "Yes").replace(false, "No"));
+	  		$('#dealerElectronics').html(JSON.parse(result[0]).electronic.toString().replace(true, "Yes").replace(false, "No"));
+	  		$('#dealerFurniture').html(JSON.parse(result[0]).furniture.toString().replace(true, "Yes").replace(false, "No"));
+	  		$('#dealerInstructions').html(JSON.parse(result[0]).instructions.toString());
+	  		$('#bodyPrefix').html(JSON.parse(result[0]).body_prefix.toString());
+	  		$('#bodySuffix').html(JSON.parse(result[0]).body_suffix.toString());
+	  		$('#dealerContactPriority').html(result[1][0].priority.toString());
+	  		$('#dealerContactName').html(result[1][0].first_name.toString()+" "+result[1][0].last_name.toString());
+	  		var numbers = result[1]
+	  		$('#contactBlock').empty();
+			$.each(numbers , function (index, value){
+				if (result[2][index] == undefined){
+
+				} else {
+				var emails = JSON.stringify(result[2][index].email).replace(/''/g, null).replace(/"/g, '');
+				$('#dealerEmail').val($('#dealerEmail').val()+emails+";");
+				$('#contactBlock').append(
+							'<div class="col-12 m-auto pb-2">'
+							+'		<div class="row">'
+							+	'		<div class="col-4">'
+							+		'		<span class="font-weight-bold">Priority: </span>'
+							+	'		</div>'
+							+	'		<div class="col-8">'
+							+		'		<span id="dealerContactName">'+result[1][index].priority+'</span>'
+							+	'		</div>'
+							+'		</div>'
+							+'		<div class="row">'
+							+	'		<div class="col-4">'
+							+		'		<span class="font-weight-bold">Contact: </span>'
+							+	'		</div>'
+							+	'		<div class="col-8">'
+							+		'		<span id="dealerContactName">'+result[1][index].first_name+' '+result[1][index].last_name+'</span>'
+							+	'		</div>'
+							+'		</div>'
+							+'		<div class="row">'
+							+	'		<div class="col-4">'
+							+		'		<span class="font-weight-bold">Phone: </span>'
+							+	'		</div>'
+							+	'		<div class="col-8">'
+							+		'		<span id="dealerContactPhone">'+result[1][index].phone+'</span>'
+							+	'		</div>'
+							+'		</div>'
+							+'		<div class="row">'
+							+	'		<div class="col-4">'
+							+		'	<span class="font-weight-bold">Email: </span>'
+							+	'		</div>'
+							+	'		<div class="col-8">'
+							// +		'		<span id="dealerContactEmail">'+result[1][index].email+'</span>'
+							+	'		</div>'
+							+'		</div>'
+							+'</div>')
+				}
+			});
+	  	}
+	  	
+	  }
+	})
+}
+</script>
+<%#= javascript_include_tag "nicEdit.js" %>
+<!-- <script type="text/javascript">
+//<![CDATA[
+        bkLib.onDomLoaded(function() { nicEditors.allTextAreas({iconsPath : '<%#= asset_path('nicEditorIcons.gif') %>', buttonList: ['bold','italic','underline','ol', 'ul', 'left', 'center', 'right', 'fontSize']}) });
+  //]]>
+
+</script> -->

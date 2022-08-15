@@ -1,0 +1,2 @@
+module SpLogTypesHelper
+end

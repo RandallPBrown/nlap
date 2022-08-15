@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  priority: MyString
+  servicer: MyString
+  claim: MyString
+  invoice: MyString
+  first_name: MyString
+  last_name: MyString
+  report_date: MyString
+  repair_date: MyString
+  email: MyString
+
+two:
+  status: MyString
+  priority: MyString
+  servicer: MyString
+  claim: MyString
+  invoice: MyString
+  first_name: MyString
+  last_name: MyString
+  report_date: MyString
+  repair_date: MyString
+  email: MyString

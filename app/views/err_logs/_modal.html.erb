@@ -1,0 +1,115 @@
+<div class="modal-header pb-2">
+	<h3 class="font-weight-bold m-auto"><%= @err_log.err_name.errname %></h3><button class="btn btn-link font-weight-bold pull-right" data-dismiss="modal"><i class="fa fa-times "></i></button>
+</div>
+<div class="modal-body" id="modal-dispute">
+	<div class="container">
+		<div class="row">
+			<div class="col-6" style="overflow-y: scroll">
+				<label>Incident Notes:</label><br>
+				<div class=" p-1">
+					<%= @err_log.errdesc %>
+				</div>
+				<hr>
+				<% if @err_log.dispute_response.present? %>
+					<label>Arbitrator Response:</label><br>
+					<div class=" p-1">
+						<%= @err_log.dispute_response %>
+					</div>
+				<% else %>
+					<label>Arbitrator Notes:</label><br>
+					<div class=" p-1">
+						<%= @err_log.err_notes %>
+					</div>
+				<% end %>
+			</div>
+			<div class="col-6">
+				<div class="row">
+					<div class="col-6">
+						Service Order:
+					</div>
+					<div class="col-6">
+						<%= @err_log.serviceorder %>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						Improvement ID:
+					</div>
+					<div class="col-6">
+						IOID-<%= @err_log.id %>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						Incident Date:
+					</div>
+					<div class="col-6">
+						<%= @err_log.errdate.strftime("%m/%d/%Y") %>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						Reported Date:
+					</div>
+					<div class="col-6">
+						<%= @err_log.created_at.strftime("%m/%d/%Y") %>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						Reviewer:
+					</div>
+					<div class="col-6">
+						<%= @err_log.approved_by %>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						Estimated Cost:
+					</div>
+					<div class="col-6">
+						$<%= (number_with_precision(@err_log.err_cost, :precision => 2) || 0) %>
+					</div>
+				</div>
+				<hr>
+			</div>
+		</div>
+		<div class="row m-auto pt-3 pb-0">
+			<div class="m-auto">
+				<%= form_for(@err_log) do |f| %>
+					<%= f.hidden_field :err_status_id, value: '6' %>
+				    <%= f.submit "ACCEPT", class: 'btn btn-primary' %>
+				    <% if @err_log.dispute_response.present? %>
+				    <% else %>
+					    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#disputeCollapse" aria-expanded="false" aria-controls="disputeCollapse">
+							DISPUTE
+						</button>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-12">
+				<div class="collapse" id="disputeCollapse">
+					<hr>
+					<%= form_for(@err_log, html: { class: 'form-horizontal' }) do |f| %>
+							<%= f.error_notification %>
+					    <%= f.form_group :dispute, class: 'row pl-3 pr-3' do |f| %>
+					      <%= f.label 'Dispute Notes:', class: 'text-capitalize' %>
+					        <%= f.text_area :dispute, class: 'form-control form-control-sm', 'rows': '7' %>
+					        <%= f.error_messages %>
+					    <% end %>
+						<%= f.hidden_field :err_status_id, value: '5' %>
+					  	<div class="d-flex">
+					    	<div class="ml-auto">
+					      		<%= f.submit "SEND", class: 'btn btn-primary' %>
+					    	</div>
+					  	</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

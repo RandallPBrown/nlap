@@ -1,6 +1,7 @@
 class WunaturesController < ApplicationController
   layout "scaffold"
-
+  before_action :authorize_admin
+  before_action :authenticate_user!
   before_action :set_wunature, only: [:show, :edit, :update, :destroy]
 
   # GET /wunatures
@@ -10,6 +11,7 @@ class WunaturesController < ApplicationController
 
   # GET /wunatures/1
   def show
+      redirect_to users_dashboard_path, notice: 'Wunature was successfully created.'
   end
 
   # GET /wunatures/new
@@ -24,7 +26,6 @@ class WunaturesController < ApplicationController
   # POST /wunatures
   def create
     @wunature = Wunature.new(wunature_params)
-
     if @wunature.save
       redirect_to @wunature, notice: 'Wunature was successfully created.'
     else

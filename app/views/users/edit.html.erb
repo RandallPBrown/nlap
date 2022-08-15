@@ -1,0 +1,128 @@
+
+
+
+<div id="main" class="devise-1">
+  <div class="container-fluid">
+    <div class="row m-5">
+      <div class="col-12 col-md-8 mr-auto ml-auto">
+        <div class="card">
+          <div class="card-body">
+            <div class="container">
+              <%= form_for @user,
+                html: { method: :put, novalidate: true, class: "form-horizontal" } do |f| %>
+
+                <%= f.error_notification %>
+
+                <%= f.form_group :email, class:"row" do |f| %>
+                  <%= f.label :email, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= f.email_field :email, required: true, autofocus: true, class: "form-control form-control-sm" %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :first_name, class:"row" do |f| %>
+                  <%= f.label :first_name, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= f.email_field :first_name, required: true, autofocus: true, class: "form-control form-control-sm" %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :last_name, class:"row" do |f| %>
+                  <%= f.label :last_name, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= f.email_field :last_name, required: true, autofocus: true, class: "form-control form-control-sm" %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :extension, class: "row" do |f| %>
+                  <%= f.label :extension, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                  <%= f.text_field :extension, autofocus: true, class: "form-control form-control-sm" %>
+                  <%= f.error_messages %>
+                </div>
+                <% end %>
+
+                <% if current_user.admin? then %>
+                <%= f.form_group :department_id, class:"row" do |f| %>
+                  <%= f.label :department_id, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= f.collection_select :department_id, Department.order(:id), :id, :name, {}, {:class => 'form-control form-control-sm'} %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+                                <%= f.form_group :role, class: "row" do |f| %>
+                  <%= f.label :role, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                  <%= f.collection_select :role, Role.order(:name), :name, :name, {}, { :class => "form-control text-capitalize form-control-sm" } %>
+                  <%= f.error_messages %>
+                </div>
+                <% end %>
+
+                                <%= f.form_group :admin, class: "row" do |f| %>
+                  <%= f.label :admin, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                  <%= f.select :admin, [['Yes', true], ['No', false]], :include_blank => true, :class => 'form-control form-control-sm' %>
+                  <%= f.error_messages %>
+                </div>
+                <% end %>
+                <% else %>
+
+                <%= f.form_group :department_id, class:"row" do |f| %>
+                  <%= f.label :department_id, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    DISABLED
+                  </div>
+                <% end %>
+                <% end %>
+
+                <%= f.form_group :password, class: "row" do |f| %>
+                  <%= f.label :password, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-6">
+                    <%= f.password_field :password, class: "form-control form-control-sm" %>
+                    <%= f.error_messages %>
+                    <div class="help-block">
+                      Leave it blank if you don"t want to change it.
+                    </div>
+                  </div>
+                  <% if current_user.admin? %>
+                 <%= link_to "RESET DEFAULT", users_password_reset_path(id: @user.id), class: 'btn btn-sm btn-primary font-weight-bold' %>
+                <% end %>
+                <% end %>
+
+                <%= f.form_group :password_confirmation, class: "row" do |f| %>
+                  <%= f.label :password_confirmation, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-6">
+                    <%= f.password_field :password_confirmation, class: "form-control form-control-sm" %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :current_password, class: "row" do |f| %>
+                  <%= f.label :current_password, class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-6">
+                    <%= f.password_field :current_password, class: "form-control form-control-sm" %>
+                    <%= f.error_messages %>
+                    <div class="help-block">
+                      We need your current password to confirm your changes.
+                    </div>
+                  </div>
+                <% end %><br>
+                
+                <div class="row d-flex align-items-center mt-5">
+                  <%= link_to "Cancel my account", user_path, confirm: "Are you sure?", method: :delete, class: "mr-auto text-danger" %>
+                  <div>
+                    <%= link_to "Back", users_path, class: "btn btn-outline-defualt" %>
+                    <%= f.submit "Update", class: "btn btn-primary" %>
+                  </div>
+                </div>
+              <% end %>              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,617 @@
+<%= wicked_pdf_image_tag 'logo.png', class: 'pb-2' %>
+<style>
+thead {
+  display: table-header-group !important;
+}
+
+tfoot {
+  display: table-row-group !important;
+}
+
+tr {
+  page-break-inside: avoid !important;
+}
+
+.top-bg {
+  background-color: #2E822B !important;
+  color: white !important;
+}
+
+.child-bg {
+  background-color: #5A9C57 !important;
+  color: white !important;
+}
+
+.page-break { 
+  display:block; 
+  clear:both; 
+  page-break-after:always; 
+}
+
+.watermarked {
+  position: relative;
+}
+
+.watermarked:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("file://<%= Rails.root.join('app/assets/images/leaf_logo.jpg') %>");
+  background-size: 100% 100%;
+  background-position: 30px 30px;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+}
+</style>
+<div class="container-fluid mt-5 main-bg watermarked">
+  <div class="card ">
+    <div class="card-header text-center top-bg">
+      <h1 class="font-weight-bold p-3">AGENT COACHING</h1>
+    </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-xs-6 border-right">
+          <div class="card card-full-height p-2" style="height:250px !important">
+            <div class="card-header child-bg">
+              <h3 class="font-weight-bold">INFORMATION</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-group row">
+                <label class="col-xs-6 col-form-label font-weight-bold">Agent: </label>
+                <div class="col-xs-6">
+                  <span class="text-uppercase text-monospace"><%= @user.full_name %></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xs-6 col-form-label font-weight-bold">Department: </label>
+                <div class="col-xs-6">
+                  <span class="text-uppercase text-monospace"><%= @user.department.name %></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xs-6 col-form-label font-weight-bold">Role: </label>
+                <div class="col-xs-6">
+                  <span class="text-uppercase text-monospace"><%= @user.roles.all.map{|f| f.name}.join(" ") %></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xs-6 col-form-label font-weight-bold">Extension: </label>
+                <div class="col-xs-6">
+                  <span class="text-uppercase text-monospace"><%= @user.extension %></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xs-6 col-form-label font-weight-bold">Email: </label>
+                <div class="col-xs-6">
+                  <span class="text-uppercase text-monospace"><%= @user.email %></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6 d-flex align-content-stretch">
+          <div class="card card-full-height p-2" style="height:250px !important">
+            <div class="card-header child-bg">
+              <h3 class="font-weight-bold">ADMIN</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-group row">
+                <label class="col-xs-6 col-form-label font-weight-bold">Date: </label>
+                <div class="col-xs-6">
+                  <span class="text-uppercase text-monospace"><%= params[:selected_date] %></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xs-6 col-form-label font-weight-bold">Occurrences: </label>
+                <div class="col-xs-6">
+                  <span class="text-uppercase text-monospace"><%= @entries_count.nil? ? "0" : @entries_count.sum  %></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xs-6 col-form-label font-weight-bold">Disciplinary Actions: </label>
+                <div class="col-xs-6">
+                  <span class="text-uppercase text-monospace"><%= @daps_count.nil? ? "0" : @daps_count.count %></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% if params[:selected_week] == "true" %>
+        <div class="row mt-3 border-top mb-3">
+          <div class="col-xs-12">
+            <div class="card card-full-height mt-2 p-2">
+              <div class="card-header child-bg">
+                <h3 class="font-weight-bold">STATISTICS - WEEK</h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xs-4"> 
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">UPH: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.average(:uph).nil? ? "N/A" : @incentives_week.average(:uph).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">OCCUPANCY: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.average(:occupancy).nil? ? "N/A" : @incentives_week.average(:occupancy).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">AHT: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.average(:aht).nil? ? "N/A" : @incentives_week.average(:aht).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">TURNTIME: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.average(:turntime).nil? ? "N/A" : @incentives_week.average(:turntime).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">CONTRACTS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.sum(:contracts).nil? ? "N/A" : @incentives_week.sum(:contracts).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">IMPROVEMENT LOGS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_week.average(:turntime).nil? ? "N/A" : @incentives_week.average(:turntime).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+      
+      <% end %>
+      <% if params[:selected_month] == "true" %>  
+        <div class="row mt-3 border-top mb-3">
+          <div class="col-xs-12">
+            <div class="card card-full-height mt-2 p-2">
+              <div class="card-header child-bg">
+                <h3 class="font-weight-bold">STATISTICS - MONTH</h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xs-4"> 
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">UPH: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.average(:uph).nil? ? "N/A" : @incentives.average(:uph).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">OCCUPANCY: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.average(:occupancy).nil? ? "N/A" : @incentives.average(:occupancy).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">AHT: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.average(:aht).nil? ? "N/A" : @incentives.average(:aht).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">TURNTIME: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.average(:turntime).nil? ? "N/A" : @incentives.average(:turntime).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">CONTRACTS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.sum(:contracts).nil? ?  "N/A" : @incentives.sum(:contracts).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">IMPROVEMENT LOGS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives.average(:turntime).nil? ? "N/A" : @incentives.average(:turntime).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+      
+      <% end %>
+      <% if params[:selected_year] == "true" %>  
+        <div class="row mt-3 border-top mb-3">
+          <div class="col-xs-12">
+            <div class="card card-full-height mt-2 p-2">
+              <div class="card-header child-bg">
+                <h3 class="font-weight-bold">STATISTICS - ANNUAL</h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xs-4"> 
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">UPH: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:uph).nil? ? "N/A" : @incentives_annual.average(:uph).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">OCCUPANCY: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:occupancy).nil? ? "N/A" : @incentives_annual.average(:occupancy).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">AHT: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:aht).nil? ? "N/A" : @incentives_annual.average(:aht).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">TURNTIME: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:turntime).nil? ?  "N/A" : @incentives_annual.average(:turntime).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">CONTRACTS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.sum(:contracts).nil? ?  "N/A" : @incentives_annual.sum(:contracts).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                      <label class="col-xs-6 col-form-label font-weight-bold">IMPROVEMENT LOGS: </label>
+                      <div class="col-xs-6">
+                        <span class="text-uppercase text-monospace"><%= @incentives_annual.average(:turntime).nil? ?  "N/A" : @incentives_annual.average(:turntime).round(2) %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+      
+      <% end %>  
+    </div>
+  </div>
+</div>
+<% if params[:selected_incentives] == "false" && params[:selected_occurrences] == "false" && params[:selected_progressives] == "false" %>
+
+<% else %>
+<div class="page-break"></div>
+
+<div class="container-fluid mt-5 main-bg watermarked">
+  <div class="card">
+    <div class="card-header text-center top-bg">
+      <h1 class="font-weight-bold p-3">BREAKDOWN</h1>
+    </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-xs-12">
+          <% if params[:selected_incentives] == "true" %>
+          <div class="row mt-3 border-top mb-3">
+            <div class="col-xs-12">
+              <div class="card card-full-height mt-2 p-2">
+                <div class="card-header child-bg">
+                  <h3 class="font-weight-bold">INCENTIVES</h3>
+                </div>
+                <div class="card-body">
+                  <table class="table table-striped">
+                    <thead>
+                        <tr class="font-weight-bold text-uppercase text-center">
+                          <th scope="col">Occurrences</th>
+                          <th scope="col">Uph</th>
+                          <th scope="col">Errors</th>
+                          <th scope="col">Occupancy</th>
+                          <th scope="col">Turntime</th>
+                          <th scope="col">Contracts</th>
+                          <th scope="col">AHT</th>
+                          <th scope="col">Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% @incentives.each do |incentive| %>
+                        <tr class="text-uppercase text-center">
+                          <td><%= incentive.user.agent.entries.effective.joins(:occurrence).nil? ? " " : incentive.user.agent.entries.effective.joins(:occurrence).sum(:ovalue).round(2) %></td>
+                          <td><%= incentive.uph.nil? ? " " : incentive.uph.round(2) %></td>
+                          <td><%= ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', incentive.user_id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').where(errdate: incentive.date).nil? ? " " : ErrLog.joins(:err_status, :err_name).includes(:err_status, :err_name).where('user_id = ?', incentive.user_id).select(:err_names).where('err_names.errname = ?', 'Improvement Opportunity').where(errdate: incentive.date).count.round(2) %></td>
+                          <td><%= incentive.occupancy.nil? ? " " : incentive.occupancy.round(2) %></td>
+                          <td><%= incentive.turntime.nil? ? " " : incentive.turntime.round(2) %></td>
+                          <td><%= incentive.contracts.nil? ? " " : incentive.contracts.round(2) %></td>
+                          <td><%= incentive.aht.nil? ? " " : incentive.aht.round(2) %></td>
+                          <td><%= incentive.date.nil? ? " " : incentive.date.strftime("%m/%d/%Y") %></td>
+                        </tr>
+                        <% end %>
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% else %>
+
+          <% end %>
+          <% if params[:selected_occurrences] == "true" %>
+          <div class="row mt-3 border-top mb-3">
+            <div class="col-xs-12">
+              <div class="card card-full-height mt-2 p-2">
+                <div class="card-header child-bg">
+                  <h3 class="font-weight-bold">OCCURRENCES</h3>
+                </div>
+                <div class="card-body">
+                  <table class="table table-striped">
+                    <thead>
+                        <tr class="font-weight-bold text-uppercase text-center">
+                          <th scope="col">Type</th>
+                          <th scope="col">Value</th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Expiration</th>
+                          <th scope="col">Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% @entries.each do |entry| %>
+                        <tr class="text-uppercase text-center">
+                          <td><%= entry.occurrence.name %></td>
+                          <td><%= entry.occurrence.ovalue %></td>
+                          <td><%= entry.edate %></td>
+                          <td><%= entry.edate + 90.days %></td>
+                          <td><%= entry.edesc.truncate(30) %></td>
+                        </tr>
+                        <% end %>
+                        <% if @entries.length == 0 %>
+                          <tr><td colspan=42 class='text-center'>No Occurrences.</td></tr>
+                          <% end %>
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% else %>
+
+          <% end %>
+          <% if params[:selected_progressives] == "true" %>
+          <div class="row mt-3 border-top mb-3">
+            <div class="col-xs-12">
+              <div class="card card-full-height mt-2 p-2">
+                <div class="card-header child-bg">
+                  <h3 class="font-weight-bold">DISCIPLINARY ACTIONS</h3>
+                </div>
+                <div class="card-body">
+                  <table class="table table-striped">
+                    <thead>
+                        <tr class="font-weight-bold text-uppercase text-center">
+                          <th scope="col">Nature</th>
+                          <th scope="col">Type</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Expiration</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% @daps_count.each do |daps| %>
+                        <tr class="text-uppercase text-center">
+                          <td><%= daps.wunature.description %></td>
+                          <td><%= daps.writeup.name %></td>
+                          <td><%= daps.description.truncate(20) %></td>
+                          <td><%= daps.ddate %></td>
+                          <td><%= daps.ddate + 90.days %></td>
+                        </tr>
+                        <% end %>
+                        <% if @entries.length == 0 %>
+                          <tr><td colspan=42 class='text-center'>No Disciplinary Actions</td></tr>
+                          <% end %>
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% else %>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+<div class="page-break"></div>
+<div class="container-fluid mt-5 main-bg watermarked">
+  <div class="card">
+    <div class="card-header text-center top-bg">
+      <h1 class="font-weight-bold p-3">ACKNOWLEDGEMENT</h1>
+    </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-xs-12">
+          <div class="jumbotron child-bg">
+            <center><h5 class="font-weight-bold text-white">I acknowledge that the information provided above was explained to me. If I have any comments or concerns I will address with the Coach or a member of management as well as document in the section "AGENT COMMENTS" below.</h5></center>
+          </div>
+          <div class="card card-full-height mt-3">
+            <div class="card-header child-bg">
+              <h3 class="font-weight-bold">COACH'S NOTES</h3>
+            </div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr style="height: 25px !important">
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-xs-12">
+          <div class="card card-full-height mt-3">
+            <div class="card-header child-bg">
+              <h3 class="font-weight-bold">AGENT COMMENTS</h3>
+            </div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr style="height: 25px !important">
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                  <tr style="height: 25px !important">
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-xs-12">
+          <div class="card card-full-height mt-3">
+            <div class="card-header child-bg">
+              <h3 class="font-weight-bold">SIGNATURES</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-group row">
+                <label class="col-xs-2 col-form-label font-weight-bold">EMPLOYEE PRINT: </label>
+                <div class="col-xs-6">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xs-2 col-form-label font-weight-bold">EMPLOYEE SIGNATURE: </label>
+                <div class="col-xs-6">
+                  <input type="text" class="form-control">
+                </div>
+                <label class="col-xs-2 col-form-label font-weight-bold">DATE: </label>
+                <div class="col-xs-2">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row mt-5">
+                <label class="col-xs-2 col-form-label font-weight-bold">COACH PRINT: </label>
+                <div class="col-xs-6">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xs-2 col-form-label font-weight-bold">COACH SIGNATURE: </label>
+                <div class="col-xs-6">
+                  <input type="text" class="form-control">
+                </div>
+                <label class="col-xs-2 col-form-label font-weight-bold">DATE: </label>
+                <div class="col-xs-2">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row mt-5">
+                <label class="col-xs-2 col-form-label font-weight-bold">MANAGEMENT SIGNATURE: </label>
+                <div class="col-xs-6">
+                  <input type="text" class="form-control">
+                </div>
+                <label class="col-xs-2 col-form-label font-weight-bold">DATE: </label>
+                <div class="col-xs-2">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

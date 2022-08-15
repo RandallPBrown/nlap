@@ -1,0 +1,78 @@
+
+<style>
+.span-wide {
+  width: 100% !important;
+}
+</style>
+
+
+
+<%= form_for(@err_log, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+    <%= f.form_group :user_id, class: 'row' do |f| %>
+      <%= f.label 'Agent', class: 'control-label col-md-12' %>
+      <div class='col-12 col-md-12'>
+        <%= f.grouped_collection_select :user_id, Department.order(:id), :users, :name, :id, :full_name, {}, {'data-live-search': true, :class=>'selectpicker text-dark'}  %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.hidden_field :department_id, value: params[:user_id] %>
+
+  <div class="form-inputs">
+    <%= f.form_group :serviceorder, class: 'row' do |f| %>
+      <%= f.label 'Service Order', class: 'control-label col-md-12 text-capitalize' %>
+      <div class='col-12 col-md-12'>
+        <%= f.text_field :serviceorder, class: 'form-control form-control-sm text-dark'%>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :errdate, class: 'row' do |f| %>
+      <%= f.label 'Improvement Date', class: 'control-label col-md-12 text-capitalize' %>
+      <div class='col-12 col-md-12'>
+        <%= f.date_field :errdate, class: 'form-control form-control-sm text-dark' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :errdesc, class: 'row' do |f| %>
+      <%= f.label 'Description', class: 'control-label col-md-12 text-capitalize' %>
+      <div class='col-12 col-md-12'>
+        <%= f.text_area :errdesc, class: 'form-control form-control-sm text-dark' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :err_cost, class: 'row' do |f| %>
+      <%= f.label 'Improvement Cost', class: 'control-label col-md-12 text-capitalize' %>
+      <div class='col-12 col-md-12'>
+        <%= f.number_field :err_cost, class: 'form-control form-control-sm text-dark', 'value': '0.00', step: :any %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :err_type_id, class: 'row' do |f| %>
+      <%= f.label 'Type', class: 'control-label col-md-12 text-capitalize' %>
+      <div class='col-12 col-md-12'>
+        <%= f.collection_select :err_type_id, ErrType.order(:description), :id, :description, {}, {:class=>'form-control text-dark border-bottom'}  %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+<%= f.hidden_field :err_name_id, value: '3' %>
+<%= f.hidden_field :err_status_id, value: '1' %>
+
+
+<%= f.hidden_field :errsubmitby, value: current_user.full_name %>
+
+  </div>
+
+  <div class="d-flex">
+    <div class="ml-auto">
+      <%= f.submit "SUBMIT", class: 'btn btn-primary' %>
+      <%= link_to "Cancel", err_logs_path, class: 'btn btn-outline-default', 'data-dismiss': 'modal' %>
+    </div>
+  </div>
+<% end %>
+

@@ -1,0 +1,2 @@
+class ErrStatus < ApplicationRecord
+end

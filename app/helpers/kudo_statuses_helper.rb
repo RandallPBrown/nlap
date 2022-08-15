@@ -1,0 +1,2 @@
+module KudoStatusesHelper
+end

@@ -8,7 +8,7 @@
     <%# Turbolinks... sigh. If you're going to remove this line, please make sure you know what
       you're doing. Please read very carefully: https://github.com/turbolinks/turbolinks %>
     <meta name="turbolinks-cache-control" content="no-cache">
-
+    <meta name="turbolinks-cache-control" content="no-preview">
     <title><%= [@title, app_name].compact.join(" - ") %></title>
 
     <%= csrf_meta_tags %>
@@ -16,15 +16,18 @@
     <%= stylesheet_link_tag "application", media: "all", 'data-turbolinks-track': 'reload'%>
     <%= yield :styles %>
 
-    <%= favicon_link_tag %>
+    <%#= favicon_link_tag %>
     <%# favicon_link_tag "apple-touch-icon.png", :rel => "apple-touch-icon" %>
 
     <%= render 'layouts/external_js_libs' %>
     <%= yield :external_js_libs %>
     <%= javascript_include_tag "application", 'data-turbolinks-track': 'reload' %>
+    
 
     <%= yield :javascript %>
-    <%= yield :head %>
+    <% if content_for?(:head) %>
+      <%= yield(:head) %>
+    <% end %>
   </head>
   <body class='<%= @body_class %>' data-js-libs='bootstrap fitie metis forms sidenav prism clipboard bs-switch <%= yield :js_libs %>'>
 

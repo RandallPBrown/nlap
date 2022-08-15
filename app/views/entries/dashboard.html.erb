@@ -1,5 +1,138 @@
-<%= content_for :js_libs, "modernizr gmaps flot chartjs demo-dashboard demo-gmaps" %>
+<%= stylesheet_link_tag "slider.css" %>
+<%= stylesheet_link_tag "pagination.css" %>
+<style>
+.float {
+  box-shadow: 3px 3px 3px 3px lightgrey;
+}
 
+.float:hover {
+  box-shadow: 5px 5px 5px 5px lightgrey;
+}
+
+.float-active {
+  box-shadow: 5px 5px 5px 5px lightgrey;
+}
+
+.float-inset {
+  box-shadow: inset 3px 3px 3px 3px lightgrey;
+}
+</style>
+<script>
+var chart_labels = <%= raw @chart_labels_dept_today %>;
+var chart_data = <%= raw @chart_data_dept_today %>;
+var dataset_label = "Today";
+var chart_type = 'bar';
+var ctx = document.getElementById("occurrenceChart").getContext('2d');
+var config = {
+    type: 'bar',
+    data: {
+        labels: chart_labels,
+        datasets: [{
+            type: chart_type,
+            label: dataset_label,
+            yAxisID: "y-axis-0",
+            fill: true,
+            data: chart_data,
+            backgroundColor: '#f1f8e9',
+            borderColor: '#7cb342',
+            borderWidth: 1
+        },]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                position: "left",
+                "id": "y-axis-0",
+                ticks: {
+                  beginAtZero: true
+                }
+            }]
+        }
+    }
+};
+var occurrence_chart = new Chart(ctx, config);
+$("#chartDeptToday").click(function() {
+    var chart_labels = <%= raw @chart_labels_dept_today %>;
+    var chart_data = <%= raw @chart_data_dept_today %>;
+    var dataset_label = "Today";
+    var data = occurrence_chart.config.data;
+    data.datasets[0].data = chart_data;
+    data.labels = chart_labels;
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
+});
+$("#chartDeptEffective").click(function() {
+    var chart_labels = <%= raw @chart_labels_dept_effective %>;
+    var chart_data = <%= raw @chart_data_dept_effective %>;
+    var dataset_label = "180 Days";
+    var data = occurrence_chart.config.data;
+    data.datasets[0].data = chart_data;
+    data.labels = chart_labels;
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
+});
+$("#chartAgentToday").click(function() {
+    var chart_labels = <%= raw @chart_labels_agent_today %>;
+    var chart_data = <%= raw @chart_data_agent_today %>;
+    var dataset_label = "Agent Today";
+    var data = occurrence_chart.config.data;
+    data.datasets[0].data = chart_data;
+    data.labels = chart_labels;
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
+});
+$("#chartAgentEffective").click(function() {
+    var chart_labels = <%= raw @chart_labels_agent_effective %>;
+    var chart_data = <%= raw @chart_data_agent_effective %>;
+    var dataset_label = "Agent 180 Days";
+    var data = occurrence_chart.config.data;
+    data.datasets[0].data = chart_data;
+    data.labels = chart_labels;
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
+});
+$("#chartToday").click(function() {
+    var chart_labels = <%= raw @chart_labels_today %>;
+    var chart_data = <%= raw @chart_data_today %>;
+    var dataset_label = "Today";
+    var data = occurrence_chart.config.data;
+    data.datasets[0].data = chart_data;
+    data.labels = chart_labels;
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
+});
+$("#chartEffective").click(function() {
+    var chart_labels = <%= raw @chart_labels_effective %>;
+    var chart_data = <%= raw @chart_data_effective %>;
+    var dataset_label = "180 Days";
+    var data = occurrence_chart.config.data;
+    data.datasets[0].data = chart_data;
+    data.labels = chart_labels;
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
+});
+$("#chartBar").click(function() {
+    var chart_type = 'bar';
+    var data = occurrence_chart.config.data;
+    data.datasets[0].type = chart_type;
+    occurrence_chart.update();
+});
+$("#chartLine").click(function() {
+    var data = occurrence_chart.config.data;
+    var chart_type = 'line';
+    data.datasets[0].type = chart_type;
+    occurrence_chart.update();
+});
+
+
+</script>
+
+<style>
+
+
+</style>
+<%= content_for :js_libs, "modernizr gmaps flot chartjs demo-dashboard demo-gmaps" %>
+<%= stylesheet_link_tag "pagination.css" %>
 <div class="container-fluid">
   <%#= render partial: 'entries/bs_table' %>
   <%= render partial: 'entries/metrics_cards' %>
@@ -9,3 +142,62 @@
   <%#= render partial: 'entries/server_activity' %>
   <%#= render partial: 'entries/online_users' %>
 </div>
+
+<% if current_user.admin == true %>
+<!-- Sidebar -->
+<div id="wrapper">
+  <div id="sidebar-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <center><%= image_tag("newleaf logo leaf.png") %></center>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-12 p-0">
+          <div class="nav flex-column nav-pills w-100" id="wrapper-pills-tab" role="tablist" aria-orientation="vertical">
+            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link active" id="wrapper-pills-error-tab" data-toggle="pill" href="#wrapper-pills-error" role="tab" aria-controls="wrapper-pills-error" aria-selected="true">IMPROVEMENT LOG</a>
+            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link" id="wrapper-pills-entry-tab" data-toggle="pill" href="#wrapper-pills-entry" role="tab" aria-controls="wrapper-pills-entry" aria-selected="false">OCCURRENCE LOG</a>
+            <a style="border-radius: 0 !important;" class="mx-3 font-weight-bold nav-link" id="wrapper-pills-dap-tab" data-toggle="pill" href="#wrapper-pills-dap" role="tab" aria-controls="wrapper-pills-dap" aria-selected="false">PROGRESSIVE LOG</a>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row mx-1">
+        <div class="col-12 p-0">
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="wrapper-pills-error" role="tabpanel" aria-labelledby="wrapper-pills-error-tab" style="">
+              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                <%= render "err_logs/form" %>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="wrapper-pills-entry" role="tabpanel" aria-labelledby="wrapper-pills-entry-tab">
+              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                <%= render "entries/form" %>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="wrapper-pills-dap" role="tabpanel" aria-labelledby="wrapper-pills-dap-tab">
+              <div class="container p-1 bg-white" style="height:375px;overflow-y: scroll;">
+                <%= render "daps/form" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bg-primary slider" style=""><a href="#" class="font-weight-bold text-white btn btn-link px-auto pl-1" id="menu-toggle" style="writing-mode: vertical-rl;text-orientation: sideways;font-size: 12px"><%= fa_icon_tag("plus") %> QUICK ACTION</a></div>
+<!-- /Sidebar -->
+<% end %>
+<script>
+$(document).ready(function(){
+  $("#menu-toggle").click(function(e){
+    e.preventDefault();
+    $("#wrapper").toggleClass("menuDisplayed");
+    $(".slider").toggleClass("menu-slide");
+    $('#sidebar-wrapper').toggleClass('sidebar-wrapper-open')
+  });
+});
+</script>

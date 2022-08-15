@@ -1,0 +1,107 @@
+<% @title = "Listing Agent Stats" %>
+<script>
+$(document).ready(function() {
+    $('#index').DataTable( {
+    } );
+} );
+</script>
+
+  <% content_for :actions do %>
+    <%= link_to new_agent_stat_path, class: 'btn btn-primary btn-large pull-right' do %>
+      <span class="font-weight-bold"><%= fa_icon_tag "file-excel-o" %> UPLOAD</span>
+    <% end %>
+  <% end %>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-sheet sheet-condensed">
+              <div class="table-responsive">
+              <table class="table table-striped table-hover table-sm-responsive" id="index">
+                <thead>
+                  <tr>
+                                          <th>Extension</th>
+                                          <th>User</th>
+                                          <th>Name</th>
+                                          <th>Date</th>
+                                          <th>Shift</th>
+                                          <th>Total login</th>
+                                          <th>Total break</th>
+                                          <th>Net login</th>
+                                          <th>Requested worktime</th>
+                                          <th>Availability</th>
+                                          <th>Occupancy</th>
+                                          <th>Queue calls</th>
+                                          <th>Queue talk</th>
+                                          <th>Direct calls</th>
+                                          <th>Direct talk</th>
+                                          <th>Outbound calls</th>
+                                          <th>Outbound talk</th>
+                                          <th>Callback calls</th>
+                                          <th>Callback talk</th>
+                                          <th>Deleted</th>
+                                          <th>Un ans</th>
+                                          <th>Picked</th>
+                                          <th>Recover</th>
+                                          <th>Power dial</th>
+                                          <th>Acw</th>
+                                          <th>Wrapup time</th>
+                                          <th>Total calls</th>
+                                          <th>Total talk</th>
+                                          <th>Aht</th>
+                                        <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% @agent_stats.each do |agent_stat| %>
+                  <tr>
+                                          <td><%= agent_stat.extension %></td>
+                                          <td><%= agent_stat.user_id %></td>
+                                          <td><%= agent_stat.name %></td>
+                                          <td><%= agent_stat.date %></td>
+                                          <td><%= agent_stat.shift %></td>
+                                          <td><%= agent_stat.total_login %></td>
+                                          <td><%= agent_stat.total_break %></td>
+                                          <td><%= agent_stat.net_login %></td>
+                                          <td><%= agent_stat.requested_worktime %></td>
+                                          <td><%= agent_stat.availability %></td>
+                                          <td><%= agent_stat.occupancy %></td>
+                                          <td><%= agent_stat.queue_calls %></td>
+                                          <td><%= agent_stat.queue_talk %></td>
+                                          <td><%= agent_stat.direct_calls %></td>
+                                          <td><%= agent_stat.direct_talk %></td>
+                                          <td><%= agent_stat.outbound_calls %></td>
+                                          <td><%= agent_stat.outbound_talk %></td>
+                                          <td><%= agent_stat.callback_calls %></td>
+                                          <td><%= agent_stat.callback_talk %></td>
+                                          <td><%= agent_stat.deleted %></td>
+                                          <td><%= agent_stat.un_ans %></td>
+                                          <td><%= agent_stat.picked %></td>
+                                          <td><%= agent_stat.recover %></td>
+                                          <td><%= agent_stat.power_dial %></td>
+                                          <td><%= agent_stat.acw %></td>
+                                          <td><%= agent_stat.wrapup_time %></td>
+                                          <td><%= agent_stat.total_calls %></td>
+                                          <td><%= agent_stat.total_talk %></td>
+                                          <td><%= agent_stat.aht %></td>
+                                        <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), agent_stat, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("pencil-alt"), edit_agent_stat_path(agent_stat), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                        <%= link_to theme_icon_tag("trash"), agent_stat, 'data-toggle': 'tooltip', title: 'Delete',
+                        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+                      </div>
+                      </td>
+                    </tr>
+                    <% end %>
+                    <% if @agent_stats.length == 0 %>
+                    <tr><td colspan=42 class='text-center'>No agent_stats.</td></tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+                </div>
+                
+                              </div>
+            </div>
+          </div>
+

@@ -1,0 +1,2 @@
+module KudoReasonsHelper
+end

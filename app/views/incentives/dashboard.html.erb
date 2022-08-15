@@ -1,0 +1,379 @@
+<%= stylesheet_link_tag "pagination.css" %>
+<% content_for :actions do %>
+  <%= link_to incentives_path, class: 'ml-2 btn btn-primary btn-large pull-right font-weight-bold text-uppercase' do %>
+    INDEX
+  <% end %>
+  <button type="button" class="btn btn-primary btn-large pull-right font-weight-bold text-uppercase" data-toggle="modal" data-target="#exampleModalCenter">
+    COACHING
+  </button>
+<% end %>
+<%= @errors %>
+<style>
+
+.top-bg {
+  background-color: #2E822B !important;
+  color: white !important;
+}
+
+.child-bg {
+  background-color: #5A9C57 !important;
+  color: white !important;
+}
+
+</style>
+<script>
+$(document).ready(function(){
+  var table = $('#incentivetable').dataTable({ 
+    "pageLength": 10,
+    select: true,
+    ajax: {
+    url: 'incentive_dashboard_breakdown',
+    "processing": true,
+    dataSrc: ''
+    },
+    columns: [ 
+      { data: 'User'}, 
+      { data: 'Occurrences' }, 
+      { data: 'Uph' },
+      { data: 'Errors' },
+      { data: 'Occupancy' },
+      { data: 'Turntime' },
+      { data: 'Contracts' },
+      { data: 'AHT' },
+      { data: '' } 
+    ]
+  });
+});
+</script>
+<div class="container pt-3">
+  <div class="row">
+    <div class="col-12 col-md-12">
+      <div class="card  p-2">
+        <table class="table table-striped table-hover" id="incentivetable">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Occurrences</th>
+              <th>Uph</th>
+              <th>Errors</th>
+              <th>Occupancy</th>
+              <th>Turntime</th>
+              <th>Contracts</th>
+              <th>AHT</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="text-uppercase font-weight-bold text-dark ml-3">COACHING FORM BUILDER</h3><h3 class="text-uppercase font-weight-bold text-dark pull-right mr-3">PREVIEW</h3>
+      </div>
+      <div class="modal-body pt-3">
+        <div class="container">
+          <div class="row">
+            <div class="col-8">
+              <div class="row pb-2 pt-2 border-top border-bottom">
+                <div class="col-6 border-right">
+                  <div class="row pt-2">
+                    <div class="col-4">
+                      <label for="selected_agent" class="text-uppercase font-weight-bold text-dark">Agent:</label>
+                    </div>
+                    <div class="col-8">
+                      <%= select_tag(:selected_agent, options_from_collection_for_select(@users, :id, :full_name), 'data-live-search': true, class: 'selectpicker text-dark', id: "selected_agent") %><br>
+                      <small>if this fails to load, refresh</small>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4">
+                      <label for="selected_date" class="text-uppercase font-weight-bold text-dark">Date:</label>
+                    </div>
+                    <div class="col-8">
+                      <input type="date" class="form-control text-dark" id="selected_date" style="width:100% !important">
+                      <small>select week by choosing a day within</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row pt-1">
+                    <div class="col-12">
+                      <div class="text-dark" style="height: 20vh !important;overflow-y: scroll !important">
+                        <p class="text-center"><u>INSTRUCTIONS FOR USE</u></p>
+                        <ol>
+                          <li>Select agent from list. The top bar is a search.</li>
+                          <li>Select a date that lies within the week for the report you would like to run.</li>
+                          <ol>
+                            <li>The reports will run for the start to the end of the week automatically.</li>
+                            <li>If you select something from the current week mid week, it will only show you up to the day naturally.</li>
+                          </ol>
+                          <li>With the week selected, choose "show" or "hide" from the options you would like to be visable on the report.</li>
+                          <ol>
+                            <li>If you would like a condensed version, hide the last three items and it will eliminate the breakdown page</li>
+                          </ol>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-3">
+                <div class="col-2">
+                  <label for="selected_date" class="text-uppercase font-weight-bold text-dark">WEEK:</label>
+                </div>
+                <div class="col-4">
+                  <%= select_tag :selected_week, options_for_select([['Show', true], ['Hide', false]]), class: "form-control text-dark" %>
+                  <small>show weekly breakdown</small>
+                </div>
+                <div class="col-2">
+                  <label for="selected_date" class="text-uppercase font-weight-bold text-dark">MONTH:</label>
+                </div>
+                <div class="col-4">
+                  <%= select_tag :selected_month, options_for_select([['Show', true], ['Hide', false]]), class: "form-control text-dark" %>
+                  <small>show monthly breakdown</small>
+                </div>
+              </div>
+              <div class="row pt-2">
+                <div class="col-2">
+                  <label for="selected_date" class="text-uppercase font-weight-bold text-dark">ANNUAL:</label>
+                </div>
+                <div class="col-4">
+                  <%= select_tag :selected_year, options_for_select([['Show', true], ['Hide', false]]), class: "form-control text-dark" %>
+                  <small>show annual breakdown</small>
+                </div>
+                <div class="col-2">
+                  <label for="selected_date" class="text-uppercase font-weight-bold text-dark">Entries:</label>
+                </div>
+                <div class="col-4">
+                  <%= select_tag :selected_occurrences, options_for_select([['Show', true], ['Hide', false]]), class: "form-control text-dark" %>
+                  <small>show the occurrence table</small>
+                </div>
+              </div>
+              <div class="row pt-2 border-bottom pb-3">
+                <div class="col-2">
+                  <label for="selected_date" class="text-uppercase font-weight-bold text-dark">Progressives:</label>
+                </div>
+                <div class="col-4">
+                  <%= select_tag :selected_progressives, options_for_select([['Show', true], ['Hide', false]]), class: "form-control text-dark" %>
+                  <small>show the progressive action table</small>
+                </div>
+                <div class="col-2">
+                  <label for="selected_date" class="text-uppercase font-weight-bold text-dark">Incentives:</label>
+                </div>
+                <div class="col-4">
+                  <%= select_tag :selected_incentives, options_for_select([['Show', true], ['Hide', false]]), class: "form-control text-dark" %>
+                  <small>show the incentive breakdown table</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="container border-top pt-3"  style="height: 425px !important;overflow-y: scroll !important">
+                <div class="card card-mini">
+                  <div class="card-header top-bg" style="min-height: 2rem !important;">
+                    <small class="font-weight-bold m-auto">AGENT COACHING</small>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="card card-mini" id="preview-info">
+                          <div class="card-header p-0 m-0 child-bg" style="min-height: 2rem !important;">
+                            <small class="font-weight-bold m-auto p-0">INFORMATION</small>
+                          </div>
+                          <div class="card-body">
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="card card-mini" id="preview-admin">
+                          <div class="card-header p-0 m-0 child-bg" style="min-height: 2rem !important;">
+                            <small class="font-weight-bold m-auto p-0">ADMIN</small>
+                          </div>
+                          <div class="card-body">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card card-mini" id="preview-week">
+                          <div class="card-header p-0 m-0 child-bg" style="min-height: 2rem !important;">
+                            <small class="font-weight-bold m-auto p-0">STATISTICS - WEEK</small>
+                          </div>
+                          <div class="card-body">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card card-mini" id="preview-month">
+                          <div class="card-header p-0 m-0 child-bg" style="min-height: 2rem !important;">
+                            <small class="font-weight-bold m-auto p-0">STATISTICS - MONTH</small>
+                          </div>
+                          <div class="card-body">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card card-mini" id="preview-year">
+                          <div class="card-header p-0 m-0 child-bg" style="min-height: 2rem !important;">
+                            <small class="font-weight-bold m-auto p-0">STATISTICS - ANNUAL</small>
+                          </div>
+                          <div class="card-body">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card card-mini"  id="preview-breakdown">
+                  <div class="card-header top-bg" style="min-height: 2rem !important;">
+                    <small class="font-weight-bold m-auto">BREAKDOWN</small>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card card-mini" id="preview-incentives">
+                          <div class="card-header p-0 m-0 child-bg" style="min-height: 2rem !important;">
+                            <small class="font-weight-bold m-auto">INCENTIVES</small>
+                          </div>
+                          <div class="card-body">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card card-mini" id="preview-occurrences">
+                          <div class="card-header p-0 m-0 child-bg" style="min-height: 2rem !important;">
+                            <small class="font-weight-bold m-auto">OCCURRENCES</small>
+                          </div>
+                          <div class="card-body">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card card-mini" id="preview-daps">
+                          <div class="card-header p-0 m-0 child-bg" style="min-height: 2rem !important;">
+                            <small class="font-weight-bold m-auto">DISCIPLINARY ACTIONS</small>
+                          </div>
+                          <div class="card-body">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+      <div class="modal-footer pt-3">
+        <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal">CLOSE</button>
+        <button type="button" class="btn btn-primary font-weight-bold" id="submitBreakdown" target="_blank"><%= fa_icon_tag("file-pdf-o") %> PDF</button>
+        <script>
+            // Toggle preview screen
+            $('#selected_incentives').change(function(){
+              if ($('#selected_incentives').children("option:selected").val() == "false"){
+                $('#preview-incentives').prop('hidden', true);
+              } else {
+                $('#preview-incentives').prop('hidden', false);
+              }
+              if ($('#selected_occurrences').children("option:selected").val() == "false" && $('#selected_progressives').children("option:selected").val() == "false" && $('#selected_incentives').children("option:selected").val() == "false") {
+              $('#preview-breakdown').prop('hidden', true);
+            } else {
+              $('#preview-breakdown').prop('hidden', false);
+            }
+            });
+            $('#selected_progressives').change(function(){
+              if ($('#selected_progressives').children("option:selected").val() == "false"){
+                $('#preview-daps').prop('hidden', true);
+              } else {
+                $('#preview-daps').prop('hidden', false);
+              }
+              if ($('#selected_occurrences').children("option:selected").val() == "false" && $('#selected_progressives').children("option:selected").val() == "false" && $('#selected_incentives').children("option:selected").val() == "false") {
+              $('#preview-breakdown').prop('hidden', true);
+            } else {
+              $('#preview-breakdown').prop('hidden', false);
+            }
+            });
+            $('#selected_occurrences').change(function(){
+              if ($('#selected_occurrences').children("option:selected").val() == "false"){
+                $('#preview-occurrences').prop('hidden', true);
+              } else {
+                $('#preview-occurrences').prop('hidden', false);
+              }
+              if ($('#selected_occurrences').children("option:selected").val() == "false" && $('#selected_progressives').children("option:selected").val() == "false" && $('#selected_incentives').children("option:selected").val() == "false") {
+              $('#preview-breakdown').prop('hidden', true);
+            } else {
+              $('#preview-breakdown').prop('hidden', false);
+            }
+            });
+            $('#selected_week').change(function(){
+              if ($('#selected_week').children("option:selected").val() == "false"){
+                $('#preview-week').prop('hidden', true);
+              } else {
+                $('#preview-week').prop('hidden', false);
+              }
+            });
+            $('#selected_month').change(function(){
+              if ($('#selected_month').children("option:selected").val() == "false"){
+                $('#preview-month').prop('hidden', true);
+              } else {
+                $('#preview-month').prop('hidden', false);
+              }
+            });
+            $('#selected_year').change(function(){
+              if ($('#selected_year').children("option:selected").val() == "false"){
+                $('#preview-year').prop('hidden', true);
+              } else {
+                $('#preview-year').prop('hidden', false);
+              }
+            });
+
+            // build the form
+            $('#submitBreakdown').click(function(){
+              var id = $('#selected_agent').children("option:selected").val();
+              var date = new Date($('#selected_date').val());
+              var incentives = $('#selected_incentives').children("option:selected").val();
+              var progs = $('#selected_progressives').children("option:selected").val();
+              var entries = $('#selected_occurrences').children("option:selected").val();
+              var week_select = $('#selected_week').children("option:selected").val();
+              var month_select = $('#selected_month').children("option:selected").val();
+              var year_select = $('#selected_year').children("option:selected").val();
+              day = date.getDate() + 1;
+              month = date.getMonth() + 1;
+              year = date.getFullYear();
+              formatted = [year, month, day].join('-');
+              window.open('../incentives/incentive_dashboard_breakdown_pdf?id=' + id + '&selected_date=' + formatted + '&selected_incentives=' + incentives + '&selected_progressives=' + progs + '&selected_occurrences=' + entries + '&selected_week=' + week_select + '&selected_month=' + month_select + '&selected_year=' + year_select)
+            })
+          </script>
+      </div>
+    </div>
+  </div>
+</div>

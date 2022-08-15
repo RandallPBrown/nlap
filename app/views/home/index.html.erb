@@ -1,0 +1,206 @@
+<style>
+.jumbo-text {
+  background-color: white;
+  color: black;
+  font-size: 2.2vw; 
+  font-weight: bold;
+  mix-blend-mode: screen;
+}
+
+
+</style>
+                    
+
+<header class="landing-header-1" style="background-image: url('<%= asset_path('background.png') %>')">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="navbar navbar-landing  navbar-centered navbar-expand-lg my-3">
+              <a href="javascript:" class="navbar-brand d-lg-none">
+                <%= image_tag('logo.png') %>
+              <button class="navbar-toggler" type="button" data-toggle="collapse"
+              data-target="#standardLandingNavbarWithCenteredBrand" aria-controls="standardLandingNavbarWithCenteredBrand"
+              aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse text-white" id="standardLandingNavbarWithCenteredBrand">
+                <ul class="nav navbar-nav navbar-left">
+                  <li class="nav-item ">
+                    <a class="nav-link" href="../users/dashboard">Dashboard</a>
+                  </li>
+                  <li class="nav-item ">
+                    <a class="nav-link" target="_blank" href="https://www.newleafsc.net/">Newleaf</a>
+                  </li>
+                  <li class="nav-item ">
+                    <a class="nav-link" target="_blank" href="https://newleaf.pcrscw.com/Main/MainPage.aspx#jumpforward">PCMI</a>
+                  </li>
+                </ul>
+                <a href="javascript:" class="navbar-brand navbar-center text-center d-none d-sm-none d-md-none d-lg-block">
+                  <%= image_tag('logo.png') %>
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="nav-item">
+                    <% if user_signed_in? %>
+                      <%= link_to "LOGOUT", destroy_user_session_path, :method => :delete, :class => 'btn btn-sm btn-outline-light text-white text-hover-dark' %>
+                    <% else %>
+                    <a class="btn btn-sm btn-outline-light text-white text-hover-dark" href="mailto:hsmith@newleafsc.net">LOST PASS</a>
+                    <% end %>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="container header-caption">
+        <div class="row">
+          <div class="col-12 col-md-7 px-5">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <div class="text-white">
+                  <span class="mt-5 font-weight-bold leading-tight" style="font-size: 7.5vw;">WELCOME</span><br>
+                  <span class="mt-5 font-weight-bold leading-tight text-nowrap" style="font-size: 3.1vw;">TO YOUR AGENT PORTAL</span>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 px-0">
+                    <p class="jumbo-text py-4 px-5 ml-5 text-center">Check your stats, occurrences, and more!<br> Login to the right to begin.</p>
+                </div>
+            </div>
+        </div>
+          </div>
+          <div class="col-12 col-md-5">
+            <div class="card bg-transparent border-0" style="box-shadow: 0 !important">
+              <div class="card-header bg-transparent border-0 p-0 mx-0 mb-3">
+                <h5 class="font-weight-bold jumbo-text p-3 w-100 text-center">SIGN IN</h5>
+              </div>
+              <div class="card-body bg-white">
+                <% if user_signed_in? %>
+                      <h6 class="font-weight-bold">You're already logged in, <%= current_user.full_name %>!</h6>
+                      <h6 class="font-weight-bold">Proceed to your <a class="font-weight-bold" href="../users/dashboard">dashboard</a>.</h6>
+                    <% else %>
+                    
+          <%= form_for resource, as: resource_name, url: session_path(resource_name),
+                    html: { class: "form-horizontal" } do |f| %>
+
+                    <%- if devise_mapping.omniauthable? %>
+                      <p>
+                        <%- resource_class.omniauth_providers.each do |provider| %>
+                          <%= link_to fa_icon_tag("#{provider}-sign") + " Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider), class: "btn" %>
+                        <% end -%>
+                      </p>
+
+                      <p>Or sign in using your ...</p>
+                    <% end -%>
+
+                    <%= f.form_group :email, class: "row" do |f| %>
+                      <%= f.label 'EMAIL:', class: "form-label text-uppercase text-dark font-weight-bold" %>
+                      <%= f.email_field :email, autofocus: true, class: "form-control" %>
+                      <%= f.error_messages %>
+                    <% end %>
+
+                    <%= f.form_group :password, class: "row" do |f| %>
+                      <%= f.label 'PASSWORD:', class: "form-label text-uppercase text-dark font-weight-bold" %>
+                      <%= f.password_field :password, class: "form-control" %>
+                      <%= f.error_messages %>
+                    <% end %>
+
+                    <% if devise_mapping.rememberable? %>
+                      <div class="d-flex align-items-center">
+                        <div class="checkbox m-0 mr-auto">
+                          <%= f.check_box :remember_me %>
+                          <%= f.label 'remember me?', class: "checkbox m-0 mr-auto" %>
+                        </div>
+                        <%= f.submit "Log in", class: "btn btn-primary text-uppercase font-weight-bold" %>
+                      </div>
+                    <% end %>
+                <% end %>
+                <% end %>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class=" ">
+  <div class="container">
+    <div class="row">
+      <h2 class="header-separator text-center col-12 my-4 mb-3">Keep up to Date</h2>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-3 text-center">
+        <div class="bg-circle bg-primary-lightest text-white mb-4" style="height: 100px;width:100px">
+            <span style="font-size: 48px;"><%= fa_icon_tag("bar-chart") %></span>
+        </div>
+        <h3>Agent Stats</h3>
+        
+      </div>
+      <div class="col-12 col-md-3 text-center">
+        <div class="bg-circle bg-primary-lightest text-white mb-4" style="height: 100px;width:100px">
+          <span style="font-size: 48px;"><%= fa_icon_tag("calendar") %></span>
+        </div>
+        <h3>Attendance Tracking</h3>
+        
+      </div>
+      <div class="col-12 col-md-3 text-center">
+        <div class="bg-circle bg-primary-lightest text-white mb-4" style="height: 100px;width:100px">
+          <span style="font-size: 48px;"><%= fa_icon_tag("file-text-o") %></span>
+        </div>
+        <h3>Progressive Actions</h3>
+        
+      </div>
+      <div class="col-12 col-md-3 text-center">
+        <div class="bg-circle bg-primary-lightest text-white mb-4" style="height: 100px;width:100px">
+          <span style="font-size: 48px;"><%= fa_icon_tag("usd") %></span>
+        </div>
+        <h3>Improvement Opportunities</h3>
+        
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-12 col-md-3 text-center">
+        <p>Up-to-date stats to stay in track for incentive.</p>
+      </div>
+      <div class="col-12 col-md-3 text-center">
+        <p>Know where you stand at all times with your occurrences. Check regularly to avoid Progressive Actions!</p>
+      </div>
+      <div class="col-12 col-md-3 text-center">
+        <p>If you do end up getting a Progressive Action, track when they drop off so you can start tracking your incentive again!</p>
+      </div>
+      <div class="col-12 col-md-3 text-center">
+        <p>Make a mistake? It happens! Keep track of all your Improvement Opportunities so you never run into the issue again!</p>
+      </div>
+  </div>
+</div>
+<section class="bg-dark  ">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-7 ml-md-auto mr-md-auto text-center text-white mt-5 mb-5">
+        <h1 class="text-shadow-light leading-normal">Notice an error? Got an idea?</h1>
+        <p class="lead font-weight-medium mt-5 text-shadow-light">Don't keep it to yourself! Click below to send an email to the admin and we'll be in touch shortly!</p>
+        <a class="btn btn-lg btn-circle btn-outline-light text-white text-hover-dark"
+        href="mailto:hsmith@newleafsc.net">email</a>
+      </div>
+    </div>
+  </div>
+</section>    
+<div class=" ">
+  <div class="row no-gutters equal-cols align-items-center">
+    <div class="col-12 col-md-5 mx-md-auto">
+      <h2 class="leading-normal text-uppercase">Newleaf Service Contracts</h2>
+      <p class="lead">This system is intended for use only by authorized New Leaf Service Contract personnel. Unauthorized access is strictly prohibited.</p>
+        <div class="row no-gutters mt-5">
+          <div class="col-12 col-md-5">
+            <h6 class="font-weight-normal">Location Information</h6>
+            <p class="small text-muted">909 Lake Carolyn Pkwy<br>Suite 900<br>Irving, Texas 75039-3919</p>
+          </div>
+          <div class="col-12 col-md-5 ml-md-auto">
+            <h6 class="font-weight-normal">Contact Information</h6>
+            <p class="small text-muted">Dan Pressley<br>Vice President, Operations<br>dpressley@newleafsc.net<br>(972) 573-1265</p>
+          </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-5">
+      <%= image_tag("909.PNG") %>
+    </div>
+  </div>
+</div>

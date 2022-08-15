@@ -1,0 +1,169 @@
+<%= stylesheet_link_tag "pagination.css" %>
+<style>
+.dt-collapse {
+  height: 400px;
+  transition: height 0.5s;
+}
+
+.dt-expand {
+  height: 100%;
+  transition: height 0.5s;
+}
+
+table.dataTable td.details-control:before {
+   content: '\f0fe';
+   font-family: 'FontAwesome';
+   cursor: pointer;
+   font-size: 22px;
+   color: black;
+
+}
+table.dataTable tr.shown td.details-control:before {
+  content: '\f146';
+  color: black;
+  height:750px;
+  transition: height 5s;
+}
+table.dataTable thead th {
+    position: relative;
+    background-image: none !important;
+}
+ 
+table.dataTable thead th.sorting:after,
+table.dataTable thead th.sorting_asc:after,
+table.dataTable thead th.sorting_desc:after {
+    position: absolute;
+    top: 12px;
+    right: 8px;
+    display: block;
+    font-family: FontAwesome;
+}
+table.dataTable thead th.sorting:after {
+    content: "\f0dc";
+    color: #ddd;
+    font-size: 0.8em;
+    padding-top: 0.12em;
+}
+table.dataTable thead th.sorting_asc:after {
+    content: "\f0de";
+}
+table.dataTable thead th.sorting_desc:after {
+    content: "\f0dd";
+}
+
+</style>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card dt-collapse" id="pending-card">
+        <div class="card-body">
+          <h5 class="text-uppercase m-auto font-weight-bold text-center border-bottom pb-2">PENDING IMPROVEMENT LOGS</h5>
+          <div class="table-responsive pt-2">
+            <table id="error_index_pending" class="table table-striped table-hover display" style="width:100%">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>ID</th>
+                  <th>Agent</th>
+                  <th>Department</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @err_logs.each do |err_log| %>
+                  <tr>
+                    <td>
+                      <button class="btn btn-link btn-sm" type="button" data-toggle="collapse" data-target="#tableCollapse" aria-expanded="false" aria-controls="tableCollapse" onclick="expandEdit()">
+                        <%= fa_icon_tag('plus') %>
+                      </button></td>
+                    <td><%= err_log.id %></td>
+                    <td><%= err_log.user.full_name %></td>
+                    <td><%= err_log.user.department.name %></td>
+                    <td><%= err_log.errdate %></td>
+                    <td><%= err_log.err_status.statusname %></td>
+                    <div class="collapse" id="tableCollapse">
+                      <div class="card card-body">
+                        <%= render partial: "form_table", locals: { err_log: err_log } %>
+                        </td>
+                      </div>
+                    </div>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  $(document).ready(function() {
+    var table = $('#error_index_all').DataTable();
+    table.draw();
+  });
+</script>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card p-3">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover" id="error_index_all">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Department</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Submitted</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            <% @allerrors.each do |err_log| %>
+              <tr>
+                <td><%= err_log.user.full_name %></td>
+                <td><%= err_log.department.name %></td>
+                <td><%= err_log.errdate.strftime('%m/%d/%Y') %></td>
+                <td><%= err_log.err_name.errname.truncate(10) %></td>
+                <td><%= err_log.errdesc.truncate(10) %></td>
+                <td><%= err_log.err_status.statusname %></td>
+                <td><%= err_log.errsubmitby %></td>
+                <td class="actions text-right">
+                  <div class="btn-group">
+                    <%= link_to theme_icon_tag("eye"), err_log, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                    <%= link_to theme_icon_tag("pencil-alt"), edit_err_log_path(err_log), 'data-toggle': 'tooltip', title: 'Edit', class: "btn btn-link" %>
+                    <%= link_to theme_icon_tag("trash"), err_log, 'data-toggle': 'tooltip', title: 'Delete',
+                    data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-link' %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="buttons"></div>
+<script>
+$(document).ready(function(){
+  $('#error_index_pending').DataTable({
+    'order': [[3, 'desc'], [4, 'desc']]
+  })
+
+});
+
+function expandEdit(){
+  $('#pending-card').removeClass('dt-collapse');
+  $('#pending-card').addClass('dt-expand');
+}
+</script>

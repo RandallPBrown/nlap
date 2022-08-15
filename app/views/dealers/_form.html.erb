@@ -1,0 +1,94 @@
+
+
+<%= form_for(@dealer, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.form_group :code, class: 'row' do |f| %>
+      <%= f.label :code, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :code, class: 'form-control form-control-sm' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :buying_group_id, class: 'row' do |f| %>
+      <%= f.label :buying_group_id, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.collection_select :buying_group_id, BuyingGroup.order(:bgname), :id, :bgname, class: 'custom-select' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+<div class="row justify-content-center">
+  <div class="form-check form-check-inline">
+    <%= f.form_group :appliance, class: 'row' do |f| %>
+      <%= f.label :appliance, class: 'form-check-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.check_box :appliance, class: 'form-check-input' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-check form-check-inline">
+    <%= f.form_group :electronic, class: 'row' do |f| %>
+      <%= f.label :electronic, class: 'form-check-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.check_box :electronic, class: 'form-check-input' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-check form-check-inline">
+    <%= f.form_group :furniture, class: 'row' do |f| %>
+      <%= f.label :furniture, class: 'form-check-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.check_box :furniture, class: 'form-check-input' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+    <%= f.form_group :instructions, class: 'row' do |f| %>
+      <%= f.label :instructions, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_area :instructions, class: 'form-control', 'style': 'width: 525px !important;height: 100px !important;background-color: white !important;border-radius: 5px 5px 5px 5px !important' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :body_prefix, class: 'row' do |f| %>
+      <%= f.label 'Before Email Body', class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_area :body_prefix, class: 'form-control form-control-sm', 'style': 'width: 525px !important;height: 100px !important;background-color: white !important;border-radius: 5px 5px 5px 5px !important' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :body_suffix, class: 'row' do |f| %>
+      <%= f.label 'After Email Body', class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_area :body_suffix, class: 'form-control form-control-sm', 'style': 'width: 525px !important;height: 100px !important;background-color: white !important;border-radius: 5px 5px 5px 5px !important' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div class="d-flex">
+    <div class="ml-auto">
+      <%= f.submit class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>
+
+<%= javascript_include_tag "nicEdit.js" %>
+<script type="text/javascript">
+//<![CDATA[
+        bkLib.onDomLoaded(function() { nicEditors.allTextAreas({iconsPath : '<%= asset_path('nicEditorIcons.gif') %>', buttonList: ['bold','italic','underline','ol', 'ul', 'left', 'center', 'right', 'fontSize']}) });
+  //]]>
+    
+</script>

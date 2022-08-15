@@ -26,7 +26,6 @@
                 <% @roles.each do |role| %>
                   <tr>
                                           <td><%= role.name %></td>
-                                          <td><%= role.sdate %></td>
                                         <td class="actions text-right">
                       <div class="btn-group">
                         <%= link_to theme_icon_tag("eye"), role, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>

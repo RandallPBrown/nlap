@@ -1,6 +1,6 @@
 class OccurrencesController < ApplicationController
   layout "scaffold"
-before_action :authorize_admin
+  before_action :authorize_admin
   before_action :set_occurrence, only: [:show, :edit, :update, :destroy]
 
   # GET /occurrences
@@ -14,17 +14,25 @@ before_action :authorize_admin
 
   # GET /occurrences/new
   def new
-    @occurrence = Occurrence.new
+    if current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @occurrence = Occurrence.new
+    else
+      redirect_to occurrences_path, notice: 'Unauthorized, contact manager or above'
+    end
   end
 
   # GET /occurrences/1/edit
   def edit
+    if current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+    
+    else
+      redirect_to occurrences_path, notice: 'Unauthorized, contact manager or above'
+    end
   end
 
   # POST /occurrences
   def create
     @occurrence = Occurrence.new(occurrence_params)
-
     if @occurrence.save
       redirect_to @occurrence, notice: 'Occurrence was successfully created.'
     else
@@ -43,8 +51,12 @@ before_action :authorize_admin
 
   # DELETE /occurrences/1
   def destroy
-    @occurrence.destroy
-    redirect_to occurrences_url, notice: 'Occurrence was successfully destroyed.'
+    if current_user.has_role?(:manager) || current_user.has_role?(:director) || current_user.has_role?(:executive) then
+      @occurrence.destroy
+      redirect_to occurrences_url, notice: 'Occurrence was successfully destroyed.'
+    else
+      redirect_to occurrences_path, notice: 'Unauthorized, contact manager or above'
+    end
   end
 
   private

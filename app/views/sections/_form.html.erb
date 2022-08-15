@@ -1,0 +1,48 @@
+
+<%= form_for(@section, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.form_group :procedure_id, class: 'row' do |f| %>
+      <%= f.label :procedure_id, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.collection_select :procedure_id, Procedure.order(:id), :id, :name, class: 'custom-select'%>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :item, class: 'row' do |f| %>
+      <%= f.label :item, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :item, class: 'form-control', placeholder: 'ex. "A.1."' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :description, class: 'row' do |f| %>
+      <%= f.label :description, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_area :description, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+
+    <%= f.form_group :goal, class: 'row' do |f| %>
+      <%= f.label :goal, class: 'control-label col-md-2' %>
+      <div class='col-12 col-md-10'>
+        <%= f.text_field :goal, class: 'form-control' %>
+        <%= f.error_messages %>
+      </div>
+    <% end %>
+    <%= f.hidden_field :start, value: '00:00' %>
+
+  </div>
+
+  <div class="d-flex">
+    <div class="ml-auto">
+      <%= f.submit class: 'btn btn-primary' %>
+      <%= link_to "Cancel", sections_path, class: 'btn btn-outline-default' %>
+    </div>
+  </div>
+<% end %>
+

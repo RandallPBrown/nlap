@@ -1,0 +1,2 @@
+module BuyingGroupsHelper
+end

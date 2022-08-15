@@ -1,0 +1,218 @@
+<% @title = "New Part" %>
+
+<script>
+  $(document).ready( function () {
+    $('#parts_index').DataTable();
+} );
+
+$(function() {
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+});
+</script>
+
+
+<% content_for :description do %>
+  <% end %>
+
+  <div class="container">
+    <div class="row">
+      <div id="content" class="col-12 col-md-7">
+        <div class="card" style="height: 125%">
+          <div class="card-header bg-primary text-white">
+            <h5 class="text-uppercase m-auto font-weight-bold">PART LIST</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover table-sm-responsive display border rounded" id="parts_index">
+                <thead>
+                  <tr>
+                                          <th>Covered</th>
+                                          <th>Approved By</th>
+                                          <th>Number</th>
+                                          <th>Name</th>
+                                        <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% @parts.each do |part| %>
+                  <tr>
+                                          <td class="text-capitalize"><%= part.covered %></td>
+                                          <td><%= part.approved_by %></td>
+                                          <td><%= part.part_number.truncate(15) %></td>
+                                          <td><%= part.part_name.truncate(15) %></td>
+                                        <td class="actions text-right">
+                      <div class="btn-group">
+                        <%= link_to theme_icon_tag("eye"), part, 'data-toggle': 'tooltip', title: 'Show', class: "btn btn-link" %>
+                      </div>
+                      </td>
+                    </tr>
+                    <% end %>
+                    <% if @parts.length == 0 %>
+                    <tr><td colspan=42 class='text-center'>No parts.</td></tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+          </div>
+        </div>
+      </div>
+      <div id="content" class="col-12 col-md-5">
+        <div class="row">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h5 class="text-uppercase m-auto font-weight-bold">ADD OPTIONS</h5>
+            </div>
+            <div class="card-body">
+              <div class="col-12 col-md-12">
+                <center>
+                  <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#productModal">
+                    <%= fa_icon_tag "plus" %> PRODUCT
+                  </button>
+                  <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#bgModal">
+                    <%= fa_icon_tag "plus" %> BUYING GROUP
+                  </button>
+                </center>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+        <div class="card" style="height: 100%;">
+          <div class="card-body">
+            <%= form_for(@part, html: { class: 'form-horizontal' }) do |f| %>
+              <%= f.error_notification %>
+
+              <div class="form-inputs">
+                <%= f.form_group :part_number, class: 'row' do |f| %>
+                  <%= f.label 'Part Number', class: 'control-label col-md-5' %>
+                  <div class='col-12 col-md-7'>
+                    <%= f.text_field :part_number, class: 'form-control', 'id': 'pn_form', 'readonly': 'true', 'placeholder': 'BEGIN WITH "PART LIST"' %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :serviceorder, class: 'row' do |f| %>
+                  <%= f.label 'Service Order', class: 'control-label col-md-5 text-capitalize' %>
+                  <div class='col-12 col-md-7'>
+                    <%= f.text_field :serviceorder, class: 'form-control' %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :part_name, class: 'row' do |f| %>
+                  <%= f.label 'Part Name', class: 'control-label col-md-5' %>
+                  <div class='col-12 col-md-7'>
+                    <%= f.text_field :part_name, class: 'form-control' %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :part_description, class: 'row' do |f| %>
+                  <%= f.label 'Part Description', class: 'control-label col-md-5' %>
+                  <div class='col-12 col-md-7'>
+                    <%= f.text_area :part_description, class: 'form-control' %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :product_id, class: 'row' do |f| %>
+                  <%= f.label 'Product', class: 'control-label col-md-5' %>
+                  <div class='col-12 col-md-7'>
+                    <%= f.collection_select :product_id, Product.order(:id), :id, :pname, {}, class: 'form-control' %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :buying_group_id, class: 'row' do |f| %>
+                  <%= f.label 'Buying Group', class: 'control-label col-md-5 text-capitalize' %>
+                  <div class='col-12 col-md-7'>
+                    <%= f.collection_select :buying_group_id, BuyingGroup.order(:id), :id, :bgname, {}, class: 'form-control' %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :source, class: 'row' do |f| %>
+                  <%= f.label 'Source Link', class: 'control-label col-md-5 text-capitalize' %>
+                  <div class='col-12 col-md-7'>
+                    <%= f.text_field :source, class: 'form-control' %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.form_group :dop, class: 'row' do |f| %>
+                  <%= f.label 'Purchased', class: 'control-label col-md-5' %>
+                  <div class='col-12 col-md-7'>
+                    <%= f.text_field :dop, class: 'datepicker', 'data-provide': 'datepicker' %>
+                    <%= f.error_messages %>
+                  </div>
+                <% end %>
+
+                <%= f.hidden_field :covered, value: 'pending' %>
+                <%= f.hidden_field :submitted_by, value: current_user.full_name %>
+
+              </div>
+
+              <div class="d-flex">
+                <div class="ml-auto">
+                  <%= f.submit class: 'btn btn-primary' %>
+                  <%= link_to "Cancel", parts_path, class: 'btn btn-outline-default' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- PRODUCT AND BUYING GROUP MODALS -->
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">NEW PRODUCT</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "products/form" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="bgModal" tabindex="-1" role="dialog" aria-labelledby="bgmodalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bgmodalLabel">NEW BUYING GROUP</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "buying_groups/form" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  $(function() {
+    $('.datepicker').datepicker({dateFormat: 'yyyy-mm-dd'});
+});
+
+
+$('#pn_search').keyup(function() {
+    $('#pn_form').val($(this).val());
+});
+
+
+$('#pn_form').keyup(function() {
+    $('#pn_search').val($(this).val());
+});
+</script>

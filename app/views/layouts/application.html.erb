@@ -1,4 +1,6 @@
   <%= render :layout => "layouts/base" do %>
+  <%= action_cable_meta_tag %>
     <%= render "layouts/flashes" %>
+    
     <%= yield %>
   <% end %>

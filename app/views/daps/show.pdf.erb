@@ -1,0 +1,58 @@
+
+
+<%= wicked_pdf_image_tag 'logo.png' %><br /><br />
+<div class="card" >
+  <div class="card-header p-3">
+	<h1 class="font-weight-bold text-monospace"><%= @dap.user.full_name %></h1>
+  </div>
+  <div class="card-body">
+	    <center><h1 class="font-weight-bold text-monospace">PROGRESSIVE ACTION HISTORY</h1></center>
+	    <div class="row">
+	        <div class="table-responsive">
+	            <table class="table table-hover table-striped" id="userDapTable">
+		            <thead>
+		              <tr>
+		                <th>Name</th>
+		                <th>Type</th>
+		                <th>Date</th>
+		                <th>Description</th>
+		              </tr>
+		            </thead>
+		            <% @daps.each do |dap| %>
+		              <tr>
+		                <td><%= dap.user.full_name %></td>
+		                <td><%= dap.writeup.name %></td>
+		                <td><%= dap.ddate %></td>
+		                <td><%= dap.description %></td>
+		              </tr>
+		            <% end %>
+	          	</table>
+	        </div>
+	    </div><br /><br />
+	    <center><h1 class="font-weight-bold text-monospace">OCCURRENCE HISTORY</h1></center>
+	    <div class="row">
+	        <div class="table-responsive">
+	            <table class="table table-hover table-striped" id="userDapTable">
+		            <thead>
+		              <tr>
+		                <th>Name</th>
+		                <th>Type</th>
+		                <th>Value</th>
+		                <th>Date</th>
+		                <th>Description</th>
+		              </tr>
+		            </thead>
+		            <% @entries.each do |entry| %>
+		              <tr>
+		                <td><%= entry.agent.user.full_name %></td>
+		                <td><%= entry.occurrence.name %></td>
+		                <td><%= entry.occurrence.ovalue %></td>
+		                <td><%= entry.edate %></td>
+		                <td><%= entry.edesc %></td>
+		              </tr>
+		            <% end %>
+	          	</table>
+	        </div>
+	    </div>
+  </div>
+</div>

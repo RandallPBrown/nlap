@@ -1,6 +1,22 @@
-<div class="row equal-cols">
+  <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+<script>
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>', {
+      cluster: '<%= ENV["PUSHER_CLUSTER"] %>',
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe('entry');
+    channel.bind('new-entry', function(data) {
+      var s = $('#occurrence-'+data.id).text();
+      $('#occurrence-'+data.id).html(parseFloat(s)+parseFloat(data.ovalue));
+    });
+
+</script>
+<div class="row equal-cols float-inset pt-3">
   <div class="col-12 col-md-9 animate-fade-in-1000">
-    <div class="card card-full-height inspectable">
+    <div class="card card-full-height inspectable float">
       <!-- component-title: Graph -->
       <div class="card-header d-flex align-items-center">
         <h6 class="mr-auto">Occurrences by Department</h6>
@@ -20,25 +36,28 @@
               <%= theme_icon_tag "more" %>
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-badgeledby="salesAndRefundButton" id="chart-selector">
-              <button class="dropdown-item" id="chartToday">Today</button>
-              <button class="dropdown-item" id="chart90Day">90 Days</button>
+              <button class="dropdown-item" id="chartDeptToday">Department Today</button>
+              <button class="dropdown-item" id="chartDeptEffective">Department 90 Days</button>
               <button class="dropdown-item" id="chartAgentToday">Agent Today</button>
-              <button class="dropdown-item" id="chartAgent90Day">Agent 90 Days</button>
+              <button class="dropdown-item" id="chartAgentEffective">Agent 90 Days</button>
+              <button class="dropdown-item" id="chartToday">Company Today</button>
+              <button class="dropdown-item" id="chartEffective">Company 90 Days</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="card-body position-relative">
+      <div class="card-body position-relative"  style="position: relative; height:60vh; width:70vw; overflow-y: scroll">
         <!-- <canvas id="myChart" width="400" height="200"></canvas> -->
 <canvas id="occurrenceChart" width="300" height="150"></canvas>
 <script>
-var chart_labels = <%= raw @chart_labels_today %>;
-var chart_data = <%= raw @chart_data_today %>;
+var chart_labels = <%= raw @chart_labels_dept_today %>;
+var chart_data = <%= raw @chart_data_dept_today %>;
 var dataset_label = "Today";
-var chart_type = 'bar';
+var chart_type = 'horizontalBar';
 var ctx = document.getElementById("occurrenceChart").getContext('2d');
 var config = {
-    type: 'bar',
+    responsive: true,
+    type: 'horizontalBar',
     data: {
         labels: chart_labels,
         datasets: [{
@@ -47,22 +66,8 @@ var config = {
             yAxisID: "y-axis-0",
             fill: true,
             data: chart_data,
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(54, 162, 235, 0.2)'
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)'
-            ],
+            backgroundColor: '#f1f8e9',
+            borderColor: '#7cb342',
             borderWidth: 1
         },]
     },
@@ -74,14 +79,20 @@ var config = {
                 ticks: {
                   beginAtZero: true
                 }
+            }],
+            xAxes: [{
+              position: 'top',
+              ticks: {
+                beginAtZero: true
+              }
             }]
         }
     }
 };
 var occurrence_chart = new Chart(ctx, config);
-$("#chartToday").click(function() {
-    var chart_labels = <%= raw @chart_labels_today %>;
-    var chart_data = <%= raw @chart_data_today %>;
+$("#chartDeptToday").click(function() {
+    var chart_labels = <%= raw @chart_labels_dept_today %>;
+    var chart_data = <%= raw @chart_data_dept_today %>;
     var dataset_label = "Today";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
@@ -89,9 +100,9 @@ $("#chartToday").click(function() {
     data.datasets[0].label = dataset_label;
     occurrence_chart.update();
 });
-$("#chart90Day").click(function() {
-    var chart_labels = <%= raw @chart_labels_effective %>;
-    var chart_data = <%= raw @chart_data_effective %>;
+$("#chartDeptEffective").click(function() {
+    var chart_labels = <%= raw @chart_labels_dept_effective %>;
+    var chart_data = <%= raw @chart_data_dept_effective %>;
     var dataset_label = "90 Days";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
@@ -109,7 +120,7 @@ $("#chartAgentToday").click(function() {
     data.datasets[0].label = dataset_label;
     occurrence_chart.update();
 });
-$("#chartAgent90Day").click(function() {
+$("#chartAgentEffective").click(function() {
     var chart_labels = <%= raw @chart_labels_agent_effective %>;
     var chart_data = <%= raw @chart_data_agent_effective %>;
     var dataset_label = "Agent 90 Days";
@@ -119,8 +130,28 @@ $("#chartAgent90Day").click(function() {
     data.datasets[0].label = dataset_label;
     occurrence_chart.update();
 });
+$("#chartToday").click(function() {
+    var chart_labels = <%= raw @chart_labels_today %>;
+    var chart_data = <%= raw @chart_data_today %>;
+    var dataset_label = "Today";
+    var data = occurrence_chart.config.data;
+    data.datasets[0].data = chart_data;
+    data.labels = chart_labels;
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
+});
+$("#chartEffective").click(function() {
+    var chart_labels = <%= raw @chart_labels_effective %>;
+    var chart_data = <%= raw @chart_data_effective %>;
+    var dataset_label = "90 Days";
+    var data = occurrence_chart.config.data;
+    data.datasets[0].data = chart_data;
+    data.labels = chart_labels;
+    data.datasets[0].label = dataset_label;
+    occurrence_chart.update();
+});
 $("#chartBar").click(function() {
-    var chart_type = 'bar';
+    var chart_type = 'horizontalBar';
     var data = occurrence_chart.config.data;
     data.datasets[0].type = chart_type;
     occurrence_chart.update();
@@ -138,32 +169,31 @@ $("#chartLine").click(function() {
     </div>
   </div>
 
+<div id="modal-agents" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
   <div class="col-12 col-md-3 animate-fade-in-1000">
-    <div class="card card-full-height d-flex inspectable">
+    <div class="card card-full-height d-flex inspectable float">
       <!-- component-title: Timeline Card -->
       <div class="card-header">
-        <h6>Highest Offenders</h6>
+        <h6>Occurrence Rankings</h6>
       </div>
-      <div class="card-body">
-        <div class="timeline" style="height: 450px">
-          <ul class="left-timeline">
-            <% @agent_occurrence_values.zip(@agent_occurrence_labels).sort{ |a, b| b <=> a }.each do |entry| %>
-              <li class="timeline-item">
-
-                <time class=''>
-                  <strong>
-                    <%= entry.join(" ---------- ") %>
-                  </strong>
-                </time>
-                <div class="activity-text">
-                  <strong><%#= @fdsa %></strong>
-                  <small class="text-muted"><%#= entry.agent.department.name %></small>
-                </div>
-              </li>
+      <div class="card-body" style="height: 500px;overflow-y: scroll">
+        <ol class="list-group">
+          <% if @agent_occurrence_values.nil? %>
+          ERROR - Report to Admin
+          <% else %>
+            <% @agent_occurrence_values.sort_by {|obj| obj[1] }.reverse.each do |f| %>
+            <li class="list-group-item list-group-item-action"> <%= link_to (f[0][1]+" "+f[0][2]), entries_agentview_path(:id => f[0][0]), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-agents', class: 'btn btn-link' %> <span class="badge badge-primary badge-pill pull-right" id="occurrence-<%= f[0][0] %>"><%= f[1] %></span></li>
             <% end %>
-          </ul>
-        </div>
+          <% end %>
+        </ol>
       </div>
     </div>
   </div>
 </div>
+
+

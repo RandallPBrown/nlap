@@ -1,5 +1,10 @@
 class HomeController < ApplicationController
-  layout 'sidenav'
+  layout 'application'
+
+  def index
+
+  end
+
   def dashboard          
     @body_class = "with-sidebar show-sidebar"
 

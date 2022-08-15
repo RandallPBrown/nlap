@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  part_number: MyString
+  part_name: MyString
+  part_description: MyText
+  product: one
+  buying_group: one
+  dop: 2019-02-21
+  covered: MyString
+
+two:
+  part_number: MyString
+  part_name: MyString
+  part_description: MyText
+  product: two
+  buying_group: two
+  dop: 2019-02-21
+  covered: MyString
