@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.5.1'
+ruby '2.6.10'
 
 
 git_source(:github) do |repo_name|
@@ -9,9 +9,9 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.4'
+gem 'rails', '~> 5.2.3'
 
-gem 'pg', '~> 0.18.4'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -45,7 +45,7 @@ gem 'ruby_kml'
 gem 'devise'
 # gem "paranoia", "~> 2.2"
 # gem 'paranoia_uniqueness_validator', '3.1.0'
-
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 # Bootstrap css library
 gem 'bootstrap'
 gem 'popper_js'
@@ -75,9 +75,7 @@ gem 'best_in_place', '~> 3.0.1'
 gem 'smarter_csv'
 
 
-source "https://gems.rapidrailsthemes.com/gems" do
-  gem "rrt", "~> 1.0.17"
-end
+gem 'kiso_themes', '~> 1.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
