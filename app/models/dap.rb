@@ -12,7 +12,7 @@ class Dap < ApplicationRecord
   	accepts_nested_attributes_for :writeup
   	accepts_nested_attributes_for :wunature
   	scope :written,  -> {
-    	where(ddate: 90.days.ago...Date.tomorrow.beginning_of_day)
+    	where(ddate: 60.days.ago...Date.tomorrow.beginning_of_day)
   	}
 
     scope :occurrence_user, -> {
@@ -38,7 +38,7 @@ class Dap < ApplicationRecord
 
   def self.user_writeups(user_id)
     
-    Dap.where('ddate > ?', Time.now.end_of_day-90.days).joins(:user).group(:user_id).where("users.id = ?", user_id).pluck(:user_id).count
+    Dap.where('ddate > ?', Time.now.end_of_day-60.days).joins(:user).group(:user_id).where("users.id = ?", user_id).pluck(:user_id).count
   end
 
   def occurrence_since_dap

@@ -43,7 +43,7 @@ class Entry < ApplicationRecord
   }
 
   scope :effective,  -> {
-  	where("entries.edate > ?", Time.now-90.days)
+  	where("entries.edate > ?", Time.now-60.days)
   }
   scope :today, -> {
   	where(edate: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
@@ -82,7 +82,7 @@ class Entry < ApplicationRecord
   }
 
   def occurrence_total
-    Entry.where(edate: 90.days.ago.beginning_of_day...Date.today.end_of_day).joins(:occurrence).sum(:ovalue)
+    Entry.where(edate: 60.days.ago.beginning_of_day...Date.today.end_of_day).joins(:occurrence).sum(:ovalue)
   end
 
   def occurrence_ovalue_today

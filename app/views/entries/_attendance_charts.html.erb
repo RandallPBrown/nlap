@@ -37,11 +37,11 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-badgeledby="salesAndRefundButton" id="chart-selector">
               <button class="dropdown-item" id="chartDeptToday">Department Today</button>
-              <button class="dropdown-item" id="chartDeptEffective">Department 90 Days</button>
+              <button class="dropdown-item" id="chartDeptEffective">Department 60.days</button>
               <button class="dropdown-item" id="chartAgentToday">Agent Today</button>
-              <button class="dropdown-item" id="chartAgentEffective">Agent 90 Days</button>
+              <button class="dropdown-item" id="chartAgentEffective">Agent 60.days</button>
               <button class="dropdown-item" id="chartToday">Company Today</button>
-              <button class="dropdown-item" id="chartEffective">Company 90 Days</button>
+              <button class="dropdown-item" id="chartEffective">Company 60.days</button>
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@ $("#chartDeptToday").click(function() {
 $("#chartDeptEffective").click(function() {
     var chart_labels = <%= raw @chart_labels_dept_effective %>;
     var chart_data = <%= raw @chart_data_dept_effective %>;
-    var dataset_label = "90 Days";
+    var dataset_label = "60.days";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;
@@ -123,7 +123,7 @@ $("#chartAgentToday").click(function() {
 $("#chartAgentEffective").click(function() {
     var chart_labels = <%= raw @chart_labels_agent_effective %>;
     var chart_data = <%= raw @chart_data_agent_effective %>;
-    var dataset_label = "Agent 90 Days";
+    var dataset_label = "Agent 60.days";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;
@@ -143,7 +143,7 @@ $("#chartToday").click(function() {
 $("#chartEffective").click(function() {
     var chart_labels = <%= raw @chart_labels_effective %>;
     var chart_data = <%= raw @chart_data_effective %>;
-    var dataset_label = "90 Days";
+    var dataset_label = "60.days";
     var data = occurrence_chart.config.data;
     data.datasets[0].data = chart_data;
     data.labels = chart_labels;

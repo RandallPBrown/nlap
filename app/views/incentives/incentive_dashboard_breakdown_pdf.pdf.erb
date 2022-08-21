@@ -398,7 +398,7 @@ tr {
                           <td><%= entry.occurrence.name %></td>
                           <td><%= entry.occurrence.ovalue %></td>
                           <td><%= entry.edate %></td>
-                          <td><%= entry.edate + 90.days %></td>
+                          <td><%= entry.edate + 60.days %></td>
                           <td><%= entry.edesc.truncate(30) %></td>
                         </tr>
                         <% end %>
@@ -437,7 +437,7 @@ tr {
                           <td><%= daps.writeup.name %></td>
                           <td><%= daps.description.truncate(20) %></td>
                           <td><%= daps.ddate %></td>
-                          <td><%= daps.ddate + 90.days %></td>
+                          <td><%= daps.ddate + 60.days %></td>
                         </tr>
                         <% end %>
                         <% if @entries.length == 0 %>

@@ -13,7 +13,7 @@ class Agent < ApplicationRecord
   accepts_nested_attributes_for :user
 
   scope :effective,  -> {
-    where("entries.edate > ?", Time.now-90.days)
+    where("entries.edate > ?", Time.now-60.days)
   }
 	scope :occurrence_user, -> {
     	joins(:occurrence, agent: :user)

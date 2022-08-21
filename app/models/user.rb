@@ -55,10 +55,10 @@ class User < ApplicationRecord
         [:first_name, :last_name]
 
   scope :written,  -> {
-    where("daps.ddate > ?", Time.now-90.days)
+    where("daps.ddate > ?", Time.now-60.days)
   }
   scope :effective,  -> {
-    where("entries.edate > ?", Time.now-90.days)
+    where("entries.edate > ?", Time.now-60.days)
   }
   scope :today, -> {
     where(edate: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)

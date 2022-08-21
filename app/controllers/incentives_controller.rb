@@ -68,7 +68,7 @@ class IncentivesController < ApplicationController
     @incentives = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.parse(params[:selected_date]).beginning_of_month..Date.parse(params[:selected_date]).end_of_month)
     @incentives_annual = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.parse(params[:selected_date]).beginning_of_year..Date.parse(params[:selected_date]).end_of_year)
     @incentives_week = Incentive.all.where('user_id = ?', @user.id).order(date: :desc).where(date: Date.parse(params[:selected_date]).beginning_of_week..Date.parse(params[:selected_date]).end_of_week)
-    @entries = Entry.all.joins(:occurrence, agent: :user).where('user_id = ?', @user.id).order(edate: :desc).where(edate: 90.days.ago..Date.parse(params[:selected_date]))
+    @entries = Entry.all.joins(:occurrence, agent: :user).where('user_id = ?', @user.id).order(edate: :desc).where(edate: 60.days.ago..Date.parse(params[:selected_date]))
     @days_from_this_week = (Date.parse(params[:selected_date]).at_beginning_of_week..Date.parse(params[:selected_date]).at_end_of_week).map
     respond_to do |format|
       format.html

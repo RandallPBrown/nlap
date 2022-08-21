@@ -73,7 +73,7 @@ tr {
                 <td><%= entry.occurrence.name %></td>
                 <td><%= entry.occurrence.ovalue %></td>
                 <td><%= entry.edate %></td>
-                <td><%= entry.edate + 90.days %></td>
+                <td><%= entry.edate + 60.days %></td>
                 <td><%= entry.edesc %></td>
               </tr>
               <% end %>
@@ -106,7 +106,7 @@ tr {
                 <td><%= dap.user.full_name %></td>
                 <td><%= dap.writeup.name %></td>
                 <td><%= dap.ddate %></td>
-                <td><%= dap.ddate + 90.days %></td>
+                <td><%= dap.ddate + 60.days %></td>
                 <td><%= dap.wunature.description.truncate(15) %></td>
               </tr>
               <% end %>

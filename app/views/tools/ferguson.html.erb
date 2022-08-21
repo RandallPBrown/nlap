@@ -369,7 +369,7 @@ $('#ferVer-Business').on('change', function(){
 
 function businessCheck(){
 	var date1 = $('#ferVer-DOP').val();
-	var date2 = "<%= 90.days.ago(Date.today).strftime("%Y-%m-%d").to_s %>";
+	var date2 = "<%= 60.days.ago(Date.today).strftime("%Y-%m-%d").to_s %>";
 	var date1Updated = new Date(date1.replace(/-/g,'/')); 
 	var date2Updated = new Date(date2.replace(/-/g,'/'));
 	business = $('#ferVer-Business').val();
