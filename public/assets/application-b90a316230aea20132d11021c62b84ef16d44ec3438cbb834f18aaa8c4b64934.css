@@ -29695,26 +29695,26 @@ pre[data-line] {
 /*
  * Pick one style by placing the `=` sign in front the the style you want. ** Just one, now. **
  *
- *  require rrt/orion/blue
- *  require rrt/orion/purple
- *  require rrt/orion/green
- *  require rrt/orion/orange
+ *  require kiso_themes/orion/blue
+ *  require kiso_themes/orion/purple
+ *  require kiso_themes/orion/green
+ *  require kiso_themes/orion/orange
  *
  *
- *  require rrt/auriga/blue
- *  require rrt/auriga/green
- *  require rrt/auriga/red
- *  require rrt/auriga/yellow
+ *  require kiso_themes/auriga/blue
+ *  require kiso_themes/auriga/green
+ *  require kiso_themes/auriga/red
+ *  require kiso_themes/auriga/yellow
  *
- *  require rrt/gemini/blue
- *  require rrt/gemini/amber
- *  require rrt/gemini/granite
- *  require rrt/gemini/ocean
+ *  require kiso_themes/gemini/blue
+ *  require kiso_themes/gemini/amber
+ *  require kiso_themes/gemini/granite
+ *  require kiso_themes/gemini/ocean
  *
- *  require rrt/lyra/azure
+ *  require kiso_themes/lyra/azure
 
- *  require rrt/lyra/lime
- *  require rrt/lyra/raspberry
+ *  require kiso_themes/lyra/lime
+ *  require kiso_themes/lyra/raspberry
  *
  * To fully customize your theme, run: `rails generate rrt:customize`.
  *

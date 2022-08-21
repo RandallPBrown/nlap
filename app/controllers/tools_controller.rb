@@ -79,7 +79,6 @@ class ToolsController < ApplicationController
           'FO - SP': helpers.best_in_place(ferg, :servicer_fo, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light', :confirm => 'Confirmed dispatch with Service Provider?'),
           'FO - D': helpers.best_in_place(ferg, :dealer_fo, as: :checkbox, collection: {false: helpers.fa_icon_tag("times-circle text-danger"), true: helpers.fa_icon_tag("check-circle text-success")}, :class => 'border rounded p-1 bg-light', :confirm => 'Informed Ferguson location of dispatch?')
         }
-      else
     end
     respond_to do |format|
       format.html

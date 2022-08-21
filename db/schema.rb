@@ -13,33 +13,9 @@
 ActiveRecord::Schema.define(version: 2020_01_13_163613) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "adminpack"
+  enable_extension "pgagent"
   enable_extension "plpgsql"
-
-  create_table "active_admin_comments", force: :cascade do |t|
-    t.string "namespace"
-    t.text "body"
-    t.string "resource_type"
-    t.bigint "resource_id"
-    t.string "author_type"
-    t.bigint "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
-  end
-
-  create_table "admin_users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_admin_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
-  end
 
   create_table "agent_stats", force: :cascade do |t|
     t.string "extension"
@@ -78,20 +54,16 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
   end
 
   create_table "agents", force: :cascade do |t|
+    t.string "fname"
+    t.string "lname"
+    t.date "hire"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "dept"
     t.bigint "department_id"
     t.bigint "user_id"
-    t.datetime "deleted_at"
-    t.index ["deleted_at"], name: "index_agents_on_deleted_at"
     t.index ["department_id"], name: "index_agents_on_department_id"
     t.index ["user_id"], name: "index_agents_on_user_id"
-  end
-
-  create_table "application_authorizers", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "buying_groups", force: :cascade do |t|
@@ -100,33 +72,10 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.bigint "language_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["language_id"], name: "index_categories_on_language_id"
-  end
-
   create_table "chatrooms", force: :cascade do |t|
     t.string "topic"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "components", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.text "chtml"
-    t.text "ccss"
-    t.text "cjavascript"
-    t.text "cror"
-    t.text "cinfo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "category_id"
-    t.index ["category_id"], name: "index_components_on_category_id"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -139,13 +88,6 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["dealer_id"], name: "index_contacts_on_dealer_id"
-  end
-
-  create_table "create_join_table_agent_departments", force: :cascade do |t|
-    t.string "agent"
-    t.string "department"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "daps", force: :cascade do |t|
@@ -198,7 +140,6 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
     t.date "edate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "dept"
     t.index ["agent_id"], name: "index_entries_on_agent_id"
     t.index ["occurrence_id"], name: "index_entries_on_occurrence_id"
   end
@@ -284,7 +225,6 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
     t.bigint "department_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "aht"
     t.float "error_amount"
     t.index ["department_id"], name: "index_incentive_settings_on_department_id"
   end
@@ -328,13 +268,6 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
     t.index ["user_id"], name: "index_kudos_on_user_id"
   end
 
-  create_table "languages", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "manufacturers", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -368,23 +301,6 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "manufacturer"
-  end
-
-  create_table "models", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_models_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_models_on_reset_password_token", unique: true
   end
 
   create_table "network_maps", force: :cascade do |t|
@@ -456,8 +372,12 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
   end
 
   create_table "procedures", force: :cascade do |t|
+    t.string "section"
+    t.string "goal"
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "start"
     t.string "name"
   end
 
@@ -480,12 +400,6 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
     t.bigint "recipient_group_id"
     t.index ["recipient_group_id"], name: "index_recipients_on_recipient_group_id"
     t.index ["user_id"], name: "index_recipients_on_user_id"
-  end
-
-  create_table "roles", force: :cascade do |t|
-    t.string "name"
-    t.string "resource_type"
-    t.integer "resource_id"
   end
 
   create_table "sections", force: :cascade do |t|
@@ -584,25 +498,10 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
     t.string "username"
     t.string "role"
     t.bigint "department_id"
-    t.bigint "agent_id"
-    t.string "avatar_file_name"
-    t.string "avatar_content_type"
-    t.integer "avatar_file_size"
-    t.datetime "avatar_updated_at"
-    t.datetime "deleted_at"
     t.string "extension"
-    t.index ["agent_id"], name: "index_users_on_agent_id"
     t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  end
-
-  create_table "users_roles", id: false, force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "role_id"
-    t.index ["role_id"], name: "index_users_roles_on_role_id"
-    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
-    t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
   create_table "writeups", force: :cascade do |t|
@@ -621,8 +520,6 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
   add_foreign_key "agent_stats", "users"
   add_foreign_key "agents", "departments"
   add_foreign_key "agents", "users"
-  add_foreign_key "categories", "languages"
-  add_foreign_key "components", "categories"
   add_foreign_key "contacts", "dealers"
   add_foreign_key "daps", "users"
   add_foreign_key "daps", "writeups"
@@ -652,6 +549,5 @@ ActiveRecord::Schema.define(version: 2020_01_13_163613) do
   add_foreign_key "shortkeys", "departments"
   add_foreign_key "sp_logs", "sp_log_types"
   add_foreign_key "teams", "groups"
-  add_foreign_key "users", "agents"
   add_foreign_key "users", "departments"
 end

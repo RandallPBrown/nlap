@@ -1,17 +1,12 @@
 source 'https://rubygems.org'
-ruby '3.1.2'
-
-
+ruby '2.6.10'
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
-
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
-
-gem 'pg', '~> 1.4.3'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -35,17 +30,17 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'geocoder'
+# gem 'geocoder'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'httparty'
-gem 'ruby_kml'
+# gem 'ruby_kml'
 # gem 'rack-cors'
 
 gem 'devise'
 # gem "paranoia", "~> 2.2"
 # gem 'paranoia_uniqueness_validator', '3.1.0'
-
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 # Bootstrap css library
 gem 'bootstrap'
 gem 'popper_js'
@@ -74,9 +69,7 @@ gem 'rolify'
 gem 'best_in_place', '~> 3.0.1'
 gem 'smarter_csv'
 gem 'net-smtp', require: false
-
-gem 'kiso_themes', '~> 1.0', '>= 1.0.2'
-
+gem 'kiso_themes', '~> 1.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -99,6 +92,6 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+#gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'jquery-rails'
