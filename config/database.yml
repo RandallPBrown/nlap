@@ -1,11 +1,11 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: proto_dev
+  database: postgres
   pool: 5
   host: localhost
   username: postgres
-  password: postgres
+  password: Peyton1990
 
 test:
   adapter: postgresql
