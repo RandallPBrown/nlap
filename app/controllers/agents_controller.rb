@@ -71,7 +71,7 @@ class AgentsController < ApplicationController
           #         "<i class='fa fa-check-circle text-success'><span hidden>N</span></i>"
           #       end
           #   }
-         else 
+         # else 
        end 
      end 
     respond_to do |format|

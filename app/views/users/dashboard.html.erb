@@ -26,7 +26,7 @@
 
   // So we should have done AJAX for all of these, but the dispute modal is a masterpiece of hacky engineering so don't right now unless you're prepared to look at it too. 
   t.rows.add(
-    [<% @user_entry.each do |entry| %>{'Name': '<%= entry.agent.user.full_name %>', 'Type': '<%= entry.occurrence.name.truncate(15) %>', 'Date':'<%= entry.edate %>', 'Expires':'<%= entry.edate + 90.days %>', 'Description':'<%= entry.edesc.truncate(15) %>', '':''},<% else %><% end %>]
+    [<% @user_entry.each do |entry| %>{'Name': '<%= entry.agent.user.full_name %>', 'Type': '<%= entry.occurrence.name.truncate(15) %>', 'Date':'<%= entry.edate %>', 'Expires':'<%= entry.edate + 90.days %>', 'Description':'<%= entry.edesc.truncate(15) %>', '':''},<% end %>]
     ).draw();
 
   // ERROR TABLE
@@ -70,7 +70,7 @@
 
   // So we should have done AJAX for all of these, but the dispute modal is a masterpiece of hacky engineering so don't right now unless you're prepared to look at it too. 
   t.rows.add(
-    [<% @user_dap.each do |dap| %>{'Name': '<%= dap.user.full_name %>', 'Type': '<%= dap.writeup.name %>', 'Date':'<%= dap.ddate %>', 'Expires':'<%= dap.ddate + 90.days %>', 'Description':'<%= dap.description.truncate(15) %>', '':''},<% else %><% end %>]
+    [<% @user_dap.each do |dap| %>{'Name': '<%= dap.user.full_name %>', 'Type': '<%= dap.writeup.name %>', 'Date':'<%= dap.ddate %>', 'Expires':'<%= dap.ddate + 90.days %>', 'Description':'<%= dap.description.truncate(15) %>', '':''},<% end %>]
     ).draw();
 
     // Incentives TABLE

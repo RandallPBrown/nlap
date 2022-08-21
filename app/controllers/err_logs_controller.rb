@@ -26,7 +26,7 @@ class ErrLogsController < ApplicationController
          'Date': err_log.errdate.strftime('%m/%d/%Y'), 
          'Status': err_log.err_status.statusname
        }
-       else 
+       # else 
       end  
     end 
     respond_to do |format|
@@ -53,7 +53,7 @@ class ErrLogsController < ApplicationController
          'Date': err_log.errdate.strftime('%m/%d/%Y'), 
          'Status': err_log.err_status.statusname
        }
-       else 
+       # else 
       end  
     end 
     @err_log = ErrLog.all

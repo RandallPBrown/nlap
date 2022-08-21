@@ -29,7 +29,7 @@ class IncentivesController < ApplicationController
          'AHT': incentive.aht,
          'Date': incentive.date,
          '': (helpers.link_to(helpers.theme_icon_tag('eye'), incentive, 'data-toggle': 'tooltip', title: 'Show', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('pencil-alt'), edit_incentive_path(incentive), 'data-toggle': 'tooltip', title: 'Edit', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('trash'), incentive, 'data-toggle': 'tooltip', title: 'Delete', method: :delete, class: 'btn btn-link p-1'))}
-       else 
+       # else 
       end  
     end 
     respond_to do |format|
@@ -52,7 +52,7 @@ class IncentivesController < ApplicationController
          'Contracts': user.incentives.sum(:contracts), 
          'AHT': user.incentives.average(:aht).round(2),
          '': (helpers.link_to(helpers.theme_icon_tag('eye'), user, 'data-toggle': 'tooltip', title: 'Show', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('pencil-alt'), edit_incentive_path(user), 'data-toggle': 'tooltip', title: 'Edit', class: 'btn btn-link p-1') + " " + helpers.link_to(helpers.theme_icon_tag('trash'), user, 'data-toggle': 'tooltip', title: 'Delete', method: :delete, class: 'btn btn-link p-1'))}
-       else 
+       # else 
       end  
     end 
     respond_to do |format|

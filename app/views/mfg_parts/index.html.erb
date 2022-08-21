@@ -24,7 +24,7 @@ t.on( 'search.dt', function () {
 } );
 
 t.rows.add(
-  [<% @mfg_parts.each do |mfg_part| %>{'Part Name':'<%= mfg_part.part_name %>', 'Part Number':'<%= mfg_part.part_number %>', 'Manufacturer':'<%= mfg_part.manufacturer.name %>', '':'<div class="btn-group"><%= link_to theme_icon_tag("eye"), mfg_part, "data-toggle": "tooltip", title: "Show", class: "btn btn-link" %><%= link_to theme_icon_tag("pencil-alt"), edit_mfg_part_path(mfg_part), "data-toggle": "tooltip", title: "Edit", class: "btn btn-link" %><%= link_to theme_icon_tag("trash"), mfg_part, "data-toggle": "tooltip", title: "Delete", data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %></div>'},<% else %><% end %>]
+  [<% @mfg_parts.each do |mfg_part| %>{'Part Name':'<%= mfg_part.part_name %>', 'Part Number':'<%= mfg_part.part_number %>', 'Manufacturer':'<%= mfg_part.manufacturer.name %>', '':'<div class="btn-group"><%= link_to theme_icon_tag("eye"), mfg_part, "data-toggle": "tooltip", title: "Show", class: "btn btn-link" %><%= link_to theme_icon_tag("pencil-alt"), edit_mfg_part_path(mfg_part), "data-toggle": "tooltip", title: "Edit", class: "btn btn-link" %><%= link_to theme_icon_tag("trash"), mfg_part, "data-toggle": "tooltip", title: "Delete", data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %></div>'},<% end %>]
   ).draw();
 t.buttons().container()
     .appendTo( $('.col-sm-6:eq(0)', t.table().container() ) );
