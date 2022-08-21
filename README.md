@@ -8,3 +8,4 @@ or if on Heroku, `heroku config:set BUNDLE_GEMS__RAPIDRAILSTHEMES__COM=JAMES.R.J
 `rake db:create`
 `rake db:migrate`
 `rails s`
+zxvsdaf

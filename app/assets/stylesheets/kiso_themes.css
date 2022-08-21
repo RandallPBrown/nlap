@@ -22,7 +22,7 @@
  *  require kiso_themes/lyra/lime
  *  require kiso_themes/lyra/raspberry
  *
- * To fully customize your theme, run: `rails generate rrt:customize`.
+ * To fully customize your theme, run: `rails generate kiso_themes:customize`.
  *
  *
  * NOTE: DO NOT PLACE ANY CUSTOM CSS IN THIS FILE - IT COULD BE OVERWRITTEN IN FUTURE
